@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Magician.h"
+#include "FigureProject.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, Magician, "Magician" );
+IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, FigureProject, "FigureProject" );

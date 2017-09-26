@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class Magician : ModuleRules
+public class FigureProject : ModuleRules
 {
-	public Magician(ReadOnlyTargetRules Target) : base(Target)
+	public FigureProject(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	

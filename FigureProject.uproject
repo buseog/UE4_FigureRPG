@@ -5,7 +5,7 @@
 	"Description": "",
 	"Modules": [
 		{
-			"Name": "Magician",
+			"Name": "FigureProject",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [

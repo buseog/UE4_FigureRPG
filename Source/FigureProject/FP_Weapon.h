@@ -2,19 +2,18 @@
 
 #pragma once
 
-#include "Core.h"
-#include "Engine.h"
+#include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Skills.generated.h"
+#include "FP_Weapon.generated.h"
 
 UCLASS()
-class MAGICIAN_API ASkills : public AActor
+class FIGUREPROJECT_API AFP_Weapon : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ASkills();
+	AFP_Weapon();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,13 +23,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
-	UPROPERTY()
-	UStaticMeshComponent* m_StaticMesh;
-	UPROPERTY(VisibleAnywhere)
-	USphereComponent* m_SphereComponent;
-
-private:
-	float m_fTimeAcc = 0.f;
+	
 	
 };

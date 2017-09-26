@@ -4,17 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "MyPlayerController.generated.h"
+#include "FP_PlayerController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MAGICIAN_API AMyPlayerController : public APlayerController
+class FIGUREPROJECT_API AFP_PlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-	AMyPlayerController();
+public:
+	AFP_PlayerController();
 	
 	
 };

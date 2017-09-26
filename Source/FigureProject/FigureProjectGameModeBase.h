@@ -3,21 +3,17 @@
 #pragma once
 
 #include "Core.h"
-#include "Engine.h"
 #include "GameFramework/GameModeBase.h"
-#include "MagicianGameModeBase.generated.h"
+#include "FigureProjectGameModeBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MAGICIAN_API AMagicianGameModeBase : public AGameModeBase
+class FIGUREPROJECT_API AFigureProjectGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
-	AMagicianGameModeBase();
-	
-	
-	virtual void BeginPlay() override;
-
+public:
+	AFigureProjectGameModeBase();
 };

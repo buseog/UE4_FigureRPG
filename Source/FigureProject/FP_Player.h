@@ -2,19 +2,18 @@
 
 #pragma once
 
-#include "Core.h"
-#include "Engine.h"
+#include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "MonsterCreator.generated.h"
+#include "FP_Player.generated.h"
 
 UCLASS()
-class MAGICIAN_API AMonsterCreator : public AActor
+class FIGUREPROJECT_API AFP_Player : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AMonsterCreator();
+	AFP_Player();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,14 +23,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void MonsterDead(void);
-	bool GetisSpawn(void) { return m_isSpawn; }
-
 	
-private:
-	bool m_isSpawn = false;
-
-	UPROPERTY()
-	class AMagicianPawn* m_pMagicianPawn;
-
+	
 };

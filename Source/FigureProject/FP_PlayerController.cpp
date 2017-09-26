@@ -1,8 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "MyPlayerController.h"
+#include "FP_PlayerController.h"
 
-AMyPlayerController::AMyPlayerController()
+
+
+
+AFP_PlayerController::AFP_PlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;

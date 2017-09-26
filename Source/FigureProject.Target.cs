@@ -3,12 +3,12 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class MagicianTarget : TargetRules
+public class FigureProjectTarget : TargetRules
 {
-	public MagicianTarget(TargetInfo Target) : base(Target)
+	public FigureProjectTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 
-		ExtraModuleNames.AddRange( new string[] { "Magician" } );
+		ExtraModuleNames.AddRange( new string[] { "FigureProject" } );
 	}
 }
