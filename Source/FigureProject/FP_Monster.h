@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Core.h"
 #include "GameFramework/Actor.h"
 #include "FP_Monster.generated.h"
 
@@ -24,5 +24,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	
-	
+	UPROPERTY()
+	UStaticMeshComponent* StaticMesh;
+
+
+	float Speed = 10.f;
 };
