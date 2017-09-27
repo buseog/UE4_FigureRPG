@@ -1,0 +1,18 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-FigureProject-7379.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.obj"
+"C:\Users\bryan\Documents\Unreal Projects\FigureProject\Intermediate\Build\Win64\UE4Editor\Development\FigureProject\FigureProject.cpp.obj"
+"C:\Users\bryan\Documents\Unreal Projects\FigureProject\Intermediate\Build\Win64\UE4Editor\Development\FigureProject\FigureProjectGameModeBase.cpp.obj"
+"C:\Users\bryan\Documents\Unreal Projects\FigureProject\Intermediate\Build\Win64\UE4Editor\Development\FigureProject\FP_HUD.cpp.obj"
+"C:\Users\bryan\Documents\Unreal Projects\FigureProject\Intermediate\Build\Win64\UE4Editor\Development\FigureProject\FigureProject.init.gen.cpp.obj"
+"C:\Users\bryan\Documents\Unreal Projects\FigureProject\Intermediate\Build\Win64\UE4Editor\Development\FigureProject\FigureProjectGameModeBase.gen.cpp.obj"
+"C:\Users\bryan\Documents\Unreal Projects\FigureProject\Intermediate\Build\Win64\UE4Editor\Development\FigureProject\FP_HUD.gen.cpp.obj"
+"D:\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\FigureProject\PCLaunch.rc.res"
+"D:\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\ModuleVersionResource.rc.inl.res"
+/OUT:"C:\Users\bryan\Documents\Unreal Projects\FigureProject\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-FigureProject-7379.lib"

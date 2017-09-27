@@ -43,20 +43,20 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_PlayerController.h">
       <Filter>Source\FigureProject\00. GameSetting</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_Bullet.h">
-      <Filter>Source\FigureProject\03. Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_Monster.h">
-      <Filter>Source\FigureProject\04. Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_MonsterMgr.h">
-      <Filter>Source\FigureProject\04. Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_Player.h">
-      <Filter>Source\FigureProject\01. Player</Filter>
+      <Filter>Source\FigureProject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Bullet.h">
+      <Filter>Source\FigureProject</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_Weapon.h">
-      <Filter>Source\FigureProject\02. Weapon</Filter>
+      <Filter>Source\FigureProject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_MonsterMgr.h">
+      <Filter>Source\FigureProject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Monster.h">
+      <Filter>Source\FigureProject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -72,20 +72,20 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_PlayerController.cpp">
       <Filter>Source\FigureProject\00. GameSetting</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_Bullet.cpp">
-      <Filter>Source\FigureProject\03. Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_Monster.cpp">
-      <Filter>Source\FigureProject\04. Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_MonsterMgr.cpp">
-      <Filter>Source\FigureProject\04. Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_Player.cpp">
-      <Filter>Source\FigureProject\01. Player</Filter>
+      <Filter>Source\FigureProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Bullet.cpp">
+      <Filter>Source\FigureProject</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_Weapon.cpp">
-      <Filter>Source\FigureProject\02. Weapon</Filter>
+      <Filter>Source\FigureProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_MonsterMgr.cpp">
+      <Filter>Source\FigureProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Monster.cpp">
+      <Filter>Source\FigureProject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
