@@ -58,6 +58,9 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_Weapon.h">
       <Filter>Source\FigureProject\02. Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Player_Circle.h">
+      <Filter>Source\FigureProject\01. Player\00. Circle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">
@@ -87,6 +90,9 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_Weapon.cpp">
       <Filter>Source\FigureProject\02. Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Player_Circle.cpp">
+      <Filter>Source\FigureProject\01. Player\00. Circle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -109,6 +115,15 @@
     </Filter>
     <Filter Include="Source\FigureProject\98. UI">
       <UniqueIdentifier>{347e69d7-8327-4550-82d3-fc988065caf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\01. Player\00. Circle">
+      <UniqueIdentifier>{565adb2d-841a-48da-8348-d15cb01e75b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\01. Player\01. TriAngle">
+      <UniqueIdentifier>{80d229d2-e78a-4a8a-bcde-a8d22e0ed176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\01. Player\02. Square">
+      <UniqueIdentifier>{eed69512-7aa0-48ef-b93b-8b9fa72d256c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
