@@ -1,3 +1,0 @@
-C:\Users\bryan\Desktop\UE4_FigureRPG\Source\FigureProject\FigureProject.Build.cs
-C:\Users\bryan\Desktop\UE4_FigureRPG\Source\FigureProject.Target.cs
-C:\Users\bryan\Desktop\UE4_FigureRPG\Source\FigureProjectEditor.Target.cs
