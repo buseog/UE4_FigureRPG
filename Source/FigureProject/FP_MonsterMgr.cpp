@@ -23,5 +23,17 @@ void AFP_MonsterMgr::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	TimeAcc += DeltaTime;
+	if (TimeAcc > MonsterSpawnTime && MonsterArray.Num() < 10)
+	{
+		TimeAcc = 0.f;
+
+		//FVector2D ViewportSize = GEngine->GameViewport->Viewport->GetSizeXY();
+		int32 iSpawnX = rand() % 50 * (rand() % 2 - 0.5) * 2;
+		int32 iSpawnY = rand() % 50 * (rand() % 2 - 0.5) * 2;
+		AFP_Monster* SpawnedMonster = GetWorld()->SpawnActor<AFP_Monster>(FVector(iSpawnX, iSpawnY, 0.f), FRotator(0.f, 0.f, 0.f));
+		MonsterArray.Add(SpawnedMonster);
+	}
+
 }
 

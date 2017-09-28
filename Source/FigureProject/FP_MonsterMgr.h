@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Core.h"
+#include "Engine.h"
+#include "FP_Monster.h"
 #include "GameFramework/Actor.h"
 #include "FP_MonsterMgr.generated.h"
 
@@ -23,6 +25,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY()
+	TArray<AFP_Monster*> MonsterArray;
+
+	float TimeAcc = 0.f;
+	float MonsterSpawnTime = 1.f;
 	
 	
 };

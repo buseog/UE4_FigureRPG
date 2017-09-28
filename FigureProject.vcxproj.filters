@@ -61,6 +61,9 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_Player_Circle.h">
       <Filter>Source\FigureProject\01. Player\00. Circle</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_StatusWidget.h">
+      <Filter>Source\FigureProject\98. UI\00. Status</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">
@@ -93,6 +96,9 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_Player_Circle.cpp">
       <Filter>Source\FigureProject\01. Player\00. Circle</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_StatusWidget.cpp">
+      <Filter>Source\FigureProject\98. UI\00. Status</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -117,13 +123,10 @@
       <UniqueIdentifier>{347e69d7-8327-4550-82d3-fc988065caf6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\FigureProject\01. Player\00. Circle">
-      <UniqueIdentifier>{565adb2d-841a-48da-8348-d15cb01e75b9}</UniqueIdentifier>
+      <UniqueIdentifier>{5064ba1c-3cf3-4a5a-b98a-8f1c938e99d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\FigureProject\01. Player\01. TriAngle">
-      <UniqueIdentifier>{80d229d2-e78a-4a8a-bcde-a8d22e0ed176}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\FigureProject\01. Player\02. Square">
-      <UniqueIdentifier>{eed69512-7aa0-48ef-b93b-8b9fa72d256c}</UniqueIdentifier>
+    <Filter Include="Source\FigureProject\98. UI\00. Status">
+      <UniqueIdentifier>{b83e60d2-cbcc-42cf-aec5-7c69194f893b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

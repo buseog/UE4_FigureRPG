@@ -4,7 +4,16 @@
 
 AFP_Player_Circle::AFP_Player_Circle()
 {
-
+	Status.Hp = 5.f;
+	Status.MaxHp = 5.f;
+	Status.HpRegen = 0.f;
+	Status.Attack = 3.f;
+	Status.AttackRange = 5.f;
+	Status.AttackSpeed = 1.f;
+	Status.BulletSpeed = 1.f;
+	Status.Critical = 1.f;
+	Status.CriticalDamage = 1.f;
+	Status.Splash = 1.f;
 }
 
 void AFP_Player_Circle::BeginPlay()
