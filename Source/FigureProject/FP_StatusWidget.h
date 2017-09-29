@@ -9,12 +9,12 @@
 /**
  * 
  */
+class AFP_Player;
+
 UCLASS()
 class FIGUREPROJECT_API UFP_StatusWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
-	
 	
 	
 };

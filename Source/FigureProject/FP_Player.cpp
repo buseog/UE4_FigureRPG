@@ -64,7 +64,6 @@ void AFP_Player::StatusLevelUp(int _Type)
 	{
 	case 0:
 		Status.Hp += 1.f;
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Yellow, FString::Printf(TEXT("%f"), Status.Hp), true, FVector2D(5.f, 5.f));
 		break;
 
 	case 1:
@@ -81,6 +80,22 @@ void AFP_Player::StatusLevelUp(int _Type)
 
 	case 4:
 		Status.AttackSpeed += 1.f;
+		break;
+
+	case 5:
+		Status.BulletSpeed += 1.f;
+		break;
+
+	case 6:
+		Status.Critical += 1.f;
+		break;
+
+	case 7:
+		Status.CriticalDamage += 1.f;
+		break;
+
+	case 8:
+		Status.Splash += 1.f;
 		break;
 	}
 }

@@ -51,8 +51,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Status)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	struct FSTATUS Status;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+	float TEST;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
 	class UStaticMeshComponent* Mesh;
@@ -82,6 +85,9 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
 	void ToggleStatus();
+
+	UFUNCTION(BlueprintCallable, Category = Status)
+	struct FSTATUS GetStatus() { return Status; }
 
 	UFUNCTION()
 	void OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult);
