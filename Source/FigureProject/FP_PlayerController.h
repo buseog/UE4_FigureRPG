@@ -38,6 +38,4 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
 	void ToggleStatus();
-	UFUNCTION(BlueprintCallable, Category = UI)
-	void StatusLevelUp(int _Type);
 };

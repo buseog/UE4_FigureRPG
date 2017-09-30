@@ -50,13 +50,3 @@ void AFP_PlayerController::ToggleStatus()
 		StatusWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 }
-
-void AFP_PlayerController::StatusLevelUp(int _Type)
-{
-	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-
-	if (nullptr == pPlayer)
-		return;
-
-	pPlayer->StatusLevelUp(_Type);
-}

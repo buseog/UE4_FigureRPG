@@ -29,6 +29,7 @@
     <None Include="..\..\Source\FigureProjectEditor.Target.cs">
       <Filter>Source\FigureProject\99. Default</Filter>
     </None>
+    <None Include="..\..\Config\DefaultInput.ini" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\FigureProject\FigureProject.h">
@@ -63,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_StatusWidget.h">
       <Filter>Source\FigureProject\98. UI\00. Status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Inventory.h">
+      <Filter>Source\FigureProject\98. UI\01. Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Item.h">
+      <Filter>Source\FigureProject\05. Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +106,12 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_StatusWidget.cpp">
       <Filter>Source\FigureProject\98. UI\00. Status</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Inventory.cpp">
+      <Filter>Source\FigureProject\98. UI\01. Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Item.cpp">
+      <Filter>Source\FigureProject\05. Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -119,14 +132,20 @@
     <Filter Include="Source\FigureProject\04. Monster">
       <UniqueIdentifier>{17fd7e9a-bbfd-4c66-a549-0696cf4ca25b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\FigureProject\98. UI">
-      <UniqueIdentifier>{347e69d7-8327-4550-82d3-fc988065caf6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\FigureProject\01. Player\00. Circle">
       <UniqueIdentifier>{5064ba1c-3cf3-4a5a-b98a-8f1c938e99d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\FigureProject\05. Item">
+      <UniqueIdentifier>{987e453c-d0f9-410d-8750-0ee18597f65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI">
+      <UniqueIdentifier>{347e69d7-8327-4550-82d3-fc988065caf6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\FigureProject\98. UI\00. Status">
       <UniqueIdentifier>{b83e60d2-cbcc-42cf-aec5-7c69194f893b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\01. Inventory">
+      <UniqueIdentifier>{dec3ae89-ccae-474e-9f57-3429acc9cf2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

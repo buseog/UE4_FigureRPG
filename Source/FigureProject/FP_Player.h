@@ -76,15 +76,12 @@ public:
 	TSubclassOf<AFP_Weapon> Weapon;
 
 public:
-	void MouseLClick(void);
 	void StatusLevelUp(int _Type);
 
-public:
-	virtual void Attack(void);
 
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
-	void ToggleStatus();
+	void ToggleStatus(AActor* p, FKey Button);
 
 	UFUNCTION(BlueprintCallable, Category = Status)
 	struct FSTATUS GetStatus() { return Status; }
