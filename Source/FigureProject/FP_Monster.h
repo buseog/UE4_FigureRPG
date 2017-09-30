@@ -27,9 +27,11 @@ public:
 
 	
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;
+	
+	UPROPERTY(EditAnywhere)
 	USphereComponent* SphereComponent;
 
-	float Speed = 3.f;
+	float Speed = 10.f;
 };

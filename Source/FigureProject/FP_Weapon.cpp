@@ -17,7 +17,6 @@ struct CompareDist
 
 		return Avector.Size() < Bvector.Size();
 	}
-
 };
 
 // Sets default values
@@ -53,7 +52,6 @@ void AFP_Weapon::BeginPlay()
 	Super::BeginPlay();
 
 	StaticMesh->SetStaticMesh(Mesh);
-	
 }
 
 // Called every frame
@@ -99,9 +97,9 @@ void AFP_Weapon::Tick(float DeltaTime)
 	//Test += FString(TEXT(" , "));
 	//Test += FString::SanitizeFloat(FirePoint.Y);
 
-	FString Test = FString::FromInt(TargetMonsters.Num());
+	//FString Test = FString::FromInt(TargetMonsters.Num());
 
-	GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, Test);
+	//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, Test);
 	
 
 }
