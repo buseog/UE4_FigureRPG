@@ -16,4 +16,7 @@ class FIGUREPROJECT_API AFigureProjectGameModeBase : public AGameModeBase
 
 public:
 	AFigureProjectGameModeBase();
+
+	
+	virtual void BeginPlay() override;
 };

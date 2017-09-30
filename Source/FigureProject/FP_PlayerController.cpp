@@ -11,6 +11,10 @@ AFP_PlayerController::AFP_PlayerController()
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
 	bShowStatus = false;
+
+	FName Path = TEXT("WidgetBlueprint'/Game/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
+	UClass* Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	StatusUI = Widget;
 }
 
 void AFP_PlayerController::BeginPlay()
@@ -45,14 +49,4 @@ void AFP_PlayerController::ToggleStatus()
 		bShowStatus = true;
 		StatusWidget->SetVisibility(ESlateVisibility::Visible);
 	}
-}
-
-void AFP_PlayerController::StatusLevelUp(int _Type)
-{
-	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-
-	if (nullptr == pPlayer)
-		return;
-
-	pPlayer->StatusLevelUp(_Type);
 }
