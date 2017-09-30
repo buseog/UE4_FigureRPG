@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FP_Monster.h"
+#include "FP_Weapon.h"
 #include "Engine.h"
 
 // Sets default values
@@ -17,6 +18,15 @@ AFP_Monster::AFP_Monster()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Sphere_Monster.Sphere_Monster'"));
 	StaticMesh->SetStaticMesh(MonsterMesh.Object);
+
+
+	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
+	SphereComponent->InitSphereRadius(5.0f);
+	SphereComponent->SetupAttachment(RootComponent);
+
+	SetActorEnableCollision(true);
+	SphereComponent->bGenerateOverlapEvents = true;
+	SphereComponent->SetNotifyRigidBodyCollision(true);
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +44,15 @@ void AFP_Monster::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	FVector CurrentLocation = GetActorLocation();
+	if (CurrentLocation.Size() < 1)
+	{
+		TArray<AActor*> FoundActor;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
+		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(this);
+		Destroy();
+		return;
+	}
+
 	FVector Direction = CurrentLocation * -1.f;
 	Direction.Normalize();
 
@@ -41,4 +60,3 @@ void AFP_Monster::Tick(float DeltaTime)
 	SetActorLocation(NewLocation);
 
 }
-

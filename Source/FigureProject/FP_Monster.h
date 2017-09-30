@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Core.h"
+#include "Engine.h"
 #include "GameFramework/Actor.h"
 #include "FP_Monster.generated.h"
 
@@ -22,11 +23,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
 
+	
 	
 	UPROPERTY()
 	UStaticMeshComponent* StaticMesh;
+	USphereComponent* SphereComponent;
 
-
-	float Speed = 10.f;
+	float Speed = 3.f;
 };

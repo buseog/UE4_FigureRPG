@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Core.h"
+#include "Engine.h"
 #include "GameFramework/Actor.h"
 #include "FP_Bullet.generated.h"
 
@@ -22,6 +23,21 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
+	UPROPERTY()
+	UStaticMeshComponent* StaticMesh;
+	USphereComponent* SphereComponent;
+
+	inline void SetTargetDir(FVector _targetdir) { TargetDir = _targetdir; }
+
+public:
+	float BulletSpeed = 100.f;
+	float TimeAcc = 0.f;
+	FVector TargetDir = FVector(1.f,0.f,0.f);
 
 	
 	
