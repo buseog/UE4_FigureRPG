@@ -3,6 +3,7 @@
 #include "FP_Bullet.h"
 #include "FP_Monster.h"
 #include "FP_Weapon.h"
+#include "FP_Player.h"
 
 // Sets default values
 AFP_Bullet::AFP_Bullet()
@@ -47,7 +48,11 @@ void AFP_Bullet::Tick(float DeltaTime)
 	if (TimeAcc > 3.f)
 		Destroy();
 
-	FVector NewLocation = GetActorLocation() + TargetDir * BulletSpeed * DeltaTime;
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (nullptr == pPlayer)
+		return;
+
+	FVector NewLocation = GetActorLocation() + TargetDir * pPlayer->GetStatus().BulletSpeed * DeltaTime;
 	SetActorLocation(NewLocation);
 }
 

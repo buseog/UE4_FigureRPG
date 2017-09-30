@@ -35,8 +35,6 @@ public:
 	USphereComponent* SphereComponent;
 
 	float AngleZ = 0.f;
-	float AttackSpeed = 0.5f;
-	float AttackRange = 50.f;
 	float TimeAcc = 0.f;
 	FVector FirePoint = FVector(0.f,0.f,0.f);
 

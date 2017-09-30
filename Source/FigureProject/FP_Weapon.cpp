@@ -3,6 +3,7 @@
 #include "FP_Weapon.h"
 #include "Engine.h"
 #include "FP_Bullet.h"
+#include "FP_Player.h"
 
 struct CompareDist
 {
@@ -36,8 +37,8 @@ AFP_Weapon::AFP_Weapon()
 
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
-	SphereComponent->InitSphereRadius(AttackRange);
 	SphereComponent->SetupAttachment(RootComponent);
+	SphereComponent->InitSphereRadius(50.f);
 
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AFP_Weapon::OnOverlapBegin);
 
@@ -59,12 +60,17 @@ void AFP_Weapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	
 
 	float fYaw = GetActorRotation().Yaw;
 	FirePoint.X = 10.f * cosf((fYaw * PI) / 180.f);
 	FirePoint.Y = 10.f * sinf((fYaw * PI) / 180.f);
 	
+	//SphereRadius
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (nullptr == pPlayer)
+		return;
+	
+	SphereComponent->SetSphereRadius(pPlayer->GetStatus().AttackRange);
 
 	if(TargetMonsters.Num() >= 1)
 	{
@@ -84,7 +90,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 
 		//attack
 		TimeAcc += DeltaTime;
-		if (TimeAcc > AttackSpeed)
+		if (TimeAcc > pPlayer->GetStatus().AttackSpeed)
 		{
 			TimeAcc = 0.f;
 			AFP_Bullet* Bullet = GetWorld()->SpawnActor<AFP_Bullet>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
@@ -97,9 +103,8 @@ void AFP_Weapon::Tick(float DeltaTime)
 	//Test += FString(TEXT(" , "));
 	//Test += FString::SanitizeFloat(FirePoint.Y);
 
-	//FString Test = FString::FromInt(TargetMonsters.Num());
-
-	//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, Test);
+	FString Test = FString::FromInt(TargetMonsters.Num());
+	GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, Test);
 	
 
 }

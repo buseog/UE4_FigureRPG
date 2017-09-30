@@ -7,10 +7,10 @@
 void UFP_StatusWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
+	
 	UButton* Button = (UButton*)GetWidgetFromName(TEXT("Button_HP"));
 	Button->OnClicked.AddDynamic(this, &UFP_StatusWidget::Button_HP);
-
+	
 	Button = (UButton*)GetWidgetFromName(TEXT("Button_HpRegen"));
 	Button->OnClicked.AddDynamic(this, &UFP_StatusWidget::Button_HpRegen);
 
@@ -34,12 +34,13 @@ void UFP_StatusWidget::NativeConstruct()
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Button_Splash"));
 	Button->OnClicked.AddDynamic(this, &UFP_StatusWidget::Button_Splash);
+
 }
 
 void UFP_StatusWidget::Button_HP()
 {
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-
+	
 	if (nullptr == pPlayer)
 		return;
 
