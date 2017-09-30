@@ -30,7 +30,10 @@ AFP_Player::AFP_Player()
 	SightSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SightSphere"));
 	SightSphere->SetupAttachment(RootComponent);
 	SightSphere->SetSphereRadius(Status.AttackRange);
+
+	OnClicked.AddDynamic(this, &AFP_Player::ToggleStatus);
 }
+
 
 // Called when the game starts or when spawned
 void AFP_Player::BeginPlay()
@@ -49,14 +52,8 @@ void AFP_Player::Tick(float DeltaTime)
 void AFP_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	PlayerInputComponent->BindAction("MouseLB", IE_Pressed, this, &AFP_Player::MouseLClick);
 }
 
-void AFP_Player::MouseLClick(void)
-{
-
-}
 
 void AFP_Player::StatusLevelUp(int _Type)
 {
@@ -100,12 +97,8 @@ void AFP_Player::StatusLevelUp(int _Type)
 	}
 }
 
-void AFP_Player::Attack(void)
-{
 
-}
-
-void AFP_Player::ToggleStatus()
+void AFP_Player::ToggleStatus(AActor* p, FKey Button)
 {
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	Cast<AFP_PlayerController>(Controller)->ToggleStatus();
