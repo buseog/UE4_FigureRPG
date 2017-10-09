@@ -59,7 +59,7 @@ void AFP_Bullet::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 		TArray<AActor*> FoundActor;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
 		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(TargetMonster);
-		TargetMonster->Destroy();
+		//TargetMonster->Destroy();
 	}
 		
 

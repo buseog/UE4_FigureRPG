@@ -38,7 +38,6 @@ public:
 	float BulletSpeed = 100.f;
 	float TimeAcc = 0.f;
 	FVector TargetDir = FVector(1.f,0.f,0.f);
-
 	
 	
 };

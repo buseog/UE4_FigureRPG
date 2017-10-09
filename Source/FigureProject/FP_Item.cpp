@@ -11,10 +11,17 @@ AFP_Item::AFP_Item()
 
 	Name = "Item";
 	Quantity = 1;
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	StaticMesh->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> ItemMesh(TEXT("StaticMesh'/Game/Item_Mesh.Item_Mesh'"));
+	StaticMesh->SetStaticMesh(ItemMesh.Object);
+
 	const ConstructorHelpers::FObjectFinder<UTexture2D> IconName(TEXT("/Game/item.item"));
 	Icon = IconName.Object;
-	RootComponent = Cast<USceneComponent>(Mesh);
 }
 
 // Called when the game starts or when spawned

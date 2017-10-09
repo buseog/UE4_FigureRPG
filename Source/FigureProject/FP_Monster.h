@@ -23,15 +23,23 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
 
+private:
+	float HP;
+	float Damage;
+	float Speed = 10.f;
 	
-	
+public:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;
 	
 	UPROPERTY(EditAnywhere)
 	USphereComponent* SphereComponent;
 
-	float Speed = 10.f;
+	bool bDestroy = false;
+
+public:
+	virtual void BeginDestroy() override;
+	virtual float TakeDamage(float Damage, struct FDamageEvent const &DamageEvent, class AController* EventIntigator, class AActor* DamageCauser) override;
+	void IncreaseStage();
 };

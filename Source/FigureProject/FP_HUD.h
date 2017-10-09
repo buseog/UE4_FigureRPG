@@ -25,6 +25,9 @@ private:
 	float CanvasSizeX;
 	AFP_Item* Item;
 	UFont* HudFont;
+	int KillCount;
+	int Stage;
+	int PreKillCount;
 
 public:
 	virtual void DrawHUD() override;
@@ -33,4 +36,8 @@ public:
 	void PickupItem();
 	void DrawWidgets();
 	void Clicked();
+	void IncreaseKillCount();
+	void DrawKillCount();
+	void DrawStage();
+	int GetStage();
 };

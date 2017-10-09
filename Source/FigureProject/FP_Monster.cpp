@@ -3,6 +3,7 @@
 #include "FP_Monster.h"
 #include "FP_Weapon.h"
 #include "Engine.h"
+#include "FP_HUD.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -27,6 +28,9 @@ AFP_Monster::AFP_Monster()
 	SetActorEnableCollision(true);
 	SphereComponent->bGenerateOverlapEvents = true;
 	SphereComponent->SetNotifyRigidBodyCollision(true);
+
+	HP = 2.f;
+	Damage = 1.f;
 }
 
 // Called when the game starts or when spawned
@@ -34,7 +38,7 @@ void AFP_Monster::BeginPlay()
 {
 	Super::BeginPlay();
 
-
+	IncreaseStage();
 	
 }
 
@@ -58,5 +62,36 @@ void AFP_Monster::Tick(float DeltaTime)
 
 	FVector NewLocation = CurrentLocation + Direction * DeltaTime * Speed;
 	SetActorLocation(NewLocation);
+}
 
+void AFP_Monster::BeginDestroy()
+{
+	Super::BeginDestroy();
+
+
+}
+
+float AFP_Monster::TakeDamage(float Damage, struct FDamageEvent const &DamageEvent, class AController* EventIntigator, class AActor* DamageCauser)
+{
+	const float ActualDamage = Super::TakeDamage(Damage, DamageEvent, EventIntigator, DamageCauser);
+
+	if (ActualDamage > 0.f)
+	{
+		HP -= ActualDamage;
+
+		if (HP <= 0.f)
+			bDestroy = true;
+	}
+
+	return ActualDamage;
+}
+
+void AFP_Monster::IncreaseStage()
+{
+	int Stage = Cast<AFP_HUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->GetStage();
+
+	HP = Stage + 1;
+	Damage = Stage;
+
+	UE_LOG(LogClass, Log, TEXT("HP : %f    Damage : %f"), HP, Damage);
 }

@@ -31,7 +31,7 @@ public:
 	int Quantity;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-	UStaticMeshComponent* Mesh;
+	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	UTexture2D* Icon;
