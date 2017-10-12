@@ -11,10 +11,18 @@ AFP_Item::AFP_Item()
 
 	Name = "Item";
 	Quantity = 1;
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Speed = 10.f;
+
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	StaticMesh->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> ItemMesh(TEXT("StaticMesh'/Game/Weapon_Mesh.Weapon_Mesh'"));
+	StaticMesh->SetStaticMesh(ItemMesh.Object);
+
 	const ConstructorHelpers::FObjectFinder<UTexture2D> IconName(TEXT("/Game/item.item"));
 	Icon = IconName.Object;
-	RootComponent = Cast<USceneComponent>(Mesh);
 }
 
 // Called when the game starts or when spawned
@@ -29,5 +37,15 @@ void AFP_Item::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	MoveToPlayer(DeltaTime);
 }
 
+void AFP_Item::MoveToPlayer(float DeltaTime)
+{
+	FVector PlayerLocation = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+	FVector Dir = PlayerLocation - this->GetActorLocation();
+	
+	Dir.Normalize();
+
+	this->SetActorLocation(this->GetActorLocation() + Dir * DeltaTime * Speed);
+}

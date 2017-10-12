@@ -37,6 +37,7 @@ public:
 	float AngleZ = 0.f;
 	float TimeAcc = 0.f;
 	FVector FirePoint = FVector(0.f,0.f,0.f);
+	float Damage = 1.f;
 
 	UPROPERTY()
 	TArray<AFP_Monster*> TargetMonsters;

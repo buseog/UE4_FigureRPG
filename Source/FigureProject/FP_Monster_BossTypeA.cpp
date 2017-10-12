@@ -12,6 +12,8 @@ void AFP_Monster_BossTypeA::BeginPlay()
 
 
 	Distance = GetActorLocation().Size();
+
+	UE_LOG(LogClass, Log, TEXT("%f, %f"), this->GetActorLocation().X, this->GetActorLocation().Y);
 }
 
 void AFP_Monster_BossTypeA::Tick(float DeltaTime)
@@ -21,7 +23,7 @@ void AFP_Monster_BossTypeA::Tick(float DeltaTime)
 	if (isDestroy == true)
 	{
 		
-		isDestroy = false;
+		//isDestroy = false;
 		Destroy();
 		return;
 	}
@@ -36,5 +38,5 @@ void AFP_Monster_BossTypeA::Tick(float DeltaTime)
 	SetActorLocation(NewLocation);
 		
 
-	GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, TEXT("Test"));
+	//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, TEXT("Test"));
 }
