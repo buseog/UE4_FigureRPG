@@ -5,6 +5,7 @@
 #include "Core.h"
 #include "Engine.h"
 #include "GameFramework/Actor.h"
+#include "FP_Item.h"
 #include "FP_Monster.generated.h"
 
 UCLASS()
@@ -22,12 +23,16 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	
+	virtual void Tick(float DeltaTime) override;	
 	void SetisDestroy(bool _isDestroy) { isDestroy = _isDestroy; }
+
+private:
+	float HP;
+	float Damage;
+	//float Speed = 10.f;
+	float DropRate;
 	
-	
-	
+public:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh;
 	
@@ -36,5 +41,11 @@ public:
 
 	float Speed = 10.f;
 	bool isDestroy = false;
+	AFP_Item* Item;
 
+public:
+	virtual float TakeDamage(float Damage, struct FDamageEvent const &DamageEvent, class AController* EventIntigator, class AActor* DamageCauser) override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	void IncreaseStage();
+	void DropItem();
 };

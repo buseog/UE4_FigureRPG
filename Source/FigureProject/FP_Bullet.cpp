@@ -76,6 +76,7 @@ void AFP_Bullet::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(TargetMonster);
 		TargetMonster->SetisDestroy(true);
 		isAlive = false;
+		//TargetMonster->Destroy();
 	}
 		
 

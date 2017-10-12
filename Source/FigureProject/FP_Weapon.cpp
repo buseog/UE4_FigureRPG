@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "FP_Bullet.h"
 #include "FP_Player.h"
+#include "FP_HUD.h"
 
 struct CompareDist
 {
@@ -120,4 +121,17 @@ void AFP_Weapon::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 {
 	TargetMonsters.Remove(_monster);
+	
+	//APlayerController* PController = GetWorld()->GetFirstPlayerController();
+	//TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
+	//FDamageEvent DamageEvent(ValidDamageTypeClass);
+
+	//_monster->TakeDamage(Damage, DamageEvent, PController, this);
+
+	//if (_monster->isDestroy)
+	//{
+	//	Cast<AFP_HUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->IncreaseKillCount();
+	//	TargetMonsters.Remove(_monster);
+	//	_monster->Destroy();
+	//}
 }
