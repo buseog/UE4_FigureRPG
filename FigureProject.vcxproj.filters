@@ -80,6 +80,12 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_Monster_BossTypeB.h">
       <Filter>Source\FigureProject\04. Monster\BossB</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ProximityWeapon.h">
+      <Filter>Source\FigureProject\02. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_StageWidget.h">
+      <Filter>Source\FigureProject\98. UI\02. Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">
@@ -130,6 +136,12 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_Monster_BossTypeB.cpp">
       <Filter>Source\FigureProject\04. Monster\BossB</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ProximityWeapon.cpp">
+      <Filter>Source\FigureProject\02. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_StageWidget.cpp">
+      <Filter>Source\FigureProject\98. UI\02. Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -176,6 +188,9 @@
     </Filter>
     <Filter Include="Source\FigureProject\04. Monster\BossB">
       <UniqueIdentifier>{7b246fab-19c3-4918-a33c-e4a9c0f3438f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\02. Stage">
+      <UniqueIdentifier>{15e71e70-bc11-4090-8363-7b97a1bb070d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
