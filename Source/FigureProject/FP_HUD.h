@@ -40,4 +40,5 @@ public:
 	void DrawKillCount();
 	void DrawStage();
 	int GetStage();
+	void DropItem(FVector DropLocation);
 };

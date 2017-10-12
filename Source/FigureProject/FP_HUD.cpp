@@ -109,3 +109,9 @@ int AFP_HUD::GetStage()
 {
 	return Stage;
 }
+
+void AFP_HUD::DropItem(FVector DropLocation)
+{
+	Item = GetWorld()->SpawnActor<AFP_Item>();
+	Item->SetActorLocation(DropLocation);
+}

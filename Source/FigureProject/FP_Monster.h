@@ -5,6 +5,7 @@
 #include "Core.h"
 #include "Engine.h"
 #include "GameFramework/Actor.h"
+#include "FP_Item.h"
 #include "FP_Monster.generated.h"
 
 UCLASS()
@@ -28,6 +29,7 @@ private:
 	float HP;
 	float Damage;
 	float Speed = 10.f;
+	float DropRate;
 	
 public:
 	UPROPERTY(EditAnywhere)
@@ -37,9 +39,12 @@ public:
 	USphereComponent* SphereComponent;
 
 	bool bDestroy = false;
+	AFP_Item* Item;
 
 public:
 	virtual void BeginDestroy() override;
 	virtual float TakeDamage(float Damage, struct FDamageEvent const &DamageEvent, class AController* EventIntigator, class AActor* DamageCauser) override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	void IncreaseStage();
+	void DropItem();
 };

@@ -71,6 +71,9 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_Item.h">
       <Filter>Source\FigureProject\05. Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ItemDropRate.h">
+      <Filter>Source\FigureProject\05. Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">

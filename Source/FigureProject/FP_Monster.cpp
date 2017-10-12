@@ -4,6 +4,7 @@
 #include "FP_Weapon.h"
 #include "Engine.h"
 #include "FP_HUD.h"
+#include "FP_ItemDropRate.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -38,8 +39,8 @@ void AFP_Monster::BeginPlay()
 {
 	Super::BeginPlay();
 
+	DropRate = FMath::FRandRange(0.f, 100.f);
 	IncreaseStage();
-	
 }
 
 // Called every frame
@@ -68,7 +69,13 @@ void AFP_Monster::BeginDestroy()
 {
 	Super::BeginDestroy();
 
+}
 
+void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	DropItem();
 }
 
 float AFP_Monster::TakeDamage(float Damage, struct FDamageEvent const &DamageEvent, class AController* EventIntigator, class AActor* DamageCauser)
@@ -92,6 +99,14 @@ void AFP_Monster::IncreaseStage()
 
 	HP = Stage + 1;
 	Damage = Stage;
+}
 
-	UE_LOG(LogClass, Log, TEXT("HP : %f    Damage : %f"), HP, Damage);
+void AFP_Monster::DropItem()
+{
+	float ItemDropRate = 100.f * ITEMNAME_DropRate;
+	
+	if (DropRate <= ItemDropRate && bDestroy)
+		Cast<AFP_HUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->DropItem(this->GetActorLocation());
+
+	bDestroy = false;
 }
