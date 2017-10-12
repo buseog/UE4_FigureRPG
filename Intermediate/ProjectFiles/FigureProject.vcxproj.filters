@@ -115,6 +115,9 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_Item.cpp">
       <Filter>Source\FigureProject\05. Item</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ItemDropRate.cpp">
+      <Filter>Source\FigureProject\05. Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
