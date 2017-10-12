@@ -3,6 +3,7 @@
 #include "FP_PlayerController.h"
 #include "FP_StatusWidget.h"
 #include "FP_Player.h"
+#include "FP_StageWidget.h"
 
 
 
@@ -19,6 +20,13 @@ AFP_PlayerController::AFP_PlayerController()
 
 void AFP_PlayerController::BeginPlay()
 {
+	FName Path = TEXT("WidgetBlueprint'/Game/FP_Stage_BP.FP_Stage_BP_C'");
+	UClass* Widget2 = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_StageWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
+
+	StageWidget->AddToViewport();
+	StageWidget->SetVisibility(ESlateVisibility::Visible);
+
 	if (nullptr != StatusUI)
 	{
 		if (nullptr == StatusWidget)

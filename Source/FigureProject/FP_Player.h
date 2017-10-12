@@ -8,7 +8,7 @@
 #include "FP_Player.generated.h"
 
 USTRUCT(BlueprintType)
-struct FSTATUS
+struct FPlayerStatus
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -34,6 +34,37 @@ struct FSTATUS
 	float Splash;
 };
 
+USTRUCT(BlueprintType)
+struct FPlayerLevel
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	int Level;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	float Exp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	float FullExp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	int Point;
+
+	void CheckLevelUp()
+	{
+		if (Exp >= FullExp)
+		{
+			++Level;
+			Point += 5;
+			Exp -= FullExp;
+			FullExp = float(100 * Level);
+		}
+	}
+
+	void DecreasePoint()
+	{
+		--Point;
+	}
+};
+
 class AFP_Weapon;
 
 UCLASS()
@@ -49,13 +80,18 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual float TakeDamage(float _Damage, struct FDamageEvent const& _DamageEvent, class AController* _EventInstigator, class AActor* _DamageCauser) override;
+
+private:
+	
+	float	HitTime;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	struct FSTATUS Status;
+	struct FPlayerStatus Status;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float TEST;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	struct FPlayerLevel	Level;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
 	class UStaticMeshComponent* Mesh;
@@ -75,16 +111,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
 	TSubclassOf<AFP_Weapon> Weapon;
 
+private:
+	void Regeneration(float DeltaTime);
+
 public:
 	void StatusLevelUp(int _Type);
 
-
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
-	void ToggleStatus(AActor* p, FKey Button);
+	void ToggleStatus(AActor* AActor, FKey Button);
 
 	UFUNCTION(BlueprintCallable, Category = Status)
-	struct FSTATUS GetStatus() { return Status; }
+	struct FPlayerStatus GetStatus() { return Status; }
+
+	UFUNCTION(BlueprintCallable, Category = Status)
+	struct FPlayerLevel	GetLevel() { return Level; }
 
 	UFUNCTION()
 	void OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult);
