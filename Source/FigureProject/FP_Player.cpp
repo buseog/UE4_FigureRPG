@@ -37,6 +37,10 @@ AFP_Player::AFP_Player()
 	Level.Exp = 0.f;
 	Level.FullExp = 100.f;
 	Level.Point = 5;
+
+	/*FName Path = TEXT("Blueprint'/Game/FP_ProximityWeapon_BP.FP_ProximityWeapon_BP_C'");
+	UClass* WeaponBP = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	Weapon = WeaponBP;*/
 }
 
 
@@ -55,7 +59,6 @@ void AFP_Player::Tick(float DeltaTime)
 	Regeneration(DeltaTime);
 	Level.CheckLevelUp();
 	Level.Exp += 1.f;
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%f"), Status.Hp), true, FVector2D(5.f, 5.f));
 }
 
 void AFP_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -77,7 +80,9 @@ void AFP_Player::Regeneration(float DeltaTime)
 	if (HitTime >= 0.f)
 		return;
 
-	Status.Hp += Status.HpRegen;
+	Status.Hp += Status.HpRegen * DeltaTime;
+	if (Status.Hp >= Status.MaxHp)
+		Status.Hp = Status.MaxHp;
 }
 
 
@@ -91,7 +96,7 @@ void AFP_Player::StatusLevelUp(int _Type)
 	switch (_Type)
 	{
 	case 0:
-		Status.Hp += 1.f;
+		Status.MaxHp += 1.f;
 		break;
 
 	case 1:
