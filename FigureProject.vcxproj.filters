@@ -50,9 +50,6 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_Monster.h">
       <Filter>Source\FigureProject\04. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_MonsterMgr.h">
-      <Filter>Source\FigureProject\04. Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_Player.h">
       <Filter>Source\FigureProject\01. Player</Filter>
     </ClInclude>
@@ -70,6 +67,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_Item.h">
       <Filter>Source\FigureProject\05. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_MonsterMgr.h">
+      <Filter>Source\FigureProject\04. Monster\Mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Monster_Normal.h">
+      <Filter>Source\FigureProject\04. Monster\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Monster_BossTypeA.h">
+      <Filter>Source\FigureProject\04. Monster\BossA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Monster_BossTypeB.h">
+      <Filter>Source\FigureProject\04. Monster\BossB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,9 +100,6 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_Monster.cpp">
       <Filter>Source\FigureProject\04. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_MonsterMgr.cpp">
-      <Filter>Source\FigureProject\04. Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_Player.cpp">
       <Filter>Source\FigureProject\01. Player</Filter>
     </ClCompile>
@@ -111,6 +117,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_Item.cpp">
       <Filter>Source\FigureProject\05. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_MonsterMgr.cpp">
+      <Filter>Source\FigureProject\04. Monster\Mgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Monster_Normal.cpp">
+      <Filter>Source\FigureProject\04. Monster\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Monster_BossTypeA.cpp">
+      <Filter>Source\FigureProject\04. Monster\BossA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Monster_BossTypeB.cpp">
+      <Filter>Source\FigureProject\04. Monster\BossB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +164,18 @@
     </Filter>
     <Filter Include="Source\FigureProject\98. UI\01. Inventory">
       <UniqueIdentifier>{dec3ae89-ccae-474e-9f57-3429acc9cf2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\04. Monster\Mgr">
+      <UniqueIdentifier>{1c3c28e9-1db7-4409-9d3d-48aba12dcc06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\04. Monster\Normal">
+      <UniqueIdentifier>{6233b0bf-6d91-452e-81a9-21119d9dea2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\04. Monster\BossA">
+      <UniqueIdentifier>{86a44151-6700-412a-a984-37804301a096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\04. Monster\BossB">
+      <UniqueIdentifier>{7b246fab-19c3-4918-a33c-e4a9c0f3438f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

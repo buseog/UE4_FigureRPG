@@ -44,6 +44,12 @@ void AFP_Bullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (isAlive == false)
+	{
+		Destroy();
+		return;
+	}
+
 	TimeAcc += DeltaTime;
 	if (TimeAcc > 3.f)
 		Destroy();
@@ -58,13 +64,18 @@ void AFP_Bullet::Tick(float DeltaTime)
 
 void AFP_Bullet::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	if (isAlive == false)
+		return;
+
+
 	AFP_Monster* TargetMonster = Cast<AFP_Monster>(OtherActor);
 	if (TargetMonster != NULL)
 	{
 		TArray<AActor*> FoundActor;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
 		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(TargetMonster);
-		TargetMonster->Destroy();
+		TargetMonster->SetisDestroy(true);
+		isAlive = false;
 	}
 		
 

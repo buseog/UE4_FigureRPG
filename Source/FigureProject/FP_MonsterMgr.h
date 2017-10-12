@@ -26,9 +26,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 
-	UPROPERTY()
-	TArray<AFP_Monster*> MonsterArray;
-
 	float TimeAcc = 0.f;
 	float MonsterSpawnTime = 1.f;
 	
