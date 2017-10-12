@@ -43,20 +43,6 @@ void AFP_Monster::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector CurrentLocation = GetActorLocation();
-	if (CurrentLocation.Size() < 1)
-	{
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(this);
-		Destroy();
-		return;
-	}
 
-	FVector Direction = CurrentLocation * -1.f;
-	Direction.Normalize();
-
-	FVector NewLocation = CurrentLocation + Direction * DeltaTime * Speed;
-	SetActorLocation(NewLocation);
 
 }

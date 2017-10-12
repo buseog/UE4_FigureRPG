@@ -108,15 +108,15 @@ void AFP_Player::StatusLevelUp(int _Type)
 		break;
 
 	case 3:
-		Status.AttackRange += 1.f;
+		Status.AttackRange += 10.f;
 		break;
 
 	case 4:
-		Status.AttackSpeed += 1.f;
+		Status.AttackSpeed -= 0.01f;
 		break;
 
 	case 5:
-		Status.BulletSpeed += 1.f;
+		Status.BulletSpeed += 10.f;
 		break;
 
 	case 6:

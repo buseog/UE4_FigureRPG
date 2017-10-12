@@ -24,7 +24,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-
+	void SetisDestroy(bool _isDestroy) { isDestroy = _isDestroy; }
+	
 	
 	
 	UPROPERTY(EditAnywhere)
@@ -34,4 +35,6 @@ public:
 	USphereComponent* SphereComponent;
 
 	float Speed = 10.f;
+	bool isDestroy = false;
+
 };
