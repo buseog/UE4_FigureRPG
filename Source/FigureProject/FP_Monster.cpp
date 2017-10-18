@@ -5,6 +5,9 @@
 #include "Engine.h"
 #include "FP_HUD.h"
 #include "FP_ItemDropRate.h"
+#include "FP_Item_PowerUp.h"
+#include "FP_Item_AttackSpeedUp.h"
+#include "FP_Player.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -89,11 +92,42 @@ void AFP_Monster::IncreaseStage()
 }
 
 void AFP_Monster::DropItem()
-{
-	float ItemDropRate = 100.f * ITEMNAME_DropRate;
-	
-	if (DropRate <= ItemDropRate && isDestroy)
-		Cast<AFP_HUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->DropItem(this->GetActorLocation());
+{	
+	if(isDestroy && Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->bIsBuffed)
+		return;
+
+	TActorIterator<AFP_Item> ActorItr = TActorIterator<AFP_Item>(GetWorld());
+
+	for (; ActorItr; ++ActorItr)
+		return;
+
+	if (DropRate <= 100.f * StatUp_DropRate && isDestroy)
+	{
+		int Type = FMath::FRandRange(1.f, 3.f);
+
+		switch (Type)
+		{
+		case 1:
+			Item = GetWorld()->SpawnActor<AFP_Item_PowerUp>(this->GetActorLocation(), FRotator());
+
+			if (Item == NULL)
+				return;
+
+			break;
+
+		case 2:
+			Item = GetWorld()->SpawnActor<AFP_Item_AttackSpeedUp>(this->GetActorLocation(), FRotator());
+
+			if (Item == NULL)
+				return;
+
+			break;
+
+			/*case 3:
+			Item = GetWorld()->SpawnActor<AFP_Item_PowerUp>();
+			Item->SetActorLocation(DropLocation);*/
+		}
+	}
 
 	isDestroy = false;
 }

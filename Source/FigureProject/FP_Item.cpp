@@ -18,11 +18,25 @@ AFP_Item::AFP_Item()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> ItemMesh(TEXT("StaticMesh'/Game/Weapon_Mesh.Weapon_Mesh'"));
-	StaticMesh->SetStaticMesh(ItemMesh.Object);
-
-	const ConstructorHelpers::FObjectFinder<UTexture2D> IconName(TEXT("/Game/item.item"));
+	static ConstructorHelpers::FObjectFinder<UTexture2D> IconName(TEXT("Texture2D'/Game/item.item'"));
 	Icon = IconName.Object;
+
+	//ChangeMesh(FString("StaticMesh'/Game/FP_Item_MonsterRegenUp.FP_Item_MonsterRegenUp'"), StaticMesh);
+
+	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
+	PointLight->Intensity = 500.f;
+	//PointLight->LightColor = FColor(0, 0, 255);
+	PointLight->AttenuationRadius = 10.f;
+	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z - 10.f), FRotator(), false);
+	PointLight->SetupAttachment(RootComponent);
+
+	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
+	CollisionSphere->SetSphereRadius(4.f);
+	/*SetActorEnableCollision(true);
+	CollisionSphere->bGenerateOverlapEvents = true;
+	CollisionSphere->SetNotifyRigidBodyCollision(true);*/
+	CollisionSphere->SetupAttachment(RootComponent);
+	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AFP_Item::OnProxOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -48,4 +62,23 @@ void AFP_Item::MoveToPlayer(float DeltaTime)
 	Dir.Normalize();
 
 	this->SetActorLocation(this->GetActorLocation() + Dir * DeltaTime * Speed);
+}
+
+void AFP_Item::ChangeLight(FColor Color, float Intensity, float Radious)
+{
+	PointLight->LightColor = Color;
+	PointLight->Intensity = Intensity;
+	PointLight->AttenuationRadius = Radious;
+}
+
+void AFP_Item::ChangeMesh(FString Ref, UStaticMeshComponent* _StaticMesh)
+{
+	ConstructorHelpers::FObjectFinder<UStaticMesh> ItemMesh(*Ref);
+	_StaticMesh->SetStaticMesh(ItemMesh.Object);
+
+}
+
+void AFP_Item::OnProxOverlapBegin(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+
 }

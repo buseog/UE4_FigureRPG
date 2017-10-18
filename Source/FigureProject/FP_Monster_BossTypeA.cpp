@@ -12,8 +12,6 @@ void AFP_Monster_BossTypeA::BeginPlay()
 
 
 	Distance = GetActorLocation().Size();
-
-	UE_LOG(LogClass, Log, TEXT("%f, %f"), this->GetActorLocation().X, this->GetActorLocation().Y);
 }
 
 void AFP_Monster_BossTypeA::Tick(float DeltaTime)
