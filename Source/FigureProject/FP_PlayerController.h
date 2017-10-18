@@ -11,6 +11,7 @@
  */
 
 enum eSTAT { HP, HPREGEN, ATTACK, ATTACKRANGE, ATTACKSPEED };
+enum eWIDGET { GAMESTART,STATUS,STAGE };
 
 class UFP_StatusWidget;
 
@@ -29,13 +30,21 @@ private:
 	bool	bShowStatus;
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = StatusUI)
+	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = StatusUI)
 	TSubclassOf<UFP_StatusWidget> StatusUI;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = StatusUI)
-	UFP_StatusWidget* StatusWidget;
+	UFP_StatusWidget* StatusWidget;*/
+
+	UPROPERTY()
+	TMap<int32, UUserWidget*> WidgetMap;
+
+	inline UUserWidget* GetWidgetMap(int32 _key) { return WidgetMap[_key]; }
 
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
 	void ToggleStatus();
+
+	UFUNCTION()
+	void SetVisibility(int32 _WidgetNum, ESlateVisibility _visibility);
 };

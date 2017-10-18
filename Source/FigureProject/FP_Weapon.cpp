@@ -31,8 +31,8 @@ AFP_Weapon::AFP_Weapon()
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(RootComponent);
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Weapon_Mesh.Weapon_Mesh'"));
+	
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Weapon_Mesh.Weapon_Mesh'"));
 	//StaticMesh->SetStaticMesh(MonsterMesh.Object);
 	Mesh = MonsterMesh.Object;
 

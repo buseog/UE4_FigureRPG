@@ -8,25 +8,23 @@ void AFP_Monster_BossTypeA::BeginPlay()
 	Super::BeginPlay();
 
 	FVector NewScale = FVector(2.f, 2.f, 2.f);
-	SetActorScale3D(NewScale);
+	//SetActorScale3D(NewScale);
+
+	StaticMesh->SetWorldScale3D(NewScale);
 
 
 	Distance = GetActorLocation().Size();
 
-	UE_LOG(LogClass, Log, TEXT("%f, %f"), this->GetActorLocation().X, this->GetActorLocation().Y);
+	MaxHP = 4.f;
+	HP = MaxHP;
+
 }
 
 void AFP_Monster_BossTypeA::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (isDestroy == true)
-	{
-		
-		//isDestroy = false;
-		Destroy();
-		return;
-	}
+	
 
 	TimeAcc += DeltaTime;
 	float fNewDist = Distance + cosf(TimeAcc);

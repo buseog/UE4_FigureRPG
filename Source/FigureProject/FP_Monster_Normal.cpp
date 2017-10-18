@@ -6,6 +6,9 @@
 void AFP_Monster_Normal::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MaxHP = 2.f;
+	HP = MaxHP;
 }
 
 void AFP_Monster_Normal::Tick(float DeltaTime)
@@ -13,14 +16,14 @@ void AFP_Monster_Normal::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	FVector CurrentLocation = GetActorLocation();
-	if (CurrentLocation.Size() < 1)
+	/*if (CurrentLocation.Size() < 1)
 	{
 		TArray<AActor*> FoundActor;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
 		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(this);
 		Destroy();
 		return;
-	}
+	}*/
 
 	FVector Direction = CurrentLocation * -1.f;
 	Direction.Normalize();

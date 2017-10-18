@@ -18,7 +18,7 @@ AFP_Item::AFP_Item()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> ItemMesh(TEXT("StaticMesh'/Game/Weapon_Mesh.Weapon_Mesh'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> ItemMesh(TEXT("StaticMesh'/Game/Mesh/Weapon_Mesh.Weapon_Mesh'"));
 	StaticMesh->SetStaticMesh(ItemMesh.Object);
 
 	const ConstructorHelpers::FObjectFinder<UTexture2D> IconName(TEXT("/Game/item.item"));

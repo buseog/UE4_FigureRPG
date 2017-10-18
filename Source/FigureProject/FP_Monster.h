@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "GameFramework/Actor.h"
 #include "FP_Item.h"
+#include "HPBar_Widget.h"
 #include "FP_Monster.generated.h"
 
 UCLASS()
@@ -25,12 +26,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;	
 	void SetisDestroy(bool _isDestroy) { isDestroy = _isDestroy; }
+	bool GetisDestory(void) { return isDestroy;  }
 
-private:
+public:
 	float HP;
+	float MaxHP;
 	float Damage;
-	//float Speed = 10.f;
 	float DropRate;
+	float Speed = 10.f;
+	float Exp = 5.f;
+	float HPShowTime = 0.f;
 	
 public:
 	UPROPERTY(EditAnywhere)
@@ -39,13 +44,17 @@ public:
 	UPROPERTY(EditAnywhere)
 	USphereComponent* SphereComponent;
 
-	float Speed = 10.f;
+	UPROPERTY(EditAnywhere)
+	class UWidgetComponent* WidgetComponent;
+
+	UPROPERTY(EditAnywhere)
+	UHPBar_Widget* HPBar_Widget;
+	
 	bool isDestroy = false;
 	AFP_Item* Item;
 
 public:
-	virtual float TakeDamage(float Damage, struct FDamageEvent const &DamageEvent, class AController* EventIntigator, class AActor* DamageCauser) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-	void IncreaseStage();
 	void DropItem();
+	void MyTakeDamage(float _damage);
 };

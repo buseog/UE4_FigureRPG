@@ -36,8 +36,8 @@ void AFP_HUD::DrawHUD()
 	CanvasSizeX = Canvas->SizeX;
 
 	DrawWidgets();
-	DrawKillCount();
-	DrawStage();
+	//DrawKillCount();
+	//DrawStage();
 }
 
 void AFP_HUD::OpenInventory()

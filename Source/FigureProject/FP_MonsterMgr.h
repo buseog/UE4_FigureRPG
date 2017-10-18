@@ -28,6 +28,8 @@ public:
 
 	float TimeAcc = 0.f;
 	float MonsterSpawnTime = 1.f;
+	int32 Stage = 1;
+	
 	
 	
 };

@@ -16,7 +16,7 @@ AFP_Bullet::AFP_Bullet()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Bullet_Mesh.Bullet_Mesh'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Bullet_Mesh.Bullet_Mesh'"));
 	StaticMesh->SetStaticMesh(MonsterMesh.Object);
 
 
@@ -73,10 +73,14 @@ void AFP_Bullet::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 	{
 		TArray<AActor*> FoundActor;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(TargetMonster);
-		TargetMonster->SetisDestroy(true);
+		
 		isAlive = false;
-		//TargetMonster->Destroy();
+
+		TargetMonster->MyTakeDamage(Damage);
+
+		if(TargetMonster->GetisDestory() == true)
+			Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(TargetMonster);
+		
 	}
 		
 

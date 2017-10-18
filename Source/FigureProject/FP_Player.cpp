@@ -57,8 +57,9 @@ void AFP_Player::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	Regeneration(DeltaTime);
+	
 	Level.CheckLevelUp();
-	Level.Exp += 1.f;
+	//Level.Exp += 1.f;
 }
 
 void AFP_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

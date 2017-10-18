@@ -5,6 +5,9 @@
 #include "Engine.h"
 #include "FP_HUD.h"
 #include "FP_ItemDropRate.h"
+#include "FP_PlayerController.h"
+#include "FP_Player.h"
+#include "WidgetComponent.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -18,7 +21,7 @@ AFP_Monster::AFP_Monster()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Sphere_Monster.Sphere_Monster'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Sphere_Monster.Sphere_Monster'"));
 	StaticMesh->SetStaticMesh(MonsterMesh.Object);
 
 
@@ -30,8 +33,22 @@ AFP_Monster::AFP_Monster()
 	SphereComponent->bGenerateOverlapEvents = true;
 	SphereComponent->SetNotifyRigidBodyCollision(true);
 
-	HP = 2.f;
-	Damage = 1.f;
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
+	WidgetComponent->SetupAttachment(SphereComponent);
+	
+	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/HealthBar.HealthBar_C'");
+	UClass* Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+
+	WidgetComponent->SetWidgetClass(Widget);
+	WidgetComponent->SetDrawSize(FVector2D(10.f, 1.f));
+	WidgetComponent->SetBlendMode(EWidgetBlendMode::Opaque);
+	WidgetComponent->SetRelativeRotation(FRotator(-90.f, 0.f, 90.f));
+	WidgetComponent->SetRelativeLocation(FVector(0.f, 10.f, 0.f));
+	//WidgetComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 1.f));
+	//WidgetComponent->SetupAttachment(RootComponent);
+	WidgetComponent->SetVisibility(false);
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -40,14 +57,31 @@ void AFP_Monster::BeginPlay()
 	Super::BeginPlay();
 
 	DropRate = FMath::FRandRange(0.f, 100.f);
-	IncreaseStage();
+	HPBar_Widget = Cast<UHPBar_Widget>(WidgetComponent->GetUserWidgetObject());
+
 }
 
 // Called every frame
 void AFP_Monster::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	if (isDestroy == true)
+	{
 
+		//isDestroy = false;
+		Destroy();
+		return;
+	}
+	
+	HPShowTime -= DeltaTime;
+	if (HPShowTime > 0)
+		WidgetComponent->SetVisibility(true);
+	else
+		WidgetComponent->SetVisibility(false);
+
+
+	
 }
 
 void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -63,30 +97,14 @@ void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	AFP_HUD* Hud = Cast<AFP_HUD>(PlayerController->GetHUD());
 	if (Hud != nullptr)
 		Hud->IncreaseKillCount();
+
+	AFP_PlayerController* CustomPlayerController = Cast<AFP_PlayerController>(PlayerController);
+
+	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	Player->Level.Exp += Exp;
+	
 }
 
-float AFP_Monster::TakeDamage(float Damage, struct FDamageEvent const &DamageEvent, class AController* EventIntigator, class AActor* DamageCauser)
-{
-	const float ActualDamage = Super::TakeDamage(Damage, DamageEvent, EventIntigator, DamageCauser);
-
-	if (ActualDamage > 0.f)
-	{
-		HP -= ActualDamage;
-
-		if (HP <= 0.f)
-			isDestroy = true;
-	}
-
-	return ActualDamage;
-}
-
-void AFP_Monster::IncreaseStage()
-{
-	int Stage = Cast<AFP_HUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->GetStage();
-
-	HP = Stage + 1;
-	Damage = Stage;
-}
 
 void AFP_Monster::DropItem()
 {
@@ -96,4 +114,18 @@ void AFP_Monster::DropItem()
 		Cast<AFP_HUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->DropItem(this->GetActorLocation());
 
 	isDestroy = false;
+}
+
+void AFP_Monster::MyTakeDamage(float _damage)
+{
+	HP -= _damage;
+	HPBar_Widget->Progress = (HP) / MaxHP;
+	HPShowTime = 1.f;
+
+	if (HP <= 0)
+		isDestroy = true;
+
+	/*float Test = HP / MaxHP;
+	UE_LOG(LogClass, Log, TEXT("%f"), Test);
+	UE_LOG(LogClass, Log, TEXT("%f"), HPBar_Widget->Progress);*/
 }

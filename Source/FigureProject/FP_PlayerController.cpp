@@ -4,7 +4,7 @@
 #include "FP_StatusWidget.h"
 #include "FP_Player.h"
 #include "FP_StageWidget.h"
-
+#include "FP_GameStart.h"
 
 
 AFP_PlayerController::AFP_PlayerController()
@@ -13,48 +13,59 @@ AFP_PlayerController::AFP_PlayerController()
 	bEnableClickEvents = true;
 	bShowStatus = false;
 
-	FName Path = TEXT("WidgetBlueprint'/Game/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
-	UClass* Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	StatusUI = Widget;
+	
+
 }
 
 void AFP_PlayerController::BeginPlay()
 {
-	FName Path = TEXT("WidgetBlueprint'/Game/FP_Stage_BP.FP_Stage_BP_C'");
+	FName Path = TEXT("WidgetBlueprint'/Game/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
+	UClass* Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_StatusWidget* StatusWidget = CreateWidget<UFP_StatusWidget>(this, Widget);
+	WidgetMap.Add(STATUS, StatusWidget);
+
+	FName GameStartWidget_Path = TEXT("WidgetBlueprint'/Game/FP_GameStart_BP.FP_GameStart_BP_C'");
+	UClass* GameStart = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *GameStartWidget_Path.ToString()));
+	UFP_GameStart* GameStartWidget = CreateWidget<UFP_GameStart>(this, GameStart);
+	WidgetMap.Add(GAMESTART, GameStartWidget);
+
+	Path = TEXT("WidgetBlueprint'/Game/FP_Stage_BP.FP_Stage_BP_C'");
 	UClass* Widget2 = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UFP_StageWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
+	UUserWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
+	WidgetMap.Add(STAGE, StageWidget);
 
-	StageWidget->AddToViewport();
-	StageWidget->SetVisibility(ESlateVisibility::Visible);
+	WidgetMap[GAMESTART]->AddToViewport();
+	WidgetMap[STATUS]->AddToViewport();
+	WidgetMap[STAGE]->AddToViewport();
 
-	if (nullptr != StatusUI)
-	{
-		if (nullptr == StatusWidget)
-		{
-			StatusWidget = CreateWidget<UFP_StatusWidget>(this, StatusUI);
-			
-			if (nullptr == StatusWidget)
-				return;
+	
+	WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);
+	WidgetMap[STATUS]->SetVisibility(ESlateVisibility::Hidden);
+	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
 
-			StatusWidget->AddToViewport();
-			StatusWidget->SetVisibility(ESlateVisibility::Visible);
-		}
-	}
+
+
+
 }
 
 void AFP_PlayerController::ToggleStatus()
 {
-	if (nullptr == StatusWidget)
+	if (nullptr == WidgetMap[STATUS])
 		return;
 
 	if (bShowStatus)
 	{
 		bShowStatus = false;
-		StatusWidget->SetVisibility(ESlateVisibility::Hidden);
+		WidgetMap[STATUS]->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else
 	{
 		bShowStatus = true;
-		StatusWidget->SetVisibility(ESlateVisibility::Visible);
+		WidgetMap[STATUS]->SetVisibility(ESlateVisibility::Visible);
 	}
+}
+
+void AFP_PlayerController::SetVisibility(int32 _WidgetNum, ESlateVisibility _visibility)
+{
+	WidgetMap[_WidgetNum]->SetVisibility(_visibility);
 }

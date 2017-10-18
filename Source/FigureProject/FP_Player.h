@@ -55,7 +55,7 @@ struct FPlayerLevel
 			++Level;
 			Point += 5;
 			Exp -= FullExp;
-			FullExp = float(100 * Level);
+			FullExp = FMath::Pow(2,Level) * 50.f; // ½Â·Ä¼öÁ¤
 		}
 	}
 
