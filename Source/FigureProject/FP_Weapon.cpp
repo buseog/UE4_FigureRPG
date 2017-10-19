@@ -29,12 +29,12 @@ AFP_Weapon::AFP_Weapon()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	StaticMesh->SetupAttachment(RootComponent);
-	
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Weapon_Mesh.Weapon_Mesh'"));
-	//StaticMesh->SetStaticMesh(MonsterMesh.Object);
-	Mesh = MonsterMesh.Object;
+	//StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	//StaticMesh->SetupAttachment(RootComponent);
+	//
+	//static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Weapon_Mesh.Weapon_Mesh'"));
+	////StaticMesh->SetStaticMesh(MonsterMesh.Object);
+	//Mesh = MonsterMesh.Object;
 
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
@@ -53,7 +53,6 @@ void AFP_Weapon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	StaticMesh->SetStaticMesh(Mesh);
 }
 
 // Called every frame

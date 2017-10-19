@@ -13,11 +13,6 @@ AFP_Player::AFP_Player()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
-	/*Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(RootComponent);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Sphere_Monster.Sphere_Monster'"));
-	Mesh->SetStaticMesh(MonsterMesh.Object);*/
-
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraSpringArm"));
 	CameraSpringArm->SetupAttachment(RootComponent);
 	CameraSpringArm->TargetArmLength = 150.0f;
@@ -25,12 +20,18 @@ AFP_Player::AFP_Player()
 	CameraSpringArm->SetWorldLocation(FVector(0.f, 0.f, -10.f));
 	CameraSpringArm->SetWorldRotation(FRotator(90.f, -90.f, 0.f));
 	
-	this->SetActorHiddenInGame(true);
+	//this->SetActorHiddenInGame(true);
 	//CameraSpringArm->SetRelativeRotation(FRotator(90.f, 0.f, 0.f));
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(CameraSpringArm, USpringArmComponent::SocketName);
-
+	Camera->PostProcessSettings.AutoExposureMaxBrightness = 1.f;
+	Camera->PostProcessSettings.AutoExposureMinBrightness = 1.f;
+	Camera->PostProcessSettings.AutoExposureBias = 0.f;
+	Camera->PostProcessSettings.bOverride_AutoExposureBias = true;
+	Camera->PostProcessSettings.bOverride_AutoExposureMaxBrightness = true;
+	Camera->PostProcessSettings.bOverride_AutoExposureMinBrightness = true;
+	
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	CollisionSphere->SetSphereRadius(5.f);
 	CollisionSphere->SetupAttachment(RootComponent);
@@ -53,11 +54,11 @@ AFP_Player::AFP_Player()
 	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z - 10.f), FRotator(), false);
 	PointLight->SetupAttachment(RootComponent);
 
-	/*Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
+	Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
 	Particle->SetupAttachment(RootComponent);
-	
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Player/P_Player.P_Player'"));
-	Particle->SetTemplate(ParticleSystem.Object);*/
+	Particle->SetTemplate(ParticleSystem.Object);
+	
 }
 
 
@@ -65,7 +66,6 @@ AFP_Player::AFP_Player()
 void AFP_Player::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

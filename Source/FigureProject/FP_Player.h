@@ -123,8 +123,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	UPointLightComponent* PointLight;
 
-	/*UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
-	class UParticleSystemComponent* Particle;*/
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
+	class UParticleSystemComponent* Particle;
 
 private:
 	void Regeneration(float DeltaTime);

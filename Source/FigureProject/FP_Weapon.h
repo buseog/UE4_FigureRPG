@@ -30,8 +30,9 @@ public:
 
 	void DeleteTargetMonsterInArray(AFP_Monster* _monster);
 
+	
+	//UStaticMeshComponent* StaticMesh;
 	UPROPERTY()
-	UStaticMeshComponent* StaticMesh;
 	USphereComponent* SphereComponent;
 
 	float AngleZ = 0.f;
@@ -42,7 +43,7 @@ public:
 	UPROPERTY()
 	TArray<AFP_Monster*> TargetMonsters;
 
-	UStaticMesh* Mesh;
+	//UStaticMesh* Mesh;
 
 	
 };
