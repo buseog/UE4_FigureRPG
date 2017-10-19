@@ -7,6 +7,8 @@
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/CoreUObject/Public/UObject/ConstructorHelpers.h"
 #include "Engine.h"
+#include "FP_Item_PowerUp.h"
+#include "FP_Item_AttackSpeedUp.h"
 
 
 AFP_HUD::AFP_HUD()
@@ -108,10 +110,4 @@ void AFP_HUD::DrawStage()
 int AFP_HUD::GetStage()
 {
 	return Stage;
-}
-
-void AFP_HUD::DropItem(FVector DropLocation)
-{
-	Item = GetWorld()->SpawnActor<AFP_Item>();
-	Item->SetActorLocation(DropLocation);
 }

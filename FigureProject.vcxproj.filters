@@ -86,6 +86,30 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_StageWidget.h">
       <Filter>Source\FigureProject\98. UI\02. Stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComProjectile.h">
+      <Filter>Source\FigureProject\97. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_GameStart.h">
+      <Filter>Source\FigureProject\98. UI\03. GameStart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Item_AttackSpeedUp.h">
+      <Filter>Source\FigureProject\05. Item\01. SpdUp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Item_MonsterRegenUp.h">
+      <Filter>Source\FigureProject\05. Item\02. MonsterRegenUp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Item_PowerUp.h">
+      <Filter>Source\FigureProject\05. Item\00. PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Skill.h">
+      <Filter>Source\FigureProject\06. Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\HPBar_Widget.h">
+      <Filter>Source\FigureProject\98. UI\04. HP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ItemDropRate.h">
+      <Filter>Source\FigureProject\05. Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">
@@ -142,6 +166,30 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_StageWidget.cpp">
       <Filter>Source\FigureProject\98. UI\02. Stage</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComProjectile.cpp">
+      <Filter>Source\FigureProject\97. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_GameStart.cpp">
+      <Filter>Source\FigureProject\98. UI\03. GameStart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Item_AttackSpeedUp.cpp">
+      <Filter>Source\FigureProject\05. Item\01. SpdUp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Item_MonsterRegenUp.cpp">
+      <Filter>Source\FigureProject\05. Item\02. MonsterRegenUp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Item_PowerUp.cpp">
+      <Filter>Source\FigureProject\05. Item\00. PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Skill.cpp">
+      <Filter>Source\FigureProject\06. Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\HPBar_Widget.cpp">
+      <Filter>Source\FigureProject\98. UI\04. HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ItemDropRate.cpp">
+      <Filter>Source\FigureProject\05. Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -191,6 +239,27 @@
     </Filter>
     <Filter Include="Source\FigureProject\98. UI\02. Stage">
       <UniqueIdentifier>{15e71e70-bc11-4090-8363-7b97a1bb070d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\03. GameStart">
+      <UniqueIdentifier>{bda39a9a-5b78-47ad-9a25-bc5ea76881cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\04. HP">
+      <UniqueIdentifier>{c8317a17-438f-4f6f-b6bf-bfea37aad777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\05. Item\00. PowerUp">
+      <UniqueIdentifier>{6b1f5784-ea73-48f1-9e9e-2630bcd6c0b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\05. Item\01. SpdUp">
+      <UniqueIdentifier>{f6ee695a-1fcf-4481-856b-59901783cea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\05. Item\02. MonsterRegenUp">
+      <UniqueIdentifier>{f2607727-ea01-4ad9-a68d-03264be51bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\97. Component">
+      <UniqueIdentifier>{965c8c31-4a2a-4796-a02e-8f14e1b1a990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill">
+      <UniqueIdentifier>{32aff099-89af-47e3-913f-1af1a0a74076}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

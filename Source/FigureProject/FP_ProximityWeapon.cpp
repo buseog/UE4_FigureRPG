@@ -16,7 +16,7 @@ AFP_ProximityWeapon::AFP_ProximityWeapon()
 	Particle->SetupAttachment(RootComponent);
 
 	ProxBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxProx"));
-	ProxBox->SetupAttachment(Particle);
+	ProxBox->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned

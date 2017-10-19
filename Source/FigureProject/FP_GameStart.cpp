@@ -9,6 +9,7 @@
 #include "FP_PlayerController.h"
 #include "FP_Player.h"
 #include "FP_StageWidget.h"
+#include "FP_StatusWidget.h"
 
 void UFP_GameStart::NativeConstruct()
 {
@@ -31,9 +32,9 @@ void UFP_GameStart::ChooseMelee()
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	PlayerController->SetVisibility(0, ESlateVisibility::Hidden);
-	PlayerController->SetVisibility(2, ESlateVisibility::Visible);
+	PlayerController->SetVisibility(1, ESlateVisibility::Visible);
 
-	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(2));
+	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(1));
 	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
 
 
@@ -49,12 +50,11 @@ void UFP_GameStart::ChooseRange()
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	PlayerController->SetVisibility(0, ESlateVisibility::Hidden);
-	PlayerController->SetVisibility(2, ESlateVisibility::Visible);
+	PlayerController->SetVisibility(1, ESlateVisibility::Visible);
 
-	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(2));
+	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(1));
 	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
 
 
 	Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->SetActorHiddenInGame(false);
-	
 }

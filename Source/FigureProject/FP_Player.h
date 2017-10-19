@@ -86,6 +86,15 @@ private:
 	
 	float	HitTime;
 
+	//Ã¶ÀÇ Ãß°¡
+	float	BuffTime = 0.f;
+	float	BuffDuration = 0.f;
+	float	BuffDiff;
+	int		BuffType;
+
+public:
+	bool	bIsBuffed = false;
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	struct FPlayerStatus Status;
@@ -93,8 +102,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
 	struct FPlayerLevel	Level;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
-	class UStaticMeshComponent* Mesh;
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+	class UStaticMeshComponent* Mesh;*/
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
 	class USpringArmComponent* CameraSpringArm;
@@ -102,14 +111,20 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
 	class UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Player)
 	class USphereComponent* CollisionSphere;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
-	class USphereComponent* SightSphere;
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+	class USphereComponent* SightSphere;*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
 	TSubclassOf<AFP_Weapon> Weapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+	UPointLightComponent* PointLight;
+
+	/*UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
+	class UParticleSystemComponent* Particle;*/
 
 private:
 	void Regeneration(float DeltaTime);
@@ -129,4 +144,7 @@ public:
 
 	UFUNCTION()
 	void OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult);
+
+	//Ã¶ÀÇ Ãß°¡
+	void SetStat(int Type, float Diff, float Duration, FColor Color = FColor(0.f, 0.f, 0.f));
 };

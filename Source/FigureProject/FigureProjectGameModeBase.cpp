@@ -12,9 +12,11 @@
 AFigureProjectGameModeBase::AFigureProjectGameModeBase()
 {
 
-	FName Path = TEXT("Blueprint'/Game/FP_Player_BP.FP_Player_BP_C'");
+	/*FName Path = TEXT("Blueprint'/Game/FP_Player_BP.FP_Player_BP_C'");
 	UClass* PlayerBP = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	DefaultPawnClass = PlayerBP;
+	DefaultPawnClass = PlayerBP;*/
+
+	DefaultPawnClass = AFP_Player::StaticClass();
 
 	HUDClass = AFP_HUD::StaticClass();
 	PlayerControllerClass = AFP_PlayerController::StaticClass();

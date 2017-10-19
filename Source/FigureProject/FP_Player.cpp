@@ -2,6 +2,7 @@
 
 #include "FP_Player.h"
 #include "FP_PlayerController.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 
 
 // Sets default values
@@ -12,24 +13,28 @@ AFP_Player::AFP_Player()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	/*Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(RootComponent);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Sphere_Monster.Sphere_Monster'"));
+	Mesh->SetStaticMesh(MonsterMesh.Object);*/
 
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraSpringArm"));
 	CameraSpringArm->SetupAttachment(RootComponent);
-	CameraSpringArm->TargetArmLength = 500.0f;
+	CameraSpringArm->TargetArmLength = 150.0f;
 	CameraSpringArm->bAbsoluteRotation = true;
+	CameraSpringArm->SetWorldLocation(FVector(0.f, 0.f, -10.f));
+	CameraSpringArm->SetWorldRotation(FRotator(90.f, -90.f, 0.f));
+	
+	this->SetActorHiddenInGame(true);
 	//CameraSpringArm->SetRelativeRotation(FRotator(90.f, 0.f, 0.f));
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(CameraSpringArm, USpringArmComponent::SocketName);
 
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
+	CollisionSphere->SetSphereRadius(5.f);
 	CollisionSphere->SetupAttachment(RootComponent);
-
-	SightSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SightSphere"));
-	SightSphere->SetupAttachment(RootComponent);
-	SightSphere->SetSphereRadius(Status.AttackRange);
+	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AFP_Player::OnProxOverlapBegin);
 
 	OnClicked.AddDynamic(this, &AFP_Player::ToggleStatus);
 
@@ -41,6 +46,18 @@ AFP_Player::AFP_Player()
 	/*FName Path = TEXT("Blueprint'/Game/FP_ProximityWeapon_BP.FP_ProximityWeapon_BP_C'");
 	UClass* WeaponBP = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 	Weapon = WeaponBP;*/
+
+	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"), true);
+	PointLight->Intensity = 0.f;
+	PointLight->AttenuationRadius = 10.f;
+	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z - 10.f), FRotator(), false);
+	PointLight->SetupAttachment(RootComponent);
+
+	/*Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
+	Particle->SetupAttachment(RootComponent);
+	
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Player/P_Player.P_Player'"));
+	Particle->SetTemplate(ParticleSystem.Object);*/
 }
 
 
@@ -60,6 +77,15 @@ void AFP_Player::Tick(float DeltaTime)
 	
 	Level.CheckLevelUp();
 	//Level.Exp += 1.f;
+
+	//철의 추가
+	if (bIsBuffed)
+	{
+		if (BuffTime >= BuffDuration)
+			SetStat(BuffType, BuffDiff, BuffDuration);
+
+		BuffTime += DeltaTime;
+	}
 }
 
 void AFP_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -144,4 +170,109 @@ void AFP_Player::ToggleStatus(AActor* AActor, FKey Button)
 void AFP_Player::OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult)
 {
 	
+}
+
+//철의 추가
+void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //Duration이 0이면 영구 적용
+{
+	if (Duration == 0)
+	{
+		BuffTime = 0.f;
+		bIsBuffed = false;
+		return;
+	}
+
+	if (BuffTime >= Duration)
+	{
+		BuffTime = 0.f;
+		bIsBuffed = false;
+		PointLight->SetIntensity(0.f);
+
+		switch (Type)
+		{
+		case 0:
+			Status.MaxHp -= Diff;
+			break;
+
+		case 1:
+			Status.HpRegen -= Diff;
+			break;
+
+		case 2:
+			Status.Attack -= Diff;
+			break;
+
+		case 3:
+			Status.AttackRange -= Diff;
+			break;
+
+		case 4:
+			Status.AttackSpeed += Diff;
+			break;
+
+		case 5:
+			Status.BulletSpeed -= Diff;
+			break;
+
+		case 6:
+			Status.Critical -= Diff;
+			break;
+
+		case 7:
+			Status.CriticalDamage -= Diff;
+			break;
+
+		case 8:
+			Status.Splash -= Diff;
+			break;
+		}
+
+		return;
+	}
+
+	bIsBuffed = true;
+	BuffDuration = Duration;
+	BuffDiff = Diff;
+	BuffType = Type;
+	PointLight->SetLightColor(Color);
+	PointLight->SetIntensity(500.f);
+
+	switch (Type)
+	{
+	case 0:
+		Status.MaxHp += Diff;
+		break;
+
+	case 1:
+		Status.HpRegen += Diff;
+		break;
+
+	case 2:
+		Status.Attack += Diff;
+		break;
+
+	case 3:
+		Status.AttackRange += Diff;
+		break;
+
+	case 4:
+		Status.AttackSpeed -= Diff;
+		break;
+
+	case 5:
+		Status.BulletSpeed += Diff;
+		break;
+
+	case 6:
+		Status.Critical += Diff;
+		break;
+
+	case 7:
+		Status.CriticalDamage += Diff;
+		break;
+
+	case 8:
+		Status.Splash += Diff;
+		break;
+	}
 }
