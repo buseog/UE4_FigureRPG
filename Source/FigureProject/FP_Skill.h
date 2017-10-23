@@ -25,18 +25,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	void SetTargetDirection(FVector _TargetLocation);
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void SetTargetDirection(FVector _location);
+
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;
 
+	//FVector TargetLocation = FVector(0.f,0.f,0.f);
 	FVector TargetDirection = FVector(0.f, 0.f, 0.f);
 	AFP_Player* Player;
 	AFP_Weapon* Weapon;
-	float Damage;
+	float Damage = 1.f;
+	
 };

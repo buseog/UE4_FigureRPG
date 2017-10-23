@@ -28,7 +28,6 @@ void AFP_ComProjectile::Tick(float DeltaTime)
 void AFP_ComProjectile::MoveToTarget(AActor* InputActor, FVector Target, float Speed)
 {
 	FVector CurrentLocation = InputActor->GetActorLocation();
-
 	FVector NewLocation = CurrentLocation + Target * Speed;
 	InputActor->SetActorLocation(NewLocation);
 }

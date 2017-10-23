@@ -7,6 +7,7 @@
 #include "FP_FireBall.h"
 #include "FP_Skill.h"
 #include "FP_HUD.h"
+#include "FP_IceBall.h"
 
 struct CompareDist
 {
@@ -96,19 +97,17 @@ void AFP_Weapon::Tick(float DeltaTime)
 		{
 			TimeAcc = 0.f;
 			AFP_FireBall* Bullet = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
-			//AFP_Skill* Bullet = GetWorld()->SpawnActor<AFP_Skill>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 			Cast<AFP_Skill>(Bullet)->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-			//Bullet->SetTargetDir(TargetEnemy);
+			
+			
+			/*AFP_IceBall* IceBall = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+			IceBall->SetTargetDirection(TargetMonsters[0]->GetActorLocation());*/
+
 		}
 	}
 		
-
-	//FString Test = FString::SanitizeFloat(FirePoint.X);
-	//Test += FString(TEXT(" , "));
-	//Test += FString::SanitizeFloat(FirePoint.Y);
-
-	FString Test = FString::FromInt(TargetMonsters.Num());
-	GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, Test);
+	//FString Test = FString::FromInt(TargetMonsters.Num());
+	//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, Test);
 	
 
 }
@@ -124,17 +123,5 @@ void AFP_Weapon::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 {
 	TargetMonsters.Remove(_monster);
-	
-	//APlayerController* PController = GetWorld()->GetFirstPlayerController();
-	//TSubclassOf<UDamageType> const ValidDamageTypeClass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
-	//FDamageEvent DamageEvent(ValidDamageTypeClass);
 
-	//_monster->TakeDamage(Damage, DamageEvent, PController, this);
-
-	//if (_monster->isDestroy)
-	//{
-	//	Cast<AFP_HUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->IncreaseKillCount();
-	//	TargetMonsters.Remove(_monster);
-	//	_monster->Destroy();
-	//}
 }

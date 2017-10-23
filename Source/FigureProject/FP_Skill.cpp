@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FP_Skill.h"
+#include "Engine.h"
+
 #include "FP_Player.h"
 #include "Runtime/Engine/Classes/Components/BoxComponent.h"
 
@@ -14,6 +16,7 @@ AFP_Skill::AFP_Skill()
 	
 	Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
 	Particle->SetupAttachment(RootComponent);
+
 }
 
 // Called when the game starts or when spawned
@@ -23,8 +26,14 @@ void AFP_Skill::BeginPlay()
 
 	Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
+	if (nullptr == Player)
+		return;
+
 	TArray<AActor*> FoundActor;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
+	if (FoundActor[0] == nullptr)
+		return;
+
 	Weapon = Cast<AFP_Weapon>(FoundActor[0]);
 }
 
@@ -35,8 +44,8 @@ void AFP_Skill::Tick(float DeltaTime)
 
 }
 
-void AFP_Skill::SetTargetDirection(FVector _TargetLocation)
+void AFP_Skill::SetTargetDirection(FVector _location)
 {
-	TargetDirection = _TargetLocation - this->GetActorLocation();
+	TargetDirection = _location - this->GetActorLocation();
 	TargetDirection.Normalize();
 }
