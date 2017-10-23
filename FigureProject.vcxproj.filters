@@ -86,9 +86,6 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_StageWidget.h">
       <Filter>Source\FigureProject\98. UI\02. Stage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_ComProjectile.h">
-      <Filter>Source\FigureProject\97. Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_GameStart.h">
       <Filter>Source\FigureProject\98. UI\03. GameStart</Filter>
     </ClInclude>
@@ -109,6 +106,16 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_ItemDropRate.h">
       <Filter>Source\FigureProject\05. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ItemDropRate_.h" />
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComProjectile.h">
+      <Filter>Source\FigureProject\97. Component\00. ComProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComCollision.h">
+      <Filter>Source\FigureProject\97. Component\01. ComCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_IceBall.h">
+      <Filter>Source\FigureProject\06. Skill\01. Ice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +173,6 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_StageWidget.cpp">
       <Filter>Source\FigureProject\98. UI\02. Stage</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_ComProjectile.cpp">
-      <Filter>Source\FigureProject\97. Component</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_GameStart.cpp">
       <Filter>Source\FigureProject\98. UI\03. GameStart</Filter>
     </ClCompile>
@@ -189,6 +193,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_ItemDropRate.cpp">
       <Filter>Source\FigureProject\05. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComProjectile.cpp">
+      <Filter>Source\FigureProject\97. Component\00. ComProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComCollision.cpp">
+      <Filter>Source\FigureProject\97. Component\01. ComCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_IceBall.cpp">
+      <Filter>Source\FigureProject\06. Skill\01. Ice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +273,15 @@
     </Filter>
     <Filter Include="Source\FigureProject\06. Skill">
       <UniqueIdentifier>{32aff099-89af-47e3-913f-1af1a0a74076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\97. Component\00. ComProjectile">
+      <UniqueIdentifier>{4ae7eaaf-4e36-4798-b359-ffb8f841f1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\97. Component\01. ComCollision">
+      <UniqueIdentifier>{8ad7c9d4-ca1b-43d7-9564-20980967c706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\01. Ice">
+      <UniqueIdentifier>{7aebe6dd-cc6f-4e1b-ba93-99510b066244}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

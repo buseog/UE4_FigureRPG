@@ -3,6 +3,12 @@
 #pragma once
 
 #include "Core.h"
+#include "Engine.h"
+#include "FP_ComProjectile.h"
+#include "FP_ComCollision.h"
+#include "FP_Player.h"
+#include "FP_Monster.h"
+#include "FP_Weapon.h"
 #include "GameFramework/Actor.h"
 #include "FP_Skill.generated.h"
 
@@ -23,11 +29,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* StaticMesh;
+	void SetTargetDirection(FVector _location);
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
-	class UBoxComponent* ProxBox;
+	class UParticleSystemComponent* Particle;
 
+	//FVector TargetLocation = FVector(0.f,0.f,0.f);
+	FVector TargetDirection = FVector(0.f, 0.f, 0.f);
+
+	AFP_Player* Player;
+	AFP_Weapon* Weapon;
+	float Damage = 1.f;
 
 };

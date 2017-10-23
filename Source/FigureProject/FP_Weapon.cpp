@@ -5,6 +5,7 @@
 #include "FP_Bullet.h"
 #include "FP_Player.h"
 #include "FP_HUD.h"
+#include "FP_IceBall.h"
 
 struct CompareDist
 {
@@ -93,8 +94,11 @@ void AFP_Weapon::Tick(float DeltaTime)
 		if (TimeAcc > pPlayer->GetStatus().AttackSpeed)
 		{
 			TimeAcc = 0.f;
-			AFP_Bullet* Bullet = GetWorld()->SpawnActor<AFP_Bullet>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
-			Bullet->SetTargetDir(TargetEnemy);
+			//AFP_Bullet* Bullet = GetWorld()->SpawnActor<AFP_Bullet>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+			//Bullet->SetTargetDir(TargetEnemy);
+
+			AFP_IceBall* IceBall = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+			IceBall->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		}
 	}
 		
