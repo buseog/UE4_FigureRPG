@@ -32,14 +32,6 @@ AFP_Weapon::AFP_Weapon()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
-	//StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	//StaticMesh->SetupAttachment(RootComponent);
-	//
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Weapon_Mesh.Weapon_Mesh'"));
-	////StaticMesh->SetStaticMesh(MonsterMesh.Object);
-	//Mesh = MonsterMesh.Object;
-
-
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	SphereComponent->SetupAttachment(RootComponent);
 	SphereComponent->InitSphereRadius(50.f);
@@ -64,9 +56,9 @@ void AFP_Weapon::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	/*float fYaw = GetActorRotation().Yaw;
+	float fYaw = GetActorRotation().Yaw;
 	FirePoint.X = 10.f * cosf((fYaw * PI) / 180.f);
-	FirePoint.Y = 10.f * sinf((fYaw * PI) / 180.f);*/
+	FirePoint.Y = 10.f * sinf((fYaw * PI) / 180.f);
 	
 	//SphereRadius
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
@@ -85,7 +77,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 		TargetEnemy.Normalize();
 
 		float fCos = FVector::DotProduct(TargetEnemy, FVector(1.f, 0.f, 0.f));
-		float AngleZ = acosf(fCos);
+		AngleZ = acosf(fCos);
 		if(TargetEnemy.Y < 0)
 			AngleZ = 2 * PI - acosf(fCos);
 
@@ -96,13 +88,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 		if (TimeAcc > pPlayer->GetStatus().AttackSpeed)
 		{
 			TimeAcc = 0.f;
-			AFP_FireBall* Bullet = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
-			Cast<AFP_Skill>(Bullet)->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-			
-			
-			/*AFP_IceBall* IceBall = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
-			IceBall->SetTargetDirection(TargetMonsters[0]->GetActorLocation());*/
-
+			SpawnSkill();
 		}
 	}
 		
@@ -124,4 +110,24 @@ void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 {
 	TargetMonsters.Remove(_monster);
 
+}
+
+void AFP_Weapon::SpawnSkill()
+{
+	AFP_Skill* Skill = nullptr;
+	switch (ActiveSkill)
+	{
+	case FIREBALL:
+		Skill = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		break;
+	case ICEBALL:
+		Skill = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		break;
+	}
+	
+
+
+	
 }

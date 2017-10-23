@@ -30,7 +30,7 @@ AFP_Monster::AFP_Monster()
 
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
-	SphereComponent->InitSphereRadius(5.0f);
+	SphereComponent->InitSphereRadius(3.0f);
 	SphereComponent->SetupAttachment(RootComponent);
 
 	SetActorEnableCollision(true);
@@ -48,6 +48,7 @@ AFP_Monster::AFP_Monster()
 	WidgetComponent->SetBlendMode(EWidgetBlendMode::Opaque);
 	WidgetComponent->SetRelativeRotation(FRotator(-90.f, 0.f, 90.f));
 	WidgetComponent->SetRelativeLocation(FVector(0.f, 10.f, 0.f));
+	WidgetComponent->bGenerateOverlapEvents = false;
 	//WidgetComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 1.f));
 	//WidgetComponent->SetupAttachment(RootComponent);
 	WidgetComponent->SetVisibility(false);

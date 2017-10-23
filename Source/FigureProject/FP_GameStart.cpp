@@ -15,20 +15,18 @@ void UFP_GameStart::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	UButton* MeleeButton = (UButton*)GetWidgetFromName(TEXT("Melee"));
-	MeleeButton->OnClicked.AddDynamic(this, &UFP_GameStart::ChooseMelee);
+	UButton* FireButton = (UButton*)GetWidgetFromName(TEXT("Fire"));
+	FireButton->OnClicked.AddDynamic(this, &UFP_GameStart::ChooseFire);
 
-	UButton* RangeButton = (UButton*)GetWidgetFromName(TEXT("Range"));
-	RangeButton->OnClicked.AddDynamic(this, &UFP_GameStart::ChooseRange);
+	UButton* IceButton = (UButton*)GetWidgetFromName(TEXT("Ice"));
+	IceButton->OnClicked.AddDynamic(this, &UFP_GameStart::ChooseIce);
 }
 
-void UFP_GameStart::ChooseMelee() 
+void UFP_GameStart::ChooseFire()
 {
 	GetWorld()->SpawnActor<AFP_MonsterMgr>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
-
-	FName Path = TEXT("Blueprint'/Game/FP_ProximityWeapon_BP.FP_ProximityWeapon_BP_C'");
-	UClass* WeaponBP = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	GetWorld()->SpawnActor<AFP_ProximityWeapon>(WeaponBP);
+	AFP_Weapon* Weapon = GetWorld()->SpawnActor<AFP_Weapon>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
+	Weapon->SetActiveSkill(AFP_Weapon::FIREBALL);
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	PlayerController->SetVisibility(0, ESlateVisibility::Hidden);
@@ -43,10 +41,11 @@ void UFP_GameStart::ChooseMelee()
 
 }
 
-void UFP_GameStart::ChooseRange()
+void UFP_GameStart::ChooseIce()
 {
 	GetWorld()->SpawnActor<AFP_MonsterMgr>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
-	GetWorld()->SpawnActor<AFP_Weapon>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
+	AFP_Weapon* Weapon = GetWorld()->SpawnActor<AFP_Weapon>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
+	Weapon->SetActiveSkill(AFP_Weapon::ICEBALL);
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	PlayerController->SetVisibility(0, ESlateVisibility::Hidden);

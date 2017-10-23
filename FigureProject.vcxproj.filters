@@ -107,7 +107,6 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ItemDropRate.h">
       <Filter>Source\FigureProject\05. Item</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_ItemDropRate_.h" />
     <ClInclude Include="..\..\Source\FigureProject\FP_ComProjectile.h">
       <Filter>Source\FigureProject\97. Component\00. ComProjectile</Filter>
     </ClInclude>
@@ -116,6 +115,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_IceBall.h">
       <Filter>Source\FigureProject\06. Skill\01. Ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_FireBall.h">
+      <Filter>Source\FigureProject\06. Skill\00. Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Impact.h">
+      <Filter>Source\FigureProject\07. Impact</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +208,12 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_IceBall.cpp">
       <Filter>Source\FigureProject\06. Skill\01. Ice</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_FireBall.cpp">
+      <Filter>Source\FigureProject\06. Skill\00. Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Impact.cpp">
+      <Filter>Source\FigureProject\07. Impact</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -282,6 +293,12 @@
     </Filter>
     <Filter Include="Source\FigureProject\06. Skill\01. Ice">
       <UniqueIdentifier>{7aebe6dd-cc6f-4e1b-ba93-99510b066244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\00. Fire">
+      <UniqueIdentifier>{ab28c6dd-5e74-463d-bab0-7ef9adaed2f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\07. Impact">
+      <UniqueIdentifier>{1e2a0e23-51a7-49df-bf60-9a7865354ac0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

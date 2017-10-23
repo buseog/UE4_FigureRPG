@@ -14,6 +14,8 @@ AFP_FireBall::AFP_FireBall()
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireBall.FP_FireBall'"));
 	Particle->SetTemplate(ParticleSystem.Object);
+
+	Speed = 0.5f;
 }
 
 // Called when the game starts or when spawned
@@ -28,7 +30,7 @@ void AFP_FireBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * DeltaTime);
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Speed * DeltaTime);
 
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(ProxSphere);
 	if (TargetMonster != nullptr)

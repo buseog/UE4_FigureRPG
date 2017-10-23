@@ -8,6 +8,10 @@
 #include "GameFramework/Actor.h"
 #include "FP_Weapon.generated.h"
 
+
+
+
+
 UCLASS()
 class FIGUREPROJECT_API AFP_Weapon : public AActor
 {
@@ -16,6 +20,7 @@ class FIGUREPROJECT_API AFP_Weapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFP_Weapon();
+	enum SKILLTYPE { FIREBALL, ICEBALL };
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,7 +34,8 @@ public:
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	void DeleteTargetMonsterInArray(AFP_Monster* _monster);
-
+	void SpawnSkill();
+	inline void SetActiveSkill(SKILLTYPE _type) { ActiveSkill = _type; }
 	
 	//UStaticMeshComponent* StaticMesh;
 	UPROPERTY()
@@ -43,6 +49,8 @@ public:
 	UPROPERTY()
 	TArray<AFP_Monster*> TargetMonsters;
 
+
+	SKILLTYPE ActiveSkill;
 	//UStaticMesh* Mesh;
 
 	

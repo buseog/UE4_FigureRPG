@@ -21,10 +21,10 @@ public:
 
 public:
 	UFUNCTION()
-	void ChooseMelee();
+	void ChooseFire();
 
 	UFUNCTION()
-	void ChooseRange();
+	void ChooseIce();
 
 private:
 
