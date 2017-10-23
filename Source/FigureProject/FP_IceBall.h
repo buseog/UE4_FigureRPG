@@ -23,4 +23,5 @@ public:
 
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Player)
 	class USphereComponent* CollisionSphere;
+
 };

@@ -39,7 +39,7 @@ public:
 	FVector TargetDirection = FVector(0.f, 0.f, 0.f);
 	AFP_Player* Player;
 	AFP_Weapon* Weapon;
-	float Damage = 1.f;
+	float Damage = 0.5f;
 	float Speed = 1.f;
 	
 };

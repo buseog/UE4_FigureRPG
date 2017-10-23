@@ -56,9 +56,6 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_Weapon.h">
       <Filter>Source\FigureProject\02. Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_Player_Circle.h">
-      <Filter>Source\FigureProject\01. Player\00. Circle</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_StatusWidget.h">
       <Filter>Source\FigureProject\98. UI\00. Status</Filter>
     </ClInclude>
@@ -148,9 +145,6 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_Weapon.cpp">
       <Filter>Source\FigureProject\02. Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_Player_Circle.cpp">
-      <Filter>Source\FigureProject\01. Player\00. Circle</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_StatusWidget.cpp">
       <Filter>Source\FigureProject\98. UI\00. Status</Filter>
     </ClCompile>
@@ -233,9 +227,6 @@
     </Filter>
     <Filter Include="Source\FigureProject\04. Monster">
       <UniqueIdentifier>{17fd7e9a-bbfd-4c66-a549-0696cf4ca25b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\FigureProject\01. Player\00. Circle">
-      <UniqueIdentifier>{5064ba1c-3cf3-4a5a-b98a-8f1c938e99d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\FigureProject\05. Item">
       <UniqueIdentifier>{987e453c-d0f9-410d-8750-0ee18597f65d}</UniqueIdentifier>

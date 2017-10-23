@@ -27,20 +27,37 @@ public:
 	template<typename A, typename B>
 	static B* Collision(A* InputComponent)
 	{
+		TArray<AActor*> Actors;
+		InputComponent->GetOverlappingActors(Actors);
+
+		for (int i = 0; i < Actors.Num(); ++i)
 		{
-			TArray<AActor*> Actors;
-			InputComponent->GetOverlappingActors(Actors);
+			B* Target = Cast<B>(Actors[i]);
+			if (Target == NULL)
+				continue;
 
-			for (int i = 0; i < Actors.Num(); ++i)
+			return Target;
+		}
+		return NULL;
+		
+	}
+
+
+	template<typename A, typename B>
+	static void CollisionWithMulti(A* InputComponent, TArray<B*>& _Array)
+	{
+		TArray<AActor*> Actors;
+		InputComponent->GetOverlappingActors(Actors);
+
+		for (int i = 0; i < Actors.Num(); ++i)
+		{
+			B* Target = Cast<B>(Actors[i]);
+			if (Target != NULL)
 			{
-				B* Target = Cast<B>(Actors[i]);
-				if (Target == NULL)
-					continue;
-
-				return Target;
+				_Array.Add(Target);
 			}
-			return NULL;
 		}
 	}
+
 
 };

@@ -14,6 +14,8 @@ AFP_IceBall::AFP_IceBall()
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	CollisionSphere->SetSphereRadius(1.f);
 	CollisionSphere->SetupAttachment(RootComponent);
+
+	Speed = 1.f;
 }
 
 void AFP_IceBall::Tick(float DeltaTime)
