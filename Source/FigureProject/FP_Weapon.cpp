@@ -4,6 +4,8 @@
 #include "Engine.h"
 #include "FP_Bullet.h"
 #include "FP_Player.h"
+#include "FP_FireBall.h"
+#include "FP_Skill.h"
 #include "FP_HUD.h"
 
 struct CompareDist
@@ -61,9 +63,9 @@ void AFP_Weapon::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	float fYaw = GetActorRotation().Yaw;
+	/*float fYaw = GetActorRotation().Yaw;
 	FirePoint.X = 10.f * cosf((fYaw * PI) / 180.f);
-	FirePoint.Y = 10.f * sinf((fYaw * PI) / 180.f);
+	FirePoint.Y = 10.f * sinf((fYaw * PI) / 180.f);*/
 	
 	//SphereRadius
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
@@ -93,8 +95,10 @@ void AFP_Weapon::Tick(float DeltaTime)
 		if (TimeAcc > pPlayer->GetStatus().AttackSpeed)
 		{
 			TimeAcc = 0.f;
-			AFP_Bullet* Bullet = GetWorld()->SpawnActor<AFP_Bullet>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
-			Bullet->SetTargetDir(TargetEnemy);
+			AFP_FireBall* Bullet = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+			//AFP_Skill* Bullet = GetWorld()->SpawnActor<AFP_Skill>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+			Cast<AFP_Skill>(Bullet)->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+			//Bullet->SetTargetDir(TargetEnemy);
 		}
 	}
 		
