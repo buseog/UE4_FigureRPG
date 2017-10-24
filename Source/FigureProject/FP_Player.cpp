@@ -33,7 +33,7 @@ AFP_Player::AFP_Player()
 	Camera->PostProcessSettings.bOverride_AutoExposureMinBrightness = true;
 	
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
-	CollisionSphere->SetSphereRadius(5.f);
+	CollisionSphere->SetSphereRadius(12.f);
 	CollisionSphere->SetupAttachment(RootComponent);
 	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AFP_Player::OnProxOverlapBegin);
 

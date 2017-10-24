@@ -45,7 +45,7 @@ void UFP_GameStart::ChooseIce()
 {
 	GetWorld()->SpawnActor<AFP_MonsterMgr>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
 	AFP_Weapon* Weapon = GetWorld()->SpawnActor<AFP_Weapon>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
-	Weapon->SetActiveSkill(AFP_Weapon::ICEBALL);
+	Weapon->SetActiveSkill(AFP_Weapon::ICEBLAST);
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	PlayerController->SetVisibility(0, ESlateVisibility::Hidden);

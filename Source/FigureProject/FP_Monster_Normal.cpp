@@ -28,6 +28,6 @@ void AFP_Monster_Normal::Tick(float DeltaTime)
 	FVector Direction = CurrentLocation * -1.f;
 	Direction.Normalize();
 
-	FVector NewLocation = CurrentLocation + Direction * DeltaTime * Speed;
+	FVector NewLocation = CurrentLocation + Direction * DeltaTime * Speed * StateMgr.SpeedOffset;
 	SetActorLocation(NewLocation);
 }

@@ -18,6 +18,40 @@ public:
 	// Sets default values for this actor's properties
 	AFP_Monster();
 
+	struct MonsterState
+	{
+		enum MSTATE {NORMAL, SLOW};
+
+		float Duration = 0.f;
+		float SpeedOffset = 0.5f;
+		MSTATE eState = NORMAL;
+		AFP_Monster* Monster = nullptr;
+
+		void SetState(MSTATE _state, float _duration)
+		{
+			eState = _state;
+			Duration = _duration;
+		}
+
+		void CustomTick(float _delta)
+		{
+			if (Duration <= 0.f)
+			{
+				eState = NORMAL;
+				SpeedOffset = 1.f;
+				Monster->PointLight->SetIntensity(0.f);
+			}
+
+			if (eState == SLOW)
+			{
+				SpeedOffset = 0.5f;
+				Duration -= _delta;	
+				Monster->PointLight->SetLightColor(FColor::Blue);
+				Monster->PointLight->SetIntensity(50.f);
+			}
+		}
+	};
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,6 +70,7 @@ public:
 	float Speed = 10.f;
 	float Exp = 5.f;
 	float HPShowTime = 0.f;
+	MonsterState StateMgr;
 	
 public:
 	UPROPERTY(EditAnywhere)
@@ -49,6 +84,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UHPBar_Widget* HPBar_Widget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+	UPointLightComponent* PointLight;
 	
 	bool isDestroy = false;
 	AFP_Item* Item;

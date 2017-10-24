@@ -19,6 +19,8 @@ AFP_Impact::AFP_Impact()
 	ConstructorHelpers::FObjectFinder<UParticleSystem> IceBallImpact(TEXT("ParticleSystem'/Game/Effect/Skill/Ice/FP_Impact_Iceball.FP_Impact_Iceball'"));
 	ParticleMap.Add(ICEBALLIMPACT, IceBallImpact.Object);
 	
+	ConstructorHelpers::FObjectFinder<UParticleSystem> IceBlastImpact(TEXT("ParticleSystem'/Game/Effect/Skill/Ice/FP_impact_IceBlast.FP_impact_IceBlast'"));
+	ParticleMap.Add(ICEBLASTIMPACT, IceBlastImpact.Object);
 	
 	Particle->SetupAttachment(RootComponent);
 	Particle->OnSystemFinished.AddDynamic(this, &AFP_Impact::OnFinished);

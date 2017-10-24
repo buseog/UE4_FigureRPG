@@ -15,7 +15,7 @@ class FIGUREPROJECT_API AFP_Impact : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFP_Impact();
-	enum IMPACTTYPE{FIREBALLIMPACT, ICEBALLIMPACT};
+	enum IMPACTTYPE{FIREBALLIMPACT, ICEBALLIMPACT, ICEBLASTIMPACT};
 
 protected:
 	// Called when the game starts or when spawned

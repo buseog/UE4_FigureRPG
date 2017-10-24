@@ -110,14 +110,17 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ComCollision.h">
       <Filter>Source\FigureProject\97. Component\01. ComCollision</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_IceBall.h">
-      <Filter>Source\FigureProject\06. Skill\01. Ice</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_FireBall.h">
       <Filter>Source\FigureProject\06. Skill\00. Fire</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_Impact.h">
       <Filter>Source\FigureProject\07. Impact</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_IceBall.h">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\00. IceBall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_IceBlast.h">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -199,14 +202,17 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_ComCollision.cpp">
       <Filter>Source\FigureProject\97. Component\01. ComCollision</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_IceBall.cpp">
-      <Filter>Source\FigureProject\06. Skill\01. Ice</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_FireBall.cpp">
       <Filter>Source\FigureProject\06. Skill\00. Fire</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_Impact.cpp">
       <Filter>Source\FigureProject\07. Impact</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_IceBall.cpp">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\00. IceBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_IceBlast.cpp">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +296,12 @@
     </Filter>
     <Filter Include="Source\FigureProject\07. Impact">
       <UniqueIdentifier>{1e2a0e23-51a7-49df-bf60-9a7865354ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\01. Ice\00. IceBall">
+      <UniqueIdentifier>{e2472e2d-edfd-49c0-90ef-0db4b1cf7d9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\01. Ice\01. IceBlast">
+      <UniqueIdentifier>{650b59ae-4b0c-400f-b4fc-bd60bb88cace}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

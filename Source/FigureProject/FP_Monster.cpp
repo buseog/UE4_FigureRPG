@@ -11,6 +11,7 @@
 #include "FP_Item_PowerUp.h"
 #include "FP_Item_AttackSpeedUp.h"
 #include "FP_Player.h"
+#include "FP_ComCollision.h"
 
 
 // Sets default values
@@ -53,6 +54,14 @@ AFP_Monster::AFP_Monster()
 	//WidgetComponent->SetupAttachment(RootComponent);
 	WidgetComponent->SetVisibility(false);
 
+
+	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
+	PointLight->Intensity = 50.f;
+	PointLight->LightColor = FColor(0, 0, 255);
+	PointLight->AttenuationRadius = 10.f;
+	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z), FRotator(), false);
+	PointLight->SetupAttachment(RootComponent);
+
 	
 }
 
@@ -63,6 +72,8 @@ void AFP_Monster::BeginPlay()
 
 	DropRate = FMath::FRandRange(0.f, 100.f);
 	HPBar_Widget = Cast<UHPBar_Widget>(WidgetComponent->GetUserWidgetObject());
+
+	StateMgr.Monster = this;
 
 }
 
@@ -86,6 +97,19 @@ void AFP_Monster::Tick(float DeltaTime)
 		WidgetComponent->SetVisibility(false);
 
 
+	AFP_Player* player = AFP_ComCollision::Collision<USphereComponent, AFP_Player>(SphereComponent);
+	if (player != nullptr)
+	{
+		isDestroy = true;
+
+		TArray<AActor*> FoundActor;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
+		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(this);
+	}
+		
+	//State Control
+	StateMgr.CustomTick(DeltaTime);
+	
 	
 }
 
@@ -154,6 +178,9 @@ void AFP_Monster::DropItem()
 
 void AFP_Monster::MyTakeDamage(float _damage)
 {
+	if (isDestroy == true)
+		return;
+
 	HP -= _damage;
 	HPBar_Widget->Progress = (HP) / MaxHP;
 	HPShowTime = 1.f;

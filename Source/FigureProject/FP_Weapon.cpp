@@ -8,6 +8,7 @@
 #include "FP_Skill.h"
 #include "FP_HUD.h"
 #include "FP_IceBall.h"
+#include "FP_IceBlast.h"
 
 struct CompareDist
 {
@@ -57,8 +58,8 @@ void AFP_Weapon::Tick(float DeltaTime)
 
 
 	float fYaw = GetActorRotation().Yaw;
-	FirePoint.X = 10.f * cosf((fYaw * PI) / 180.f);
-	FirePoint.Y = 10.f * sinf((fYaw * PI) / 180.f);
+	FirePoint.X = 12.f * cosf((fYaw * PI) / 180.f);
+	FirePoint.Y = 12.f * sinf((fYaw * PI) / 180.f);
 	
 	//SphereRadius
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
@@ -124,6 +125,9 @@ void AFP_Weapon::SpawnSkill()
 	case ICEBALL:
 		Skill = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		break;
+	case ICEBLAST:
+		Skill = GetWorld()->SpawnActor<AFP_IceBlast>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		break;
 	}
 	
