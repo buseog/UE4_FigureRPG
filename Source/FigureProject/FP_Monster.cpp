@@ -75,6 +75,12 @@ void AFP_Monster::BeginPlay()
 
 	StateMgr.Monster = this;
 
+	TArray<AActor*> FoundActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
+	if (FoundActor[0] == nullptr)
+		return;
+
+	Weapon = Cast<AFP_Weapon>(FoundActor[0]);
 }
 
 // Called every frame
@@ -102,15 +108,18 @@ void AFP_Monster::Tick(float DeltaTime)
 	{
 		isDestroy = true;
 
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		Cast<AFP_Weapon>(FoundActor[0])->DeleteTargetMonsterInArray(this);
+		Weapon->DeleteTargetMonsterInArray(this);
 	}
 		
 	//State Control
 	StateMgr.CustomTick(DeltaTime);
 	
-	
+	if (StateMgr.eState == MonsterState::IGNITE)
+	{
+		MyTakeDamage(0.005f);
+		if (isDestroy)
+			Weapon->DeleteTargetMonsterInArray(this);
+	}
 }
 
 void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)

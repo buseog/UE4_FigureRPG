@@ -9,6 +9,7 @@
 #include "FP_HUD.h"
 #include "FP_IceBall.h"
 #include "FP_IceBlast.h"
+#include "FP_FireBlastSpawnPoint.h"
 
 struct CompareDist
 {
@@ -49,6 +50,8 @@ void AFP_Weapon::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	TimeAcc = pPlayer->GetStatus().AttackSpeed;
 }
 
 // Called every frame
@@ -96,7 +99,6 @@ void AFP_Weapon::Tick(float DeltaTime)
 	//FString Test = FString::FromInt(TargetMonsters.Num());
 	//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, Test);
 	
-
 }
 
 void AFP_Weapon::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -120,6 +122,10 @@ void AFP_Weapon::SpawnSkill()
 	{
 	case FIREBALL:
 		Skill = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		break;
+	case FIREBLAST:
+		Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		break;
 	case ICEBALL:

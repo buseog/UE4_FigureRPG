@@ -43,3 +43,14 @@ void AFP_FireBall::Tick(float DeltaTime)
 		Destroy();
 	}
 }
+
+void AFP_FireBall::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(this->GetActorLocation(), FRotator(0.f, 0.f, 0.f));
+	if (Impact == nullptr)
+		return;
+
+	Impact->SetImpact(AFP_Impact::FIREBALLIMPACT);
+}

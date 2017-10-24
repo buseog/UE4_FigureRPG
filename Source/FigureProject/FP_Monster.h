@@ -9,6 +9,7 @@
 #include "HPBar_Widget.h"
 #include "FP_Monster.generated.h"
 
+class AFP_Weapon;
 UCLASS()
 class FIGUREPROJECT_API AFP_Monster : public AActor
 {
@@ -20,7 +21,7 @@ public:
 
 	struct MonsterState
 	{
-		enum MSTATE {NORMAL, SLOW};
+		enum MSTATE {NORMAL, SLOW, IGNITE};
 
 		float Duration = 0.f;
 		float SpeedOffset = 0.5f;
@@ -47,6 +48,13 @@ public:
 				SpeedOffset = 0.5f;
 				Duration -= _delta;	
 				Monster->PointLight->SetLightColor(FColor::Blue);
+				Monster->PointLight->SetIntensity(50.f);
+			}
+
+			if (eState == IGNITE)
+			{
+				Duration -= _delta;
+				Monster->PointLight->SetLightColor(FColor::Red);
 				Monster->PointLight->SetIntensity(50.f);
 			}
 		}
@@ -90,6 +98,7 @@ public:
 	
 	bool isDestroy = false;
 	AFP_Item* Item;
+	AFP_Weapon* Weapon;
 
 public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;

@@ -110,9 +110,6 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ComCollision.h">
       <Filter>Source\FigureProject\97. Component\01. ComCollision</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_FireBall.h">
-      <Filter>Source\FigureProject\06. Skill\00. Fire</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_Impact.h">
       <Filter>Source\FigureProject\07. Impact</Filter>
     </ClInclude>
@@ -121,6 +118,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_IceBlast.h">
       <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_FireBall.h">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\00. FireBall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_FireBlast.h">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\01. FireBlast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_FireBlastSpawnPoint.h">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\01. FireBlast</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,9 +208,6 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_ComCollision.cpp">
       <Filter>Source\FigureProject\97. Component\01. ComCollision</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_FireBall.cpp">
-      <Filter>Source\FigureProject\06. Skill\00. Fire</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_Impact.cpp">
       <Filter>Source\FigureProject\07. Impact</Filter>
     </ClCompile>
@@ -213,6 +216,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_IceBlast.cpp">
       <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_FireBall.cpp">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\00. FireBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_FireBlast.cpp">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\01. FireBlast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_FireBlastSpawnPoint.cpp">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\01. FireBlast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +314,12 @@
     </Filter>
     <Filter Include="Source\FigureProject\06. Skill\01. Ice\01. IceBlast">
       <UniqueIdentifier>{650b59ae-4b0c-400f-b4fc-bd60bb88cace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\00. Fire\00. FireBall">
+      <UniqueIdentifier>{48a83775-5c2f-4055-aba9-bbc65eaf7da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\00. Fire\01. FireBlast">
+      <UniqueIdentifier>{6d2b1ee2-ea83-4ccd-84b8-df4abc3f22cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
