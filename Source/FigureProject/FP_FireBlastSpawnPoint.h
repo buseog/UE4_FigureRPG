@@ -6,7 +6,6 @@
 //#include "GameFramework/Actor.h"
 #include "FP_Skill.h"
 #include "FP_Player.h"
-#include "FP_FireBlast.h"
 #include "FP_FireBlastSpawnPoint.generated.h"
 
 UCLASS()
@@ -27,9 +26,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 public:
-	AFP_FireBlast* FireBlast;
+	AFP_Skill* FireSkill;
 	float SpawnDelay = 0.3f;
 	float CurrentTime = 0.3f;
-	int MaxFireBlastNum = 4;
-	int CurrentFireBlastNum = 0;
+	int MaxSpawnNum = 4;
+	int CurrentSpawnNum = 0;
+	FString SkillName = "FireBlast";
+
+public:
+	void SetSkill(FString _skillName, float _spawnDelay = 0.3f, int _maxSpawnNum = 4, float _speed = 1.f);
 };

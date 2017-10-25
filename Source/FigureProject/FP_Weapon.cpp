@@ -128,6 +128,11 @@ void AFP_Weapon::SpawnSkill()
 		Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		break;
+	case FIREWALL:
+		Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		Cast<AFP_FireBlastSpawnPoint>(Skill)->SetSkill("FireWall", 0.25f, 5);
+		break;
 	case ICEBALL:
 		Skill = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());

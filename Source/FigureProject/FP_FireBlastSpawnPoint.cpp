@@ -2,6 +2,8 @@
 
 #include "FP_FireBlastSpawnPoint.h"
 #include "FP_ComProjectile.h"
+#include "FP_FireBlast.h"
+#include "FP_FireWall.h"
 
 
 // Sets default values
@@ -34,12 +36,28 @@ void AFP_FireBlastSpawnPoint::Tick(float DeltaTime)
 
 	if (CurrentTime >= SpawnDelay)
 	{
-		if (CurrentFireBlastNum >= MaxFireBlastNum)
+		if (CurrentSpawnNum >= MaxSpawnNum)
 			Destroy();
 
-		++CurrentFireBlastNum;
+		++CurrentSpawnNum;
 		CurrentTime = 0.f;
 		FVector Location = this->GetActorLocation();
-		FireBlast = GetWorld()->SpawnActor<AFP_FireBlast>(Location, FRotator(0.f, 0.f, 0.f));
+
+		if(SkillName == "FireBlast")
+			FireSkill = GetWorld()->SpawnActor<AFP_FireBlast>(Location, FRotator(0.f, 0.f, 0.f));
+		else if (SkillName == "FireWall")
+		{
+			FireSkill = GetWorld()->SpawnActor<AFP_FireWall>(Location, FRotator(0.f, 0.f, 0.f));
+			FireSkill->SetActorScale3D(FVector(0.3f, 0.3f, 0.3f));
+		}
 	}
+}
+
+void AFP_FireBlastSpawnPoint::SetSkill(FString _skillName, float _spawnDelay, int _maxSpawnNum, float _speed)
+{
+	SkillName = _skillName;
+	SpawnDelay = _spawnDelay;
+	CurrentTime = SpawnDelay;
+	MaxSpawnNum = _maxSpawnNum;
+	Speed = _speed;
 }

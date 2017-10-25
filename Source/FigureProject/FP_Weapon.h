@@ -20,7 +20,7 @@ class FIGUREPROJECT_API AFP_Weapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFP_Weapon();
-	enum SKILLTYPE { FIREBALL, FIREBLAST, ICEBALL , ICEBLAST};
+	enum SKILLTYPE { FIREBALL, FIREBLAST, FIREWALL, ICEBALL , ICEBLAST};
 
 protected:
 	// Called when the game starts or when spawned

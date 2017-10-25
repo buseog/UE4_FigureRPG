@@ -128,6 +128,9 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_FireBlastSpawnPoint.h">
       <Filter>Source\FigureProject\06. Skill\00. Fire\01. FireBlast</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_FireWall.h">
+      <Filter>Source\FigureProject\99. Default</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">
@@ -225,6 +228,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_FireBlastSpawnPoint.cpp">
       <Filter>Source\FigureProject\06. Skill\00. Fire\01. FireBlast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_FireWall.cpp">
+      <Filter>Source\FigureProject\99. Default</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
