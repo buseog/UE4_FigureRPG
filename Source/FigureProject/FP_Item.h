@@ -33,24 +33,13 @@ public:
 	void ChangeMesh(FString Ref, UStaticMeshComponent* _StaticMesh);
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	FString Name;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	int Quantity;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	UStaticMeshComponent* StaticMesh;
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	UTexture2D* Icon;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	USphereComponent* CollisionSphere;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	UPointLightComponent* PointLight;
+	class UParticleSystemComponent* Particle;
 	
 	UFUNCTION()
 	virtual void OnProxOverlapBegin(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

@@ -8,9 +8,13 @@ AFP_Item_PowerUp::AFP_Item_PowerUp()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	LightColor = FColor(255, 0, 0);
+	/*LightColor = FColor(255, 0, 0);
 	ChangeMesh(FString("StaticMesh'/Game/Mesh/FP_Item_PowerUp.FP_Item_PowerUp'"), StaticMesh);
-	ChangeLight(LightColor);
+	ChangeLight(LightColor);*/
+
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Item/FP_PowerUp.FP_PowerUp'"));
+	Particle->SetTemplate(ParticleSystem.Object);
+	Particle->SetWorldScale3D(FVector(0.7f, 0.7f, 0.7f));
 }
 
 void AFP_Item_PowerUp::BeginPlay()

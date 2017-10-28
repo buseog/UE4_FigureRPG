@@ -23,12 +23,15 @@ AFP_Item::AFP_Item()
 
 	//ChangeMesh(FString("StaticMesh'/Game/FP_Item_MonsterRegenUp.FP_Item_MonsterRegenUp'"), StaticMesh);
 
-	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
-	PointLight->Intensity = 500.f;
-	//PointLight->LightColor = FColor(0, 0, 255);
-	PointLight->AttenuationRadius = 10.f;
-	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z - 10.f), FRotator(), false);
-	PointLight->SetupAttachment(RootComponent);
+	//PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
+	//PointLight->Intensity = 500.f;
+	////PointLight->LightColor = FColor(0, 0, 255);
+	//PointLight->AttenuationRadius = 10.f;
+	//PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z - 10.f), FRotator(), false);
+	//PointLight->SetupAttachment(RootComponent);
+
+	Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
+	Particle->SetupAttachment(RootComponent);
 
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	CollisionSphere->SetSphereRadius(4.f);
