@@ -26,7 +26,7 @@ void UFP_GameStart::ChooseFire()
 {
 	GetWorld()->SpawnActor<AFP_MonsterMgr>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
 	AFP_Weapon* Weapon = GetWorld()->SpawnActor<AFP_Weapon>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
-	Weapon->SetActiveSkill(AFP_Weapon::FIREBALL);
+	Weapon->SetActiveSkill(AFP_Weapon::FIREBLAST);
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	PlayerController->SetVisibility(AFP_PlayerController::GAMESTART, false);
