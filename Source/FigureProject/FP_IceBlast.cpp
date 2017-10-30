@@ -20,7 +20,7 @@ AFP_IceBlast::AFP_IceBlast()
 	//CollisionBox->SetHiddenInGame(false);
 
 	Particle->OnSystemFinished.AddDynamic(this, &AFP_IceBlast::OnFinished);
-	Damage = 0.005f;
+	Stat.Damage = 0.005f;
 
 
 }
@@ -36,7 +36,7 @@ void AFP_IceBlast::Tick(float DeltaTime)
 	AFP_ComCollision::CollisionWithMulti<UBoxComponent, AFP_Monster>(CollisionBox, Targets);
 	for (size_t i = 0; i < Targets.Num(); ++i)
 	{
-		Targets[i]->MyTakeDamage(Damage);
+		Targets[i]->MyTakeDamage(Player->Status.Attack * Stat.Damage);
 		if (Targets[i]->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(Targets[i]);
 

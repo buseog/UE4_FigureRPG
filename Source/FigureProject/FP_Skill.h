@@ -20,6 +20,15 @@ class FIGUREPROJECT_API AFP_Skill : public AActor
 	
 public:	
 	// Sets default values for this actor's properties
+
+	struct SkillStat
+	{
+		float Damage = 1.f;
+		float Speed = 1.f; //bullet speed
+		float CoolTimeRatio = 1.f; // attack speed
+		float Range = 1.f;
+	};
+
 	AFP_Skill();
 
 protected:
@@ -39,7 +48,11 @@ public:
 	FVector TargetDirection = FVector(0.f, 0.f, 0.f);
 	AFP_Player* Player;
 	AFP_Weapon* Weapon;
-	float Damage = 0.5f;
-	float Speed = 1.f;
-	float CoolTimeRatio = 1.f;
+
+	SkillStat Stat;
+
+	
+	
+
+	
 };

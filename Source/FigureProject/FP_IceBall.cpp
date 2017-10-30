@@ -15,19 +15,19 @@ AFP_IceBall::AFP_IceBall()
 	CollisionSphere->SetSphereRadius(1.f);
 	CollisionSphere->SetupAttachment(RootComponent);
 
-	Speed = 1.f;
+	Stat.Speed = 1.f;
 }
 
 void AFP_IceBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Speed * DeltaTime);
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
 
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(CollisionSphere);
 	if (TargetMonster != nullptr)
 	{
-		TargetMonster->MyTakeDamage(Damage);
+		TargetMonster->MyTakeDamage(Player->Status.Attack * Stat.Damage);
 		if (TargetMonster->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(TargetMonster);
 		

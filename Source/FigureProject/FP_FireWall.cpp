@@ -11,7 +11,7 @@ AFP_FireWall::AFP_FireWall()
 	ProxSphere->SetSphereRadius(50.f);
 	ProxSphere->SetupAttachment(RootComponent);
 	ProxSphere->SetHiddenInGame(false);
-	Damage = 0.005f;
+	Stat.Damage = 0.005f;
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireWall.FP_FireWall'"));
 	Particle->SetTemplate(ParticleSystem.Object);
@@ -35,14 +35,14 @@ void AFP_FireWall::Tick(float DeltaTime)
 
 	CurrentTime += DeltaTime;
 
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Speed * DeltaTime);
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
 
 	Targets.Empty();
 	AFP_ComCollision::CollisionWithMulti<USphereComponent, AFP_Monster>(ProxSphere, Targets);
 
 	for (int i = 0; i < Targets.Num(); ++i)
 	{
-		Targets[i]->MyTakeDamage(Damage);
+		Targets[i]->MyTakeDamage(Player->Status.Attack * Stat.Damage);
 
 		/*AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(this->GetActorLocation(), FRotator(0.f, 0.f, 0.f));
 		if (Impact == nullptr)

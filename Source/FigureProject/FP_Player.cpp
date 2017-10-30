@@ -140,11 +140,11 @@ void AFP_Player::StatusLevelUp(int _Type)
 		break;
 
 	case 2:
-		Status.Attack += 1.f;
+		Status.Attack += 0.01f;
 		break;
 
 	case 3:
-		Status.AttackRange += 10.f;
+		Status.AttackRange += 1.f;
 		break;
 
 	case 4:
@@ -176,6 +176,7 @@ void AFP_Player::ToggleStatus(UPrimitiveComponent* AActor, FKey Button)
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 	
 	PC->ToggleMainUI();
+	
 	
 
 	UE_LOG(LogClass, Log, TEXT("HI"));

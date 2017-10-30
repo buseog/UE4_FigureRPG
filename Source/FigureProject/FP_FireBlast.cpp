@@ -11,7 +11,7 @@ AFP_FireBlast::AFP_FireBlast()
 	ProxSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereProx"));
 	ProxSphere->SetSphereRadius(20.f);
 	ProxSphere->SetupAttachment(RootComponent);
-	Damage = 1.f;
+	Stat.Damage = 1.f;
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireBlastImpact.FP_FireBlastImpact'"));
 	Particle->SetTemplate(ParticleSystem.Object);
@@ -45,7 +45,7 @@ void AFP_FireBlast::Tick(float DeltaTime)
 	AFP_ComCollision::CollisionWithMulti<USphereComponent, AFP_Monster>(ProxSphere, Targets);
 	for (size_t i = 0; i < Targets.Num(); ++i)
 	{
-		Targets[i]->MyTakeDamage(Damage);
+		Targets[i]->MyTakeDamage(Player->Status.Attack * Stat.Damage);
 		if (Targets[i]->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(Targets[i]);
 

@@ -37,6 +37,7 @@ public:
 
 	void DeleteTargetMonsterInArray(AFP_Monster* _monster);
 	void SpawnSkill();
+	float GetStatfromSkill(FString _stat);
 	inline void SetActiveSkill(SKILLTYPE _type) { ActiveSkill = _type; }
 	
 	//UStaticMeshComponent* StaticMesh;
@@ -54,6 +55,7 @@ public:
 
 
 	SKILLTYPE ActiveSkill;
+	class AFP_Skill* Skill;
 	//UStaticMesh* Mesh;
 
 	

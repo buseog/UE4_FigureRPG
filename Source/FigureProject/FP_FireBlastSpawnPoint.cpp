@@ -11,7 +11,7 @@ AFP_FireBlastSpawnPoint::AFP_FireBlastSpawnPoint()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	Speed = 0.1f;
+	Stat.Speed = 0.1f;
 }
 
 // Called when the game starts or when spawned
@@ -30,7 +30,7 @@ void AFP_FireBlastSpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Speed * DeltaTime);
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
 
 	CurrentTime += DeltaTime;
 	Scale += DeltaTime;
@@ -64,5 +64,5 @@ void AFP_FireBlastSpawnPoint::SetSkill(FString _skillName, float _spawnDelay, in
 	SpawnDelay = _spawnDelay;
 	CurrentTime = SpawnDelay;
 	MaxSpawnNum = _maxSpawnNum;
-	Speed = _speed;
+	Stat.Speed = _speed;
 }

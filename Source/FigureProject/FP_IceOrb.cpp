@@ -15,8 +15,8 @@ AFP_IceOrb::AFP_IceOrb()
 	CollisionSphere->SetSphereRadius(2.f);
 	CollisionSphere->SetupAttachment(RootComponent);
 
-	Speed = 0.2f;
-	CoolTimeRatio = 3.f;
+	Stat.Speed = 0.2f;
+	Stat.CoolTimeRatio = 3.f;
 }
 
 void AFP_IceOrb::Tick(float DeltaTime)
@@ -26,12 +26,12 @@ void AFP_IceOrb::Tick(float DeltaTime)
 	if (Particle->AccumTickTime > 5.f)
 		Destroy();
 
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Speed * DeltaTime);
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
 
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(CollisionSphere);
 	if (TargetMonster != nullptr)
 	{
-		TargetMonster->MyTakeDamage(Damage);
+		TargetMonster->MyTakeDamage(Player->Status.Attack * Stat.Damage);
 		if (TargetMonster->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(TargetMonster);
 

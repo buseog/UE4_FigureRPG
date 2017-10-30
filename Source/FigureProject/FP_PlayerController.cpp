@@ -61,10 +61,16 @@ void AFP_PlayerController::ToggleMainUI()
 	if (nullptr == WidgetMap[MAINUI])
 		return;
 
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+
 	if (bShowMainUI)
 	{
 		bShowMainUI = false;
 		Cast<UFP_MainUI>(WidgetMap[MAINUI])->eState = UFP_MainUI::END;
+
+		PC->SetPause(false);
 		
 	}
 	else
@@ -76,6 +82,8 @@ void AFP_PlayerController::ToggleMainUI()
 		Cast<UFP_MainUI>(WidgetMap[MAINUI])->TimeAcc = 0.f;
 		Cast<UFP_MainUI>(WidgetMap[MAINUI])->eState = UFP_MainUI::START;
 		WidgetMap[MAINUI]->AddToViewport();
+
+		PC->SetPause(true);
 	}
 }
 

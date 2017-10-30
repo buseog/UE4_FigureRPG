@@ -12,6 +12,7 @@
 #include "FP_IceOrb.h"
 #include "FP_FireBlastSpawnPoint.h"
 #include "FP_FireBlast.h"
+#include "FP_FireWall.h"
 
 
 struct CompareDist
@@ -62,15 +63,15 @@ void AFP_Weapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
+	/*UE_LOG(LogClass, Log, TEXT("%f"), GetRangefromSkill());*/
 	
 	
 	//SphereRadius
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
-	
-	SphereComponent->SetSphereRadius(pPlayer->GetStatus().AttackRange);
+
+	SphereComponent->SetSphereRadius(pPlayer->GetStatus().AttackRange * GetStatfromSkill("Range"));
 
 	if(TargetMonsters.Num() >= 1)
 	{
@@ -94,7 +95,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 
 		//attack
 		TimeAcc += DeltaTime;
-		if (TimeAcc > pPlayer->GetStatus().AttackSpeed * ReloadTime)
+		if (TimeAcc > pPlayer->GetStatus().AttackSpeed * GetStatfromSkill("AttackSpeed"))
 		{
 			TimeAcc = 0.f;
 			SpawnSkill();
@@ -122,7 +123,6 @@ void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 
 void AFP_Weapon::SpawnSkill()
 {
-	AFP_Skill* Skill = nullptr;
 	switch (ActiveSkill)
 	{
 	case FIREBALL:
@@ -149,11 +149,99 @@ void AFP_Weapon::SpawnSkill()
 	case ICEORB:
 		Skill = GetWorld()->SpawnActor<AFP_IceOrb>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		ReloadTime = Skill->CoolTimeRatio;
+		ReloadTime = Skill->Stat.CoolTimeRatio;
 		break;
 	}
 	
 
 
 	
+}
+
+float AFP_Weapon::GetStatfromSkill(FString _stat)
+{
+	UClass* SkillClass = nullptr;
+	AFP_Skill* Skill = nullptr;
+	switch (ActiveSkill)
+	{
+	case FIREBALL:
+		SkillClass = AFP_FireBall::StaticClass();
+		Skill = SkillClass->GetDefaultObject<AFP_FireBall>();
+
+		if (_stat == "Damage")
+			return Skill->Stat.Damage;
+		else if (_stat == "Range")
+			return Skill->Stat.Range;
+		else if (_stat == "Speed")
+			return Skill->Stat.Speed;
+		else if (_stat == "AttackSpeed")
+			return Skill->Stat.CoolTimeRatio;
+
+	case FIREBLAST:
+		SkillClass = AFP_FireBlast::StaticClass();
+		Skill = SkillClass->GetDefaultObject<AFP_FireBlast>();
+		
+		if (_stat == "Damage")
+			return Skill->Stat.Damage;
+		else if (_stat == "Range")
+			return Skill->Stat.Range;
+		else if (_stat == "Speed")
+			return Skill->Stat.Speed;
+		else if (_stat == "AttackSpeed")
+			return Skill->Stat.CoolTimeRatio;
+
+	case FIREWALL:
+		SkillClass = AFP_FireWall::StaticClass();
+		Skill = SkillClass->GetDefaultObject<AFP_FireWall>();
+		
+		if (_stat == "Damage")
+			return Skill->Stat.Damage;
+		else if (_stat == "Range")
+			return Skill->Stat.Range;
+		else if (_stat == "Speed")
+			return Skill->Stat.Speed;
+		else if (_stat == "AttackSpeed")
+			return Skill->Stat.CoolTimeRatio;
+
+	case ICEBALL:
+		SkillClass = AFP_IceBall::StaticClass();
+		Skill = SkillClass->GetDefaultObject<AFP_IceBall>();
+		
+		if (_stat == "Damage")
+			return Skill->Stat.Damage;
+		else if (_stat == "Range")
+			return Skill->Stat.Range;
+		else if (_stat == "Speed")
+			return Skill->Stat.Speed;
+		else if (_stat == "AttackSpeed")
+			return Skill->Stat.CoolTimeRatio;
+
+	case ICEBLAST:
+		SkillClass = AFP_IceBlast::StaticClass();
+		Skill = SkillClass->GetDefaultObject<AFP_IceBlast>();
+	
+		if (_stat == "Damage")
+			return Skill->Stat.Damage;
+		else if (_stat == "Range")
+			return Skill->Stat.Range;
+		else if (_stat == "Speed")
+			return Skill->Stat.Speed;
+		else if (_stat == "AttackSpeed")
+			return Skill->Stat.CoolTimeRatio;
+
+	case ICEORB:
+		SkillClass = AFP_IceOrb::StaticClass();
+		Skill = SkillClass->GetDefaultObject<AFP_IceOrb>();
+		
+		if (_stat == "Damage")
+			return Skill->Stat.Damage;
+		else if (_stat == "Range")
+			return Skill->Stat.Range;
+		else if (_stat == "Speed")
+			return Skill->Stat.Speed;
+		else if (_stat == "AttackSpeed")
+			return Skill->Stat.CoolTimeRatio;
+
+	}
+	return 0.f;
 }
