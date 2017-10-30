@@ -36,9 +36,14 @@ AFP_Player::AFP_Player()
 	CollisionSphere->SetSphereRadius(12.f);
 	CollisionSphere->SetupAttachment(RootComponent);
 	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AFP_Player::OnProxOverlapBegin);
-
-	OnClicked.AddDynamic(this, &AFP_Player::ToggleStatus);
-
+	
+	
+	MouseSphere = CreateDefaultSubobject<USphereComponent>(TEXT("MouseSphere"));
+	MouseSphere->SetSphereRadius(10.f);
+	//MouseSphere->SetupAttachment(RootComponent);
+	MouseSphere->OnClicked.AddDynamic(this, &AFP_Player::ToggleStatus);
+	MouseSphere->SetCollisionProfileName("BlockAll");
+	
 	Level.Level = 1;
 	Level.Exp = 0.f;
 	Level.FullExp = 100.f;
@@ -58,6 +63,10 @@ AFP_Player::AFP_Player()
 	Particle->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Player/P_Player.P_Player'"));
 	Particle->SetTemplate(ParticleSystem.Object);
+	
+	Particle->SetVisibility(false);
+
+
 }
 
 
@@ -65,6 +74,7 @@ AFP_Player::AFP_Player()
 void AFP_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
 
 // Called every frame
@@ -160,10 +170,15 @@ void AFP_Player::StatusLevelUp(int _Type)
 }
 
 
-void AFP_Player::ToggleStatus(AActor* AActor, FKey Button)
+void AFP_Player::ToggleStatus(UPrimitiveComponent* AActor, FKey Button)
 {
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	Cast<AFP_PlayerController>(Controller)->ToggleStatus();
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	
+	PC->ToggleMainUI();
+	
+
+	UE_LOG(LogClass, Log, TEXT("HI"));
 }
 
 void AFP_Player::OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult)

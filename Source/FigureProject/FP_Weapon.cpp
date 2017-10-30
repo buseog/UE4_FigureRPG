@@ -9,8 +9,10 @@
 #include "FP_HUD.h"
 #include "FP_IceBall.h"
 #include "FP_IceBlast.h"
+#include "FP_IceOrb.h"
 #include "FP_FireBlastSpawnPoint.h"
 #include "FP_FireBlast.h"
+
 
 struct CompareDist
 {
@@ -92,7 +94,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 
 		//attack
 		TimeAcc += DeltaTime;
-		if (TimeAcc > pPlayer->GetStatus().AttackSpeed)
+		if (TimeAcc > pPlayer->GetStatus().AttackSpeed * ReloadTime)
 		{
 			TimeAcc = 0.f;
 			SpawnSkill();
@@ -143,6 +145,11 @@ void AFP_Weapon::SpawnSkill()
 		break;
 	case ICEBLAST:
 		Skill = GetWorld()->SpawnActor<AFP_IceBlast>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		break;
+	case ICEORB:
+		Skill = GetWorld()->SpawnActor<AFP_IceOrb>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		ReloadTime = Skill->CoolTimeRatio;
 		break;
 	}
 	

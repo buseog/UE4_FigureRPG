@@ -5,13 +5,14 @@
 #include "FP_Player.h"
 #include "FP_StageWidget.h"
 #include "FP_GameStart.h"
+#include "FP_MainUI.h"
 
 
 AFP_PlayerController::AFP_PlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
-	bShowStatus = false;
+	bShowMainUI = false;
 
 	
 
@@ -35,16 +36,19 @@ void AFP_PlayerController::BeginPlay()
 	UUserWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
 	WidgetMap.Add(STAGE, StageWidget);
 
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_MainUI.FP_MainUI_C'");
+	UClass* MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UUserWidget* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
+	WidgetMap.Add(MAINUI, MainUIWidget);
+
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
-	WidgetMap[STATUS]->AddToViewport();
-
+	
 	
 	WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);
-	WidgetMap[STATUS]->SetVisibility(ESlateVisibility::Hidden);
 	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
+	
 
-	//WidgetMap[STAGE]->SetRenderTranslation(FVector2D(500.f, 50.f));
 	WidgetMap[STATUS]->SetRenderTranslation(FVector2D(0.f, 500.f));
 
 
@@ -52,24 +56,33 @@ void AFP_PlayerController::BeginPlay()
 
 }
 
-void AFP_PlayerController::ToggleStatus()
+void AFP_PlayerController::ToggleMainUI()
 {
-	if (nullptr == WidgetMap[STATUS])
+	if (nullptr == WidgetMap[MAINUI])
 		return;
 
-	if (bShowStatus)
+	if (bShowMainUI)
 	{
-		bShowStatus = false;
-		WidgetMap[STATUS]->SetVisibility(ESlateVisibility::Hidden);
+		bShowMainUI = false;
+		Cast<UFP_MainUI>(WidgetMap[MAINUI])->eState = UFP_MainUI::END;
+		
 	}
 	else
 	{
-		bShowStatus = true;
-		WidgetMap[STATUS]->SetVisibility(ESlateVisibility::Visible);
+		if (WidgetMap[MAINUI]->IsInViewport() == true)
+			return;
+
+		bShowMainUI = true;
+		Cast<UFP_MainUI>(WidgetMap[MAINUI])->TimeAcc = 0.f;
+		Cast<UFP_MainUI>(WidgetMap[MAINUI])->eState = UFP_MainUI::START;
+		WidgetMap[MAINUI]->AddToViewport();
 	}
 }
 
-void AFP_PlayerController::SetVisibility(int32 _WidgetNum, ESlateVisibility _visibility)
+void AFP_PlayerController::SetVisibility(eWIDGET _WidgetNum, bool _isvisible)
 {
-	WidgetMap[_WidgetNum]->SetVisibility(_visibility);
+	if(_isvisible == true)
+		WidgetMap[_WidgetNum]->SetVisibility(ESlateVisibility::Visible);
+	else
+		WidgetMap[_WidgetNum]->SetVisibility(ESlateVisibility::Hidden);
 }

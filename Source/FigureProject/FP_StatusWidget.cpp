@@ -2,15 +2,23 @@
 
 #include "FP_StatusWidget.h"
 #include "Runtime/UMG/Public/Components/Button.h"
+#include "Engine.h"
+#include "FP_PlayerController.h"
 #include "FP_Player.h"
+#include "FP_MainUI.h"
 
 void UFP_StatusWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
+
+}
+bool UFP_StatusWidget::Initialize()
+{
+	Super::Initialize();
+
 	UButton* Button = (UButton*)GetWidgetFromName(TEXT("Button_HP"));
 	Button->OnClicked.AddDynamic(this, &UFP_StatusWidget::Button_HP);
-	
+
 	Button = (UButton*)GetWidgetFromName(TEXT("Button_HpRegen"));
 	Button->OnClicked.AddDynamic(this, &UFP_StatusWidget::Button_HpRegen);
 
@@ -35,8 +43,8 @@ void UFP_StatusWidget::NativeConstruct()
 	Button = (UButton*)GetWidgetFromName(TEXT("Button_Splash"));
 	Button->OnClicked.AddDynamic(this, &UFP_StatusWidget::Button_Splash);
 
+	return true;
 }
-
 void UFP_StatusWidget::Button_HP()
 {
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
@@ -125,4 +133,20 @@ void UFP_StatusWidget::Button_Splash()
 		return;
 
 	pPlayer->StatusLevelUp(8);
+}
+
+void UFP_StatusWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
+{
+	Super::NativeTick(MyGeometry, DeltaTime);
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	if (PC->bShowMainUI == false)
+	{
+		RemoveFromViewport();
+		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->isStatClicked = false;
+	}
+		
+
 }

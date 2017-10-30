@@ -18,7 +18,8 @@ class FIGUREPROJECT_API UFP_StatusWidget : public UUserWidget
 	
 public:
 	virtual void NativeConstruct() override;
-
+	virtual bool Initialize() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = Button)

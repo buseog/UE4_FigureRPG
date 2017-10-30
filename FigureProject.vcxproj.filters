@@ -119,6 +119,13 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_IceBlast.h">
       <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="..\..\Source\FigureProject\FP_IceOrb.h">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\02. IceOrb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_MainUI.h">
+      <Filter>Source\FigureProject\98. UI\05. MainUI</Filter>
+=======
     <ClInclude Include="..\..\Source\FigureProject\FP_FireBall.h">
       <Filter>Source\FigureProject\06. Skill\00. Fire\00. FireBall</Filter>
     </ClInclude>
@@ -130,6 +137,7 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_FireWall.h">
       <Filter>Source\FigureProject\99. Default</Filter>
+>>>>>>> remotes/origin/Hong
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +228,13 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_IceBlast.cpp">
       <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="..\..\Source\FigureProject\FP_IceOrb.cpp">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\02. IceOrb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_MainUI.cpp">
+      <Filter>Source\FigureProject\98. UI\05. MainUI</Filter>
+=======
     <ClCompile Include="..\..\Source\FigureProject\FP_FireBall.cpp">
       <Filter>Source\FigureProject\06. Skill\00. Fire\00. FireBall</Filter>
     </ClCompile>
@@ -231,6 +246,7 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_FireWall.cpp">
       <Filter>Source\FigureProject\99. Default</Filter>
+>>>>>>> remotes/origin/Hong
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,11 +337,19 @@
     <Filter Include="Source\FigureProject\06. Skill\01. Ice\01. IceBlast">
       <UniqueIdentifier>{650b59ae-4b0c-400f-b4fc-bd60bb88cace}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
+    <Filter Include="Source\FigureProject\06. Skill\01. Ice\02. IceOrb">
+      <UniqueIdentifier>{b97e8587-99bc-4eb1-bb40-ae8f8be9050a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\05. MainUI">
+      <UniqueIdentifier>{0bb9bc7d-007e-4dc7-86e9-ff45a4a56111}</UniqueIdentifier>
+=======
     <Filter Include="Source\FigureProject\06. Skill\00. Fire\00. FireBall">
       <UniqueIdentifier>{48a83775-5c2f-4055-aba9-bbc65eaf7da5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\FigureProject\06. Skill\00. Fire\01. FireBlast">
       <UniqueIdentifier>{6d2b1ee2-ea83-4ccd-84b8-df4abc3f22cb}</UniqueIdentifier>
+>>>>>>> remotes/origin/Hong
     </Filter>
   </ItemGroup>
 </Project>

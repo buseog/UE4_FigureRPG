@@ -29,14 +29,14 @@ void UFP_GameStart::ChooseFire()
 	Weapon->SetActiveSkill(AFP_Weapon::FIREBLAST);
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	PlayerController->SetVisibility(0, ESlateVisibility::Hidden);
-	PlayerController->SetVisibility(1, ESlateVisibility::Visible);
+	PlayerController->SetVisibility(AFP_PlayerController::GAMESTART, false);
+	PlayerController->SetVisibility(AFP_PlayerController::STAGE, true);
 
-	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(1));
+	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(AFP_PlayerController::STAGE));
 	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
 
 
-	Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->SetActorHiddenInGame(false);
+	Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->Particle->SetVisibility(true);
 
 
 }
@@ -45,15 +45,15 @@ void UFP_GameStart::ChooseIce()
 {
 	GetWorld()->SpawnActor<AFP_MonsterMgr>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
 	AFP_Weapon* Weapon = GetWorld()->SpawnActor<AFP_Weapon>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
-	Weapon->SetActiveSkill(AFP_Weapon::ICEBLAST);
+	Weapon->SetActiveSkill(AFP_Weapon::ICEORB);
 
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	PlayerController->SetVisibility(0, ESlateVisibility::Hidden);
-	PlayerController->SetVisibility(1, ESlateVisibility::Visible);
+	PlayerController->SetVisibility(AFP_PlayerController::GAMESTART, false);
+	PlayerController->SetVisibility(AFP_PlayerController::STAGE, true);
 
-	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(1));
+	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(AFP_PlayerController::STAGE));
 	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
 
 
-	Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->SetActorHiddenInGame(false);
+	Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->Particle->SetVisibility(true);
 }
