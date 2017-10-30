@@ -29,9 +29,10 @@ public:
 	AFP_Skill* FireSkill;
 	float SpawnDelay = 0.3f;
 	float CurrentTime = 0.3f;
-	int MaxSpawnNum = 4;
+	int MaxSpawnNum = 2;
 	int CurrentSpawnNum = 0;
 	FString SkillName = "FireBlast";
+	float Scale = 0.f;
 
 public:
 	void SetSkill(FString _skillName, float _spawnDelay = 0.3f, int _maxSpawnNum = 4, float _speed = 1.f);

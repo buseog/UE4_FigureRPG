@@ -11,7 +11,7 @@ AFP_FireBlastSpawnPoint::AFP_FireBlastSpawnPoint()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	Speed = 0.1f;
 }
 
 // Called when the game starts or when spawned
@@ -33,11 +33,15 @@ void AFP_FireBlastSpawnPoint::Tick(float DeltaTime)
 	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Speed * DeltaTime);
 
 	CurrentTime += DeltaTime;
+	Scale += DeltaTime;
 
 	if (CurrentTime >= SpawnDelay)
 	{
 		if (CurrentSpawnNum >= MaxSpawnNum)
+		{
 			Destroy();
+			return;
+		}
 
 		++CurrentSpawnNum;
 		CurrentTime = 0.f;
@@ -47,8 +51,9 @@ void AFP_FireBlastSpawnPoint::Tick(float DeltaTime)
 			FireSkill = GetWorld()->SpawnActor<AFP_FireBlast>(Location, FRotator(0.f, 0.f, 0.f));
 		else if (SkillName == "FireWall")
 		{
-			FireSkill = GetWorld()->SpawnActor<AFP_FireWall>(Location, FRotator(0.f, 0.f, 0.f));
-			FireSkill->SetActorScale3D(FVector(0.3f, 0.3f, 0.3f));
+			
+			FireSkill = GetWorld()->SpawnActor<AFP_FireWall>(AFP_FireWall::StaticClass(),FTransform(FRotator(0.f,0.f,0.f),Location, FVector(0.1f + Scale * 0.3f, 0.1f + Scale * 0.3f, 0.1f)));
+			//FireSkill->SetActorScale3D(FVector(0.1f + Scale * 2.f, 0.1f + Scale * 2.f, 0.1f + Scale * 2.f));
 		}
 	}
 }

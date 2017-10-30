@@ -58,7 +58,6 @@ AFP_Player::AFP_Player()
 	Particle->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Player/P_Player.P_Player'"));
 	Particle->SetTemplate(ParticleSystem.Object);
-	
 }
 
 

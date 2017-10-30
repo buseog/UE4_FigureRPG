@@ -10,6 +10,7 @@
 #include "FP_IceBall.h"
 #include "FP_IceBlast.h"
 #include "FP_FireBlastSpawnPoint.h"
+#include "FP_FireBlast.h"
 
 struct CompareDist
 {
@@ -60,9 +61,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	float fYaw = GetActorRotation().Yaw;
-	FirePoint.X = 12.f * cosf((fYaw * PI) / 180.f);
-	FirePoint.Y = 12.f * sinf((fYaw * PI) / 180.f);
+	
 	
 	//SphereRadius
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
@@ -73,7 +72,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 
 	if(TargetMonsters.Num() >= 1)
 	{
-		TargetMonsters.Sort(CompareDist(FirePoint));
+		TargetMonsters.Sort(CompareDist(FVector(0.f,0.f,0.f)));
 
 		FVector TargetEnemy = TargetMonsters[0]->GetActorLocation();
 		//DrawDebugLine(GetWorld(), FVector(0.f, 0.f, 0.f), TargetEnemy, FColor::Red);
@@ -86,6 +85,10 @@ void AFP_Weapon::Tick(float DeltaTime)
 			AngleZ = 2 * PI - acosf(fCos);
 
 		SetActorRotation(FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+
+		float fYaw = GetActorRotation().Yaw;
+		FirePoint.X = 12.f * cosf((fYaw * PI) / 180.f);
+		FirePoint.Y = 12.f * sinf((fYaw * PI) / 180.f);
 
 		//attack
 		TimeAcc += DeltaTime;
@@ -125,13 +128,14 @@ void AFP_Weapon::SpawnSkill()
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		break;
 	case FIREBLAST:
-		Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		//Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = GetWorld()->SpawnActor<AFP_FireBlast>(TargetMonsters[0]->GetActorLocation(), FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		break;
 	case FIREWALL:
 		Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		Cast<AFP_FireBlastSpawnPoint>(Skill)->SetSkill("FireWall", 0.25f, 5);
+		Cast<AFP_FireBlastSpawnPoint>(Skill)->SetSkill("FireWall", 0.1f, 7 , 0.75f);
 		break;
 	case ICEBALL:
 		Skill = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));

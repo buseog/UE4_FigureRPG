@@ -14,7 +14,8 @@ AFP_Item_PowerUp::AFP_Item_PowerUp()
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Item/FP_PowerUp.FP_PowerUp'"));
 	Particle->SetTemplate(ParticleSystem.Object);
-	Particle->SetWorldScale3D(FVector(0.7f, 0.7f, 0.7f));
+	Particle->SetWorldScale3D(FVector(0.4f, 0.4f, 0.4f));
+	Particle->SetVectorParameter("Color", FVector(0, 0, 255));
 }
 
 void AFP_Item_PowerUp::BeginPlay()

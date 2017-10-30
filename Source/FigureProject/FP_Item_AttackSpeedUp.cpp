@@ -14,7 +14,7 @@ AFP_Item_AttackSpeedUp::AFP_Item_AttackSpeedUp()
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Item/FP_AttackSpeedUp.FP_AttackSpeedUp'"));
 	Particle->SetTemplate(ParticleSystem.Object);
-	Particle->SetWorldScale3D(FVector(0.6f, 0.6f, 0.6f));
+	Particle->SetWorldScale3D(FVector(0.4f, 0.4f, 0.4f));
 }
 
 void AFP_Item_AttackSpeedUp::BeginPlay()

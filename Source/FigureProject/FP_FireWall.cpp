@@ -10,11 +10,12 @@ AFP_FireWall::AFP_FireWall()
 	ProxSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereProx"));
 	ProxSphere->SetSphereRadius(50.f);
 	ProxSphere->SetupAttachment(RootComponent);
-	//ProxSphere->SetHiddenInGame(false);
+	ProxSphere->SetHiddenInGame(false);
 	Damage = 0.005f;
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireWall.FP_FireWall'"));
 	Particle->SetTemplate(ParticleSystem.Object);
+	//Particle->SetWorldScale3D(FVector(0.3f, 0.3f, 0.3f));
 }
 
 // Called when the game starts or when spawned
@@ -28,6 +29,9 @@ void AFP_FireWall::BeginPlay()
 void AFP_FireWall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	FVector CurrentScale = Particle->RelativeScale3D;
+	//Particle->SetWorldScale3D(FVector(CurrentScale.X - CurrentTime * 0.1f, CurrentScale.Y - CurrentTime * 0.1f, CurrentScale.Z - CurrentTime * 0.1f));
 
 	CurrentTime += DeltaTime;
 

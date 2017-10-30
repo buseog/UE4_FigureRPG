@@ -23,7 +23,7 @@ struct FPlayerStatus
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float AttackRange = 50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float AttackSpeed = 0.5f;
+	float AttackSpeed = 1.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float BulletSpeed = 100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)

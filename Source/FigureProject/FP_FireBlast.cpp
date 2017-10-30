@@ -16,6 +16,7 @@ AFP_FireBlast::AFP_FireBlast()
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireBlastImpact.FP_FireBlastImpact'"));
 	Particle->SetTemplate(ParticleSystem.Object);
 	Particle->SetupAttachment(RootComponent);
+	Particle->SetWorldScale3D(FVector(0.7f, 0.7f, 0.7f));
 }
 
 // Called when the game starts or when spawned
