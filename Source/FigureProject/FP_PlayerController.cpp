@@ -49,7 +49,7 @@ void AFP_PlayerController::BeginPlay()
 	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
 	
 
-	WidgetMap[STATUS]->SetRenderTranslation(FVector2D(0.f, 500.f));
+	WidgetMap[STATUS]->SetRenderTranslation(FVector2D(200.f, 500.f));
 
 
 

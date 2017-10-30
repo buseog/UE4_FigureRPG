@@ -13,7 +13,8 @@
 
 AFP_HUD::AFP_HUD()
 {
-	ConstructorHelpers::FObjectFinder<UFont> FontObject(TEXT("Font'/Game/Roboto-Regular_Font.Roboto-Regular_Font'"));
+	ConstructorHelpers::FObjectFinder<UFont> FontObject(TEXT("Font'/Game/NanumPen_Font.NanumPen_Font'"));
+	
 	HudFont = FontObject.Object;
 }
 
