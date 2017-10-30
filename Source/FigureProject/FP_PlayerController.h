@@ -10,8 +10,7 @@
  * 
  */
 
-enum eSTAT { HP, HPREGEN, ATTACK, ATTACKRANGE, ATTACKSPEED };
-enum eWIDGET { GAMESTART,STAGE, STATUS};
+
 
 class UFP_StatusWidget;
 
@@ -21,13 +20,16 @@ class FIGUREPROJECT_API AFP_PlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
+	enum eSTAT { HP, HPREGEN, ATTACK, ATTACKRANGE, ATTACKSPEED };
+	enum eWIDGET { GAMESTART, STAGE, STATUS, MAINUI };
+
 	AFP_PlayerController();
 
 public:
 	virtual void BeginPlay() override;
 	
-private:
-	bool	bShowStatus;
+public:
+	bool	bShowMainUI;
 
 public:
 	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = StatusUI)
@@ -35,16 +37,14 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = StatusUI)
 	UFP_StatusWidget* StatusWidget;*/
+	
+	TMap<eWIDGET, UUserWidget*> WidgetMap;
 
-	UPROPERTY()
-	TMap<int32, UUserWidget*> WidgetMap;
-
-	inline UUserWidget* GetWidgetMap(int32 _key) { return WidgetMap[_key]; }
+	inline UUserWidget* GetWidgetMap(eWIDGET _key) { return WidgetMap[_key]; }
 
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
-	void ToggleStatus();
+	void ToggleMainUI();
 
-	UFUNCTION()
-	void SetVisibility(int32 _WidgetNum, ESlateVisibility _visibility);
+	void SetVisibility(eWIDGET _WidgetNum, bool _isvisible);
 };

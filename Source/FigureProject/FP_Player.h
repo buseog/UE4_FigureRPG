@@ -23,7 +23,7 @@ struct FPlayerStatus
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float AttackRange = 50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float AttackSpeed = 0.5f;
+	float AttackSpeed = 1.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float BulletSpeed = 100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
@@ -114,8 +114,8 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Player)
 	class USphereComponent* CollisionSphere;
 
-	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
-	class USphereComponent* SightSphere;*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+	class USphereComponent* MouseSphere;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
 	TSubclassOf<AFP_Weapon> Weapon;
@@ -134,7 +134,7 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
-	void ToggleStatus(AActor* AActor, FKey Button);
+	void ToggleStatus(UPrimitiveComponent* AActor, FKey Button);
 
 	UFUNCTION(BlueprintCallable, Category = Status)
 	struct FPlayerStatus GetStatus() { return Status; }
@@ -147,4 +147,6 @@ public:
 
 	//Ã¶ÀÇ Ãß°¡
 	void SetStat(int Type, float Diff, float Duration, FColor Color = FColor(0.f, 0.f, 0.f));
+
+	FName Test;
 };

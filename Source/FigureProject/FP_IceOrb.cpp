@@ -12,7 +12,7 @@ AFP_IceOrb::AFP_IceOrb()
 	Particle->SetWorldScale3D(FVector(0.1f, 0.1f, 0.1f));
 
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
-	CollisionSphere->SetSphereRadius(1.f);
+	CollisionSphere->SetSphereRadius(2.f);
 	CollisionSphere->SetupAttachment(RootComponent);
 
 	Speed = 0.2f;
@@ -22,6 +22,9 @@ AFP_IceOrb::AFP_IceOrb()
 void AFP_IceOrb::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (Particle->AccumTickTime > 5.f)
+		Destroy();
 
 	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Speed * DeltaTime);
 

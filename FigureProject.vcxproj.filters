@@ -122,6 +122,12 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_IceBlast.h">
       <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_IceOrb.h">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\02. IceOrb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_MainUI.h">
+      <Filter>Source\FigureProject\98. UI\05. MainUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">
@@ -214,6 +220,12 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_IceBlast.cpp">
       <Filter>Source\FigureProject\06. Skill\01. Ice\01. IceBlast</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_IceOrb.cpp">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\02. IceOrb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_MainUI.cpp">
+      <Filter>Source\FigureProject\98. UI\05. MainUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -302,6 +314,12 @@
     </Filter>
     <Filter Include="Source\FigureProject\06. Skill\01. Ice\01. IceBlast">
       <UniqueIdentifier>{650b59ae-4b0c-400f-b4fc-bd60bb88cace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\01. Ice\02. IceOrb">
+      <UniqueIdentifier>{b97e8587-99bc-4eb1-bb40-ae8f8be9050a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\05. MainUI">
+      <UniqueIdentifier>{0bb9bc7d-007e-4dc7-86e9-ff45a4a56111}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
