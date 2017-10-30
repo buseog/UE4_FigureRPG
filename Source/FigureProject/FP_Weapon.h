@@ -20,7 +20,7 @@ class FIGUREPROJECT_API AFP_Weapon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFP_Weapon();
-	enum SKILLTYPE { FIREBALL, ICEBALL , ICEBLAST};
+	enum SKILLTYPE { FIREBALL, ICEBALL , ICEBLAST, ICEORB};
 
 protected:
 	// Called when the game starts or when spawned
@@ -45,6 +45,7 @@ public:
 	float TimeAcc = 0.f;
 	FVector FirePoint = FVector(0.f,0.f,0.f);
 	float Damage = 1.f;
+	float ReloadTime = 1.f;
 
 	UPROPERTY()
 	TArray<AFP_Monster*> TargetMonsters;

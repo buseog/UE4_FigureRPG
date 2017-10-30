@@ -41,5 +41,5 @@ public:
 	AFP_Weapon* Weapon;
 	float Damage = 0.5f;
 	float Speed = 1.f;
-	
+	float CoolTimeRatio = 1.f;
 };
