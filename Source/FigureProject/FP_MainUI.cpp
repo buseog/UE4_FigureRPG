@@ -22,10 +22,10 @@ bool UFP_MainUI::Initialize()
 
 	UButton* Button = (UButton*)GetWidgetFromName(TEXT("Stat"));
 	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Stat);
-
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Skill"));
+	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Skill);
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Rune"));
@@ -110,9 +110,22 @@ void UFP_MainUI::Button_Stat()
 	{
 		StatWidget->RemoveFromViewport();
 		isStatClicked = false;
+	}	
+}
+
+void UFP_MainUI::Button_Skill()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	UUserWidget* SkillWidget = Cast<AFP_PlayerController>(Controller)->GetWidgetMap(AFP_PlayerController::SKILLUI);
+
+	if (isSkillClicked == false)
+	{
+		SkillWidget->AddToViewport();
+		isSkillClicked = true;
 	}
-
-	
-
-	
+	else
+	{
+		SkillWidget->RemoveFromViewport();
+		isSkillClicked = false;
+	}
 }

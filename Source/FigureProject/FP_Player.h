@@ -35,6 +35,27 @@ struct FPlayerStatus
 };
 
 USTRUCT(BlueprintType)
+struct FPlayerSkillLv
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireBall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireBlast = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireWall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceBall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceBlast = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceOrb = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int SkillPoint = 10;
+};
+
+USTRUCT(BlueprintType)
 struct FPlayerLevel
 {
 	GENERATED_USTRUCT_BODY()
@@ -98,6 +119,9 @@ public:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	struct FPlayerStatus Status;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	struct FPlayerSkillLv SkillLv;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
 	struct FPlayerLevel	Level;

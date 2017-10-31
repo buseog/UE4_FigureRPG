@@ -6,6 +6,7 @@
 #include "FP_StageWidget.h"
 #include "FP_GameStart.h"
 #include "FP_MainUI.h"
+#include "FP_SkillUI.h"
 
 
 AFP_PlayerController::AFP_PlayerController()
@@ -41,6 +42,12 @@ void AFP_PlayerController::BeginPlay()
 	UUserWidget* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
 	WidgetMap.Add(MAINUI, MainUIWidget);
 
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_SkillUI.FP_SkillUI_C'");
+	UClass* SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UUserWidget* SkillUIWidget = CreateWidget<UFP_SkillUI>(this, SkillUI);
+	WidgetMap.Add(SKILLUI, SkillUIWidget);
+
+
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
 	
@@ -49,7 +56,8 @@ void AFP_PlayerController::BeginPlay()
 	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
 	
 
-	WidgetMap[STATUS]->SetRenderTranslation(FVector2D(200.f, 500.f));
+	WidgetMap[STATUS]->SetRenderTranslation(FVector2D(300.f, 500.f));
+	WidgetMap[SKILLUI]->SetRenderTranslation(FVector2D(300.f, 500.f));
 
 
 

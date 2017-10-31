@@ -10,6 +10,7 @@
 #include "FP_Player.h"
 #include "FP_StageWidget.h"
 #include "FP_StatusWidget.h"
+#include "FP_SkillUI.h"
 
 void UFP_GameStart::NativeConstruct()
 {
@@ -36,8 +37,9 @@ void UFP_GameStart::ChooseFire()
 	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
 
 
-	Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->Particle->SetVisibility(true);
-
+	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	player->Particle->SetVisibility(true);
+	player->SkillLv.FireBall = 1;
 
 }
 
@@ -55,5 +57,10 @@ void UFP_GameStart::ChooseIce()
 	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
 
 
-	Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->Particle->SetVisibility(true);
+	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	player->Particle->SetVisibility(true);
+	player->SkillLv.IceBall = 1;
+
+	UFP_SkillUI* SkillUI = Cast<UFP_SkillUI>(PlayerController->GetWidgetMap(AFP_PlayerController::SKILLUI));
+	SkillUI->ActiveIceBall();
 }

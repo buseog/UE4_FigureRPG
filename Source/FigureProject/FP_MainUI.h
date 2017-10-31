@@ -25,6 +25,7 @@ public:
 	STATE eState = IDLE;
 
 	bool isStatClicked = false;
+	bool isSkillClicked = false;
 
 public:
 	virtual void NativeConstruct() override;
@@ -35,5 +36,7 @@ public:
 
 	UFUNCTION()
 	void Button_Stat();
+	UFUNCTION()
+	void Button_Skill();
 	
 };
