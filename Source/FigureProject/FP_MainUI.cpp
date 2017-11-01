@@ -32,6 +32,7 @@ bool UFP_MainUI::Initialize()
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Rev"));
+	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Rev);
 	ButtonArray.Add(Button);
 
 	return true;
@@ -128,4 +129,11 @@ void UFP_MainUI::Button_Skill()
 		SkillWidget->RemoveFromViewport();
 		isSkillClicked = false;
 	}
+}
+
+void UFP_MainUI::Button_Rev()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	Cast<AFP_PlayerController>(Controller)->RestartLevel();
+	
 }

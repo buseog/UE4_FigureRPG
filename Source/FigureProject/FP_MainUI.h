@@ -38,5 +38,6 @@ public:
 	void Button_Stat();
 	UFUNCTION()
 	void Button_Skill();
-	
+	UFUNCTION()
+	void Button_Rev();
 };
