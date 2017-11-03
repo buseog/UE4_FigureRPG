@@ -35,6 +35,12 @@ void AFP_Skill::BeginPlay()
 		return;
 
 	Weapon = Cast<AFP_Weapon>(FoundActor[0]);
+
+	AFP_Rune* rune = GetWorld()->SpawnActor<AFP_Rune>(FVector::ZeroVector, FRotator::ZeroRotator);
+	Socket socket;
+	socket.Color = rune->Color;
+	Sockets.Add(socket);
+	Sockets[0].EpuipRune(rune);
 }
 
 // Called every frame
@@ -48,4 +54,30 @@ void AFP_Skill::SetTargetDirection(FVector _location)
 {
 	TargetDirection = _location - this->GetActorLocation();
 	TargetDirection.Normalize();
+}
+
+void AFP_Skill::AddSocket()
+{
+	if (Stat.ActiveSocketNum >= MaxSocketNum)
+		return;
+
+	++Stat.ActiveSocketNum;
+	int color = FMath::FRandRange(1, 3);
+	
+	Socket socket;
+	
+	switch (color)
+	{
+	case 1:
+		socket.Color = FColor::Red;
+		break;
+	case 2:
+		socket.Color = FColor::Green;
+		break;
+	case 3:
+		socket.Color = FColor::Blue;
+		break;
+	}
+
+	Sockets.Add(socket);
 }

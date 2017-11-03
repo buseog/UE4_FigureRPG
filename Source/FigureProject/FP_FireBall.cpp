@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FP_FireBall.h"
+#include "FP_ComCalculator.h"
 
 
 AFP_FireBall::AFP_FireBall()
@@ -38,8 +39,8 @@ void AFP_FireBall::Tick(float DeltaTime)
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(ProxSphere);
 	if (TargetMonster != nullptr)
 	{
-		TargetMonster->MyTakeDamage(Player->Status.Attack * Stat.Damage);
-
+		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
+		
 		if (TargetMonster->GetisDestory() == true)
 			Cast<AFP_Weapon>(Weapon)->DeleteTargetMonsterInArray(TargetMonster);
 

@@ -21,7 +21,7 @@ class FIGUREPROJECT_API AFP_PlayerController : public APlayerController
 	
 public:
 	enum eSTAT { HP, HPREGEN, ATTACK, ATTACKRANGE, ATTACKSPEED };
-	enum eWIDGET { GAMESTART, STAGE, STATUS, MAINUI };
+	enum eWIDGET { GAMESTART, STAGE, STATUS, MAINUI, INVENTORY, RUNETOOLTIP };
 
 	AFP_PlayerController();
 

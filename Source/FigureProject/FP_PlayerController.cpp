@@ -6,6 +6,8 @@
 #include "FP_StageWidget.h"
 #include "FP_GameStart.h"
 #include "FP_MainUI.h"
+#include "FP_InventoryWidget.h"
+#include "FP_RuneToolTip.h"
 
 
 AFP_PlayerController::AFP_PlayerController()
@@ -41,8 +43,20 @@ void AFP_PlayerController::BeginPlay()
 	UUserWidget* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
 	WidgetMap.Add(MAINUI, MainUIWidget);
 
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
+	UClass* Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UUserWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(this, Inventory);
+	WidgetMap.Add(INVENTORY, InventoryWidget);
+
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_RuneToolTip_BP.FP_RuneToolTip_BP_C'");
+	UClass* RuneToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UUserWidget* RuneToolTipWidget = CreateWidget<UFP_RuneToolTip>(this, RuneToolTip);
+	WidgetMap.Add(RUNETOOLTIP, RuneToolTipWidget);
+
+
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
+	//WidgetMap[INVENTORY]->AddToViewport();
 	
 	
 	WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);

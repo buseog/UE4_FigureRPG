@@ -29,6 +29,7 @@ bool UFP_MainUI::Initialize()
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Rune"));
+	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Rune);
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Rev"));
@@ -112,7 +113,22 @@ void UFP_MainUI::Button_Stat()
 		isStatClicked = false;
 	}
 
-	
+}
 
-	
+void UFP_MainUI::Button_Rune()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	UUserWidget* RuneWidget = Cast<AFP_PlayerController>(Controller)->GetWidgetMap(AFP_PlayerController::INVENTORY);
+
+	if (isRuneClicked == false)
+	{
+		RuneWidget->AddToViewport();
+		isRuneClicked = true;
+	}
+	else
+	{
+		RuneWidget->RemoveFromViewport();
+		isRuneClicked = false;
+	}
+
 }
