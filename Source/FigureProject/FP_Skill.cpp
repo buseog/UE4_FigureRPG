@@ -36,11 +36,11 @@ void AFP_Skill::BeginPlay()
 
 	Weapon = Cast<AFP_Weapon>(FoundActor[0]);
 
-	AFP_Rune* rune = GetWorld()->SpawnActor<AFP_Rune>(FVector::ZeroVector, FRotator::ZeroRotator);
+	/*AFP_Rune* rune = GetWorld()->SpawnActor<AFP_Rune>(FVector::ZeroVector, FRotator::ZeroRotator);
 	Socket socket;
 	socket.Color = rune->Color;
 	Sockets.Add(socket);
-	Sockets[0].EpuipRune(rune);
+	Sockets[0].EpuipRune(rune);*/
 }
 
 // Called every frame

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Button.h"
+#include "FP_Rune.h"
 #include "FP_InventoryWidget.generated.h"
 
 /**
@@ -17,6 +18,10 @@ class FIGUREPROJECT_API UFP_InventoryWidget : public UUserWidget
 
 public:
 	TArray<UButton*> Slots;
+	TArray<AFP_Rune*> Inventory;
+	bool isClicked = false;
+	int MaxSlotNum = 10;
+	FVector2D IconSize = FVector2D(63.f, 62.f);
 	
 public:
 	virtual bool Initialize() override;
@@ -25,4 +30,6 @@ public:
 public:
 	UFUNCTION()
 	void SlotSelected();
+	void AddRune();
+	void ViewAllSortByTier();
 };

@@ -71,8 +71,8 @@ void AFP_Rune::InitiateRune()
 
 	int stage = Cast<AFP_MonsterMgr>(FoundActors[0])->Stage;
 
-	float Tier3DropRate = (float)stage * 0.01f;
-	float Tier2DropRate = (float)stage * 0.1f;
+	Tier3DropRate = (float)stage * Tier3DropRate;
+	Tier2DropRate = (float)stage * Tier2DropRate;
 
 	if (Tier3DropRate >= Tier3MaxDropRate)
 		Tier3DropRate = Tier3MaxDropRate;
@@ -89,7 +89,6 @@ void AFP_Rune::InitiateRune()
 	else
 		Stat.Tier = 1;
 
-
 	//Color, Property
 	int random = FMath::FRandRange(0, 3);
 	int i = 0;
@@ -98,32 +97,63 @@ void AFP_Rune::InitiateRune()
 	{
 	case 0:
 		Color = FColor::Red;
-		for (; i < Stat.Tier; ++i)
+		for (i = 0; i < Stat.Tier; ++i)
 		{
-			random = FMath::FRandRange(0, Red.MaxNum + 1);
+			while (1)
+			{
+				random = FMath::FRandRange(0, Red.MaxNum);
+
+				if (!(Property & (uint64)pow(16, random)))
+					break;
+			}
+
 			Property = Property | (uint64)pow(16, random);
+			/*UE_LOG(LogClass, Log, TEXT("random : %d"), random);
+			UE_LOG(LogClass, Log, TEXT("Property : %d"), Property);
+			UE_LOG(LogClass, Log, TEXT("%s"), *Name);*/
 		}
 		break;
 
 	case 1:
 		Color = FColor::Green;
-		for (; i < Stat.Tier; ++i)
+		for (i = 0; i < Stat.Tier; ++i)
 		{
-			random = FMath::FRandRange(0, Green.MaxNum + 1);
+			while (1)
+			{
+				random = FMath::FRandRange(0, Red.MaxNum);
+
+				if (!(Property & (uint64)pow(16, random)))
+					break;
+			}
+
 			Property = Property | (uint64)pow(16, random);
+			/*UE_LOG(LogClass, Log, TEXT("random : %d"), random);
+			UE_LOG(LogClass, Log, TEXT("Property : %d"), Property);
+			UE_LOG(LogClass, Log, TEXT("%s"), *Name);*/
 		}
 		break;
 
 	case 2:
 		Color = FColor::Blue;
-		for (; i < Stat.Tier; ++i)
+		for (i = 0; i < Stat.Tier; ++i)
 		{
-			random = FMath::FRandRange(0, Blue.MaxNum + 1);
+			while (1)
+			{
+				random = FMath::FRandRange(0, Red.MaxNum);
+
+				if (!(Property & (uint64)pow(16, random)))
+					break;
+			}
+
 			Property = Property | (uint64)pow(16, random);
+			/*UE_LOG(LogClass, Log, TEXT("random : %d"), random);
+			UE_LOG(LogClass, Log, TEXT("Property : %d"), Property);
+			UE_LOG(LogClass, Log, TEXT("%s"), *Name);*/
 		}
 		break;
 	}
 
+	//icon, name
 	if (Color == FColor::Red)
 	{
 		if (Stat.Tier == 1)
@@ -135,6 +165,20 @@ void AFP_Rune::InitiateRune()
 		else
 			Icon = RedTier4Icon;
 
+		if (Property & Red.GUIDED)
+			Name += Red.NAME_GUIDED;
+		if (Property & Red.STUN)
+			Name += Red.NAME_STUN;
+		if (Property & Red.KNOCKBACK)
+			Name += Red.NAME_KNOCKBACK;
+		if (Property & Red.LIFESTEAL)
+			Name += Red.NAME_LIFESTEAL;
+		if (Property & Red.IGNITE)
+			Name += Red.NAME_IGNITE;
+		if (Property & Red.AREAUP)
+			Name += Red.NAME_AREAUP;
+		if (Property & Red.RANDOMEFFECT)
+			Name += Red.NAME_RANDOMEFFECT;
 	}
 	else if (Color == FColor::Green)
 	{
@@ -146,6 +190,21 @@ void AFP_Rune::InitiateRune()
 			Icon = GreenTier3Icon;
 		else
 			Icon = GreenTier4Icon;
+
+		if (Property & Green.ATTACKSPEEDUP)
+			Name += Green.NAME_ATTACKSPEEDUP;
+		if (Property & Green.BULLETSPEEDUP)
+			Name += Green.NAME_BULLETSPEEDUP;
+		if (Property & Green.DAMAGEUP)
+			Name += Green.NAME_DAMAGEUP;
+		if (Property & Green.DAMAGEUPTOSQARE)
+			Name += Green.NAME_DAMAGEUPTOSQARE;
+		if (Property & Green.N)
+			Name += Green.NAME_N;
+		if (Property & Green.O)
+			Name += Green.NAME_O;
+		if (Property & Green.P)
+			Name += Green.NAME_P;
 	}
 	else
 	{
@@ -157,9 +216,28 @@ void AFP_Rune::InitiateRune()
 			Icon = BlueTier3Icon;
 		else
 			Icon = BlueTier4Icon;
+
+		if (Property & Blue.RANGEUP)
+			Name += Blue.NAME_RANGEUP;
+		if (Property & Blue.BULLETSPEEDUP)
+			Name += Blue.NAME_BULLETSPEEDUP;
+		if (Property & Blue.C)
+			Name += Blue.NAME_C;
+		if (Property & Blue.D)
+			Name += Blue.NAME_D;
+		if (Property & Blue.E)
+			Name += Blue.NAME_E;
+		if (Property & Blue.F)
+			Name += Blue.NAME_F;
+		if (Property & Blue.G)
+			Name += Blue.NAME_G;
 	}
 
-	/*UE_LOG(LogClass, Log, TEXT("%d"), Stat.Tier);
-	UE_LOG(LogClass, Log, TEXT("%f, %f, %f"), (float)Color.R, (float)Color.G, (float)Color.B);
-	UE_LOG(LogClass, Log, TEXT("%s"), *Icon->GetName());*/
+	
+
+	//UE_LOG(LogClass, Log, TEXT("%d"), Stat.Tier);
+	//UE_LOG(LogClass, Log, TEXT("%f, %f, %f"), (float)Color.R, (float)Color.G, (float)Color.B);
+	//UE_LOG(LogClass, Log, TEXT("%s"), *Icon->GetName());
+	//UE_LOG(LogClass, Log, TEXT("Property : %d"), Property);
+	//UE_LOG(LogClass, Log, TEXT("Name : %s"), *Name);
 }

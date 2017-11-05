@@ -39,8 +39,11 @@ public:
 	FColor Color;
 	RuneStat Stat;
 	uint64 Property;
-	float Tier3MaxDropRate = 10.f;
-	float Tier2MaxDropRate = 40.f;
+	float Tier3DropRate = 30.f;
+	float Tier2DropRate = 60.f;
+	float Tier3MaxDropRate = 30.f;
+	float Tier2MaxDropRate = 60.f;
+	FString Name = "";
 
 public:	
 	// Sets default values for this actor's properties
