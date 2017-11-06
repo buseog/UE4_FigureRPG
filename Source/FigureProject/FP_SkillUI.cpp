@@ -8,7 +8,8 @@
 #include "FP_MainUI.h"
 #include "CircularThrobber.h"
 #include "FP_Weapon.h"
-
+#include "FP_Tooltip.h"
+#include "FP_FireBall.h"
 
 bool UFP_SkillUI::Initialize()
 {
@@ -78,9 +79,51 @@ void UFP_SkillUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 void UFP_SkillUI::ActiveFireBall()
 {
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	UUserWidget* ToolTip = Cast<AFP_PlayerController>(Controller)->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP);
+
+	if (isSkillClicked == false)
+	{
+		FVector2D MousePosition;
+		Controller->GetMousePosition(MousePosition.X, MousePosition.Y);
+		ToolTip->SetRenderTranslation(MousePosition);
+
+		UFP_Tooltip* ToolTipClass = Cast<UFP_Tooltip>(ToolTip);
+		ToolTipClass->SkillName = FText::FromString(TEXT("FireBall"));
+
+		UClass* FireBallClass = AFP_FireBall::StaticClass();
+		AFP_FireBall* FireBall = FireBallClass->GetDefaultObject<AFP_FireBall>();
+		
+		
+		ToolTipClass->CurrentLevel = FText::FromString(FString::FromInt(pPlayer->SkillLv.FireBall));
+		ToolTipClass->CurrentDamage = FText::FromString(FString::FromInt(FireBall->Stat.Damage) + "%");
+		ToolTipClass->CurrentAtkSpeed = FText::FromString(FString::FromInt(FireBall->Stat.CoolTimeRatio) + "/ sec");
+
+		ToolTipClass->NextLevel = FText::FromString(FString::FromInt(pPlayer->SkillLv.FireBall) + FString::FromInt(1));
+		ToolTipClass->NextDamage = FText::FromString(FString::FromInt(FireBall->Stat.Damage + 10) + "%");
+
+	
+		ToolTipClass->NextAtkSpeed = FText::FromString(FString::SanitizeFloat(FireBall->Stat.CoolTimeRatio - 0.01f) + "/ sec");
+
+		ToolTip->AddToViewport();
+		isSkillClicked = true;
+	}
+	else
+	{
+		ToolTip->RemoveFromViewport();
+		isSkillClicked = false;
+	}
+
+
+
+	return;
+
+
 	if (pPlayer->SkillLv.FireBall == 0)
 		return;
 

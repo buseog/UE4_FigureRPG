@@ -49,6 +49,6 @@ public:
 	int SkillCnt = 6;
 
 	class UCircularThrobber* Throbber;
-	
+	bool isSkillClicked = false;
 	
 };

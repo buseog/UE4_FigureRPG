@@ -7,7 +7,7 @@
 #include "FP_GameStart.h"
 #include "FP_MainUI.h"
 #include "FP_SkillUI.h"
-
+#include "FP_Tooltip.h"
 
 AFP_PlayerController::AFP_PlayerController()
 {
@@ -47,6 +47,13 @@ void AFP_PlayerController::BeginPlay()
 	UUserWidget* SkillUIWidget = CreateWidget<UFP_SkillUI>(this, SkillUI);
 	WidgetMap.Add(SKILLUI, SkillUIWidget);
 
+
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	UClass* SkillToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UUserWidget* SkillToolTipWidget = CreateWidget<UFP_Tooltip>(this, SkillToolTip);
+	WidgetMap.Add(SKILLTOOLTIP, SkillToolTipWidget);
+
+	
 
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
