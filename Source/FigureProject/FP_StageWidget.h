@@ -24,7 +24,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Progress")
 	float Progress = 0.5f;
 
+	virtual bool Initialize() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
+
+
+	UFUNCTION()
+	void Button_MainUI();
 
 
 };
