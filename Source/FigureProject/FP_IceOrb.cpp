@@ -16,7 +16,7 @@ AFP_IceOrb::AFP_IceOrb()
 	CollisionSphere->SetupAttachment(RootComponent);
 
 	Stat.Speed = 0.2f;
-	Stat.CoolTimeRatio = 3.f;
+	Stat.CoolTimeRatio = 1.5f;
 }
 
 void AFP_IceOrb::Tick(float DeltaTime)

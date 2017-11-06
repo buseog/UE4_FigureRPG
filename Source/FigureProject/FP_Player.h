@@ -19,7 +19,7 @@ struct FPlayerStatus
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float HpRegen;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float Attack = 2.f;
+	float Attack = 1.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float AttackRange = 50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
@@ -114,9 +114,6 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Player)
 	class USphereComponent* CollisionSphere;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
-	class USphereComponent* MouseSphere;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
 	TSubclassOf<AFP_Weapon> Weapon;
 
@@ -133,8 +130,6 @@ public:
 	void StatusLevelUp(int _Type);
 
 public:
-	UFUNCTION(BlueprintCallable, Category = UI)
-	void ToggleStatus(UPrimitiveComponent* AActor, FKey Button);
 
 	UFUNCTION(BlueprintCallable, Category = Status)
 	struct FPlayerStatus GetStatus() { return Status; }

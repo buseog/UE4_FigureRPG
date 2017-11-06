@@ -4,6 +4,19 @@
 #include "Engine.h"
 #include "FP_Player.h"
 #include "FP_MonsterMgr.h"
+#include "Button.h"
+
+
+bool UFP_StageWidget::Initialize()
+{
+	Super::Initialize();
+
+	UButton* Button = (UButton*)GetWidgetFromName(TEXT("MainUI"));
+	Button->OnClicked.AddDynamic(this, &UFP_StageWidget::Button_MainUI);
+
+	return true;
+}
+
 
 void UFP_StageWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 {
@@ -25,4 +38,13 @@ void UFP_StageWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 		FString fStage = StageOff + FString::FromInt(Cast<AFP_MonsterMgr>(FoundActors[0])->Stage);
 		StageText = FText::FromString(fStage);
 	}
+}
+
+
+void UFP_StageWidget::Button_MainUI()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	PC->ToggleMainUI();
 }

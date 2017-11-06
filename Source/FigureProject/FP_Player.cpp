@@ -38,11 +38,11 @@ AFP_Player::AFP_Player()
 	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &AFP_Player::OnProxOverlapBegin);
 	
 	
-	MouseSphere = CreateDefaultSubobject<USphereComponent>(TEXT("MouseSphere"));
-	MouseSphere->SetSphereRadius(10.f);
-	//MouseSphere->SetupAttachment(RootComponent);
-	MouseSphere->OnClicked.AddDynamic(this, &AFP_Player::ToggleStatus);
-	MouseSphere->SetCollisionProfileName("BlockAll");
+	//MouseSphere = CreateDefaultSubobject<USphereComponent>(TEXT("MouseSphere"));
+	//MouseSphere->SetSphereRadius(10.f);
+	////MouseSphere->SetupAttachment(RootComponent);
+	//MouseSphere->OnClicked.AddDynamic(this, &AFP_Player::ToggleStatus);
+	//MouseSphere->SetCollisionProfileName("BlockAll");
 	
 	Level.Level = 1;
 	Level.Exp = 0.f;
@@ -170,18 +170,6 @@ void AFP_Player::StatusLevelUp(int _Type)
 }
 
 
-void AFP_Player::ToggleStatus(UPrimitiveComponent* AActor, FKey Button)
-{
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-	
-	PC->ToggleMainUI();
-	
-	
-
-	UE_LOG(LogClass, Log, TEXT("HI"));
-}
-
 void AFP_Player::OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult)
 {
 	
@@ -214,7 +202,7 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 			break;
 
 		case 2:
-			Status.Attack -= Diff;
+			Status.Attack /= Diff;
 			break;
 
 		case 3:

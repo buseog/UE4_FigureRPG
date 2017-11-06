@@ -26,5 +26,5 @@ AFigureProjectGameModeBase::AFigureProjectGameModeBase()
 void AFigureProjectGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	FPlatformMisc::ControlScreensaver(FPlatformMisc::EScreenSaverAction::Disable);
 }
