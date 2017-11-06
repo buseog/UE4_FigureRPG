@@ -8,6 +8,9 @@
 #include "FP_MainUI.h"
 #include "FP_SkillUI.h"
 #include "FP_Tooltip.h"
+#include "FP_InventoryWidget.h"
+#include "FP_RuneToolTip.h"
+
 
 AFP_PlayerController::AFP_PlayerController()
 {
@@ -41,19 +44,31 @@ void AFP_PlayerController::BeginPlay()
 	WidgetMap.Add(MAINUI, MainUIWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_SkillUI.FP_SkillUI_C'");
-	UClass* SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* SkillUIWidget = CreateWidget<UFP_SkillUI>(this, SkillUI);
+	TSubclassOf<UFP_SkillUI> SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_SkillUI* SkillUIWidget = CreateWidget<UFP_SkillUI>(this, SkillUI);
 	WidgetMap.Add(SKILLUI, SkillUIWidget);
 
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
-	UClass* SkillToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* SkillToolTipWidget = CreateWidget<UFP_Tooltip>(this, SkillToolTip);
+	TSubclassOf<UFP_Tooltip> SkillToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_Tooltip* SkillToolTipWidget = CreateWidget<UFP_Tooltip>(this, SkillToolTip);
 	WidgetMap.Add(SKILLTOOLTIP, SkillToolTipWidget);
+
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
+	TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(this, Inventory);
+	WidgetMap.Add(INVENTORY, InventoryWidget);
+
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_RuneToolTip_BP.FP_RuneToolTip_BP_C'");
+	TSubclassOf<UFP_RuneToolTip> RuneToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_RuneToolTip* RuneToolTipWidget = CreateWidget<UFP_RuneToolTip>(this, RuneToolTip);
+	WidgetMap.Add(RUNETOOLTIP, RuneToolTipWidget);
+
 
 
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
+	//WidgetMap[INVENTORY]->AddToViewport();
 	
 	
 	WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);

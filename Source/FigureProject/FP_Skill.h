@@ -11,6 +11,7 @@
 #include "FP_Monster.h"
 #include "FP_Weapon.h"
 #include "FP_Impact.h"
+#include "FP_Rune.h"
 #include "FP_Skill.generated.h"
 
 UCLASS()
@@ -21,12 +22,27 @@ class FIGUREPROJECT_API AFP_Skill : public AActor
 public:	
 	// Sets default values for this actor's properties
 
+	struct Socket
+	{
+		AFP_Rune* Rune = nullptr;
+		FColor Color;
+
+		void EpuipRune(AFP_Rune* _rune)
+		{
+			if (Color != _rune->Color)
+				return;
+
+			Rune = _rune;
+		}
+	};
+
 	struct SkillStat
 	{
 		float Damage = 1.f;
 		float Speed = 1.f; //bullet speed
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
+		int ActiveSocketNum = 1;
 	};
 
 	AFP_Skill();
@@ -40,6 +56,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SetTargetDirection(FVector _location);
+	void AddSocket();
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;
@@ -51,7 +68,12 @@ public:
 
 	SkillStat Stat;
 
+
+	/*-----Socket-------------------*/
 	
+	int MaxSocketNum = 4;
+	TArray<Socket> Sockets;
+	/*------------------------------*/
 	
 
 	

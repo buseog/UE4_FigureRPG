@@ -26,6 +26,7 @@ public:
 
 	bool isStatClicked = false;
 	bool isSkillClicked = false;
+	bool isRuneClicked = false;
 
 public:
 	virtual void NativeConstruct() override;
@@ -40,4 +41,7 @@ public:
 	void Button_Skill();
 	UFUNCTION()
 	void Button_Rev();
+	UFUNCTION()
+	void Button_Rune();
+	
 };

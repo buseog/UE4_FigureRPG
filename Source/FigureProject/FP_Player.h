@@ -19,7 +19,7 @@ struct FPlayerStatus
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float HpRegen;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float Attack = 1.f;
+	float Attack = 2.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float AttackRange = 50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)

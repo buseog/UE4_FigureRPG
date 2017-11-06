@@ -107,9 +107,6 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ComProjectile.h">
       <Filter>Source\FigureProject\97. Component\00. ComProjectile</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_ComCollision.h">
-      <Filter>Source\FigureProject\97. Component\01. ComCollision</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_Impact.h">
       <Filter>Source\FigureProject\07. Impact</Filter>
     </ClInclude>
@@ -136,6 +133,22 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_IceOrb.h">
       <Filter>Source\FigureProject\06. Skill\01. Ice\02. IceOrb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Rune.h">
+      <Filter>Source\FigureProject\08. Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComCollision.h" />
+    <ClInclude Include="..\..\Source\FigureProject\FP_RuneTable.h">
+      <Filter>Source\FigureProject\99. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComCalculator.h">
+      <Filter>Source\FigureProject\97. Component\02. ComCalculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_InventoryWidget.h">
+      <Filter>Source\FigureProject\99. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_RuneToolTip.h">
+      <Filter>Source\FigureProject\99. Default</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +257,21 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_IceOrb.cpp">
       <Filter>Source\FigureProject\06. Skill\01. Ice\02. IceOrb</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Rune.cpp">
+      <Filter>Source\FigureProject\08. Rune</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_RuneTable.cpp">
+      <Filter>Source\FigureProject\99. Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComCalculator.cpp">
+      <Filter>Source\FigureProject\97. Component\02. ComCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_InventoryWidget.cpp">
+      <Filter>Source\FigureProject\99. Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_RuneToolTip.cpp">
+      <Filter>Source\FigureProject\99. Default</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -347,6 +375,15 @@
     </Filter>
     <Filter Include="Source\FigureProject\06. Skill\01. Ice\02. IceOrb">
       <UniqueIdentifier>{28aa220d-bfab-469b-87b4-cb3a53aaf2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\08. Rune">
+      <UniqueIdentifier>{ffba2b2b-b8b7-4b11-8b44-387244ba05fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\97. Component\02. ComCalculator">
+      <UniqueIdentifier>{5eb33e9a-d4b9-4454-946e-d958fa221567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\08. Rune\00.">
+      <UniqueIdentifier>{526619b2-ae00-489e-869a-ae27f024b739}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

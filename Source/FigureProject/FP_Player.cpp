@@ -263,7 +263,7 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 		break;
 
 	case 2:
-		Status.Attack += Diff;
+		Status.Attack *= Diff;
 		break;
 
 	case 3:
