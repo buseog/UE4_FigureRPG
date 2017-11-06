@@ -12,34 +12,33 @@ AFP_PlayerController::AFP_PlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
-	bShowMainUI = false;
-
-	
-
+	bShowMainUI = false; 	
 }
 
 void AFP_PlayerController::BeginPlay()
 {
+
 	
 	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
-	UClass* Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	TSubclassOf<UFP_StatusWidget> Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 	UFP_StatusWidget* StatusWidget = CreateWidget<UFP_StatusWidget>(this, Widget);
 	WidgetMap.Add(STATUS, StatusWidget);
 
 	FName GameStartWidget_Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_GameStart_BP.FP_GameStart_BP_C'");
-	UClass* GameStart = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *GameStartWidget_Path.ToString()));
+	TSubclassOf<UFP_GameStart> GameStart = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *GameStartWidget_Path.ToString()));
 	UFP_GameStart* GameStartWidget = CreateWidget<UFP_GameStart>(this, GameStart);
 	WidgetMap.Add(GAMESTART, GameStartWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Stage_BP.FP_Stage_BP_C'");
-	UClass* Widget2 = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
+	TSubclassOf<UFP_StageWidget> Widget2 = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_StageWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
 	WidgetMap.Add(STAGE, StageWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_MainUI.FP_MainUI_C'");
-	UClass* MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
+	TSubclassOf<UFP_MainUI> MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_MainUI* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
 	WidgetMap.Add(MAINUI, MainUIWidget);
+
 
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
