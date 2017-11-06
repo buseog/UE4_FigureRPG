@@ -20,6 +20,7 @@ AFP_FireBall::AFP_FireBall()
 	Stat.Damage = 1.f;
 	Stat.Speed = 0.5f;
 	Stat.Range = 2.f;
+	Stat.CoolTimeRatio = 1.f;
 }
 
 // Called when the game starts or when spawned

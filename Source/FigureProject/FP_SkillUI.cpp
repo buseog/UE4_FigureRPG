@@ -68,11 +68,6 @@ void UFP_SkillUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
-	if (PC->bShowMainUI == false)
-	{
-		RemoveFromViewport();
-		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->isSkillClicked = false;
-	}
 
 
 }

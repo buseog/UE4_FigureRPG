@@ -28,6 +28,8 @@ bool UFP_InventoryWidget::Initialize()
 	if(PC != nullptr)
 		PC->InputComponent->BindAction("AddItem", IE_Released, this, &UFP_InventoryWidget::AddRune);
 
+	Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+
 	return true;
 }
 
@@ -38,14 +40,7 @@ void UFP_InventoryWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTim
 	if (!isClicked)
 		isClicked = true;
 
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-
-	if (PC->bShowMainUI == false)
-	{
-		RemoveFromViewport();
-		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->isRuneClicked = false;
-	}
+	
 }
 
 void UFP_InventoryWidget::SlotSelected()
@@ -67,19 +62,19 @@ void UFP_InventoryWidget::SlotSelected()
 
 void UFP_InventoryWidget::AddRune()
 {
-	if (Inventory.Num() >= MaxSlotNum)
+	if (Player->Inventory.Num() >= MaxSlotNum)
 		return;
 
 	AFP_Rune* rune = GetWorld()->SpawnActor<AFP_Rune>(FVector::ZeroVector, FRotator::ZeroRotator);
 
-	Inventory.Add(rune);
+	Player->Inventory.Add(rune);
 
 	ViewAllSortByTier();
 }
 
 void UFP_InventoryWidget::ViewAllSortByTier()
 {
-	if (Inventory.Num() == 0)
+	if (Player->Inventory.Num() == 0)
 		return;
 
 	/*Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
@@ -89,19 +84,19 @@ void UFP_InventoryWidget::ViewAllSortByTier()
 		return A.Color.R > B.Color.R;
 	});*/
 
-	Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+	Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
 		return A.Stat.Tier < B.Stat.Tier;
 	});
 
-	for (int i = 0; i < Inventory.Num(); ++i)
+	for (int i = 0; i < Player->Inventory.Num(); ++i)
 	{
-		Slots[i]->WidgetStyle.Normal.SetResourceObject(Inventory[i]->Icon);
+		Slots[i]->WidgetStyle.Normal.SetResourceObject(Player->Inventory[i]->Icon);
 		Slots[i]->WidgetStyle.Normal.ImageSize = IconSize;
 		Slots[i]->WidgetStyle.Normal.Margin = 0;
-		Slots[i]->WidgetStyle.Hovered.SetResourceObject(Inventory[i]->Icon);
+		Slots[i]->WidgetStyle.Hovered.SetResourceObject(Player->Inventory[i]->Icon);
 		Slots[i]->WidgetStyle.Hovered.ImageSize = IconSize;
 		Slots[i]->WidgetStyle.Hovered.Margin = 0;
-		Slots[i]->WidgetStyle.Pressed.SetResourceObject(Inventory[i]->Icon);
+		Slots[i]->WidgetStyle.Pressed.SetResourceObject(Player->Inventory[i]->Icon);
 		Slots[i]->WidgetStyle.Pressed.ImageSize = IconSize;
 		Slots[i]->WidgetStyle.Pressed.Margin = 0;
 	}

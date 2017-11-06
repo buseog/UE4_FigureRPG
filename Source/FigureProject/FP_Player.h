@@ -5,6 +5,7 @@
 #include "Core.h"
 #include "Engine.h"
 #include "GameFramework/Actor.h"
+#include "FP_Rune.h"
 #include "FP_Player.generated.h"
 
 USTRUCT(BlueprintType)
@@ -19,7 +20,7 @@ struct FPlayerStatus
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float HpRegen;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float Attack = 2.f;
+	float Attack = 1.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float AttackRange = 50.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
@@ -114,6 +115,9 @@ private:
 	int		BuffType;
 
 public:
+	TArray<AFP_Rune*> Inventory;
+
+public:
 	bool	bIsBuffed = false;
 
 public:
@@ -173,4 +177,5 @@ public:
 	void SetStat(int Type, float Diff, float Duration, FColor Color = FColor(0.f, 0.f, 0.f));
 
 	FName Test;
+	float TimeAcc = 0.f;
 };

@@ -3,6 +3,7 @@
 #include "FP_Player.h"
 #include "FP_PlayerController.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "FP_MainUI.h"
 
 
 // Sets default values
@@ -82,7 +83,16 @@ void AFP_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
 	Regeneration(DeltaTime);
+
+	
+	/*TimeAcc += DeltaTime;
+	UUserWidget* Test = PC->GetWidgetMap(AFP_PlayerController::MAINUI);
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::FromInt(int(Test->IsValidLowLevel())));*/
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::SanitizeFloat(TimeAcc));
 	
 	Level.CheckLevelUp();
 	//Level.Exp += 1.f;
@@ -214,7 +224,7 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 			break;
 
 		case 2:
-			Status.Attack -= Diff;
+			Status.Attack /= Diff;
 			break;
 
 		case 3:

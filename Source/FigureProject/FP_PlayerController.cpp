@@ -64,19 +64,21 @@ void AFP_PlayerController::BeginPlay()
 	UFP_RuneToolTip* RuneToolTipWidget = CreateWidget<UFP_RuneToolTip>(this, RuneToolTip);
 	WidgetMap.Add(RUNETOOLTIP, RuneToolTipWidget);
 
+	
 
-
+	
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
 	//WidgetMap[INVENTORY]->AddToViewport();
+	
 	
 	
 	WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);
 	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
 	
 
-	WidgetMap[STATUS]->SetRenderTranslation(FVector2D(300.f, 500.f));
-	WidgetMap[SKILLUI]->SetRenderTranslation(FVector2D(300.f, 500.f));
+	/*WidgetMap[STATUS]->SetRenderTranslation(FVector2D(300.f, 500.f));
+	WidgetMap[SKILLUI]->SetRenderTranslation(FVector2D(300.f, 500.f));*/
 
 
 
@@ -85,6 +87,16 @@ void AFP_PlayerController::BeginPlay()
 
 void AFP_PlayerController::ToggleMainUI()
 {
+	if (WidgetMap[MAINUI]->IsValidLowLevel() == false)
+	{
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_MainUI.FP_MainUI_C'");
+		TSubclassOf<UFP_MainUI> MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		UFP_MainUI* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
+		WidgetMap.Add(MAINUI, MainUIWidget);
+	}
+
+
+
 	if (nullptr == WidgetMap[MAINUI])
 		return;
 
@@ -102,6 +114,8 @@ void AFP_PlayerController::ToggleMainUI()
 	}
 	else
 	{
+	
+
 		if (WidgetMap[MAINUI]->IsInViewport() == true)
 			return;
 
