@@ -6,6 +6,8 @@
 #include "FP_StageWidget.h"
 #include "FP_GameStart.h"
 #include "FP_MainUI.h"
+#include "FP_SkillUI.h"
+#include "FP_Tooltip.h"
 #include "FP_InventoryWidget.h"
 #include "FP_RuneToolTip.h"
 
@@ -14,56 +16,69 @@ AFP_PlayerController::AFP_PlayerController()
 {
 	bShowMouseCursor = true;
 	bEnableClickEvents = true;
-	bShowMainUI = false;
-
-	
-
+	bShowMainUI = false; 	
 }
 
 void AFP_PlayerController::BeginPlay()
 {
+
 	
 	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
-	UClass* Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	TSubclassOf<UFP_StatusWidget> Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 	UFP_StatusWidget* StatusWidget = CreateWidget<UFP_StatusWidget>(this, Widget);
 	WidgetMap.Add(STATUS, StatusWidget);
 
 	FName GameStartWidget_Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_GameStart_BP.FP_GameStart_BP_C'");
-	UClass* GameStart = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *GameStartWidget_Path.ToString()));
+	TSubclassOf<UFP_GameStart> GameStart = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *GameStartWidget_Path.ToString()));
 	UFP_GameStart* GameStartWidget = CreateWidget<UFP_GameStart>(this, GameStart);
 	WidgetMap.Add(GAMESTART, GameStartWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Stage_BP.FP_Stage_BP_C'");
-	UClass* Widget2 = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
+	TSubclassOf<UFP_StageWidget> Widget2 = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_StageWidget* StageWidget = CreateWidget<UFP_StageWidget>(this, Widget2);
 	WidgetMap.Add(STAGE, StageWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_MainUI.FP_MainUI_C'");
-	UClass* MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
+	TSubclassOf<UFP_MainUI> MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_MainUI* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
 	WidgetMap.Add(MAINUI, MainUIWidget);
 
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_SkillUI.FP_SkillUI_C'");
+	TSubclassOf<UFP_SkillUI> SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_SkillUI* SkillUIWidget = CreateWidget<UFP_SkillUI>(this, SkillUI);
+	WidgetMap.Add(SKILLUI, SkillUIWidget);
+
+
+	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	TSubclassOf<UFP_Tooltip> SkillToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_Tooltip* SkillToolTipWidget = CreateWidget<UFP_Tooltip>(this, SkillToolTip);
+	WidgetMap.Add(SKILLTOOLTIP, SkillToolTipWidget);
+
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
-	UClass* Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(this, Inventory);
+	TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(this, Inventory);
 	WidgetMap.Add(INVENTORY, InventoryWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_RuneToolTip_BP.FP_RuneToolTip_BP_C'");
-	UClass* RuneToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-	UUserWidget* RuneToolTipWidget = CreateWidget<UFP_RuneToolTip>(this, RuneToolTip);
+	TSubclassOf<UFP_RuneToolTip> RuneToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+	UFP_RuneToolTip* RuneToolTipWidget = CreateWidget<UFP_RuneToolTip>(this, RuneToolTip);
 	WidgetMap.Add(RUNETOOLTIP, RuneToolTipWidget);
 
+	
 
+	
 	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
 	//WidgetMap[INVENTORY]->AddToViewport();
+	
 	
 	
 	WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);
 	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
 	
 
-	WidgetMap[STATUS]->SetRenderTranslation(FVector2D(200.f, 500.f));
+	/*WidgetMap[STATUS]->SetRenderTranslation(FVector2D(300.f, 500.f));
+	WidgetMap[SKILLUI]->SetRenderTranslation(FVector2D(300.f, 500.f));*/
 
 
 
@@ -72,6 +87,16 @@ void AFP_PlayerController::BeginPlay()
 
 void AFP_PlayerController::ToggleMainUI()
 {
+	if (WidgetMap[MAINUI]->IsValidLowLevel() == false)
+	{
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_MainUI.FP_MainUI_C'");
+		TSubclassOf<UFP_MainUI> MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		UFP_MainUI* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
+		WidgetMap.Add(MAINUI, MainUIWidget);
+	}
+
+
+
 	if (nullptr == WidgetMap[MAINUI])
 		return;
 
@@ -89,6 +114,8 @@ void AFP_PlayerController::ToggleMainUI()
 	}
 	else
 	{
+	
+
 		if (WidgetMap[MAINUI]->IsInViewport() == true)
 			return;
 

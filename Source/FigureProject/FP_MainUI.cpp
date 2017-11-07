@@ -3,6 +3,8 @@
 #include "FP_MainUI.h"
 #include "FP_PlayerController.h"
 #include "Engine.h"
+#include "FP_SkillUI.h"
+#include "FP_InventoryWidget.h"
 
 
 void UFP_MainUI::NativeConstruct()
@@ -22,10 +24,10 @@ bool UFP_MainUI::Initialize()
 
 	UButton* Button = (UButton*)GetWidgetFromName(TEXT("Stat"));
 	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Stat);
-
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Skill"));
+	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Skill);
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Rune"));
@@ -33,6 +35,7 @@ bool UFP_MainUI::Initialize()
 	ButtonArray.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Rev"));
+	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Rev);
 	ButtonArray.Add(Button);
 
 	return true;
@@ -99,36 +102,67 @@ void UFP_MainUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 void UFP_MainUI::Button_Stat()
 {
+
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	UUserWidget* StatWidget = Cast<AFP_PlayerController>(Controller)->GetWidgetMap(AFP_PlayerController::STATUS);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	UUserWidget* StatWidget = PC->GetWidgetMap(AFP_PlayerController::STATUS);
 
-	if (isStatClicked == false)
+	if (StatWidget->IsValidLowLevel() == false)
 	{
-		StatWidget->AddToViewport();
-		isStatClicked = true;
-	}
-	else
-	{
-		StatWidget->RemoveFromViewport();
-		isStatClicked = false;
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
+		TSubclassOf<UFP_StatusWidget> Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		UFP_StatusWidget* StatusWidget = CreateWidget<UFP_StatusWidget>(PC, Widget);
+		PC->WidgetMap.Add(AFP_PlayerController::STATUS, StatusWidget);
 	}
 
+	PC->GetWidgetMap(AFP_PlayerController::STATUS)->AddToViewport();
+	
+}
+
+
+void UFP_MainUI::Button_Skill()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	UUserWidget* SkillWidget = PC->GetWidgetMap(AFP_PlayerController::SKILLUI);
+
+	if (SkillWidget->IsValidLowLevel() == false)
+	{
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_SkillUI.FP_SkillUI_C'");
+		TSubclassOf<UFP_SkillUI> SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		UFP_SkillUI* SkillUIWidget = CreateWidget<UFP_SkillUI>(PC, SkillUI);
+		PC->WidgetMap.Add(AFP_PlayerController::SKILLUI, SkillUIWidget);
+	}
+
+
+	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->AddToViewport();
+	
+}
+
+void UFP_MainUI::Button_Rev()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	Cast<AFP_PlayerController>(Controller)->RestartLevel();
+	
 }
 
 void UFP_MainUI::Button_Rune()
 {
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	UUserWidget* RuneWidget = Cast<AFP_PlayerController>(Controller)->GetWidgetMap(AFP_PlayerController::INVENTORY);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	UUserWidget* RuneWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
 
-	if (isRuneClicked == false)
+	if (RuneWidget->IsValidLowLevel() == false)
 	{
-		RuneWidget->AddToViewport();
-		isRuneClicked = true;
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
+		TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(PC, Inventory);
+		InventoryWidget->ViewAllSortByTier();
+		PC->WidgetMap.Add(AFP_PlayerController::INVENTORY, InventoryWidget);
 	}
-	else
-	{
-		RuneWidget->RemoveFromViewport();
-		isRuneClicked = false;
-	}
+
+
+
+	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
 
 }

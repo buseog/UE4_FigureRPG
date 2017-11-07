@@ -31,5 +31,6 @@ public:
 	UFUNCTION()
 	void Button_MainUI();
 
-
+	UFUNCTION()
+	void Button_Exit();
 };

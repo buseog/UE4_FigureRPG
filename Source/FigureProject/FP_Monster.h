@@ -76,7 +76,7 @@ public:
 	float Damage;
 	float DropRate;
 	float Speed = 10.f;
-	float Exp = 5.f;
+	float Exp = 15.f;
 	float HPShowTime = 0.f;
 	MonsterState StateMgr;
 	

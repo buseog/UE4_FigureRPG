@@ -24,9 +24,6 @@ public:
 	TArray<UButton*> ButtonArray;
 	STATE eState = IDLE;
 
-	bool isStatClicked = false;
-	bool isRuneClicked = false;
-
 public:
 	virtual void NativeConstruct() override;
 	virtual bool Initialize() override;
@@ -36,6 +33,10 @@ public:
 
 	UFUNCTION()
 	void Button_Stat();
+	UFUNCTION()
+	void Button_Skill();
+	UFUNCTION()
+	void Button_Rev();
 	UFUNCTION()
 	void Button_Rune();
 	

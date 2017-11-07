@@ -5,6 +5,7 @@
 #include "Core.h"
 #include "Engine.h"
 #include "GameFramework/Actor.h"
+#include "FP_Rune.h"
 #include "FP_Player.generated.h"
 
 USTRUCT(BlueprintType)
@@ -32,6 +33,27 @@ struct FPlayerStatus
 	float CriticalDamage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float Splash;
+};
+
+USTRUCT(BlueprintType)
+struct FPlayerSkillLv
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireBall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireBlast = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireWall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceBall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceBlast = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceOrb = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int SkillPoint = 10;
 };
 
 USTRUCT(BlueprintType)
@@ -93,11 +115,17 @@ private:
 	int		BuffType;
 
 public:
+	TArray<AFP_Rune*> Inventory;
+
+public:
 	bool	bIsBuffed = false;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	struct FPlayerStatus Status;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	struct FPlayerSkillLv SkillLv;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
 	struct FPlayerLevel	Level;
@@ -144,4 +172,5 @@ public:
 	void SetStat(int Type, float Diff, float Duration, FColor Color = FColor(0.f, 0.f, 0.f));
 
 	FName Test;
+	float TimeAcc = 0.f;
 };
