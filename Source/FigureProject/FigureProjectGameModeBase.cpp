@@ -6,6 +6,8 @@
 #include "FP_MonsterMgr.h"
 #include "FP_Weapon.h"
 #include "FP_Player.h"
+#include "Engine.h"
+
 #include "FP_ProximityWeapon.h"
 
 
@@ -21,10 +23,20 @@ AFigureProjectGameModeBase::AFigureProjectGameModeBase()
 	HUDClass = AFP_HUD::StaticClass();
 	PlayerControllerClass = AFP_PlayerController::StaticClass();
 
+
 }
 
 void AFigureProjectGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+
 	
+	
+}
+
+void AFigureProjectGameModeBase::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
 }

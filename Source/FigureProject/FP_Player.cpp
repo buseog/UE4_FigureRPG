@@ -4,6 +4,9 @@
 #include "FP_PlayerController.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "FP_MainUI.h"
+#include "Engine.h"
+#include "FP_SaveGame.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -75,6 +78,18 @@ AFP_Player::AFP_Player()
 void AFP_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UFP_SaveGame* LoadGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::CreateSaveGameObject(UFP_SaveGame::StaticClass()));
+	LoadGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
+	if (LoadGameInstance == nullptr)
+		return;
+
+
+	Status.Attack = LoadGameInstance->Attack;
+	Status.AttackRange = LoadGameInstance->AttackRange;
+	Status.AttackSpeed = LoadGameInstance->AttackSpeed;
+	Status.BulletSpeed = LoadGameInstance->BulletSpeed;
+	
 
 }
 
@@ -300,4 +315,18 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 		Status.Splash += Diff;
 		break;
 	}
+}
+
+void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	UFP_SaveGame* SaveGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::CreateSaveGameObject(UFP_SaveGame::StaticClass()));
+	
+	SaveGameInstance->Attack = Status.Attack;
+	SaveGameInstance->AttackSpeed = Status.AttackSpeed;
+	SaveGameInstance->AttackRange = Status.AttackRange;
+	SaveGameInstance->BulletSpeed = Status.BulletSpeed;
+
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 }
