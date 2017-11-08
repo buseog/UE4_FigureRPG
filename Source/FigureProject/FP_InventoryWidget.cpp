@@ -5,6 +5,10 @@
 #include "FP_PlayerController.h"
 #include "FP_MainUI.h"
 #include "FP_RuneToolTip.h"
+#include "CircularThrobber.h"
+#include "UniformGridSlot.h"
+#include "FP_ComRuneGenerator.h"
+#include "FP_MonsterMgr.h"
 
 
 bool UFP_InventoryWidget::Initialize()
@@ -20,6 +24,7 @@ bool UFP_InventoryWidget::Initialize()
 		slot = Cast<UButton>(GetWidgetFromName(*slotName));
 		slot->OnClicked.AddDynamic(this, &UFP_InventoryWidget::SlotSelected);
 		Slots.Add(slot);
+		Slots[i - 1]->SetIsEnabled(false);
 	}
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
@@ -29,6 +34,8 @@ bool UFP_InventoryWidget::Initialize()
 		PC->InputComponent->BindAction("AddItem", IE_Released, this, &UFP_InventoryWidget::AddRune);
 
 	Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+
+	Throbber = (UCircularThrobber*)GetWidgetFromName(TEXT("Active"));
 
 	return true;
 }
@@ -55,7 +62,13 @@ void UFP_InventoryWidget::SlotSelected()
 			APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 			UUserWidget* RuneToolTip = Cast<AFP_PlayerController>(Controller)->GetWidgetMap(AFP_PlayerController::RUNETOOLTIP);
 
-			Cast<UFP_RuneToolTip>(RuneToolTip)->ToggleToolTip(Slots[i]);
+			UUniformGridSlot* ThrobberSlot = Cast<UUniformGridSlot>(Throbber->Slot);
+			UUniformGridSlot* InventorySlot = Cast<UUniformGridSlot>(Slots[i]->Slot);
+			ThrobberSlot->SetColumn(InventorySlot->Column);
+			ThrobberSlot->SetRow(InventorySlot->Row);
+			Throbber->SetVisibility(ESlateVisibility::Visible);
+
+			Cast<UFP_RuneToolTip>(RuneToolTip)->ToggleToolTip(Player->Inventory[i]);
 		}
 	}
 }
@@ -66,6 +79,15 @@ void UFP_InventoryWidget::AddRune()
 		return;
 
 	AFP_Rune* rune = GetWorld()->SpawnActor<AFP_Rune>(FVector::ZeroVector, FRotator::ZeroRotator);
+
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_MonsterMgr::StaticClass(), FoundActors);
+
+	int stage = Cast<AFP_MonsterMgr>(FoundActors[0])->Stage;
+
+	AFP_ComRuneGenerator* runeGenerator = AFP_ComRuneGenerator::StaticClass()->GetDefaultObject<AFP_ComRuneGenerator>();
+
+	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RuneOption, rune, stage);
 
 	Player->Inventory.Add(rune);
 
@@ -99,5 +121,6 @@ void UFP_InventoryWidget::ViewAllSortByTier()
 		Slots[i]->WidgetStyle.Pressed.SetResourceObject(Player->Inventory[i]->Icon);
 		Slots[i]->WidgetStyle.Pressed.ImageSize = IconSize;
 		Slots[i]->WidgetStyle.Pressed.Margin = 0;
+		Slots[i]->SetIsEnabled(true);
 	}
 }

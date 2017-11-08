@@ -116,7 +116,7 @@ void AFP_Monster::Tick(float DeltaTime)
 	
 	if (StateMgr.eState == MonsterState::IGNITE)
 	{
-		MyTakeDamage(0.005f);
+		MyTakeDamage(StateMgr.Damage);
 		if (isDestroy)
 			Weapon->DeleteTargetMonsterInArray(this);
 	}

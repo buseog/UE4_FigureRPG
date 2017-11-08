@@ -5,6 +5,7 @@
 #include "FP_Player.h"
 #include "FP_MonsterMgr.h"
 #include "FP_PlayerController.h"
+#include "FP_InventoryWidget.h"
 #include "Button.h"
 
 
@@ -81,7 +82,16 @@ void UFP_StageWidget::Button_Exit()
 	{
 		if (PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->IsInViewport() == true)
 		{
+			Cast<UFP_InventoryWidget>((PC->GetWidgetMap(AFP_PlayerController::INVENTORY)))->Throbber->SetVisibility(ESlateVisibility::Hidden);
 			PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->RemoveFromViewport();
+		}
+	}
+
+	if (PC->GetWidgetMap(AFP_PlayerController::RUNETOOLTIP)->IsValidLowLevel() == true)
+	{
+		if (PC->GetWidgetMap(AFP_PlayerController::RUNETOOLTIP)->IsInViewport() == true)
+		{
+			PC->GetWidgetMap(AFP_PlayerController::RUNETOOLTIP)->RemoveFromViewport();
 		}
 	}
 }
