@@ -25,13 +25,15 @@ public:
 
 		float Duration = 0.f;
 		float SpeedOffset = 0.5f;
+		float Damage = 0.005f;
 		MSTATE eState = NORMAL;
 		AFP_Monster* Monster = nullptr;
 
-		void SetState(MSTATE _state, float _duration)
+		void SetState(MSTATE _state, float _duration, float _damage = 0.f)
 		{
 			eState = _state;
 			Duration = _duration;
+			Damage += _damage;
 		}
 
 		void CustomTick(float _delta)

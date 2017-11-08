@@ -23,6 +23,7 @@ public:
 	int MaxSlotNum = 10;
 	FVector2D IconSize = FVector2D(63.f, 62.f);
 	AFP_Player* Player;
+	class UCircularThrobber* Throbber;
 	
 public:
 	virtual bool Initialize() override;

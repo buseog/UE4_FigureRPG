@@ -143,9 +143,6 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Player)
 	class USphereComponent* CollisionSphere;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
-	class USphereComponent* MouseSphere;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
 	TSubclassOf<AFP_Weapon> Weapon;
 
@@ -162,8 +159,6 @@ public:
 	void StatusLevelUp(int _Type);
 
 public:
-	UFUNCTION(BlueprintCallable, Category = UI)
-	void ToggleStatus(UPrimitiveComponent* AActor, FKey Button);
 
 	UFUNCTION(BlueprintCallable, Category = Status)
 	struct FPlayerStatus GetStatus() { return Status; }

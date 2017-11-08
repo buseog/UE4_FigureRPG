@@ -30,9 +30,8 @@ void AFigureProjectGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	FPlatformMisc::ControlScreensaver(FPlatformMisc::EScreenSaverAction::Disable);
 
-	
-	
 }
 
 void AFigureProjectGameModeBase::EndPlay(EEndPlayReason::Type EndPlayReason)

@@ -30,17 +30,63 @@ void AFP_ComCalculator::Tick(float DeltaTime)
 float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
 {
 	float RuneDmg = 0.f;
+
 	if (_skill->Sockets.Num() != 0)
 	{
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
 			RuneDmg += _skill->Sockets[i].Rune->Stat.Damage;
 	}
 	else
-		RuneDmg = 1.f;
+		RuneDmg = 0.f;
 
 	/*switch (_monster->StateMgr.eState)
 	{
 	}*/
 
-	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg;
+	return _player->Status.Attack * _skill->Stat.Damage + RuneDmg;
+}
+
+float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
+{
+	float RuneRange = 0.f;
+
+	if (_skill->Sockets.Num() != 0)
+	{
+		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+			RuneRange += _skill->Sockets[i].Rune->Stat.Range;
+	}
+	else
+		RuneRange = 0.f;
+
+	return _player->Status.AttackRange * _skill->Stat.Range + RuneRange;
+}
+
+float AFP_ComCalculator::CalculateFinalSpeed(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
+{
+	float RuneSpeed = 0.f;
+
+	if (_skill->Sockets.Num() != 0)
+	{
+		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+			RuneSpeed += _skill->Sockets[i].Rune->Stat.Speed;
+	}
+	else
+		RuneSpeed = 0.f;
+
+	return _player->Status.BulletSpeed * _skill->Stat.Speed + RuneSpeed;
+}
+
+float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
+{
+	float RuneCoolTime = 0.f;
+
+	if (_skill->Sockets.Num() != 0)
+	{
+		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+			RuneCoolTime += _skill->Sockets[i].Rune->Stat.CoolTimeRatio;
+	}
+	else
+		RuneCoolTime = 0.f;
+
+	return _player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio + RuneCoolTime;
 }
