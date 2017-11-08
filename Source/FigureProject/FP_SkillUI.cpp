@@ -10,6 +10,11 @@
 #include "FP_Weapon.h"
 #include "FP_Tooltip.h"
 #include "FP_FireBall.h"
+#include "FP_FireBlast.h"
+#include "FP_FireWall.h"
+#include "FP_IceBall.h"
+#include "FP_IceBlast.h"
+#include "FP_IceOrb.h"
 
 bool UFP_SkillUI::Initialize()
 {
@@ -72,102 +77,36 @@ void UFP_SkillUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 }
 
+
 void UFP_SkillUI::ActiveFireBall()
 {
-
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
 
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	UUserWidget* ToolTip = Cast<AFP_PlayerController>(Controller)->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP);
-
-	if (isSkillClicked == false)
-	{
-		FVector2D MousePosition;
-		Controller->GetMousePosition(MousePosition.X, MousePosition.Y);
-		ToolTip->SetRenderTranslation(MousePosition);
-
-		UFP_Tooltip* ToolTipClass = Cast<UFP_Tooltip>(ToolTip);
-		ToolTipClass->SkillName = FText::FromString(TEXT("FireBall"));
-
-		UClass* FireBallClass = AFP_FireBall::StaticClass();
-		AFP_FireBall* FireBall = FireBallClass->GetDefaultObject<AFP_FireBall>();
-		
-		
-		ToolTipClass->CurrentLevel = FText::FromString(FString::FromInt(pPlayer->SkillLv.FireBall));
-		ToolTipClass->CurrentDamage = FText::FromString(FString::FromInt(FireBall->Stat.Damage) + "%");
-		ToolTipClass->CurrentAtkSpeed = FText::FromString(FString::FromInt(FireBall->Stat.CoolTimeRatio) + "/ sec");
-
-		ToolTipClass->NextLevel = FText::FromString(FString::FromInt(pPlayer->SkillLv.FireBall) + FString::FromInt(1));
-		ToolTipClass->NextDamage = FText::FromString(FString::FromInt(FireBall->Stat.Damage + 10) + "%");
-
+	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	PrepareTooltip<AFP_FireBall>(AFP_PlayerController::SKILLTOOLTIP, Path, FText::FromString(TEXT("FireBall")), pPlayer->SkillLv.FireBall);
 	
-		ToolTipClass->NextAtkSpeed = FText::FromString(FString::SanitizeFloat(FireBall->Stat.CoolTimeRatio - 0.01f) + "/ sec");
-
-		ToolTip->AddToViewport();
-		isSkillClicked = true;
-	}
-	else
-	{
-		ToolTip->RemoveFromViewport();
-		isSkillClicked = false;
-	}
-
-
-
-	return;
-
-
-	if (pPlayer->SkillLv.FireBall == 0)
-		return;
-
-
-	Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::FIREBALL * (SizeY / SkillCnt)));
-
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
-
-	Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::FIREBALL);
 }
 void UFP_SkillUI::ActiveFireBlast()
 {
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
-	if (pPlayer->SkillLv.FireBlast == 0)
-		return;
 
+	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	PrepareTooltip<AFP_FireBlast>(AFP_PlayerController::SKILLTOOLTIP, Path, FText::FromString(TEXT("FireBlast")), pPlayer->SkillLv.FireBlast);
 
-	Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::FIREBLAST * (SizeY / SkillCnt)));
-
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
-
-	
-	Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::FIREBLAST);
 }
 void UFP_SkillUI::ActiveFireWall()
 {
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
-	if (pPlayer->SkillLv.FireWall == 0)
-		return;
 
-	Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::FIREWALL * (SizeY / SkillCnt)));
-	
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
+	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	PrepareTooltip<AFP_FireWall>(AFP_PlayerController::SKILLTOOLTIP, Path, FText::FromString(TEXT("FireWall")), pPlayer->SkillLv.FireWall);
 
-	
-	Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::FIREWALL);
 }
 
 void UFP_SkillUI::ActiveIceBall()
@@ -175,54 +114,30 @@ void UFP_SkillUI::ActiveIceBall()
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
-	if (pPlayer->SkillLv.IceBall == 0)
-		return;
 
-	Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEBALL * (SizeY / SkillCnt)));
+	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	PrepareTooltip<AFP_IceBall>(AFP_PlayerController::SKILLTOOLTIP, Path, FText::FromString(TEXT("IceBall")), pPlayer->SkillLv.IceBall);
 
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
-
-	
-	Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::ICEBALL);
 }
 void UFP_SkillUI::ActiveIceBlast()
 {
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
-	if (pPlayer->SkillLv.IceBlast == 0)
-		return;
 
-	Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEBLAST * (SizeY / SkillCnt)));
+	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	PrepareTooltip<AFP_IceBlast>(AFP_PlayerController::SKILLTOOLTIP, Path, FText::FromString(TEXT("IceBlast")), pPlayer->SkillLv.IceBlast);
 
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
-
-	
-	Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::ICEBLAST);
 }
 void UFP_SkillUI::ActiveIceOrb()
 {
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
-	if (pPlayer->SkillLv.IceOrb == 0)
-		return;
 
-	Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEORB * (SizeY / SkillCnt)));
+	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+	PrepareTooltip<AFP_IceOrb>(AFP_PlayerController::SKILLTOOLTIP, Path, FText::FromString(TEXT("IceOrb")), pPlayer->SkillLv.IceOrb);
 
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
-
-	
-	Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::ICEORB);
 }
 
 void UFP_SkillUI::LvUpFireBall()
@@ -237,6 +152,12 @@ void UFP_SkillUI::LvUpFireBall()
 
 	pPlayer->SkillLv.FireBall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+
+	UClass* Class = AFP_FireBall::StaticClass();
+	AFP_FireBall* Skill = Class->GetDefaultObject<AFP_FireBall>();
+	Skill->Stat.Damage += Skill->SkillInfo.DmgPerLv*0.01f;
+	Skill->Stat.CoolTimeRatio -= Skill->SkillInfo.AtkSpdPerLv;
+	UpdateTooltip<AFP_FireBall>(pPlayer->SkillLv.FireBall);
 }
 void UFP_SkillUI::LvUpFireBlast()
 {
@@ -250,6 +171,12 @@ void UFP_SkillUI::LvUpFireBlast()
 
 	pPlayer->SkillLv.FireBlast += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+
+	UClass* Class = AFP_FireBlast::StaticClass();
+	AFP_FireBlast* Skill = Class->GetDefaultObject<AFP_FireBlast>();
+	Skill->Stat.Damage += Skill->SkillInfo.DmgPerLv*0.01f;
+	Skill->Stat.CoolTimeRatio -= Skill->SkillInfo.AtkSpdPerLv;
+	UpdateTooltip<AFP_FireBlast>(pPlayer->SkillLv.FireBlast);
 }
 void UFP_SkillUI::LvUpFireWall()
 {
@@ -263,6 +190,12 @@ void UFP_SkillUI::LvUpFireWall()
 
 	pPlayer->SkillLv.FireWall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+
+	UClass* Class = AFP_FireWall::StaticClass();
+	AFP_FireWall* Skill = Class->GetDefaultObject<AFP_FireWall>();
+	Skill->Stat.Damage += Skill->SkillInfo.DmgPerLv*0.01f;
+	Skill->Stat.CoolTimeRatio -= Skill->SkillInfo.AtkSpdPerLv;
+	UpdateTooltip<AFP_FireWall>(pPlayer->SkillLv.FireWall);
 }
 
 void UFP_SkillUI::LvUpIceBall()
@@ -277,6 +210,12 @@ void UFP_SkillUI::LvUpIceBall()
 
 	pPlayer->SkillLv.IceBall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+
+	UClass* Class = AFP_IceBall::StaticClass();
+	AFP_IceBall* Skill = Class->GetDefaultObject<AFP_IceBall>();
+	Skill->Stat.Damage += Skill->SkillInfo.DmgPerLv*0.01f;
+	Skill->Stat.CoolTimeRatio -= Skill->SkillInfo.AtkSpdPerLv;
+	UpdateTooltip<AFP_IceBall>(pPlayer->SkillLv.IceBall);
 }
 void UFP_SkillUI::LvUpIceBlast()
 {
@@ -290,6 +229,12 @@ void UFP_SkillUI::LvUpIceBlast()
 
 	pPlayer->SkillLv.IceBlast += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+
+	UClass* Class = AFP_IceBlast::StaticClass();
+	AFP_IceBlast* Skill = Class->GetDefaultObject<AFP_IceBlast>();
+	Skill->Stat.Damage += Skill->SkillInfo.DmgPerLv*0.01f;
+	Skill->Stat.CoolTimeRatio -= Skill->SkillInfo.AtkSpdPerLv;
+	UpdateTooltip<AFP_IceBlast>(pPlayer->SkillLv.IceBlast);
 }
 void UFP_SkillUI::LvUpIceOrb()
 {
@@ -303,4 +248,11 @@ void UFP_SkillUI::LvUpIceOrb()
 
 	pPlayer->SkillLv.IceOrb += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+
+	UClass* Class = AFP_IceOrb::StaticClass();
+	AFP_IceOrb* Skill = Class->GetDefaultObject<AFP_IceOrb>();
+	Skill->Stat.Damage += Skill->SkillInfo.DmgPerLv*0.01f;
+	Skill->Stat.CoolTimeRatio -= Skill->SkillInfo.AtkSpdPerLv;
+	UpdateTooltip<AFP_IceOrb>(pPlayer->SkillLv.IceOrb);
 }
+

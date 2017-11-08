@@ -10,6 +10,7 @@
 #include "FP_Player.h"
 #include "FP_StageWidget.h"
 #include "FP_StatusWidget.h"
+#include "CircularThrobber.h"
 #include "FP_SkillUI.h"
 
 void UFP_GameStart::NativeConstruct()
@@ -62,5 +63,5 @@ void UFP_GameStart::ChooseIce()
 	player->SkillLv.IceBall = 1;
 
 	UFP_SkillUI* SkillUI = Cast<UFP_SkillUI>(PlayerController->GetWidgetMap(AFP_PlayerController::SKILLUI));
-	SkillUI->ActiveIceBall();
+	SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEBALL * (SkillUI->SizeY / SkillUI->SkillCnt)));
 }

@@ -18,7 +18,13 @@ UCLASS()
 class FIGUREPROJECT_API AFP_Skill : public AActor
 {
 	GENERATED_BODY()
-	
+public:
+	struct SkillInfo
+	{
+		float DmgPerLv = 10.f;
+		float AtkSpdPerLv = 0.05f;
+	};
+
 public:	
 	// Sets default values for this actor's properties
 
@@ -67,6 +73,7 @@ public:
 	AFP_Weapon* Weapon;
 
 	SkillStat Stat;
+	SkillInfo SkillInfo;
 
 
 	/*-----Socket-------------------*/
