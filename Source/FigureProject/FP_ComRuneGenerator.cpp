@@ -42,11 +42,6 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("IGNITE", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Red.AREAUP, Red.NAME_AREAUP);
-	RuneOption.Add(Red.AREAUP, Red.NAME_AREAUP);
-	option.Add("AREAUP", prop_name);
-	prop_name.Empty();
-
 	RuneProperty.Add(FColor::Red, option);
 	option.Empty();
 
@@ -82,14 +77,19 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("RANGEUP", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Blue.BULLETSPEEDUP, Blue.NAME_BULLETSPEEDUP);
-	RuneOption.Add(Blue.BULLETSPEEDUP, Blue.NAME_BULLETSPEEDUP);
-	option.Add("BULLETSPEEDUP", prop_name);
+	prop_name.Add(Blue.EXPUP, Blue.NAME_EXPUP);
+	RuneOption.Add(Blue.EXPUP, Blue.NAME_EXPUP);
+	option.Add("EXPUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Blue.GUIDED, Blue.NAME_GUIDED);
 	RuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
 	option.Add("GUIDED", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Blue.AREAUP, Blue.NAME_AREAUP);
+	RuneOption.Add(Blue.AREAUP, Blue.NAME_AREAUP);
+	option.Add("AREAUP", prop_name);
 	prop_name.Empty();
 
 	RuneProperty.Add(FColor::Blue, option);
@@ -365,6 +365,13 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			_rune->Icon = _rune->BlueTier4Icon;
 	}
 
+	//Type
+	int64 a = 0x00000005;
+	int64 b = 0x00000001;
+
+	int64 c = 0x00000005 & 0x00000001;
+
+	UE_LOG(LogClass, Log, TEXT("%d"), c);
 
 	//Stat
 	

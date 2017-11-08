@@ -42,8 +42,8 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, AFP_Skill* _s
 	/*switch (_monster->StateMgr.eState)
 	{
 	}*/
-
-	return _player->Status.Attack * _skill->Stat.Damage + RuneDmg;
+	
+	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg;
 }
 
 float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)

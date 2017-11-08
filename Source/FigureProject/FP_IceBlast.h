@@ -17,6 +17,7 @@ class FIGUREPROJECT_API AFP_IceBlast : public AFP_Skill
 public:
 	AFP_IceBlast();
 
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 

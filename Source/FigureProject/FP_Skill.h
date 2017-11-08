@@ -75,6 +75,13 @@ public:
 	SkillStat Stat;
 	SkillInfo SkillInfo;
 
+	/*-----Debuff-------------------*/
+	AFP_Monster::MonsterState::MSTATE Debuff = AFP_Monster::MonsterState::NORMAL;
+	float DebuffDamage = 0.f;
+	float DebuffDuration = 0.f;
+	/*------------------------------*/
+
+
 
 	/*-----Socket-------------------*/
 	

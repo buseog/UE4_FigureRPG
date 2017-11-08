@@ -24,6 +24,9 @@ void AFP_FireBlast::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Debuff = AFP_Monster::MonsterState::IGNITE;
+	DebuffDamage = 0.005f;
+	DebuffDuration = 2.f;
 }
 
 // Called every frame
@@ -54,7 +57,7 @@ void AFP_FireBlast::Tick(float DeltaTime)
 			continue;
 		Impact->SetImpact(AFP_Impact::FIREBALLIMPACT);
 
-		Targets[i]->StateMgr.SetState(AFP_Monster::MonsterState::IGNITE, 2.f);
+		Targets[i]->StateMgr.SetState(Debuff, DebuffDuration, DebuffDamage);
 	}
 
 	bActivated = true;

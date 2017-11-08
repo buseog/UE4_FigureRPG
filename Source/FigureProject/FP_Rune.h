@@ -13,6 +13,9 @@ class FIGUREPROJECT_API AFP_Rune : public AActor
 	GENERATED_BODY()
 
 public:
+	enum TYPE{STAT, PROBABILITY, FIXED, PROJECTILE, AOE, DOT, EXP, ETC};
+
+public:
 	struct RuneStat
 	{
 		float Damage = 0.f;
@@ -20,7 +23,10 @@ public:
 		float CoolTimeRatio = 0.f; // attack speed
 		float Range = 0.f;
 		int Tier = 1;
+		TArray<TYPE> Type;
 	};
+
+	
 	
 public:
 	UTexture2D* RedTier1Icon;

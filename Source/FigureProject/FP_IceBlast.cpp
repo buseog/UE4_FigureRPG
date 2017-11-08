@@ -25,6 +25,14 @@ AFP_IceBlast::AFP_IceBlast()
 
 }
 
+void AFP_IceBlast::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Debuff = AFP_Monster::MonsterState::SLOW;
+	DebuffDuration = 0.5f;
+}
+
 void AFP_IceBlast::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -50,7 +58,7 @@ void AFP_IceBlast::Tick(float DeltaTime)
 			Impact->SetImpact(AFP_Impact::ICEBLASTIMPACT);
 
 			//state slow
-			Targets[i]->StateMgr.SetState(AFP_Monster::MonsterState::SLOW, 0.5f);
+			Targets[i]->StateMgr.SetState(Debuff, DebuffDuration);
 		}
 		
 	}
