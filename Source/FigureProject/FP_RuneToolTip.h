@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Button.h"
 #include "FP_Rune.h"
+#include "FP_Skill.h"
 #include "FP_RuneToolTip.generated.h"
 
 /**
@@ -56,8 +57,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tier")
 	FText Tier;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Button")
+	UButton* EquipButton;
+
+	AFP_Skill* SelectedSkill = nullptr;
+	AFP_Rune* SelectedRune = nullptr;
 	
 public:
-	void ToggleToolTip(AFP_Rune* _rune);
+	void ToggleToolTip(AFP_Rune* _rune, bool _fromInventory = true, AFP_Skill* _skill = nullptr);
 	void InitializeToolTip();
+
+	UFUNCTION()
+	void EquipRune();
 };

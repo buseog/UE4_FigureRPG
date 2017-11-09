@@ -13,8 +13,8 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 
 	TMap<uint64, FString> prop_name;
 	TMap<FString, TMap<uint64, FString>> option;
-	TMap<float, float> stat;
-	TMap<FString, TMap<float, float>> _option;
+	TMap<FString, float> stat;
+	TMap<FString, TMap<FString, float>> _option;
 	
 	//RED
 	prop_name.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
@@ -97,43 +97,53 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 
 
 	//RuneStatRange Tier1
-	stat.Add(RuneStatRange.Tier1.RANDOMEFFECT_MIN, RuneStatRange.Tier1.RANDOMEFFECT_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.RANDOMEFFECT_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.RANDOMEFFECT_MAX);
 	_option.Add("RANDOMEFFECT", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.STUN_MIN, RuneStatRange.Tier1.STUN_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.STUN_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.STUN_MAX);
 	_option.Add("STUN", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.LIFESTEAL_MIN, RuneStatRange.Tier1.LIFESTEAL_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.LIFESTEAL_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.IGNITE_MIN, RuneStatRange.Tier1.IGNITE_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.IGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.IGNITE_MAX);
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.AREAUP_MIN, RuneStatRange.Tier1.AREAUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.AREAUP_MAX);
 	_option.Add("AREAUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.ATTACKSPEEDUP_MIN, RuneStatRange.Tier1.ATTACKSPEEDUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.ATTACKSPEEDUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.ATTACKSPEEDUP_MAX);
 	_option.Add("ATTACKSPEEDUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.BULLETSPEEDUP_MIN, RuneStatRange.Tier1.BULLETSPEEDUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.BULLETSPEEDUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.BULLETSPEEDUP_MAX);
 	_option.Add("BULLETSPEEDUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.DAMAGEUP_MIN, RuneStatRange.Tier1.DAMAGEUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUP_MAX);
 	_option.Add("DAMAGEUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.DAMAGEUPTOSQARE_MIN, RuneStatRange.Tier1.DAMAGEUPTOSQARE_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUPTOSQARE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUPTOSQARE_MAX);
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier1.RANGEUP_MIN, RuneStatRange.Tier1.RANGEUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier1.RANGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
 	stat.Empty();
 
@@ -141,43 +151,53 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Empty();
 
 	//RuneStatRange Tier2
-	stat.Add(RuneStatRange.Tier2.RANDOMEFFECT_MIN, RuneStatRange.Tier2.RANDOMEFFECT_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.RANDOMEFFECT_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.RANDOMEFFECT_MAX);
 	_option.Add("RANDOMEFFECT", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.STUN_MIN, RuneStatRange.Tier2.STUN_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.STUN_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.STUN_MAX);
 	_option.Add("STUN", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.LIFESTEAL_MIN, RuneStatRange.Tier2.LIFESTEAL_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.LIFESTEAL_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.IGNITE_MIN, RuneStatRange.Tier2.IGNITE_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.IGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.IGNITE_MAX);
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.AREAUP_MIN, RuneStatRange.Tier2.AREAUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.AREAUP_MAX);
 	_option.Add("AREAUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.ATTACKSPEEDUP_MIN, RuneStatRange.Tier2.ATTACKSPEEDUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.ATTACKSPEEDUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.ATTACKSPEEDUP_MAX);
 	_option.Add("ATTACKSPEEDUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.BULLETSPEEDUP_MIN, RuneStatRange.Tier2.BULLETSPEEDUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.BULLETSPEEDUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.BULLETSPEEDUP_MAX);
 	_option.Add("BULLETSPEEDUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.DAMAGEUP_MIN, RuneStatRange.Tier2.DAMAGEUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUP_MAX);
 	_option.Add("DAMAGEUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.DAMAGEUPTOSQARE_MIN, RuneStatRange.Tier2.DAMAGEUPTOSQARE_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPTOSQARE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPTOSQARE_MAX);
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier2.RANGEUP_MIN, RuneStatRange.Tier2.RANGEUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier2.RANGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
 	stat.Empty();
 
@@ -185,43 +205,53 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Empty();
 
 	//RuneStatRange Tier3
-	stat.Add(RuneStatRange.Tier3.RANDOMEFFECT_MIN, RuneStatRange.Tier3.RANDOMEFFECT_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.RANDOMEFFECT_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.RANDOMEFFECT_MAX);
 	_option.Add("RANDOMEFFECT", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.STUN_MIN, RuneStatRange.Tier3.STUN_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.STUN_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.STUN_MAX);
 	_option.Add("STUN", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.LIFESTEAL_MIN, RuneStatRange.Tier3.LIFESTEAL_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.LIFESTEAL_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.IGNITE_MIN, RuneStatRange.Tier3.IGNITE_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.IGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.IGNITE_MAX);
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.AREAUP_MIN, RuneStatRange.Tier3.AREAUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.AREAUP_MAX);
 	_option.Add("AREAUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.ATTACKSPEEDUP_MIN, RuneStatRange.Tier3.ATTACKSPEEDUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.ATTACKSPEEDUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.ATTACKSPEEDUP_MAX);
 	_option.Add("ATTACKSPEEDUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.BULLETSPEEDUP_MIN, RuneStatRange.Tier3.BULLETSPEEDUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.BULLETSPEEDUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.BULLETSPEEDUP_MAX);
 	_option.Add("BULLETSPEEDUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.DAMAGEUP_MIN, RuneStatRange.Tier3.DAMAGEUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUP_MAX);
 	_option.Add("DAMAGEUP", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.DAMAGEUPTOSQARE_MIN, RuneStatRange.Tier3.DAMAGEUPTOSQARE_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUPTOSQARE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUPTOSQARE_MAX);
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
-	stat.Add(RuneStatRange.Tier3.RANGEUP_MIN, RuneStatRange.Tier3.RANGEUP_MAX);
+	stat.Add("MIN", RuneStatRange.Tier3.RANGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
 	stat.Empty();
 
@@ -243,7 +273,7 @@ void AFP_ComRuneGenerator::Tick(float DeltaTime)
 
 }
 
-AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _runeOption, AFP_Rune* _rune, int _stage)
+AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _runeOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage)
 {
 	//Tier
 	_rune->Tier3DropRate = (float)_stage * _rune->Tier3DropRate;
@@ -265,7 +295,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		_rune->Stat.Tier = 1;
 
 
-	//Color, Property, Name
+	//Color, Property, Name, Type
 	int random = FMath::FRandRange(0, 3);
 	int i = 0;
 	uint64 hex = 0;
@@ -285,9 +315,33 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 					break;
 			}
 
-			_rune->Name += _runeOption[hex] + " ";
-			_rune->Option.Add(_runeOption[hex]);
+			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
+
+			if (_runeOption[hex].Contains("STAT"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
+
+			if (_runeOption[hex].Contains("PROBABILITY"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
+
+			if (_runeOption[hex].Contains("FIXED"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
+
+			if (_runeOption[hex].Contains("PROJECTILE"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
+
+			if (_runeOption[hex].Contains("AOE"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
+
+			if (_runeOption[hex].Contains("DOT"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
+
+			if (_runeOption[hex].Contains("EXP"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
+
+			if (_runeOption[hex].Contains("ETC"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
 
@@ -304,9 +358,33 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 					break;
 			}
 
-			_rune->Name += _runeOption[hex] + " ";
-			_rune->Option.Add(_runeOption[hex]);
+			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
+
+			if (_runeOption[hex].Contains("STAT"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
+
+			if (_runeOption[hex].Contains("PROBABILITY"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
+
+			if (_runeOption[hex].Contains("FIXED"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
+
+			if (_runeOption[hex].Contains("PROJECTILE"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
+
+			if (_runeOption[hex].Contains("AOE"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
+
+			if (_runeOption[hex].Contains("DOT"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
+
+			if (_runeOption[hex].Contains("EXP"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
+
+			if (_runeOption[hex].Contains("ETC"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
 
@@ -323,9 +401,33 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 					break;
 			}
 
-			_rune->Name += _runeOption[hex] + " ";
-			_rune->Option.Add(_runeOption[hex]);
+			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
+
+			if (_runeOption[hex].Contains("STAT"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
+
+			if (_runeOption[hex].Contains("PROBABILITY"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
+
+			if (_runeOption[hex].Contains("FIXED"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
+
+			if (_runeOption[hex].Contains("PROJECTILE"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
+
+			if (_runeOption[hex].Contains("AOE"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
+
+			if (_runeOption[hex].Contains("DOT"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
+
+			if (_runeOption[hex].Contains("EXP"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
+
+			if (_runeOption[hex].Contains("ETC"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
 	}
@@ -365,16 +467,72 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			_rune->Icon = _rune->BlueTier4Icon;
 	}
 
-	//Type
-	int64 a = 0x00000005;
-	int64 b = 0x00000001;
-
-	int64 c = 0x00000005 & 0x00000001;
-
-	UE_LOG(LogClass, Log, TEXT("%d"), c);
 
 	//Stat
-	
+	for (i = 0; i < _rune->Stat.Type.Num(); ++i)
+	{
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+		{
+			for (int j = 0; j < _rune->Option.Num(); ++j)
+			{
+				if (_rune->Option[j].Contains("DAMAGE") && !_rune->Option[j].Contains("TO"))
+				{
+					_rune->Stat.Damage = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DAMAGEUP"]["MIN"], _runeStat[_rune->Stat.Tier]["DAMAGEUP"]["MAX"]);
+					_rune->OptionVal[j] = _rune->Stat.Damage;
+				}
+				else if (_rune->Option[j].Contains("RANGE"))
+				{
+					_rune->Stat.Range = FMath::RandRange(_runeStat[_rune->Stat.Tier]["RANGEUP"]["MIN"], _runeStat[_rune->Stat.Tier]["RANGEUP"]["MAX"]);
+					_rune->OptionVal[j] = _rune->Stat.Range;
+				}
+				else if (_rune->Option[j].Contains("ATTACKSPEED"))
+				{
+					_rune->Stat.CoolTimeRatio = FMath::RandRange(_runeStat[_rune->Stat.Tier]["ATTACKSPEEDUP"]["MIN"], _runeStat[_rune->Stat.Tier]["ATTACKSPEEDUP"]["MAX"]);
+					_rune->OptionVal[j] = _rune->Stat.CoolTimeRatio;
+				}
+				else if (_rune->Option[j].Contains("BULLETSPEED"))
+				{
+					_rune->Stat.Speed = FMath::RandRange(_runeStat[_rune->Stat.Tier]["BULLETSPEEDUP"]["MIN"], _runeStat[_rune->Stat.Tier]["BULLETSPEEDUP"]["MAX"]);
+					_rune->OptionVal[j] = _rune->Stat.Speed;
+				}
+			}
+		}
+
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
+		{
+
+		}
+
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::FIXED)
+		{
+
+		}
+
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROJECTILE)
+		{
+
+		}
+
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::AOE)
+		{
+
+		}
+
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::DOT)
+		{
+
+		}
+
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::EXP)
+		{
+
+		}
+
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::ETC)
+		{
+
+		}
+	}
 
 	//UE_LOG(LogClass, Log, TEXT("========================================================"));
 	//UE_LOG(LogClass, Log, TEXT("Tier : %d"), _rune->Stat.Tier);

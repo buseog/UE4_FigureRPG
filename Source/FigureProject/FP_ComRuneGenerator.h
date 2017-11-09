@@ -27,8 +27,8 @@ public:
 public:
 	TMap<FColor, TMap<FString, TMap<uint64, FString>>> RuneProperty;
 	TMap<uint64, FString> RuneOption;
-	TMap<int, TMap<FString, TMap<float, float>>> RuneStat;
+	TMap<int, TMap<FString, TMap<FString, float>>> RuneStat;
 
 public:
-	static AFP_Rune* GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _runeOption, AFP_Rune* _rune, int _stage);
+	static AFP_Rune* GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _runeOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage);
 };
