@@ -56,13 +56,13 @@ void AFP_Skill::SetTargetDirection(FVector _location)
 	TargetDirection.Normalize();
 }
 
-void AFP_Skill::AddSocket()
+FColor AFP_Skill::AddSocket()
 {
 	if (Stat.ActiveSocketNum >= MaxSocketNum)
-		return;
+		return FColor::White;
 
 	++Stat.ActiveSocketNum;
-	int color = FMath::FRandRange(1, 3);
+	int color = FMath::FRandRange(1, 4);
 	
 	Socket socket;
 	
@@ -80,6 +80,8 @@ void AFP_Skill::AddSocket()
 	}
 
 	Sockets.Add(socket);
+	
+	return socket.Color;
 }
 
 void AFP_Skill::EquipRune(AFP_Rune* _rune)
@@ -90,5 +92,6 @@ void AFP_Skill::EquipRune(AFP_Rune* _rune)
 	if (EquipedRuneNum >= Stat.ActiveSocketNum)
 		return;
 
-	Sockets[Stat.ActiveSocketNum].EpuipRune(_rune);
+	Sockets[Stat.ActiveSocketNum - 1].EpuipRune(_rune);
+
 }

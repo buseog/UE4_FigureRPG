@@ -6,9 +6,7 @@
 #include "FP_Weapon.h"
 #include "FP_MainUI.h"
 #include "FP_InventoryWidget.h"
-
-
-
+#include "VerticalBox.h"
 
 bool UFP_Tooltip::Initialize()
 {
@@ -19,17 +17,31 @@ bool UFP_Tooltip::Initialize()
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket0"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
+	Button->SetBackgroundColor(FColor::Black);
 	SocketButton.Add(Button);
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket1"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
+	Button->SetBackgroundColor(FColor::Black);
 	SocketButton.Add(Button);
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket2"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
+	Button->SetBackgroundColor(FColor::Black);
 	SocketButton.Add(Button);
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket3"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
+	Button->SetBackgroundColor(FColor::Black);
 	SocketButton.Add(Button);
 
+	Button = (UButton*)GetWidgetFromName(TEXT("Create"));
+	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::CreateSocket);
+	Button = (UButton*)GetWidgetFromName(TEXT("ChangeColor"));
+	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::ChangeColor);
+	Button = (UButton*)GetWidgetFromName(TEXT("Equip"));
+	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::EquipRune);
+
+
+	SocketBox = (UVerticalBox*)GetWidgetFromName(TEXT("SocketButtonBox"));
+	
 	return true;
 }
 
@@ -45,8 +57,23 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	{
 		RemoveFromViewport();
 		Cast<UFP_SkillUI>(PC->GetWidgetMap(AFP_PlayerController::SKILLUI))->isSkillClicked = false;
+		SocketBox->SetVisibility(ESlateVisibility::Hidden);
 	}
 
+	if (CurrentSkill->Sockets.Num() == 0)
+	{
+		for (size_t i = 0; i < SocketButton.Num(); ++i)
+		{
+			SocketButton[i]->SetBackgroundColor(FColor::Black);
+		}
+	}
+	else
+	{
+		for (size_t i = 0; i < CurrentSkill->Sockets.Num(); ++i)
+		{
+			SocketButton[i]->SetBackgroundColor(CurrentSkill->Sockets[i].Color);
+		}
+	}
 
 }
 
@@ -152,18 +179,87 @@ void UFP_Tooltip::ActiveSkill()
 
 void UFP_Tooltip::SocketButtonClick()
 {
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-
 	for (size_t i = 0; i < SocketButton.Num(); ++i)
 	{
 		if (SocketButton[i]->IsPressed() == true)
 		{
-			//open inventory
-			if(Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->IsInViewport()==false)
-				Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->Button_Rune();
-			
-			UE_LOG(LogClass, Log, TEXT("%f"), float(i));
+			//UE_LOG(LogClass, Log, TEXT("%f"), float(i));
+			iSocketIndex = i;
+			FString target = TEXT("TargetSocket : ") + FString::FromInt(iSocketIndex+1);
+			TargetSocket = FText::FromString(target);
+			break;
 		}
 	}
+
+	SocketBox->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UFP_Tooltip::CreateSocket()
+{
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (nullptr == pPlayer)
+		return;
+
+	int RequiredGem = FMath::Pow(2, iSocketIndex);
+	if (pPlayer->Gem >= RequiredGem)
+	{
+		FColor color = CurrentSkill->AddSocket();
+		pPlayer->Gem -= RequiredGem;
+
+		//SocketButton[iSocketIndex]->SetBackgroundColor(color);
+	}
+
+	SocketBox->SetVisibility(ESlateVisibility::Hidden);
+}
+void UFP_Tooltip::ChangeColor()
+{
+	int icolor = FMath::FRandRange(1, 4);
+	FColor color;
+	switch (icolor)
+	{
+	case 1:
+		color = FColor::Red;
+		break;
+	case 2:
+		color = FColor::Green;
+		break;
+	case 3:
+		color = FColor::Blue;
+		break;
+	}
+
+	SocketButton[iSocketIndex]->SetBackgroundColor(color);
+	CurrentSkill->Sockets[iSocketIndex].Color = color;
+
+
+	SocketBox->SetVisibility(ESlateVisibility::Hidden);
+}
+void UFP_Tooltip::EquipRune()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
+
+	//open inventory
+	if (Inventory->IsInViewport() == false)
+	{
+		Inventory->bFromMain = false;
+		
+		FColor color = CurrentSkill->Sockets[iSocketIndex].Color;
+
+		if (color == FColor::Red)
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::RED;
+		else if (color == FColor::Green)
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::GREEN;
+		else
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::BLUE;
+
+		Inventory->SelectedSkill = CurrentSkill;
+
+		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill();
+	}
+		
+
+	SocketBox->SetVisibility(ESlateVisibility::Hidden);
 }

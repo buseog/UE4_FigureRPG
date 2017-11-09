@@ -28,6 +28,8 @@ public:
 	AFP_Player* Player;
 	class UCircularThrobber* Throbber;
 	SORTORDER Order = TIER;
+	bool bFromMain = true;
+	AFP_Skill* SelectedSkill;
 	
 public:
 	virtual bool Initialize() override;
@@ -37,5 +39,5 @@ public:
 	UFUNCTION()
 	void SlotSelected();
 	void AddRune();
-	void ViewAllSortByTier();
+	void SortInventory();
 };

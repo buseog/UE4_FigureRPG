@@ -43,19 +43,31 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
 	FText SkillName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
+	FText TargetSocket;
 	
 
 	UFUNCTION()
 	void ActiveSkill();
 	UFUNCTION()
 	void SocketButtonClick();
+	UFUNCTION()
+	void CreateSocket();
+	UFUNCTION()
+	void ChangeColor();
+	UFUNCTION()
+	void EquipRune();
 
 
 	UFP_SkillUI* SkillUI;
+	AFP_Skill* CurrentSkill;
 
 	UPROPERTY()
 	TArray<UButton*> SocketButton;
 
-	
+	//Socket
+	class UVerticalBox* SocketBox;
+	int iSocketIndex = 0;
 	
 };

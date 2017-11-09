@@ -142,6 +142,11 @@ void UFP_SkillUI::ActiveIceOrb()
 
 void UFP_SkillUI::LvUpFireBall()
 {
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	if (Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->IsInViewport() == true && Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->SkillName.ToString() != "FireBall")
+		return;
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	if (nullptr == pPlayer)
@@ -161,6 +166,11 @@ void UFP_SkillUI::LvUpFireBall()
 }
 void UFP_SkillUI::LvUpFireBlast()
 {
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	if (Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->IsInViewport() == true && Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->SkillName.ToString() != "FireBlast")
+		return;
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	if (nullptr == pPlayer)
@@ -180,6 +190,11 @@ void UFP_SkillUI::LvUpFireBlast()
 }
 void UFP_SkillUI::LvUpFireWall()
 {
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	if (Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->IsInViewport() == true && Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->SkillName.ToString() != "FireWall")
+		return;
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	if (nullptr == pPlayer)
@@ -200,6 +215,11 @@ void UFP_SkillUI::LvUpFireWall()
 
 void UFP_SkillUI::LvUpIceBall()
 {
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	if (Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->IsInViewport() == true && Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->SkillName.ToString() != "IceBall")
+		return;
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	if (nullptr == pPlayer)
@@ -219,6 +239,11 @@ void UFP_SkillUI::LvUpIceBall()
 }
 void UFP_SkillUI::LvUpIceBlast()
 {
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	if (Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->IsInViewport() == true && Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->SkillName.ToString() != "IceBlast")
+		return;
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	if (nullptr == pPlayer)
@@ -238,6 +263,11 @@ void UFP_SkillUI::LvUpIceBlast()
 }
 void UFP_SkillUI::LvUpIceOrb()
 {
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	if (Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->IsInViewport() == true && Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP))->SkillName.ToString() != "IceOrb")
+		return;
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	if (nullptr == pPlayer)

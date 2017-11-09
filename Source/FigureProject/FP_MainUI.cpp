@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "FP_SkillUI.h"
 #include "FP_InventoryWidget.h"
+#include "FP_MonsterMgr.h"
 
 
 void UFP_MainUI::NativeConstruct()
@@ -141,6 +142,19 @@ void UFP_MainUI::Button_Skill()
 
 void UFP_MainUI::Button_Rev()
 {
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (nullptr == pPlayer)
+		return;
+
+	pPlayer->Status = pPlayer->InitStatus;
+	pPlayer->SkillLv = pPlayer->InitSkillLv;
+	pPlayer->Level = pPlayer->InitLevel;
+	pPlayer->Gem = 5;
+
+	AFP_MonsterMgr::Stage = 1;
+	AFP_MonsterMgr::MonsterKillCnt = 0;
+
+	
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	Cast<AFP_PlayerController>(Controller)->RestartLevel();
 	
@@ -157,12 +171,31 @@ void UFP_MainUI::Button_Rune()
 		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
 		TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 		UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(PC, Inventory);
-		InventoryWidget->ViewAllSortByTier();
+		
 		PC->WidgetMap.Add(AFP_PlayerController::INVENTORY, InventoryWidget);
 	}
-
-
+	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->bFromMain = true;
+	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->Order = UFP_InventoryWidget::SORTORDER::TIER;
+	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
 
 	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
 
+}
+
+void UFP_MainUI::OpenInventoryFromSkill()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	UUserWidget* RuneWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
+
+	if (RuneWidget->IsValidLowLevel() == false)
+	{
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
+		TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(PC, Inventory);
+		PC->WidgetMap.Add(AFP_PlayerController::INVENTORY, InventoryWidget);
+	}
+
+	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
+	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
 }

@@ -27,6 +27,7 @@ void AFP_Monster_BossTypeA::Tick(float DeltaTime)
 	
 
 	TimeAcc += DeltaTime;
+	Distance -= DeltaTime;
 	float fNewDist = Distance + cosf(TimeAcc);
 
 	FVector NewLocation = GetActorLocation();

@@ -48,7 +48,7 @@ public:
 		float Speed = 1.f; //bullet speed
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
-		int ActiveSocketNum = 1;
+		int ActiveSocketNum = 0;
 	};
 
 	AFP_Skill();
@@ -62,8 +62,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SetTargetDirection(FVector _location);
-	void AddSocket();
+	FColor AddSocket();
 	void EquipRune(AFP_Rune* _rune);
+
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;

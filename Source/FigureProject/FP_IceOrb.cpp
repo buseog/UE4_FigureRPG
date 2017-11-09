@@ -31,7 +31,7 @@ void AFP_IceOrb::Tick(float DeltaTime)
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(CollisionSphere);
 	if (TargetMonster != nullptr)
 	{
-		TargetMonster->MyTakeDamage(Player->Status.Attack * Stat.Damage);
+		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
 		if (TargetMonster->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(TargetMonster);
 
