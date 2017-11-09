@@ -62,7 +62,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SetTargetDirection(FVector _location);
-	void AddSocket();
+	FColor AddSocket();
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;

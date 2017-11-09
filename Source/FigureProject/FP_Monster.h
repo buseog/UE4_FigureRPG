@@ -50,14 +50,14 @@ public:
 				SpeedOffset = 0.5f;
 				Duration -= _delta;	
 				Monster->PointLight->SetLightColor(FColor::Blue);
-				Monster->PointLight->SetIntensity(50.f);
+				Monster->PointLight->SetIntensity(150.f);
 			}
 
 			if (eState == IGNITE)
 			{
 				Duration -= _delta;
 				Monster->PointLight->SetLightColor(FColor::Red);
-				Monster->PointLight->SetIntensity(50.f);
+				Monster->PointLight->SetIntensity(150.f);
 			}
 		}
 	};

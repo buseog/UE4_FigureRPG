@@ -21,6 +21,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
 	FText LevelText;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
+	FText GemText;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Progress")
 	float Progress = 0.5f;
 

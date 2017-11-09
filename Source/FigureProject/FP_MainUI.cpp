@@ -141,7 +141,16 @@ void UFP_MainUI::Button_Skill()
 
 void UFP_MainUI::Button_Rev()
 {
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (nullptr == pPlayer)
+		return;
+
+	pPlayer->Status.Attack = 1.f;
+	pPlayer->Status.AttackRange = 50.f;
+	pPlayer->Status.AttackSpeed = 1.f;
+	pPlayer->Status.BulletSpeed = 100.f;
+	
+		APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	Cast<AFP_PlayerController>(Controller)->RestartLevel();
 	
 }

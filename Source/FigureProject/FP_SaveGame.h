@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FP_Player.h"
 #include "GameFramework/SaveGame.h"
 #include "FP_SaveGame.generated.h"
 
@@ -40,11 +41,47 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float Splash;
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
-		FString SaveSlotName;
+	//Skill
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireBall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireBlast = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int FireWall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceBall = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceBlast = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int IceOrb = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int SkillPoint = 10;
+
+	//Lv
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	int Level;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	float Exp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	float FullExp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	int Point;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gem)
+	int Gem = 5;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stage)
+	int Stage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stage)
+	int MonsterKillCnt;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-		uint32 UserIndex;
+	FString SaveSlotName;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	uint32 UserIndex;
 	
 	
 };

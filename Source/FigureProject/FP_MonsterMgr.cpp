@@ -6,6 +6,8 @@
 #include "FP_Monster_BossTypeB.h"
 
 // Sets default values
+int32 AFP_MonsterMgr::MonsterKillCnt = 0;
+int32 AFP_MonsterMgr::Stage = 1;
 AFP_MonsterMgr::AFP_MonsterMgr()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -27,14 +29,28 @@ void AFP_MonsterMgr::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	TimeAcc += DeltaTime;
+
+	Stage = (MonsterKillCnt / 10) + 1;
+
 	if (TimeAcc > MonsterSpawnTime)
 	{
 		TimeAcc = 0.f;
 
-		//FVector2D ViewportSize = GEngine->GameViewport->Viewport->GetSizeXY();
 		int32 iSpawnX = FMath::RandRange(30, 100) * (rand() % 2 - 0.5);
 		int32 iSpawnY = FMath::RandRange(30, 120) * (rand() % 2 - 0.5);
-		AFP_Monster* SpawnedMonster = GetWorld()->SpawnActor<AFP_Monster_Normal>(FVector(iSpawnX, iSpawnY, 0.f), FRotator(0.f, 0.f, 0.f));
+		
+		AFP_Monster* SpawnedMonster = nullptr;
+		int iRand = rand() % 2;
+		if(iRand == 0)
+			SpawnedMonster = GetWorld()->SpawnActor<AFP_Monster_BossTypeA>(FVector(iSpawnX, iSpawnY, 0.f), FRotator(0.f, 0.f, 0.f));
+		else
+			SpawnedMonster = GetWorld()->SpawnActor<AFP_Monster_Normal>(FVector(iSpawnX, iSpawnY, 0.f), FRotator(0.f, 0.f, 0.f));
+
+
+		//FVector2D ViewportSize = GEngine->GameViewport->Viewport->GetSizeXY();
+		
+		SpawnedMonster->HP = Stage * Stage + 3;
+		SpawnedMonster->Exp = SpawnedMonster->HP * 5;
 		//MonsterArray.Add(SpawnedMonster);
 	}
 

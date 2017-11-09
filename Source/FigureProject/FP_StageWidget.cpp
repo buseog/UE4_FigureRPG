@@ -42,6 +42,9 @@ void UFP_StageWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 		
 		FString fStage = StageOff + FString::FromInt(Cast<AFP_MonsterMgr>(FoundActors[0])->Stage);
 		StageText = FText::FromString(fStage);
+
+		FString Gem = TEXT("Gem : ") + FString::FromInt(Player->Gem);
+		GemText = FText::FromString(Gem);
 	}
 }
 

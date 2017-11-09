@@ -12,7 +12,7 @@
 #include "FP_Item_AttackSpeedUp.h"
 #include "FP_Player.h"
 #include "FP_ComCollision.h"
-
+#include "FP_MonsterMgr.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -141,6 +141,8 @@ void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	Player->Level.Exp += Exp;
 	
+	AFP_MonsterMgr::MonsterKillCnt++;
+
 }
 
 
