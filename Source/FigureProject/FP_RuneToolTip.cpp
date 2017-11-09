@@ -7,6 +7,10 @@ bool UFP_RuneToolTip::Initialize()
 {
 	Super::Initialize();
 
+	EquipButton = Cast<UButton>(GetWidgetFromName(TEXT("EquipBtn")));
+
+	EquipButton->OnClicked.AddDynamic(this, &UFP_RuneToolTip::EquipRune);
+
 	return true;
 }
 
@@ -16,7 +20,7 @@ void UFP_RuneToolTip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 }
 
-void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune)
+void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Skill* _skill)
 {
 	if (IsInViewport())
 		RemoveFromViewport();
@@ -32,21 +36,49 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune)
 		{
 		case 0:
 			Option1 = Option[i];
+
+			if (_rune->OptionVal[i] == NULL)
+				break;
+
+			Val1 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
 			break;
 		case 1:
 			Option2 = Option[i];
+
+			if (_rune->OptionVal[i] == NULL)
+				break;
+
+			Val2 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
 			break;
 		case 2:
 			Option3 = Option[i];
+
+			if (_rune->OptionVal[i] == NULL)
+				break;
+
+			Val3 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
 			break;
 		case 3:
 			Option4 = Option[i];
+
+			if (_rune->OptionVal[i] == NULL)
+				break;
+
+			Val4 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
 			break;
 		}
 	}
 
 	//Name = FText::FromString(_rune->Name);
 	Tier = FText::FromString(FString::FromInt(_rune->Stat.Tier) + " Tier");
+
+	if (_fromInventory)
+		EquipButton->SetVisibility(ESlateVisibility::Hidden);
+	else
+		EquipButton->SetVisibility(ESlateVisibility::Visible);
+
+	SelectedSkill = _skill;
+	SelectedRune = _rune;
 
 	AddToViewport();
 }
@@ -64,4 +96,9 @@ void UFP_RuneToolTip::InitializeToolTip()
 	Val4 = FText::FromString("");
 	Tier = FText::FromString("");
 	//Name = FText::FromString("");
+}
+
+void UFP_RuneToolTip::EquipRune()
+{
+	SelectedSkill->EquipRune(SelectedRune);
 }

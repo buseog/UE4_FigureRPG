@@ -51,6 +51,7 @@ public:
 	float Tier2MaxDropRate = 60.f;
 	FString Name = "";
 	TArray<FString> Option;
+	TArray<float> OptionVal;
 
 public:	
 	// Sets default values for this actor's properties

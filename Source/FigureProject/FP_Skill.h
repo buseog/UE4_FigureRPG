@@ -63,6 +63,7 @@ public:
 
 	void SetTargetDirection(FVector _location);
 	void AddSocket();
+	void EquipRune(AFP_Rune* _rune);
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;
@@ -86,6 +87,7 @@ public:
 	/*-----Socket-------------------*/
 	
 	int MaxSocketNum = 4;
+	int EquipedRuneNum = 0;
 	TArray<Socket> Sockets;
 	/*------------------------------*/
 	

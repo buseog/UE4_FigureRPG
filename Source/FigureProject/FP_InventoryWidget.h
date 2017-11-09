@@ -18,12 +18,16 @@ class FIGUREPROJECT_API UFP_InventoryWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	enum SORTORDER{COLOR, TIER, RED, GREEN, BLUE, TIER1, TIER2, TIER3};
+
+public:
 	TArray<UButton*> Slots;
 	bool isClicked = false;
 	int MaxSlotNum = 10;
 	FVector2D IconSize = FVector2D(63.f, 62.f);
 	AFP_Player* Player;
 	class UCircularThrobber* Throbber;
+	SORTORDER Order = TIER;
 	
 public:
 	virtual bool Initialize() override;

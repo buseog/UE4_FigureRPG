@@ -46,6 +46,8 @@ AFP_Rune::AFP_Rune()
 
 	static ConstructorHelpers::FObjectFinder<UTexture2D> BlueTier4(TEXT("Texture2D'/Game/Icon/BlueCircleRune.BlueCircleRune'"));
 	BlueTier4Icon = BlueTier4.Object;
+
+	OptionVal.Init(NULL, 4);
 }
 
 // Called when the game starts or when spawned

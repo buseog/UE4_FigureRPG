@@ -81,3 +81,14 @@ void AFP_Skill::AddSocket()
 
 	Sockets.Add(socket);
 }
+
+void AFP_Skill::EquipRune(AFP_Rune* _rune)
+{
+	if (Sockets.Num() == 0)
+		return;
+
+	if (EquipedRuneNum >= Stat.ActiveSocketNum)
+		return;
+
+	Sockets[Stat.ActiveSocketNum].EpuipRune(_rune);
+}

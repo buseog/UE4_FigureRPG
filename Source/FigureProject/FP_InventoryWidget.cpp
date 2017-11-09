@@ -87,40 +87,81 @@ void UFP_InventoryWidget::AddRune()
 
 	AFP_ComRuneGenerator* runeGenerator = AFP_ComRuneGenerator::StaticClass()->GetDefaultObject<AFP_ComRuneGenerator>();
 
-	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RuneOption, rune, stage);
-
 	Player->Inventory.Add(rune);
+
+	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RuneOption, runeGenerator->RuneStat, Player->Inventory.Last(), stage);
 
 	ViewAllSortByTier();
 }
 
 void UFP_InventoryWidget::ViewAllSortByTier()
 {
+	int slotNum = -1;
+
 	if (Player->Inventory.Num() == 0)
 		return;
 
-	/*Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
-		if (A.Color.R == 0 && B.Color.R == 0)
-			return A.Color.G > B.Color.G;
-
-		return A.Color.R > B.Color.R;
-	});*/
-
-	Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
-		return A.Stat.Tier < B.Stat.Tier;
-	});
-
-	for (int i = 0; i < Player->Inventory.Num(); ++i)
+	if (Order == TIER || Order == RED || Order == GREEN || Order == BLUE)
 	{
-		Slots[i]->WidgetStyle.Normal.SetResourceObject(Player->Inventory[i]->Icon);
-		Slots[i]->WidgetStyle.Normal.ImageSize = IconSize;
-		Slots[i]->WidgetStyle.Normal.Margin = 0;
-		Slots[i]->WidgetStyle.Hovered.SetResourceObject(Player->Inventory[i]->Icon);
-		Slots[i]->WidgetStyle.Hovered.ImageSize = IconSize;
-		Slots[i]->WidgetStyle.Hovered.Margin = 0;
-		Slots[i]->WidgetStyle.Pressed.SetResourceObject(Player->Inventory[i]->Icon);
-		Slots[i]->WidgetStyle.Pressed.ImageSize = IconSize;
-		Slots[i]->WidgetStyle.Pressed.Margin = 0;
-		Slots[i]->SetIsEnabled(true);
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			return A.Stat.Tier < B.Stat.Tier;
+		});
+	}
+	else
+	{
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			if (A.Color.R == 0 && B.Color.R == 0)
+				return A.Color.G > B.Color.G;
+
+			return A.Color.R > B.Color.R;
+		});
+	}
+
+	if (Order == COLOR || Order == TIER)
+	{
+		for (int i = 0; i < Player->Inventory.Num(); ++i)
+		{
+			Slots[i]->WidgetStyle.Normal.SetResourceObject(Player->Inventory[i]->Icon);
+			Slots[i]->WidgetStyle.Normal.ImageSize = IconSize;
+			Slots[i]->WidgetStyle.Normal.Margin = 0;
+			Slots[i]->WidgetStyle.Hovered.SetResourceObject(Player->Inventory[i]->Icon);
+			Slots[i]->WidgetStyle.Hovered.ImageSize = IconSize;
+			Slots[i]->WidgetStyle.Hovered.Margin = 0;
+			Slots[i]->WidgetStyle.Pressed.SetResourceObject(Player->Inventory[i]->Icon);
+			Slots[i]->WidgetStyle.Pressed.ImageSize = IconSize;
+			Slots[i]->WidgetStyle.Pressed.Margin = 0;
+			Slots[i]->SetIsEnabled(true);
+		}
+	}
+	else
+	{
+		for (int i = 0; i < Player->Inventory.Num(); ++i)
+		{
+			if (Order == RED && Player->Inventory[i]->Color != FColor::Red)
+				continue;
+			else if (Order == GREEN && Player->Inventory[i]->Color != FColor::Green)
+				continue;
+			else if (Order == BLUE && Player->Inventory[i]->Color != FColor::Blue)
+				continue;
+			else if (Order == TIER1 && Player->Inventory[i]->Stat.Tier != 1)
+				continue;
+			else if (Order == TIER2 && Player->Inventory[i]->Stat.Tier != 2)
+				continue;
+			else if (Order == TIER3 && Player->Inventory[i]->Stat.Tier != 3)
+				continue;
+			else
+				++slotNum;
+
+			Slots[slotNum]->WidgetStyle.Normal.SetResourceObject(Player->Inventory[i]->Icon);
+			Slots[slotNum]->WidgetStyle.Normal.ImageSize = IconSize;
+			Slots[slotNum]->WidgetStyle.Normal.Margin = 0;
+			Slots[slotNum]->WidgetStyle.Hovered.SetResourceObject(Player->Inventory[i]->Icon);
+			Slots[slotNum]->WidgetStyle.Hovered.ImageSize = IconSize;
+			Slots[slotNum]->WidgetStyle.Hovered.Margin = 0;
+			Slots[slotNum]->WidgetStyle.Pressed.SetResourceObject(Player->Inventory[i]->Icon);
+			Slots[slotNum]->WidgetStyle.Pressed.ImageSize = IconSize;
+			Slots[slotNum]->WidgetStyle.Pressed.Margin = 0;
+			Slots[slotNum]->SetIsEnabled(true);
+		}
 	}
 }
