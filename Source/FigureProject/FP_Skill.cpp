@@ -92,6 +92,6 @@ void AFP_Skill::EquipRune(AFP_Rune* _rune)
 	if (EquipedRuneNum >= Stat.ActiveSocketNum)
 		return;
 
-	Sockets[Stat.ActiveSocketNum].EpuipRune(_rune);
+	Sockets[Stat.ActiveSocketNum - 1].EpuipRune(_rune);
 
 }

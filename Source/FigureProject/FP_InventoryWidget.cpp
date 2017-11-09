@@ -37,6 +37,8 @@ bool UFP_InventoryWidget::Initialize()
 
 	Throbber = (UCircularThrobber*)GetWidgetFromName(TEXT("Active"));
 
+	SelectedSkill = nullptr;
+
 	return true;
 }
 
@@ -68,7 +70,7 @@ void UFP_InventoryWidget::SlotSelected()
 			ThrobberSlot->SetRow(InventorySlot->Row);
 			Throbber->SetVisibility(ESlateVisibility::Visible);
 
-			Cast<UFP_RuneToolTip>(RuneToolTip)->ToggleToolTip(Player->Inventory[i]);
+			Cast<UFP_RuneToolTip>(RuneToolTip)->ToggleToolTip(Player->Inventory[i], bFromMain, SelectedSkill);
 		}
 	}
 }
@@ -90,12 +92,17 @@ void UFP_InventoryWidget::AddRune()
 	Player->Inventory.Add(rune);
 
 	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RuneOption, runeGenerator->RuneStat, Player->Inventory.Last(), stage);
-
-	ViewAllSortByTier();
 }
 
-void UFP_InventoryWidget::ViewAllSortByTier()
+void UFP_InventoryWidget::SortInventory()
 {
+	for (int i = 0; i < Slots.Num(); ++i)
+	{
+		Slots[i]->WidgetStyle.Normal.SetResourceObject(NULL);
+		Slots[i]->WidgetStyle.Hovered.SetResourceObject(NULL);
+		Slots[i]->WidgetStyle.Pressed.SetResourceObject(NULL);
+	}
+
 	int slotNum = -1;
 
 	if (Player->Inventory.Num() == 0)

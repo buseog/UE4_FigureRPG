@@ -62,13 +62,13 @@ struct FPlayerLevel
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
-	int Level;
+	int Level = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
-	float Exp;
+	float Exp = 0.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
-	float FullExp;
+	float FullExp = 100;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
-	int Point;
+	int Point = 0.f;
 
 	void CheckLevelUp()
 	{
@@ -130,6 +130,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
 	struct FPlayerLevel	Level;
+
+	//init
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+	struct FPlayerStatus InitStatus;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	struct FPlayerSkillLv InitSkillLv;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
+	struct FPlayerLevel	InitLevel;
 
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
 	class UStaticMeshComponent* Mesh;*/

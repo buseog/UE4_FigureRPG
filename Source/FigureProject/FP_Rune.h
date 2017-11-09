@@ -18,10 +18,10 @@ public:
 public:
 	struct RuneStat
 	{
-		float Damage = 0.f;
-		float Speed = 0.f; //bullet speed
-		float CoolTimeRatio = 0.f; // attack speed
-		float Range = 0.f;
+		float Damage = 1.f;
+		float Speed = 1.f; //bullet speed
+		float CoolTimeRatio = 1.f; // attack speed
+		float Range = 1.f;
 		int Tier = 1;
 		TArray<TYPE> Type;
 	};

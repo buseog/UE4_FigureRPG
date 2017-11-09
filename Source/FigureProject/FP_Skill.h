@@ -48,7 +48,7 @@ public:
 		float Speed = 1.f; //bullet speed
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
-		int ActiveSocketNum = 1;
+		int ActiveSocketNum = 0;
 	};
 
 	AFP_Skill();

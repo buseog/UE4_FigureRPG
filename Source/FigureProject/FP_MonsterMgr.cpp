@@ -50,7 +50,10 @@ void AFP_MonsterMgr::Tick(float DeltaTime)
 		//FVector2D ViewportSize = GEngine->GameViewport->Viewport->GetSizeXY();
 		
 		SpawnedMonster->HP = Stage * Stage + 3;
+		SpawnedMonster->MaxHP = SpawnedMonster->HP;
 		SpawnedMonster->Exp = SpawnedMonster->HP * 5;
+
+		
 		//MonsterArray.Add(SpawnedMonster);
 	}
 

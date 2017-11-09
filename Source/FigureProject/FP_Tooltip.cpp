@@ -239,9 +239,27 @@ void UFP_Tooltip::EquipRune()
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
+	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
+
 	//open inventory
-	if (Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->IsInViewport() == false)
-		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->Button_Rune();
+	if (Inventory->IsInViewport() == false)
+	{
+		Inventory->bFromMain = false;
+		
+		FColor color = CurrentSkill->Sockets[iSocketIndex].Color;
+
+		if (color == FColor::Red)
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::RED;
+		else if (color == FColor::Green)
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::GREEN;
+		else
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::BLUE;
+
+		Inventory->SelectedSkill = CurrentSkill;
+
+		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill();
+	}
+		
 
 	SocketBox->SetVisibility(ESlateVisibility::Hidden);
 }

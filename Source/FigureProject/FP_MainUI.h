@@ -39,5 +39,7 @@ public:
 	void Button_Rev();
 	UFUNCTION()
 	void Button_Rune();
+
+	void OpenInventoryFromSkill();
 	
 };
