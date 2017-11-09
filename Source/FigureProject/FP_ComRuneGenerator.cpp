@@ -18,27 +18,27 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	
 	//RED
 	prop_name.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
-	RuneOption.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
+	RedRuneOption.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
 	option.Add("RANDOMEFFECT", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.STUN, Red.NAME_STUN);
-	RuneOption.Add(Red.STUN, Red.NAME_STUN);
+	RedRuneOption.Add(Red.STUN, Red.NAME_STUN);
 	option.Add("STUN", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
-	RuneOption.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
+	RedRuneOption.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
 	option.Add("KNOCKBACK", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
-	RuneOption.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
+	RedRuneOption.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
 	option.Add("LIFESTEAL", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.IGNITE, Red.NAME_IGNITE);
-	RuneOption.Add(Red.IGNITE, Red.NAME_IGNITE);
+	RedRuneOption.Add(Red.IGNITE, Red.NAME_IGNITE);
 	option.Add("IGNITE", prop_name);
 	prop_name.Empty();
 
@@ -48,22 +48,22 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 
 	//GREEN
 	prop_name.Add(Green.ATTACKSPEEDUP, Green.NAME_ATTACKSPEEDUP);
-	RuneOption.Add(Green.ATTACKSPEEDUP, Green.NAME_ATTACKSPEEDUP);
+	GreenRuneOption.Add(Green.ATTACKSPEEDUP, Green.NAME_ATTACKSPEEDUP);
 	option.Add("ATTACKSPEEDUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Green.BULLETSPEEDUP, Green.NAME_BULLETSPEEDUP);
-	RuneOption.Add(Green.BULLETSPEEDUP, Green.NAME_BULLETSPEEDUP);
+	GreenRuneOption.Add(Green.BULLETSPEEDUP, Green.NAME_BULLETSPEEDUP);
 	option.Add("BULLETSPEEDUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
-	RuneOption.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
+	GreenRuneOption.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
 	option.Add("DAMAGEUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
-	RuneOption.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
+	GreenRuneOption.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
 	option.Add("DAMAGEUPTOSQARE", prop_name);
 	prop_name.Empty();
 
@@ -73,22 +73,22 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 
 	//BLUE
 	prop_name.Add(Blue.RANGEUP, Blue.NAME_RANGEUP);
-	RuneOption.Add(Blue.RANGEUP, Blue.NAME_RANGEUP);
+	BlueRuneOption.Add(Blue.RANGEUP, Blue.NAME_RANGEUP);
 	option.Add("RANGEUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Blue.EXPUP, Blue.NAME_EXPUP);
-	RuneOption.Add(Blue.EXPUP, Blue.NAME_EXPUP);
+	BlueRuneOption.Add(Blue.EXPUP, Blue.NAME_EXPUP);
 	option.Add("EXPUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Blue.GUIDED, Blue.NAME_GUIDED);
-	RuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
+	BlueRuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
 	option.Add("GUIDED", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Blue.AREAUP, Blue.NAME_AREAUP);
-	RuneOption.Add(Blue.AREAUP, Blue.NAME_AREAUP);
+	BlueRuneOption.Add(Blue.AREAUP, Blue.NAME_AREAUP);
 	option.Add("AREAUP", prop_name);
 	prop_name.Empty();
 
@@ -273,7 +273,7 @@ void AFP_ComRuneGenerator::Tick(float DeltaTime)
 
 }
 
-AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _runeOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage)
+AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage)
 {
 	//Tier
 	_rune->Tier3DropRate = (float)_stage * _rune->Tier3DropRate;
@@ -308,39 +308,39 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Red].Num());
+				random = FMath::FRandRange(0, _runeProperty[FColor::Red].Num() - 1);
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Red].Num())
 					break;
 			}
 
-			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
-			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
+			_rune->Name += _redRuneOption[hex].Left(_redRuneOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_redRuneOption[hex].Left(_redRuneOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
 
-			if (_runeOption[hex].Contains("STAT"))
+			if (_redRuneOption[hex].Contains("STAT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
 
-			if (_runeOption[hex].Contains("PROBABILITY"))
+			if (_redRuneOption[hex].Contains("PROBABILITY"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
 
-			if (_runeOption[hex].Contains("FIXED"))
+			if (_redRuneOption[hex].Contains("FIXED"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
 
-			if (_runeOption[hex].Contains("PROJECTILE"))
+			if (_redRuneOption[hex].Contains("PROJECTILE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
 
-			if (_runeOption[hex].Contains("AOE"))
+			if (_redRuneOption[hex].Contains("AOE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
 
-			if (_runeOption[hex].Contains("DOT"))
+			if (_redRuneOption[hex].Contains("DOT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
 
-			if (_runeOption[hex].Contains("EXP"))
+			if (_redRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
-			if (_runeOption[hex].Contains("ETC"))
+			if (_redRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
@@ -351,39 +351,39 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Green].Num());
+				random = FMath::FRandRange(0, _runeProperty[FColor::Green].Num() - 1);
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Green].Num())
 					break;
 			}
 
-			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
-			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
+			_rune->Name += _greenRuneOption[hex].Left(_greenRuneOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_greenRuneOption[hex].Left(_greenRuneOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
 
-			if (_runeOption[hex].Contains("STAT"))
+			if (_greenRuneOption[hex].Contains("STAT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
 
-			if (_runeOption[hex].Contains("PROBABILITY"))
+			if (_greenRuneOption[hex].Contains("PROBABILITY"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
 
-			if (_runeOption[hex].Contains("FIXED"))
+			if (_greenRuneOption[hex].Contains("FIXED"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
 
-			if (_runeOption[hex].Contains("PROJECTILE"))
+			if (_greenRuneOption[hex].Contains("PROJECTILE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
 
-			if (_runeOption[hex].Contains("AOE"))
+			if (_greenRuneOption[hex].Contains("AOE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
 
-			if (_runeOption[hex].Contains("DOT"))
+			if (_greenRuneOption[hex].Contains("DOT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
 
-			if (_runeOption[hex].Contains("EXP"))
+			if (_greenRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
-			if (_runeOption[hex].Contains("ETC"))
+			if (_greenRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
@@ -394,40 +394,42 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Blue].Num());
+				random = FMath::FRandRange(0, _runeProperty[FColor::Blue].Num() - 1);
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Blue].Num())
 					break;
 			}
 
-			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
-			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
+			UE_LOG(LogClass, Log, TEXT("%d"), _runeProperty[FColor::Blue].Num());
+
+			/*_rune->Name += _blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
 
-			if (_runeOption[hex].Contains("STAT"))
+			if (_blueRuneOption[hex].Contains("STAT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
 
-			if (_runeOption[hex].Contains("PROBABILITY"))
+			if (_blueRuneOption[hex].Contains("PROBABILITY"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
 
-			if (_runeOption[hex].Contains("FIXED"))
+			if (_blueRuneOption[hex].Contains("FIXED"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
 
-			if (_runeOption[hex].Contains("PROJECTILE"))
+			if (_blueRuneOption[hex].Contains("PROJECTILE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
 
-			if (_runeOption[hex].Contains("AOE"))
+			if (_blueRuneOption[hex].Contains("AOE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
 
-			if (_runeOption[hex].Contains("DOT"))
+			if (_blueRuneOption[hex].Contains("DOT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
 
-			if (_runeOption[hex].Contains("EXP"))
+			if (_blueRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
-			if (_runeOption[hex].Contains("ETC"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
+			if (_blueRuneOption[hex].Contains("ETC"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);*/
 		}
 		break;
 	}

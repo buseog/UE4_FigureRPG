@@ -89,7 +89,7 @@ void UFP_InventoryWidget::AddRune()
 
 	Player->Inventory.Add(rune);
 
-	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RuneOption, runeGenerator->RuneStat, Player->Inventory.Last(), stage);
+	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RedRuneOption, runeGenerator->GreenRuneOption, runeGenerator->BlueRuneOption, runeGenerator->RuneStat, Player->Inventory.Last(), stage);
 
 	ViewAllSortByTier();
 }
