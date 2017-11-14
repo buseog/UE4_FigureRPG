@@ -70,6 +70,13 @@ void UFP_StageWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 			APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 			Cast<AFP_PlayerController>(Controller)->SetPause(false);
+
+			int NewStage = ((AFP_MonsterMgr::Stage-1) / 10) * 10 + 1;
+			int NewKillCnt = (NewStage-1) * 10;
+
+			AFP_MonsterMgr::Stage = NewStage;
+			AFP_MonsterMgr::MonsterKillCnt = NewKillCnt;
+
 			Cast<AFP_PlayerController>(Controller)->RestartLevel();
 
 			CountTime = 10.f;

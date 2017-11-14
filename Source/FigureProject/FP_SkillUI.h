@@ -105,8 +105,8 @@ public:
 			UFP_Tooltip* ToolTipClass = Cast<UFP_Tooltip>(ToolTip);
 			ToolTipClass->SkillName = Skillname;// FText::FromString(TEXT("FireBall"));
 
-			UClass* Class = AFP_Skill::StaticClass();
-			AFP_Skill* SKill = Class->GetDefaultObject<AFP_Skill>();
+			UClass* Class = T::StaticClass();
+			T* SKill = Class->GetDefaultObject<T>();
 			ToolTipClass->CurrentSkill = SKill;
 			
 			float DamageLv = SKill->SkillInfo.DmgPerLv;

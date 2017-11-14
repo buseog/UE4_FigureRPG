@@ -62,17 +62,17 @@ public:
 	template<typename T>
 	T* CustomSpawn(FVector SpawnLocation, FRotator SpawnRotator)
 	{
-		UClass*  Class = AFP_Skill::StaticClass();
-		AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
-		
+		UClass*  Class = T::StaticClass();
+		T* Skill_CDO = Class->GetDefaultObject<T>();
+
 		FTransform transform = FTransform(SpawnRotator, SpawnLocation);
-
-
 		T* Skill = GetWorld()->SpawnActorDeferred<T>(T::StaticClass(), transform);
 
 		Skill->Sockets = Skill_CDO->Sockets;
-		
+	
 		UGameplayStatics::FinishSpawningActor(Skill, transform);
+
+		Skill->Stat = Skill_CDO->Stat;
 
 		return Skill;
 	}

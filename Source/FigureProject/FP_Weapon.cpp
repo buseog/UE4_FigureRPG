@@ -4,9 +4,9 @@
 #include "Engine.h"
 #include "FP_Bullet.h"
 #include "FP_Player.h"
-#include "FP_FireBall.h"
 #include "FP_Skill.h"
 #include "FP_HUD.h"
+#include "FP_FireBall.h"
 #include "FP_IceBall.h"
 #include "FP_IceBlast.h"
 #include "FP_IceOrb.h"
@@ -125,14 +125,17 @@ void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 
 void AFP_Weapon::SpawnSkill()
 {
-	UClass*  Class = AFP_Skill::StaticClass();
-	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
+
+	UClass* Class = AFP_FireBall::StaticClass();
+	AFP_FireBall* Skill_CDO = Class->GetDefaultObject<AFP_FireBall>();
 
 	switch (ActiveSkill)
 	{
 	case FIREBALL:
 		Skill = CustomSpawn<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		
+		UE_LOG(LogClass, Log, TEXT("%f"), Skill->Stat.Damage);
 		break;
 	case FIREBLAST:
 		Skill = CustomSpawn<AFP_FireBlast>(TargetMonsters[0]->GetActorLocation(), FRotator(0.f, AngleZ * 180.f / PI, 0.f));

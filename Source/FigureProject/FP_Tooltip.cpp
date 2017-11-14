@@ -214,6 +214,9 @@ void UFP_Tooltip::CreateSocket()
 }
 void UFP_Tooltip::ChangeColor()
 {
+	if (CurrentSkill->Sockets.Num() < iSocketIndex + 1)
+		return;
+
 	int icolor = FMath::FRandRange(1, 4);
 	FColor color;
 	switch (icolor)
@@ -237,6 +240,9 @@ void UFP_Tooltip::ChangeColor()
 }
 void UFP_Tooltip::EquipRune()
 {
+	if (CurrentSkill->Sockets.Num() < iSocketIndex + 1)
+		return;
+
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 

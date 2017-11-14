@@ -52,10 +52,7 @@ AFP_Player::AFP_Player()
 	//MouseSphere->OnClicked.AddDynamic(this, &AFP_Player::ToggleStatus);
 	//MouseSphere->SetCollisionProfileName("BlockAll");
 	
-	Level.Level = 1;
-	Level.Exp = 0.f;
-	Level.FullExp = 100.f;
-	Level.Point = 5;
+
 
 	/*FName Path = TEXT("Blueprint'/Game/FP_ProximityWeapon_BP.FP_ProximityWeapon_BP_C'");
 	UClass* WeaponBP = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
@@ -101,7 +98,7 @@ void AFP_Player::Tick(float DeltaTime)
 	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::FromInt(int(Test->IsValidLowLevel())));*/
 	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, FString::SanitizeFloat(TimeAcc));
 	
-	Level.CheckLevelUp();
+	CheckLevelUp();
 	//Level.Exp += 1.f;
 
 	//Ã¶ÀÇ Ãß°¡
@@ -144,12 +141,13 @@ void AFP_Player::StatusLevelUp(int _Type)
 	if (Level.Point <= 0)
 		return;
 
-	Level.DecreasePoint();
+	Level.Point--;
 
 	switch (_Type)
 	{
 	case 0:
 		Status.MaxHp += 1.f;
+		Status.Hp += 1.f;
 		break;
 
 	case 1:
@@ -186,7 +184,20 @@ void AFP_Player::StatusLevelUp(int _Type)
 	}
 }
 
+void AFP_Player::CheckLevelUp()
+{
+	if (Level.Exp >= Level.FullExp)
+	{
+		++Level.Level;
+		Level.Point += 1;
+		Level.Exp -= Level.FullExp;
+		Level.FullExp = FMath::Pow(2, Level.Level) * 50.f; // ½Â·Ä¼öÁ¤
 
+		if (Level.Level % 5 == 0)
+			SkillLv.SkillPoint++;
+	}
+	
+}
 void AFP_Player::OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult)
 {
 	
@@ -303,6 +314,8 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 
 	UFP_SaveGame* SaveGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::CreateSaveGameObject(UFP_SaveGame::StaticClass()));
 	
+	SaveGameInstance->Hp = Status.Hp;
+	SaveGameInstance->MaxHp = Status.MaxHp;
 	SaveGameInstance->Attack = Status.Attack;
 	SaveGameInstance->AttackSpeed = Status.AttackSpeed;
 	SaveGameInstance->AttackRange = Status.AttackRange;

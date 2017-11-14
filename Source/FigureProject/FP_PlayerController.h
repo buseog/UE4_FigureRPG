@@ -31,7 +31,8 @@ public:
 	
 public:
 	bool	bShowMainUI;
-
+	static bool    isRev;
+	static bool		isDead;
 public:
 	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = StatusUI)
 	TSubclassOf<UFP_StatusWidget> StatusUI;
@@ -49,4 +50,15 @@ public:
 
 	void SetVisibility(eWIDGET _WidgetNum, bool _isvisible);
 	bool Load();
+
+
+	template<typename T>
+	void SetSkillDetail(int iSkillLv)
+	{
+		UClass* Class = T::StaticClass();
+		T* SkillCDO = Class->GetDefaultObject<T>();
+
+		SkillCDO->Stat.Damage = 1.f + SkillCDO->SkillInfo.DmgPerLv*0.01f * iSkillLv;
+		SkillCDO->Stat.CoolTimeRatio = 1.f - SkillCDO->SkillInfo.AtkSpdPerLv * iSkillLv;
+	}
 };

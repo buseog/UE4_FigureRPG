@@ -13,8 +13,17 @@
 #include "FP_RuneToolTip.h"
 #include "FP_SaveGame.h"
 #include "FP_MonsterMgr.h"
+#include "FP_FireBall.h"
+#include "FP_IceBall.h"
+#include "FP_IceBlast.h"
+#include "FP_IceOrb.h"
+#include "FP_FireBlastSpawnPoint.h"
+#include "FP_FireBlast.h"
+#include "FP_FireWall.h"
 
 
+bool AFP_PlayerController::isRev = false;
+bool AFP_PlayerController::isDead = false;
 AFP_PlayerController::AFP_PlayerController()
 {
 	bShowMouseCursor = true;
@@ -72,10 +81,11 @@ void AFP_PlayerController::BeginPlay()
 	WidgetMap[STAGE]->AddToViewport();
 	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
 
-	if (Load() == false)
+	if (Load() == false || isRev == true)
 	{
 		WidgetMap[GAMESTART]->AddToViewport();
 		WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);
+		isRev = false;
 	}
 	else
 		Cast<UFP_GameStart>(WidgetMap[GAMESTART])->StartWithLoad();
@@ -96,14 +106,14 @@ bool AFP_PlayerController::Load()
 	//AFP_Player* Player_CDO = Player->GetDefaultObject<AFP_Player>();
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
-
+	player->Status.MaxHp = LoadGameInstance->MaxHp;
+	player->Status.Hp = LoadGameInstance->Hp;
 	player->Status.Attack = LoadGameInstance->Attack;
 	player->Status.AttackRange = LoadGameInstance->AttackRange;
 	player->Status.AttackSpeed = LoadGameInstance->AttackSpeed;
 	player->Status.BulletSpeed = LoadGameInstance->BulletSpeed;
 
 	//////////
-
 	player->SkillLv.FireBall = LoadGameInstance->FireBall;
 	player->SkillLv.FireBlast = LoadGameInstance->FireBlast;
 	player->SkillLv.FireWall = LoadGameInstance->FireWall;
@@ -111,6 +121,13 @@ bool AFP_PlayerController::Load()
 	player->SkillLv.IceBlast = LoadGameInstance->IceBlast;
 	player->SkillLv.IceOrb = LoadGameInstance->IceOrb;
 	player->SkillLv.SkillPoint = LoadGameInstance->SkillPoint;
+
+	SetSkillDetail<AFP_FireBall>(player->SkillLv.FireBall);
+	SetSkillDetail<AFP_FireBlast>(player->SkillLv.FireBlast);
+	SetSkillDetail<AFP_FireWall>(player->SkillLv.FireWall);
+	SetSkillDetail<AFP_IceBall>(player->SkillLv.IceBall);
+	SetSkillDetail<AFP_IceBlast>(player->SkillLv.IceBlast);
+	SetSkillDetail<AFP_IceOrb>(player->SkillLv.IceOrb);
 
 	player->Level.Level = LoadGameInstance->Level;
 	player->Level.Exp = LoadGameInstance->Exp;
@@ -182,3 +199,4 @@ void AFP_PlayerController::SetVisibility(eWIDGET _WidgetNum, bool _isvisible)
 	else
 		WidgetMap[_WidgetNum]->SetVisibility(ESlateVisibility::Hidden);
 }
+

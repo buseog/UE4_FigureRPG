@@ -6,6 +6,7 @@
 #include "FP_SkillUI.h"
 #include "FP_InventoryWidget.h"
 #include "FP_MonsterMgr.h"
+#include "FP_Skill.h"
 
 
 void UFP_MainUI::NativeConstruct()
@@ -150,13 +151,20 @@ void UFP_MainUI::Button_Rev()
 	pPlayer->SkillLv = pPlayer->InitSkillLv;
 	pPlayer->Level = pPlayer->InitLevel;
 	pPlayer->Gem = 5;
-
+	
 	AFP_MonsterMgr::Stage = 1;
 	AFP_MonsterMgr::MonsterKillCnt = 0;
 
-	
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+
+
 	Cast<AFP_PlayerController>(Controller)->RestartLevel();
+	Cast<AFP_PlayerController>(Controller)->isRev = true;
+
+	UClass* Class = AFP_Skill::StaticClass();
+	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
+
+	Skill_CDO->Sockets.Empty();
 	
 }
 

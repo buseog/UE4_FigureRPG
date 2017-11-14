@@ -68,23 +68,10 @@ struct FPlayerLevel
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
 	float FullExp = 100;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
-	int Point = 0.f;
+	int Point = 5.f;
+	
 
-	void CheckLevelUp()
-	{
-		if (Exp >= FullExp)
-		{
-			++Level;
-			Point += 5;
-			Exp -= FullExp;
-			FullExp = FMath::Pow(2,Level) * 50.f; // ½Â·Ä¼öÁ¤
-		}
-	}
 
-	void DecreasePoint()
-	{
-		--Point;
-	}
 };
 
 class AFP_Weapon;
@@ -105,6 +92,7 @@ public:
 	virtual float TakeDamage(float _Damage, struct FDamageEvent const& _DamageEvent, class AController* _EventInstigator, class AActor* _DamageCauser) override;
 	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
+	void CheckLevelUp();
 private:
 	
 	float	HitTime;
