@@ -47,7 +47,7 @@ public:
 
 	struct SkillStat
 	{
-		float Damage;
+		float Damage = 1.f;
 		float Speed = 1.f; //bullet speed
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
@@ -63,13 +63,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	virtual void OnConstruction(const FTransform & Transform) override;
 
 	void SetTargetDirection(FVector _location);
 	FColor AddSocket();
-	void EquipRune(AFP_Rune* _rune);
-
-
+	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;
 
@@ -92,7 +89,6 @@ public:
 	/*-----Socket-------------------*/
 	
 	int MaxSocketNum = 4;
-	int EquipedRuneNum = 0;
 	TArray<Socket> Sockets;
 	/*------------------------------*/
 	

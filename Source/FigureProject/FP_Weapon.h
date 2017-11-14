@@ -76,11 +76,6 @@ public:
 
 		return Skill;
 	}
-
-	TMultiMap<SKILLTYPE, AFP_Rune*> EquipedRunes;
-
-public:
-	TArray<AFP_Rune*> CheckEquipedRunes();
 };
 
 

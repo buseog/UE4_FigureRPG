@@ -3,6 +3,7 @@
 #include "FP_RuneToolTip.h"
 #include "FP_PlayerController.h"
 #include "FP_InventoryWidget.h"
+#include "FP_Tooltip.h"
 
 bool UFP_RuneToolTip::Initialize()
 {
@@ -101,28 +102,15 @@ void UFP_RuneToolTip::InitializeToolTip()
 
 void UFP_RuneToolTip::EquipRune()
 {
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
-
-	if(SelectedSkill->GetName().Contains("FireBall"))
-		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::FIREBALL, SelectedRune);
-	else if (SelectedSkill->GetName().Contains("FireWall"))
-		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::FIREWALL, SelectedRune);
-	else if (SelectedSkill->GetName().Contains("FireBlast"))
-		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::FIREBLAST, SelectedRune);
-	else if (SelectedSkill->GetName().Contains("IceBall"))
-		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::ICEBALL, SelectedRune);
-	else if (SelectedSkill->GetName().Contains("IceBlast"))
-		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::ICEBLAST, SelectedRune);
-	else if (SelectedSkill->GetName().Contains("IceOrb"))
-		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::ICEORB, SelectedRune);
-
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	UUserWidget* InventoryWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
+	UFP_Tooltip* SkillToolTip = Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP));
+	UClass* Class = AFP_Skill::StaticClass();
+	AFP_Skill* skill = Class->GetDefaultObject<AFP_Skill>();
+
+	skill->Sockets[SkillToolTip->iSocketIndex].EquipRune(SelectedRune);
 	
 	Player->Inventory.Remove(SelectedRune);
 	Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();

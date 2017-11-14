@@ -26,7 +26,7 @@ void AFP_FireBall::BeginPlay()
 	//Stat.Damage += SkillInfo.FireBallDmgLv * (Player->SkillLv.FireBall - 1);
 	//Stat.CoolTimeRatio -= SkillInfo.FireBallAtkSpdLv * (Player->SkillLv.FireBall - 1);
 
-	//Stat.Damage = 1.f;
+	Stat.Damage = 1.f;
 	Stat.Speed = 0.5f;
 	Stat.Range = 2.f;
 	Stat.CoolTimeRatio = 1.f;

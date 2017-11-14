@@ -4,6 +4,7 @@
 #include "FP_Player.h"
 #include "FP_Skill.h"
 #include "FP_Monster.h"
+#include "FP_Tooltip.h"
 
 // Sets default values
 AFP_ComCalculator::AFP_ComCalculator()
@@ -35,7 +36,12 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AF
 	if (_skill->Sockets.Num() != 0)
 	{
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+		{
+			if (!_skill->Sockets[i].Rune->IsValidLowLevel())
+				break;
+
 			RuneDmg += _skill->Sockets[i].Rune->Stat.Damage;
+		}
 	}
 	else
 		RuneDmg = 1.f;
@@ -55,7 +61,12 @@ float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, T* _skill, AFP
 	if (_skill->Sockets.Num() != 0)
 	{
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+		{
+			if (!_skill->Sockets[i].Rune->IsValid())
+				break;
+
 			RuneRange += _skill->Sockets[i].Rune->Stat.Range;
+		}
 	}
 	else
 		RuneRange = 1.f;
@@ -71,7 +82,12 @@ float AFP_ComCalculator::CalculateFinalSpeed(AFP_Player* _player, T* _skill, AFP
 	if (_skill->Sockets.Num() != 0)
 	{
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+		{
+			if (!_skill->Sockets[i].Rune->IsValid())
+				break;
+
 			RuneSpeed += _skill->Sockets[i].Rune->Stat.Speed;
+		}
 	}
 	else
 		RuneSpeed = 1.f;
@@ -87,7 +103,12 @@ float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill, 
 	if (_skill->Sockets.Num() != 0)
 	{
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+		{
+			if (!_skill->Sockets[i].Rune->IsValid())
+				break;
+
 			RuneCoolTime += _skill->Sockets[i].Rune->Stat.CoolTimeRatio;
+		}
 	}
 	else
 		RuneCoolTime = 1.f;

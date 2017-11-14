@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "FP_Skill.h"
 #include "FP_SkillUI.generated.h"
 
 /**
@@ -104,8 +105,8 @@ public:
 			UFP_Tooltip* ToolTipClass = Cast<UFP_Tooltip>(ToolTip);
 			ToolTipClass->SkillName = Skillname;// FText::FromString(TEXT("FireBall"));
 
-			UClass* Class = T::StaticClass();
-			T* SKill = Class->GetDefaultObject<T>();
+			UClass* Class = AFP_Skill::StaticClass();
+			AFP_Skill* SKill = Class->GetDefaultObject<AFP_Skill>();
 			ToolTipClass->CurrentSkill = SKill;
 			
 			float DamageLv = SKill->SkillInfo.DmgPerLv;

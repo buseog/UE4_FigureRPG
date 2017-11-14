@@ -133,51 +133,29 @@ void AFP_Weapon::SpawnSkill()
 	case FIREBALL:
 		Skill = CustomSpawn<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		UE_LOG(LogClass, Log, TEXT("%d"), Skill->Sockets.Num());
-		UE_LOG(LogClass, Log, TEXT("%d"), Skill_CDO->Sockets.Num());
 		break;
 	case FIREBLAST:
-		//Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
-		Skill = GetWorld()->SpawnActor<AFP_FireBlast>(TargetMonsters[0]->GetActorLocation(), FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = CustomSpawn<AFP_FireBlast>(TargetMonsters[0]->GetActorLocation(), FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		break;
 	case FIREWALL:
-		Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = CustomSpawn<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		Cast<AFP_FireBlastSpawnPoint>(Skill)->SetSkill("FireWall", 0.1f, 7 , 0.75f);
 		break;
 	case ICEBALL:
-		Skill = GetWorld()->SpawnActor<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = CustomSpawn<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		break;
 	case ICEBLAST:
-		Skill = GetWorld()->SpawnActor<AFP_IceBlast>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = CustomSpawn<AFP_IceBlast>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		break;
 	case ICEORB:
-		Skill = GetWorld()->SpawnActor<AFP_IceOrb>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = CustomSpawn<AFP_IceOrb>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		ReloadTime = Skill->Stat.CoolTimeRatio;
 		break;
-	}
-	
-	TArray<AFP_Rune*> runes = CheckEquipedRunes();
-
-	if (runes.Num() != 0)
-	{
-		for (int i = 0; i < Skill->Sockets.Num(); ++i)
-		{
-			if (Skill->Sockets[i].Rune == nullptr)
-			{
-				for (int j = 0; j < runes.Num(); ++j)
-				{
-					if(Skill->Sockets[i].Color == runes[j]->Color)
-						Skill->Sockets[i].EquipRune(runes[j]);
-				}
-			}
-		}
-	}
-
-	
+	}	
 }
 
 float AFP_Weapon::GetStatfromSkill(FString _stat)
@@ -266,14 +244,4 @@ float AFP_Weapon::GetStatfromSkill(FString _stat)
 
 	}
 	return 0.f;
-}
-
-TArray<AFP_Rune*> AFP_Weapon::CheckEquipedRunes()
-{
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	TArray<AFP_Rune*> runes;
-
-	EquipedRunes.MultiFind(ActiveSkill, runes, true);
-
-	return runes;
 }

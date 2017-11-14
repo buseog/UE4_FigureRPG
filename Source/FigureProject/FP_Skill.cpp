@@ -84,23 +84,3 @@ FColor AFP_Skill::AddSocket()
 	return socket.Color;
 }
 
-void AFP_Skill::EquipRune(AFP_Rune* _rune)
-{
-	if (Sockets.Num() == 0)
-		return;
-
-	if (EquipedRuneNum >= Stat.ActiveSocketNum)
-		return;
-
-	Sockets[Stat.ActiveSocketNum - 1].EquipRune(_rune);
-
-}
-
-void AFP_Skill::OnConstruction(const FTransform & Transform)
-{
-	Super::OnConstruction(Transform);
-
-	Stat.Speed = 1.f;
-	Stat.CoolTimeRatio = 1.f;
-	Stat.Range = 1.f;
-}
