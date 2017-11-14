@@ -8,6 +8,7 @@
 #include "Engine.h"
 #include "FP_SaveGame.h"
 #include "Kismet/GameplayStatics.h"
+#include "FP_StageWidget.h"
 
 
 // Sets default values
@@ -79,44 +80,6 @@ AFP_Player::AFP_Player()
 void AFP_Player::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UFP_SaveGame* LoadGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::CreateSaveGameObject(UFP_SaveGame::StaticClass()));
-	LoadGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
-	if (LoadGameInstance == nullptr)
-		return;
-
-
-	Status.Attack = LoadGameInstance->Attack;
-	Status.AttackRange = LoadGameInstance->AttackRange;
-	Status.AttackSpeed = LoadGameInstance->AttackSpeed;
-	Status.BulletSpeed = LoadGameInstance->BulletSpeed;
-
-	//////////
-
-	SkillLv.FireBall= LoadGameInstance->FireBall;
-	SkillLv.FireBlast = LoadGameInstance->FireBlast;
-	SkillLv.FireWall = LoadGameInstance->FireWall;
-	SkillLv.IceBall = LoadGameInstance->IceBall;
-	SkillLv.IceBlast = LoadGameInstance->IceBlast;
-	SkillLv.IceOrb = LoadGameInstance->IceOrb;
-	SkillLv.SkillPoint = LoadGameInstance->SkillPoint;
-
-	Level.Level = LoadGameInstance->Level;
-	Level.Exp = LoadGameInstance->Exp;
-	Level.FullExp = LoadGameInstance->FullExp;
-	Level.Point = LoadGameInstance->Point;
-
-	Gem = LoadGameInstance->Gem;
-
-
-	//TArray<AActor*> FoundActor;
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_MonsterMgr::StaticClass(), FoundActor);
-	//if (FoundActor.Num() == 0)
-	//	return;
-
-	//Cast<AFP_MonsterMgr>(FoundActor[0])->Stage = LoadGameInstance->Stage;
-	AFP_MonsterMgr::MonsterKillCnt = LoadGameInstance->MonsterKillCnt;
-	AFP_MonsterMgr::Stage = LoadGameInstance->Stage;
 
 }
 
@@ -356,15 +319,22 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	SaveGameInstance->FullExp = Level.FullExp;
 	SaveGameInstance->Point = Level.Point;
 
-
-	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_MonsterMgr::StaticClass(), FoundActor);
-	if (FoundActor[0] == nullptr)
-		return;
-
-	SaveGameInstance->Stage = Cast<AFP_MonsterMgr>(FoundActor[0])->Stage;
+	SaveGameInstance->Stage = AFP_MonsterMgr::Stage;
 	SaveGameInstance->MonsterKillCnt = AFP_MonsterMgr::MonsterKillCnt;
 	SaveGameInstance->Gem = Gem;
 
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
+}
+
+void AFP_Player::RestartStage()
+{
+	//UE_LOG(LogClass, Log, TEXT("DEAD"));
+	Status.Hp = Status.MaxHp;
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	Cast<UFP_StageWidget>(PC->GetWidgetMap(AFP_PlayerController::STAGE))->CountTime = 5.9f;
+
+	PC->SetPause(true);
+	
 }

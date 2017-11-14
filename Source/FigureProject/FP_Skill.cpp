@@ -2,7 +2,7 @@
 
 #include "FP_Skill.h"
 #include "Engine.h"
-
+#include "FP_Weapon.h"
 #include "FP_Player.h"
 #include "Runtime/Engine/Classes/Components/BoxComponent.h"
 

@@ -5,6 +5,7 @@
 #include "Core.h"
 #include "Engine.h"
 #include "FP_Monster.h"
+#include "FP_Skill.h"
 #include "GameFramework/Actor.h"
 #include "FP_Weapon.generated.h"
 
@@ -57,6 +58,25 @@ public:
 	SKILLTYPE ActiveSkill;
 	class AFP_Skill* Skill;
 	//UStaticMesh* Mesh;
+
+
+	template<typename T>
+	T* CustomSpawn(FVector SpawnLocation, FRotator SpawnRotator)
+	{
+		UClass*  Class = AFP_Skill::StaticClass();
+		AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
+		
+		FTransform transform = FTransform(SpawnRotator, SpawnLocation);
+
+
+		T* Skill = GetWorld()->SpawnActorDeferred<T>(T::StaticClass(), transform);
+
+		Skill->Sockets = Skill_CDO->Sockets;
+		
+		UGameplayStatics::FinishSpawningActor(Skill, transform);
+
+		return Skill;
+	}
 
 	
 };

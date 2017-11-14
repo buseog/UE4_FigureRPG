@@ -7,6 +7,7 @@
 #include "FP_PlayerController.h"
 #include "FP_InventoryWidget.h"
 #include "Button.h"
+#include "Runtime/UMG/Public/Components/TextBlock.h"
 
 
 bool UFP_StageWidget::Initialize()
@@ -18,6 +19,8 @@ bool UFP_StageWidget::Initialize()
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Exit"));
 	Button->OnClicked.AddDynamic(this, &UFP_StageWidget::Button_Exit);
+
+	CountText = (UTextBlock*)GetWidgetFromName(TEXT("Count"));
 
 	return true;
 }
@@ -45,6 +48,33 @@ void UFP_StageWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 		FString Gem = TEXT("Gem : ") + FString::FromInt(Player->Gem);
 		GemText = FText::FromString(Gem);
+
+		PlayerHP = Player->Status.Hp / Player->Status.MaxHp;
+		FString PlayerHPTextString = FString::FromInt(Player->Status.Hp) + TEXT(" / ") + FString::FromInt(Player->Status.MaxHp);
+		PlayerHPText = FText::FromString(PlayerHPTextString);
+
+		//UE_LOG(LogClass, Log, TEXT("%f"), CountTime);
+
+		if (CountTime >= 0.f && CountTime < 6.f)
+		{
+			CountTime -= DeltaTime;
+			CountText->SetVisibility(ESlateVisibility::Visible);
+			FText Count = FText::FromString(FString::FromInt(int(CountTime)));
+			CountText->SetText(Count);
+
+			Player->Particle->SetVisibility(false);
+		}
+		else if (CountTime < 0.f)
+		{
+			CountText->SetVisibility(ESlateVisibility::Hidden);
+
+			APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+			Cast<AFP_PlayerController>(Controller)->SetPause(false);
+			Cast<AFP_PlayerController>(Controller)->RestartLevel();
+
+			CountTime = 10.f;
+			Player->Particle->SetVisibility(true);
+		}
 	}
 }
 

@@ -123,11 +123,17 @@ void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 
 void AFP_Weapon::SpawnSkill()
 {
+
+	UClass*  Class = AFP_Skill::StaticClass();
+	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
+
 	switch (ActiveSkill)
 	{
 	case FIREBALL:
-		Skill = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = CustomSpawn<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		UE_LOG(LogClass, Log, TEXT("%d"), Skill->Sockets.Num());
+		UE_LOG(LogClass, Log, TEXT("%d"), Skill_CDO->Sockets.Num());
 		break;
 	case FIREBLAST:
 		//Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));

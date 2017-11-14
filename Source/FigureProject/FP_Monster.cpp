@@ -107,6 +107,9 @@ void AFP_Monster::Tick(float DeltaTime)
 	if (player != nullptr)
 	{
 		isDestroy = true;
+		player->Status.Hp -= HP;
+		if (player->Status.Hp <= 0)
+			player->RestartStage();
 
 		Weapon->DeleteTargetMonsterInArray(this);
 	}
@@ -148,7 +151,14 @@ void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void AFP_Monster::DropItem()
 {	
-	if(isDestroy && Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0))->bIsBuffed)
+	if(isDestroy)
+		return;
+
+	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (Player == nullptr)
+		return;
+
+	if (Player->bIsBuffed)
 		return;
 
 	TActorIterator<AFP_Item> ActorItr = TActorIterator<AFP_Item>(GetWorld());

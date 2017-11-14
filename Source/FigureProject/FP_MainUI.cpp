@@ -21,7 +21,7 @@ bool UFP_MainUI::Initialize()
 {
 	Super::Initialize();
 
-	UE_LOG(LogClass, Log, TEXT("INIT"));
+	//UE_LOG(LogClass, Log, TEXT("INIT"));
 
 	UButton* Button = (UButton*)GetWidgetFromName(TEXT("Stat"));
 	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Stat);

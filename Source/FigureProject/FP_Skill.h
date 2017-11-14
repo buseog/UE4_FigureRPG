@@ -9,10 +9,10 @@
 #include "FP_ComCollision.h"
 #include "FP_Player.h"
 #include "FP_Monster.h"
-#include "FP_Weapon.h"
 #include "FP_Impact.h"
 #include "FP_Rune.h"
 #include "FP_Skill.generated.h"
+
 
 UCLASS()
 class FIGUREPROJECT_API AFP_Skill : public AActor
@@ -71,8 +71,8 @@ public:
 
 	//FVector TargetLocation = FVector(0.f,0.f,0.f);
 	FVector TargetDirection = FVector(0.f, 0.f, 0.f);
-	AFP_Player* Player;
-	AFP_Weapon* Weapon;
+	class AFP_Player* Player;
+	class AFP_Weapon* Weapon;
 
 	SkillStat Stat;
 	SkillInfo SkillInfo;
@@ -88,7 +88,10 @@ public:
 	/*-----Socket-------------------*/
 	
 	int MaxSocketNum = 4;
+
+	UPROPERTY(EditAnywhere)
 	int EquipedRuneNum = 0;
+	
 	TArray<Socket> Sockets;
 	/*------------------------------*/
 	

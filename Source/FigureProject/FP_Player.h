@@ -14,9 +14,9 @@ struct FPlayerStatus
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float Hp;
+	float Hp = 20;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	float MaxHp;
+	float MaxHp = 20;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	float HpRegen;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
@@ -167,7 +167,7 @@ private:
 
 public:
 	void StatusLevelUp(int _Type);
-
+	void RestartStage(void);
 public:
 
 	UFUNCTION(BlueprintCallable, Category = Status)

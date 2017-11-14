@@ -26,6 +26,7 @@ public:
 	UFUNCTION()
 	void ChooseIce();
 
+	void StartWithLoad();
 private:
 
 };

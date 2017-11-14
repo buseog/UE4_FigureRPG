@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FP_PlayerController.h"
+#include "Engine.h"
 #include "FP_StatusWidget.h"
 #include "FP_Player.h"
 #include "FP_StageWidget.h"
@@ -10,6 +11,8 @@
 #include "FP_Tooltip.h"
 #include "FP_InventoryWidget.h"
 #include "FP_RuneToolTip.h"
+#include "FP_SaveGame.h"
+#include "FP_MonsterMgr.h"
 
 
 AFP_PlayerController::AFP_PlayerController()
@@ -66,24 +69,67 @@ void AFP_PlayerController::BeginPlay()
 	WidgetMap.Add(RUNETOOLTIP, RuneToolTipWidget);
 
 	
-
-	
-	WidgetMap[GAMESTART]->AddToViewport();
 	WidgetMap[STAGE]->AddToViewport();
-	//WidgetMap[INVENTORY]->AddToViewport();
-	
-	
-	
-	WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);
 	WidgetMap[STAGE]->SetVisibility(ESlateVisibility::Hidden);
+
+	if (Load() == false)
+	{
+		WidgetMap[GAMESTART]->AddToViewport();
+		WidgetMap[GAMESTART]->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+		Cast<UFP_GameStart>(WidgetMap[GAMESTART])->StartWithLoad();
+		
 	
+	
+	
+}
 
-	/*WidgetMap[STATUS]->SetRenderTranslation(FVector2D(300.f, 500.f));
-	WidgetMap[SKILLUI]->SetRenderTranslation(FVector2D(300.f, 500.f));*/
+bool AFP_PlayerController::Load()
+{
+	UFP_SaveGame* LoadGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::CreateSaveGameObject(UFP_SaveGame::StaticClass()));
+	LoadGameInstance = Cast<UFP_SaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
+	if (LoadGameInstance == nullptr)
+		return false;
+	
+	//TSubclassOf<AFP_Player> Player = AFP_Player::StaticClass();
+	//AFP_Player* Player_CDO = Player->GetDefaultObject<AFP_Player>();
+	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 
+	player->Status.Attack = LoadGameInstance->Attack;
+	player->Status.AttackRange = LoadGameInstance->AttackRange;
+	player->Status.AttackSpeed = LoadGameInstance->AttackSpeed;
+	player->Status.BulletSpeed = LoadGameInstance->BulletSpeed;
+
+	//////////
+
+	player->SkillLv.FireBall = LoadGameInstance->FireBall;
+	player->SkillLv.FireBlast = LoadGameInstance->FireBlast;
+	player->SkillLv.FireWall = LoadGameInstance->FireWall;
+	player->SkillLv.IceBall = LoadGameInstance->IceBall;
+	player->SkillLv.IceBlast = LoadGameInstance->IceBlast;
+	player->SkillLv.IceOrb = LoadGameInstance->IceOrb;
+	player->SkillLv.SkillPoint = LoadGameInstance->SkillPoint;
+
+	player->Level.Level = LoadGameInstance->Level;
+	player->Level.Exp = LoadGameInstance->Exp;
+	player->Level.FullExp = LoadGameInstance->FullExp;
+	player->Level.Point = LoadGameInstance->Point;
+
+	player->Gem = LoadGameInstance->Gem;
 
 
+	//TArray<AActor*> FoundActor;
+	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_MonsterMgr::StaticClass(), FoundActor);
+	//if (FoundActor.Num() == 0)
+	//	return;
+
+	//Cast<AFP_MonsterMgr>(FoundActor[0])->Stage = LoadGameInstance->Stage;
+	AFP_MonsterMgr::MonsterKillCnt = LoadGameInstance->MonsterKillCnt;
+	AFP_MonsterMgr::Stage = LoadGameInstance->Stage;
+
+	return true;
 }
 
 void AFP_PlayerController::ToggleMainUI()

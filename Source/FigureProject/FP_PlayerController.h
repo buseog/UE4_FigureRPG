@@ -48,4 +48,5 @@ public:
 	void ToggleMainUI();
 
 	void SetVisibility(eWIDGET _WidgetNum, bool _isvisible);
+	bool Load();
 };

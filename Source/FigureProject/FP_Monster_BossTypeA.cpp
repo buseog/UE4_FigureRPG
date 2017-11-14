@@ -18,6 +18,9 @@ void AFP_Monster_BossTypeA::BeginPlay()
 	MaxHP = 4.f;
 	HP = MaxHP;
 
+	SphereComponent->SetSphereRadius(8.f);
+
+
 }
 
 void AFP_Monster_BossTypeA::Tick(float DeltaTime)

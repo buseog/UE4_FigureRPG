@@ -65,3 +65,18 @@ void UFP_GameStart::ChooseIce()
 	UFP_SkillUI* SkillUI = Cast<UFP_SkillUI>(PlayerController->GetWidgetMap(AFP_PlayerController::SKILLUI));
 	SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEBALL * (SkillUI->SizeY / SkillUI->SkillCnt)));
 }
+
+void UFP_GameStart::StartWithLoad()
+{
+	GetWorld()->SpawnActor<AFP_MonsterMgr>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
+	AFP_Weapon* Weapon = GetWorld()->SpawnActor<AFP_Weapon>(FVector(0.f, 0.f, 0.f), FRotator(0.f, 0.f, 0.f));
+
+	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	PlayerController->SetVisibility(AFP_PlayerController::STAGE, true);
+
+	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(AFP_PlayerController::STAGE));
+	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
+
+	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	player->Particle->SetVisibility(true);
+}

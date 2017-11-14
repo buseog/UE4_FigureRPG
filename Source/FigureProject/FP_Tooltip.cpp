@@ -6,6 +6,8 @@
 #include "FP_Weapon.h"
 #include "FP_MainUI.h"
 #include "FP_InventoryWidget.h"
+#include "FP_Skill.h"
+#include "FP_FireBall.h"
 #include "VerticalBox.h"
 
 bool UFP_Tooltip::Initialize()
@@ -205,7 +207,6 @@ void UFP_Tooltip::CreateSocket()
 	{
 		FColor color = CurrentSkill->AddSocket();
 		pPlayer->Gem -= RequiredGem;
-
 		//SocketButton[iSocketIndex]->SetBackgroundColor(color);
 	}
 
