@@ -63,3 +63,42 @@ void AFP_Rune::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+AFP_Rune* AFP_Rune::Initiate(FColor _color, uint64 _property, RuneStat _stat, FString _name, TArray<FString> _option, TArray<float> _optionVal)
+{
+	if (_stat.Tier == 1)
+	{
+		if (_color == FColor::Red)
+			Icon = RedTier1Icon;
+		else if (_color == FColor::Green)
+			Icon = GreenTier1Icon;
+		else
+			Icon = BlueTier1Icon;
+	}
+	else if (_stat.Tier == 2)
+	{
+		if (_color == FColor::Red)
+			Icon = RedTier2Icon;
+		else if (_color == FColor::Green)
+			Icon = GreenTier2Icon;
+		else
+			Icon = BlueTier2Icon;
+	}
+	else if (_stat.Tier == 3)
+	{
+		if (_color == FColor::Red)
+			Icon = RedTier3Icon;
+		else if (_color == FColor::Green)
+			Icon = GreenTier3Icon;
+		else
+			Icon = BlueTier3Icon;
+	}
+
+	Color = _color;
+	Property = _property;
+	Name = _name;
+	Option = _option;
+	OptionVal = _optionVal;
+
+	return this;
+}

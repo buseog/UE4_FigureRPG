@@ -154,10 +154,14 @@ void UFP_MainUI::Button_Rev()
 	AFP_MonsterMgr::Stage = 1;
 	AFP_MonsterMgr::MonsterKillCnt = 0;
 
-	
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
+
+	//Inventory->AddRune();
+
 	Cast<AFP_PlayerController>(Controller)->RestartLevel();
-	
+	UE_LOG(LogClass, Error, TEXT("after restartlevel %d"), pPlayer->Inventory.Num());
 }
 
 void UFP_MainUI::Button_Rune()

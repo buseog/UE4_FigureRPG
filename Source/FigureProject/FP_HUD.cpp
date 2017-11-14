@@ -9,6 +9,8 @@
 #include "Engine.h"
 #include "FP_Item_PowerUp.h"
 #include "FP_Item_AttackSpeedUp.h"
+#include "FP_Player.h"
+#include "FP_InventoryWidget.h"
 
 
 AFP_HUD::AFP_HUD()
@@ -45,7 +47,13 @@ void AFP_HUD::DrawHUD()
 
 void AFP_HUD::OpenInventory()
 {
-	Inventory->ToggleInventory(CanvasSizeX);
+	//Inventory->ToggleInventory(CanvasSizeX);
+
+	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
+	player->Inventory.Empty();
+
 }
 
 void AFP_HUD::PickupItem()

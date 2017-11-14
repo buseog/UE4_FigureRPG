@@ -129,6 +129,62 @@ bool AFP_PlayerController::Load()
 	AFP_MonsterMgr::MonsterKillCnt = LoadGameInstance->MonsterKillCnt;
 	AFP_MonsterMgr::Stage = LoadGameInstance->Stage;
 
+	for (int i = 0; i < LoadGameInstance->Inventory.Num(); ++i)
+	{
+		AFP_Rune* rune = GetWorld()->SpawnActor<AFP_Rune>(FVector::ZeroVector, FRotator::ZeroRotator);
+
+		AFP_Rune::RuneStat stat;
+		stat.Damage = LoadGameInstance->Inventory[i].Damage;
+		stat.Speed = LoadGameInstance->Inventory[i].Speed;
+		stat.CoolTimeRatio = LoadGameInstance->Inventory[i].CoolTimeRatio;
+		stat.Range = LoadGameInstance->Inventory[i].Range;
+		stat.Tier = LoadGameInstance->Inventory[i].Tier;
+		
+		for (int j = 0; j < LoadGameInstance->Inventory[i].Type.Num(); ++j)
+		{
+			switch (LoadGameInstance->Inventory[i].Type[j])
+			{
+			case 0:
+				stat.Type.Add(AFP_Rune::TYPE::STAT);
+				break;
+			case 1:
+				stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
+				break;
+			case 2:
+				stat.Type.Add(AFP_Rune::TYPE::FIXED);
+				break;
+			case 3:
+				stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
+				break;
+			case 4:
+				stat.Type.Add(AFP_Rune::TYPE::AOE);
+				break;
+			case 5:
+				stat.Type.Add(AFP_Rune::TYPE::DOT);
+				break;
+			case 6:
+				stat.Type.Add(AFP_Rune::TYPE::EXP);
+				break;
+			case 7:
+				stat.Type.Add(AFP_Rune::TYPE::ETC);
+				break;
+			}
+		}
+
+		TArray<FString> option;
+		option.Add(LoadGameInstance->Inventory[i].Option1);
+		option.Add(LoadGameInstance->Inventory[i].Option2);
+		option.Add(LoadGameInstance->Inventory[i].Option3);
+
+		TArray<float> optionVal;
+		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal1);
+		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal2);
+		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal3);
+
+		rune->Initiate(LoadGameInstance->Inventory[i].Color, LoadGameInstance->Inventory[i].Property, stat, LoadGameInstance->Inventory[i].Name, option, optionVal);
+		player->Inventory.Add(rune);
+	}
+
 	return true;
 }
 

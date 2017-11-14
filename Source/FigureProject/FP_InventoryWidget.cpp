@@ -72,8 +72,6 @@ void UFP_InventoryWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTim
 
 	if (!isClicked)
 		isClicked = true;
-
-	
 }
 
 void UFP_InventoryWidget::SlotSelected()
@@ -125,6 +123,7 @@ void UFP_InventoryWidget::SortInventory()
 		Slots[i]->WidgetStyle.Normal.SetResourceObject(NULL);
 		Slots[i]->WidgetStyle.Hovered.SetResourceObject(NULL);
 		Slots[i]->WidgetStyle.Pressed.SetResourceObject(NULL);
+		Slots[i]->SetIsEnabled(false);
 	}
 
 	int slotNum = -1;

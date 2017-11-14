@@ -49,7 +49,6 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AF
 	/*switch (_monster->StateMgr.eState)
 	{
 	}*/
-	UE_LOG(LogClass, Log, TEXT("%f"), _player->Status.Attack * _skill->Stat.Damage * RuneDmg);
 	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg;
 }
 
