@@ -201,7 +201,7 @@ void AFP_Monster::MyTakeDamage(float _damage)
 {
 	if (isDestroy == true)
 		return;
-
+	
 	HP -= _damage;
 	HPBar_Widget->Progress = (HP) / MaxHP;
 	HPShowTime = 1.f;

@@ -7,6 +7,7 @@
 #include "FP_Monster.h"
 #include "FP_Skill.h"
 #include "GameFramework/Actor.h"
+#include "FP_Rune.h"
 #include "FP_Weapon.generated.h"
 
 
@@ -54,11 +55,9 @@ public:
 	UPROPERTY()
 	TArray<AFP_Monster*> TargetMonsters;
 
-
 	SKILLTYPE ActiveSkill;
 	class AFP_Skill* Skill;
 	//UStaticMesh* Mesh;
-
 
 	template<typename T>
 	T* CustomSpawn(FVector SpawnLocation, FRotator SpawnRotator)
@@ -78,7 +77,10 @@ public:
 		return Skill;
 	}
 
-	
+	TMultiMap<SKILLTYPE, AFP_Rune*> EquipedRunes;
+
+public:
+	TArray<AFP_Rune*> CheckEquipedRunes();
 };
 
 

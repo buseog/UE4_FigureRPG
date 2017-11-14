@@ -40,14 +40,14 @@ void AFP_Skill::BeginPlay()
 	Socket socket;
 	socket.Color = rune->Color;
 	Sockets.Add(socket);
-	Sockets[0].EpuipRune(rune);*/
+	Sockets[0].EquipRune(rune);*/
 }
 
 // Called every frame
 void AFP_Skill::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 void AFP_Skill::SetTargetDirection(FVector _location)
@@ -80,7 +80,7 @@ FColor AFP_Skill::AddSocket()
 	}
 
 	Sockets.Add(socket);
-	
+
 	return socket.Color;
 }
 
@@ -92,6 +92,15 @@ void AFP_Skill::EquipRune(AFP_Rune* _rune)
 	if (EquipedRuneNum >= Stat.ActiveSocketNum)
 		return;
 
-	Sockets[Stat.ActiveSocketNum - 1].EpuipRune(_rune);
+	Sockets[Stat.ActiveSocketNum - 1].EquipRune(_rune);
 
+}
+
+void AFP_Skill::OnConstruction(const FTransform & Transform)
+{
+	Super::OnConstruction(Transform);
+
+	Stat.Speed = 1.f;
+	Stat.CoolTimeRatio = 1.f;
+	Stat.Range = 1.f;
 }

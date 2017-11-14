@@ -2,6 +2,7 @@
 
 #include "FP_RuneToolTip.h"
 #include "FP_PlayerController.h"
+#include "FP_InventoryWidget.h"
 
 bool UFP_RuneToolTip::Initialize()
 {
@@ -39,8 +40,8 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 
 			if (_rune->OptionVal[i] == NULL)
 				break;
-
-			Val1 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
+			
+			Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
 			break;
 		case 1:
 			Option2 = Option[i];
@@ -48,7 +49,7 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 			if (_rune->OptionVal[i] == NULL)
 				break;
 
-			Val2 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
+			Val2 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
 			break;
 		case 2:
 			Option3 = Option[i];
@@ -56,7 +57,7 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 			if (_rune->OptionVal[i] == NULL)
 				break;
 
-			Val3 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
+			Val3 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
 			break;
 		case 3:
 			Option4 = Option[i];
@@ -64,7 +65,7 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 			if (_rune->OptionVal[i] == NULL)
 				break;
 
-			Val4 = FText::FromString(FString::FromInt(_rune->OptionVal[i]));
+			Val4 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
 			break;
 		}
 	}
@@ -100,5 +101,31 @@ void UFP_RuneToolTip::InitializeToolTip()
 
 void UFP_RuneToolTip::EquipRune()
 {
-	SelectedSkill->EquipRune(SelectedRune);
+	TArray<AActor*> FoundActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
+	if (FoundActor[0] == nullptr)
+		return;
+
+	if(SelectedSkill->GetName().Contains("FireBall"))
+		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::FIREBALL, SelectedRune);
+	else if (SelectedSkill->GetName().Contains("FireWall"))
+		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::FIREWALL, SelectedRune);
+	else if (SelectedSkill->GetName().Contains("FireBlast"))
+		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::FIREBLAST, SelectedRune);
+	else if (SelectedSkill->GetName().Contains("IceBall"))
+		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::ICEBALL, SelectedRune);
+	else if (SelectedSkill->GetName().Contains("IceBlast"))
+		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::ICEBLAST, SelectedRune);
+	else if (SelectedSkill->GetName().Contains("IceOrb"))
+		Cast<AFP_Weapon>(FoundActor[0])->EquipedRunes.Add(AFP_Weapon::SKILLTYPE::ICEORB, SelectedRune);
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	UUserWidget* InventoryWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
+	
+	Player->Inventory.Remove(SelectedRune);
+	Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();
+
+	this->RemoveFromViewport();
 }

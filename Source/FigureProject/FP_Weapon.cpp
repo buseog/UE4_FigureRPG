@@ -13,6 +13,8 @@
 #include "FP_FireBlastSpawnPoint.h"
 #include "FP_FireBlast.h"
 #include "FP_FireWall.h"
+#include "FP_Tooltip.h"
+#include "FP_PlayerController.h"
 
 
 struct CompareDist
@@ -123,7 +125,6 @@ void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 
 void AFP_Weapon::SpawnSkill()
 {
-
 	UClass*  Class = AFP_Skill::StaticClass();
 	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
 
@@ -159,7 +160,22 @@ void AFP_Weapon::SpawnSkill()
 		break;
 	}
 	
+	TArray<AFP_Rune*> runes = CheckEquipedRunes();
 
+	if (runes.Num() != 0)
+	{
+		for (int i = 0; i < Skill->Sockets.Num(); ++i)
+		{
+			if (Skill->Sockets[i].Rune == nullptr)
+			{
+				for (int j = 0; j < runes.Num(); ++j)
+				{
+					if(Skill->Sockets[i].Color == runes[j]->Color)
+						Skill->Sockets[i].EquipRune(runes[j]);
+				}
+			}
+		}
+	}
 
 	
 }
@@ -250,4 +266,14 @@ float AFP_Weapon::GetStatfromSkill(FString _stat)
 
 	}
 	return 0.f;
+}
+
+TArray<AFP_Rune*> AFP_Weapon::CheckEquipedRunes()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	TArray<AFP_Rune*> runes;
+
+	EquipedRunes.MultiFind(ActiveSkill, runes, true);
+
+	return runes;
 }

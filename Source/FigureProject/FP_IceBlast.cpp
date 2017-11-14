@@ -21,8 +21,7 @@ AFP_IceBlast::AFP_IceBlast()
 
 	Particle->OnSystemFinished.AddDynamic(this, &AFP_IceBlast::OnFinished);
 	Stat.Damage = 0.005f;
-
-
+	SkillInfo.Name = "IceBlast";
 }
 
 void AFP_IceBlast::BeginPlay()

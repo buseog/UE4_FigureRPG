@@ -18,28 +18,38 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	
 	//RED
 	prop_name.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
-	RuneOption.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
+	RedRuneOption.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
 	option.Add("RANDOMEFFECT", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.STUN, Red.NAME_STUN);
-	RuneOption.Add(Red.STUN, Red.NAME_STUN);
+	RedRuneOption.Add(Red.STUN, Red.NAME_STUN);
 	option.Add("STUN", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
-	RuneOption.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
+	RedRuneOption.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
 	option.Add("KNOCKBACK", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
-	RuneOption.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
+	RedRuneOption.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
 	option.Add("LIFESTEAL", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.IGNITE, Red.NAME_IGNITE);
-	RuneOption.Add(Red.IGNITE, Red.NAME_IGNITE);
+	RedRuneOption.Add(Red.IGNITE, Red.NAME_IGNITE);
 	option.Add("IGNITE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Red.DAMAGEUPONIGNITE, Red.NAME_DAMAGEUPONIGNITE);
+	RedRuneOption.Add(Red.DAMAGEUPONIGNITE, Red.NAME_DAMAGEUPONIGNITE);
+	option.Add("DAMAGEUPONIGNITE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Red.DAMAGEUPTOCIRCLE, Red.NAME_DAMAGEUPTOCIRCLE);
+	RedRuneOption.Add(Red.DAMAGEUPTOCIRCLE, Red.NAME_DAMAGEUPTOCIRCLE);
+	option.Add("DAMAGEUPTOCIRCLE", prop_name);
 	prop_name.Empty();
 
 	RuneProperty.Add(FColor::Red, option);
@@ -48,23 +58,38 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 
 	//GREEN
 	prop_name.Add(Green.ATTACKSPEEDUP, Green.NAME_ATTACKSPEEDUP);
-	RuneOption.Add(Green.ATTACKSPEEDUP, Green.NAME_ATTACKSPEEDUP);
+	GreenRuneOption.Add(Green.ATTACKSPEEDUP, Green.NAME_ATTACKSPEEDUP);
 	option.Add("ATTACKSPEEDUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Green.BULLETSPEEDUP, Green.NAME_BULLETSPEEDUP);
-	RuneOption.Add(Green.BULLETSPEEDUP, Green.NAME_BULLETSPEEDUP);
+	GreenRuneOption.Add(Green.BULLETSPEEDUP, Green.NAME_BULLETSPEEDUP);
 	option.Add("BULLETSPEEDUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
-	RuneOption.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
+	GreenRuneOption.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
 	option.Add("DAMAGEUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
-	RuneOption.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
+	GreenRuneOption.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
 	option.Add("DAMAGEUPTOSQARE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
+	GreenRuneOption.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
+	option.Add("DAMAGEUPTOSQARE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Green.PIERCE, Green.NAME_PIERCE);
+	GreenRuneOption.Add(Green.PIERCE, Green.NAME_PIERCE);
+	option.Add("PIERCE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Green.DOTDAMAGEUP, Green.NAME_DOTDAMAGEUP);
+	GreenRuneOption.Add(Green.DOTDAMAGEUP, Green.NAME_DOTDAMAGEUP);
+	option.Add("PIERCE", prop_name);
 	prop_name.Empty();
 
 	RuneProperty.Add(FColor::Green, option);
@@ -73,23 +98,38 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 
 	//BLUE
 	prop_name.Add(Blue.RANGEUP, Blue.NAME_RANGEUP);
-	RuneOption.Add(Blue.RANGEUP, Blue.NAME_RANGEUP);
+	BlueRuneOption.Add(Blue.RANGEUP, Blue.NAME_RANGEUP);
 	option.Add("RANGEUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Blue.EXPUP, Blue.NAME_EXPUP);
-	RuneOption.Add(Blue.EXPUP, Blue.NAME_EXPUP);
+	BlueRuneOption.Add(Blue.EXPUP, Blue.NAME_EXPUP);
 	option.Add("EXPUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Blue.GUIDED, Blue.NAME_GUIDED);
-	RuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
+	BlueRuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
 	option.Add("GUIDED", prop_name);
 	prop_name.Empty();
 
+	prop_name.Add(Blue.SLOW, Blue.NAME_SLOW);
+	BlueRuneOption.Add(Blue.SLOW, Blue.NAME_SLOW);
+	option.Add("SLOW", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
+	BlueRuneOption.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
+	option.Add("FREEZEONSLOW", prop_name);
+	prop_name.Empty();
+
 	prop_name.Add(Blue.AREAUP, Blue.NAME_AREAUP);
-	RuneOption.Add(Blue.AREAUP, Blue.NAME_AREAUP);
+	BlueRuneOption.Add(Blue.AREAUP, Blue.NAME_AREAUP);
 	option.Add("AREAUP", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Blue.DAMAGEUPTOTRIANGLE, Blue.NAME_DAMAGEUPTOTRIANGLE);
+	BlueRuneOption.Add(Blue.DAMAGEUPTOTRIANGLE, Blue.NAME_DAMAGEUPTOTRIANGLE);
+	option.Add("DAMAGEUPTOTRIANGLE", prop_name);
 	prop_name.Empty();
 
 	RuneProperty.Add(FColor::Blue, option);
@@ -107,6 +147,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("STUN", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier1.KNOCKBACK_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.KNOCKBACK_MAX);
+	_option.Add("KNOCKBACK", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier1.LIFESTEAL_MIN);
 	stat.Add("MAX", RuneStatRange.Tier1.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
@@ -117,9 +162,14 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier1.AREAUP_MIN);
-	stat.Add("MAX", RuneStatRange.Tier1.AREAUP_MAX);
-	_option.Add("AREAUP", stat);
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUPONIGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUPONIGNITE_MAX);
+	_option.Add("DAMAGEUPONIGNITE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUPTOCIRCLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUPTOCIRCLE_MAX);
+	_option.Add("DAMAGEUPTOCIRCLE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier1.ATTACKSPEEDUP_MIN);
@@ -142,9 +192,54 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier1.ATTACKTWICE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.ATTACKTWICE_MAX);
+	_option.Add("ATTACKTWICE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.PIERCE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.PIERCE_MAX);
+	_option.Add("PIERCE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.DOTDAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DOTDAMAGEUP_MAX);
+	_option.Add("DOTDAMAGEUP", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier1.RANGEUP_MIN);
 	stat.Add("MAX", RuneStatRange.Tier1.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.EXPUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.EXPUP_MAX);
+	_option.Add("EXPUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.GUIDED_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.GUIDED_MAX);
+	_option.Add("GUIDED", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.SLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.SLOW_MAX);
+	_option.Add("SLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.FREEZEONSLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.FREEZEONSLOW_MAX);
+	_option.Add("FREEZEONSLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.AREAUP_MAX);
+	_option.Add("AREAUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUPTOTRIANGLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUPTOTRIANGLE_MAX);
+	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
 	RuneStat.Add(1, _option);
@@ -161,6 +256,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("STUN", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier2.KNOCKBACK_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.KNOCKBACK_MAX);
+	_option.Add("KNOCKBACK", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier2.LIFESTEAL_MIN);
 	stat.Add("MAX", RuneStatRange.Tier2.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
@@ -171,9 +271,14 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier2.AREAUP_MIN);
-	stat.Add("MAX", RuneStatRange.Tier2.AREAUP_MAX);
-	_option.Add("AREAUP", stat);
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPONIGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPONIGNITE_MAX);
+	_option.Add("DAMAGEUPONIGNITE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPTOCIRCLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPTOCIRCLE_MAX);
+	_option.Add("DAMAGEUPTOCIRCLE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier2.ATTACKSPEEDUP_MIN);
@@ -196,9 +301,54 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier2.ATTACKTWICE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.ATTACKTWICE_MAX);
+	_option.Add("ATTACKTWICE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.PIERCE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.PIERCE_MAX);
+	_option.Add("PIERCE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.DOTDAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DOTDAMAGEUP_MAX);
+	_option.Add("DOTDAMAGEUP", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier2.RANGEUP_MIN);
 	stat.Add("MAX", RuneStatRange.Tier2.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.EXPUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.EXPUP_MAX);
+	_option.Add("EXPUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.GUIDED_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.GUIDED_MAX);
+	_option.Add("GUIDED", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.SLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.SLOW_MAX);
+	_option.Add("SLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.FREEZEONSLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.FREEZEONSLOW_MAX);
+	_option.Add("FREEZEONSLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.AREAUP_MAX);
+	_option.Add("AREAUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPTOTRIANGLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPTOTRIANGLE_MAX);
+	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
 	RuneStat.Add(2, _option);
@@ -215,6 +365,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("STUN", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier3.KNOCKBACK_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.KNOCKBACK_MAX);
+	_option.Add("KNOCKBACK", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier3.LIFESTEAL_MIN);
 	stat.Add("MAX", RuneStatRange.Tier3.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
@@ -225,9 +380,14 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier3.AREAUP_MIN);
-	stat.Add("MAX", RuneStatRange.Tier3.AREAUP_MAX);
-	_option.Add("AREAUP", stat);
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUPONIGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUPONIGNITE_MAX);
+	_option.Add("DAMAGEUPONIGNITE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUPTOCIRCLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUPTOCIRCLE_MAX);
+	_option.Add("DAMAGEUPTOCIRCLE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier3.ATTACKSPEEDUP_MIN);
@@ -250,9 +410,54 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier3.ATTACKTWICE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.ATTACKTWICE_MAX);
+	_option.Add("ATTACKTWICE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.PIERCE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.PIERCE_MAX);
+	_option.Add("PIERCE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.DOTDAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DOTDAMAGEUP_MAX);
+	_option.Add("DOTDAMAGEUP", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier3.RANGEUP_MIN);
 	stat.Add("MAX", RuneStatRange.Tier3.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.EXPUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.EXPUP_MAX);
+	_option.Add("EXPUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.GUIDED_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.GUIDED_MAX);
+	_option.Add("GUIDED", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.SLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.SLOW_MAX);
+	_option.Add("SLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.FREEZEONSLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.FREEZEONSLOW_MAX);
+	_option.Add("FREEZEONSLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.AREAUP_MAX);
+	_option.Add("AREAUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUPTOTRIANGLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUPTOTRIANGLE_MAX);
+	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
 	RuneStat.Add(3, _option);
@@ -273,7 +478,7 @@ void AFP_ComRuneGenerator::Tick(float DeltaTime)
 
 }
 
-AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _runeOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage)
+AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage)
 {
 	//Tier
 	_rune->Tier3DropRate = (float)_stage * _rune->Tier3DropRate;
@@ -308,39 +513,39 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Red].Num());
+				random = FMath::FRandRange(0, _runeProperty[FColor::Red].Num() - 1);
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Red].Num())
 					break;
 			}
 
-			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
-			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
+			_rune->Name += _redRuneOption[hex].Left(_redRuneOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_redRuneOption[hex].Left(_redRuneOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
 
-			if (_runeOption[hex].Contains("STAT"))
+			if (_redRuneOption[hex].Contains("STAT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
 
-			if (_runeOption[hex].Contains("PROBABILITY"))
+			if (_redRuneOption[hex].Contains("PROBABILITY"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
 
-			if (_runeOption[hex].Contains("FIXED"))
+			if (_redRuneOption[hex].Contains("FIXED"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
 
-			if (_runeOption[hex].Contains("PROJECTILE"))
+			if (_redRuneOption[hex].Contains("PROJECTILE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
 
-			if (_runeOption[hex].Contains("AOE"))
+			if (_redRuneOption[hex].Contains("AOE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
 
-			if (_runeOption[hex].Contains("DOT"))
+			if (_redRuneOption[hex].Contains("DOT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
 
-			if (_runeOption[hex].Contains("EXP"))
+			if (_redRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
-			if (_runeOption[hex].Contains("ETC"))
+			if (_redRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
@@ -351,39 +556,39 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Green].Num());
+				random = FMath::FRandRange(0, _runeProperty[FColor::Green].Num() - 1);
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Green].Num())
 					break;
 			}
 
-			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
-			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
+			_rune->Name += _greenRuneOption[hex].Left(_greenRuneOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_greenRuneOption[hex].Left(_greenRuneOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
 
-			if (_runeOption[hex].Contains("STAT"))
+			if (_greenRuneOption[hex].Contains("STAT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
 
-			if (_runeOption[hex].Contains("PROBABILITY"))
+			if (_greenRuneOption[hex].Contains("PROBABILITY"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
 
-			if (_runeOption[hex].Contains("FIXED"))
+			if (_greenRuneOption[hex].Contains("FIXED"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
 
-			if (_runeOption[hex].Contains("PROJECTILE"))
+			if (_greenRuneOption[hex].Contains("PROJECTILE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
 
-			if (_runeOption[hex].Contains("AOE"))
+			if (_greenRuneOption[hex].Contains("AOE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
 
-			if (_runeOption[hex].Contains("DOT"))
+			if (_greenRuneOption[hex].Contains("DOT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
 
-			if (_runeOption[hex].Contains("EXP"))
+			if (_greenRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
-			if (_runeOption[hex].Contains("ETC"))
+			if (_greenRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
@@ -394,39 +599,39 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Blue].Num());
+				random = FMath::FRandRange(0, _runeProperty[FColor::Blue].Num() - 1);
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Blue].Num())
 					break;
 			}
 
-			_rune->Name += _runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))) + " ";
-			_rune->Option.Add(_runeOption[hex].Left(_runeOption[hex].Find(TEXT(":"))));
+			_rune->Name += _blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Option.Add(_blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
 
-			if (_runeOption[hex].Contains("STAT"))
+			if (_blueRuneOption[hex].Contains("STAT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
 
-			if (_runeOption[hex].Contains("PROBABILITY"))
+			if (_blueRuneOption[hex].Contains("PROBABILITY"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
 
-			if (_runeOption[hex].Contains("FIXED"))
+			if (_blueRuneOption[hex].Contains("FIXED"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
 
-			if (_runeOption[hex].Contains("PROJECTILE"))
+			if (_blueRuneOption[hex].Contains("PROJECTILE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
 
-			if (_runeOption[hex].Contains("AOE"))
+			if (_blueRuneOption[hex].Contains("AOE"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
 
-			if (_runeOption[hex].Contains("DOT"))
+			if (_blueRuneOption[hex].Contains("DOT"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
 
-			if (_runeOption[hex].Contains("EXP"))
+			if (_blueRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
-			if (_runeOption[hex].Contains("ETC"))
+			if (_blueRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;

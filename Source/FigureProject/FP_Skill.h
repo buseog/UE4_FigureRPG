@@ -14,26 +14,19 @@
 #include "FP_Skill.generated.h"
 
 
+
 UCLASS()
 class FIGUREPROJECT_API AFP_Skill : public AActor
 {
 	GENERATED_BODY()
 public:
-	struct SkillInfo
-	{
-		float DmgPerLv = 10.f;
-		float AtkSpdPerLv = 0.05f;
-	};
-
-public:	
-	// Sets default values for this actor's properties
 
 	struct Socket
 	{
 		AFP_Rune* Rune = nullptr;
 		FColor Color;
 
-		void EpuipRune(AFP_Rune* _rune)
+		void EquipRune(AFP_Rune* _rune)
 		{
 			if (Color != _rune->Color)
 				return;
@@ -42,9 +35,19 @@ public:
 		}
 	};
 
+	struct SkillInfo
+	{
+		FString Name;
+		float DmgPerLv = 10.f;
+		float AtkSpdPerLv = 0.05f;
+	};
+
+public:	
+	// Sets default values for this actor's properties
+
 	struct SkillStat
 	{
-		float Damage = 1.f;
+		float Damage;
 		float Speed = 1.f; //bullet speed
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
@@ -60,6 +63,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void OnConstruction(const FTransform & Transform) override;
 
 	void SetTargetDirection(FVector _location);
 	FColor AddSocket();
@@ -88,13 +92,8 @@ public:
 	/*-----Socket-------------------*/
 	
 	int MaxSocketNum = 4;
-
-	UPROPERTY(EditAnywhere)
 	int EquipedRuneNum = 0;
-	
 	TArray<Socket> Sockets;
 	/*------------------------------*/
-	
-
 	
 };

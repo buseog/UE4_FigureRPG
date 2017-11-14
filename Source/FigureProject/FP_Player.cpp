@@ -9,6 +9,8 @@
 #include "FP_SaveGame.h"
 #include "Kismet/GameplayStatics.h"
 #include "FP_StageWidget.h"
+#include "FP_Tooltip.h"
+
 
 
 // Sets default values
