@@ -27,7 +27,8 @@ void AFP_ComCalculator::Tick(float DeltaTime)
 
 }
 
-float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
+template<typename T>
+float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AFP_Monster* _monster)
 {
 	float RuneDmg = 1.f;
 
@@ -42,11 +43,12 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, AFP_Skill* _s
 	/*switch (_monster->StateMgr.eState)
 	{
 	}*/
-	
+	UE_LOG(LogClass, Log, TEXT("%f"), _player->Status.Attack * _skill->Stat.Damage * RuneDmg);
 	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg;
 }
 
-float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
+template<typename T>
+float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, T* _skill, AFP_Monster* _monster)
 {
 	float RuneRange = 1.f;
 
@@ -61,7 +63,8 @@ float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, AFP_Skill* _sk
 	return _player->Status.AttackRange * _skill->Stat.Range + RuneRange;
 }
 
-float AFP_ComCalculator::CalculateFinalSpeed(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
+template<typename T>
+float AFP_ComCalculator::CalculateFinalSpeed(AFP_Player* _player, T* _skill, AFP_Monster* _monster)
 {
 	float RuneSpeed = 1.f;
 
@@ -76,7 +79,8 @@ float AFP_ComCalculator::CalculateFinalSpeed(AFP_Player* _player, AFP_Skill* _sk
 	return _player->Status.BulletSpeed * _skill->Stat.Speed + RuneSpeed;
 }
 
-float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, AFP_Skill* _skill, AFP_Monster* _monster)
+template<typename T>
+float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill, AFP_Monster* _monster)
 {
 	float RuneCoolTime = 1.f;
 

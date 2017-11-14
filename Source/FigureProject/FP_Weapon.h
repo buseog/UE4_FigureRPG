@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "FP_Monster.h"
 #include "GameFramework/Actor.h"
+#include "FP_Rune.h"
 #include "FP_Weapon.generated.h"
 
 
@@ -53,12 +54,14 @@ public:
 	UPROPERTY()
 	TArray<AFP_Monster*> TargetMonsters;
 
-
 	SKILLTYPE ActiveSkill;
 	class AFP_Skill* Skill;
 	//UStaticMesh* Mesh;
 
-	
+	TMultiMap<SKILLTYPE, AFP_Rune*> EquipedRunes;
+
+public:
+	TArray<AFP_Rune*> CheckEquipedRunes();
 };
 
 

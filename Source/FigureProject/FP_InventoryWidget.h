@@ -22,6 +22,14 @@ public:
 
 public:
 	TArray<UButton*> Slots;
+	UButton* ByTier;
+	UButton* ByColor;
+	UButton* ViewTier1;
+	UButton* ViewTier2;
+	UButton* ViewTier3;
+	UButton* ViewRed;
+	UButton* ViewGreen;
+	UButton* ViewBlue;
 	bool isClicked = false;
 	int MaxSlotNum = 10;
 	FVector2D IconSize = FVector2D(63.f, 62.f);
@@ -38,6 +46,33 @@ public:
 public:
 	UFUNCTION()
 	void SlotSelected();
-	void AddRune();
+
+	UFUNCTION()
 	void SortInventory();
+
+	UFUNCTION()
+	void SortByTierClicked();
+
+	UFUNCTION()
+	void SortByColorClicked();
+
+	UFUNCTION()
+	void ViewTier1Clicked();
+
+	UFUNCTION()
+	void ViewTier2Clicked();
+
+	UFUNCTION()
+	void ViewTier3Clicked();
+
+	UFUNCTION()
+	void ViewRedClicked();
+
+	UFUNCTION()
+	void ViewGreenClicked();
+
+	UFUNCTION()
+	void ViewBlueClicked();
+
+	void AddRune();
 };

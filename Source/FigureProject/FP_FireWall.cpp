@@ -16,6 +16,8 @@ AFP_FireWall::AFP_FireWall()
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireWall.FP_FireWall'"));
 	Particle->SetTemplate(ParticleSystem.Object);
 	//Particle->SetWorldScale3D(FVector(0.3f, 0.3f, 0.3f));
+
+	SkillInfo.Name = "FireWall";
 }
 
 // Called when the game starts or when spawned

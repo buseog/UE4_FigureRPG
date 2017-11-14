@@ -13,6 +13,8 @@
 #include "FP_FireBlastSpawnPoint.h"
 #include "FP_FireBlast.h"
 #include "FP_FireWall.h"
+#include "FP_Tooltip.h"
+#include "FP_PlayerController.h"
 
 
 struct CompareDist
@@ -123,11 +125,20 @@ void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
 
 void AFP_Weapon::SpawnSkill()
 {
+	TArray<AFP_Rune*> runes = CheckEquipedRunes();
+	UClass* Class = AFP_Skill::StaticClass();
+	AFP_Skill* _skill = Class->GetDefaultObject<AFP_Skill>();
 	switch (ActiveSkill)
 	{
 	case FIREBALL:
-		Skill = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = GetWorld()->SpawnActorDeferred<AFP_FireBall>(AFP_FireBall::StaticClass(), FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill->Sockets = _skill->Sockets;
+		UGameplayStatics::FinishSpawningActor(Skill, Skill->GetTransform());
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		UE_LOG(LogClass, Log, TEXT("%d"), Skill->Sockets.Num());
+		UE_LOG(LogClass, Log, TEXT("%d"), _skill->Sockets.Num());
+		/*Skill = GetWorld()->SpawnActor<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());*/
 		break;
 	case FIREBLAST:
 		//Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
@@ -153,7 +164,26 @@ void AFP_Weapon::SpawnSkill()
 		break;
 	}
 	
+	if (runes.Num() != 0)
+	{
+		///////////임시로 소켓 뚫어주기//////////
+		FRuneSocket socket;
+		socket.Color = runes[0]->Color;
+		Skill->Sockets.Add(socket);
+		/////////////////////////////////////////
 
+		for (int i = 0; i < Skill->Sockets.Num(); ++i)
+		{
+			if (Skill->Sockets[i].Rune == nullptr)
+			{
+				for (int j = 0; j < runes.Num(); ++j)
+				{
+					if(Skill->Sockets[i].Color == runes[j]->Color)
+						Skill->Sockets[i].EquipRune(runes[j]);
+				}
+			}
+		}
+	}
 
 	
 }
@@ -244,4 +274,14 @@ float AFP_Weapon::GetStatfromSkill(FString _stat)
 
 	}
 	return 0.f;
+}
+
+TArray<AFP_Rune*> AFP_Weapon::CheckEquipedRunes()
+{
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	TArray<AFP_Rune*> runes;
+
+	EquipedRunes.MultiFind(ActiveSkill, runes, true);
+
+	return runes;
 }

@@ -17,6 +17,8 @@ AFP_FireBlast::AFP_FireBlast()
 	Particle->SetTemplate(ParticleSystem.Object);
 	Particle->SetupAttachment(RootComponent);
 	Particle->SetWorldScale3D(FVector(0.7f, 0.7f, 0.7f));
+
+	SkillInfo.Name = "FireBlast";
 }
 
 // Called when the game starts or when spawned

@@ -16,6 +16,7 @@ AFP_IceBall::AFP_IceBall()
 	CollisionSphere->SetupAttachment(RootComponent);
 
 	Stat.Speed = 1.f;
+	SkillInfo.Name = "IceBall";
 }
 
 void AFP_IceBall::Tick(float DeltaTime)

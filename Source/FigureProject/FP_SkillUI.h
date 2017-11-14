@@ -107,7 +107,7 @@ public:
 			UClass* Class = T::StaticClass();
 			T* SKill = Class->GetDefaultObject<T>();
 			ToolTipClass->CurrentSkill = SKill;
-
+			
 			float DamageLv = SKill->SkillInfo.DmgPerLv;
 			float AttackSpeedLv = SKill->SkillInfo.AtkSpdPerLv;
 

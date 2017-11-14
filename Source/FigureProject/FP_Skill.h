@@ -14,6 +14,26 @@
 #include "FP_Rune.h"
 #include "FP_Skill.generated.h"
 
+USTRUCT()
+struct FRuneSocket
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	AFP_Rune* Rune = nullptr;
+
+	UPROPERTY()
+	FColor Color;
+
+	void EquipRune(AFP_Rune* _rune)
+	{
+		if (Color != _rune->Color)
+			return;
+
+		Rune = _rune;
+	}
+};
+
 UCLASS()
 class FIGUREPROJECT_API AFP_Skill : public AActor
 {
@@ -21,6 +41,7 @@ class FIGUREPROJECT_API AFP_Skill : public AActor
 public:
 	struct SkillInfo
 	{
+		FString Name;
 		float DmgPerLv = 10.f;
 		float AtkSpdPerLv = 0.05f;
 	};
@@ -28,23 +49,9 @@ public:
 public:	
 	// Sets default values for this actor's properties
 
-	struct Socket
-	{
-		AFP_Rune* Rune = nullptr;
-		FColor Color;
-
-		void EpuipRune(AFP_Rune* _rune)
-		{
-			if (Color != _rune->Color)
-				return;
-
-			Rune = _rune;
-		}
-	};
-
 	struct SkillStat
 	{
-		float Damage = 1.f;
+		float Damage;
 		float Speed = 1.f; //bullet speed
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
@@ -60,6 +67,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void OnConstruction(const FTransform & Transform) override;
 
 	void SetTargetDirection(FVector _location);
 	FColor AddSocket();
@@ -88,10 +96,17 @@ public:
 	/*-----Socket-------------------*/
 	
 	int MaxSocketNum = 4;
+
+	UPROPERTY()
 	int EquipedRuneNum = 0;
-	TArray<Socket> Sockets;
+
+	UPROPERTY()
+	TArray<FRuneSocket> Sockets;
 	/*------------------------------*/
 	
-
+	void SetVar(float _damage)
+	{
+		Stat.Damage = _damage;
+	}
 	
 };

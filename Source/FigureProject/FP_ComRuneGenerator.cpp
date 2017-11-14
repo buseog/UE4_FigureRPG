@@ -42,6 +42,16 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("IGNITE", prop_name);
 	prop_name.Empty();
 
+	prop_name.Add(Red.DAMAGEUPONIGNITE, Red.NAME_DAMAGEUPONIGNITE);
+	RedRuneOption.Add(Red.DAMAGEUPONIGNITE, Red.NAME_DAMAGEUPONIGNITE);
+	option.Add("DAMAGEUPONIGNITE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Red.DAMAGEUPTOCIRCLE, Red.NAME_DAMAGEUPTOCIRCLE);
+	RedRuneOption.Add(Red.DAMAGEUPTOCIRCLE, Red.NAME_DAMAGEUPTOCIRCLE);
+	option.Add("DAMAGEUPTOCIRCLE", prop_name);
+	prop_name.Empty();
+
 	RuneProperty.Add(FColor::Red, option);
 	option.Empty();
 
@@ -67,6 +77,21 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("DAMAGEUPTOSQARE", prop_name);
 	prop_name.Empty();
 
+	prop_name.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
+	GreenRuneOption.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
+	option.Add("DAMAGEUPTOSQARE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Green.PIERCE, Green.NAME_PIERCE);
+	GreenRuneOption.Add(Green.PIERCE, Green.NAME_PIERCE);
+	option.Add("PIERCE", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Green.DOTDAMAGEUP, Green.NAME_DOTDAMAGEUP);
+	GreenRuneOption.Add(Green.DOTDAMAGEUP, Green.NAME_DOTDAMAGEUP);
+	option.Add("PIERCE", prop_name);
+	prop_name.Empty();
+
 	RuneProperty.Add(FColor::Green, option);
 	option.Empty();
 
@@ -87,9 +112,24 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("GUIDED", prop_name);
 	prop_name.Empty();
 
+	prop_name.Add(Blue.SLOW, Blue.NAME_SLOW);
+	BlueRuneOption.Add(Blue.SLOW, Blue.NAME_SLOW);
+	option.Add("SLOW", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
+	BlueRuneOption.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
+	option.Add("FREEZEONSLOW", prop_name);
+	prop_name.Empty();
+
 	prop_name.Add(Blue.AREAUP, Blue.NAME_AREAUP);
 	BlueRuneOption.Add(Blue.AREAUP, Blue.NAME_AREAUP);
 	option.Add("AREAUP", prop_name);
+	prop_name.Empty();
+
+	prop_name.Add(Blue.DAMAGEUPTOTRIANGLE, Blue.NAME_DAMAGEUPTOTRIANGLE);
+	BlueRuneOption.Add(Blue.DAMAGEUPTOTRIANGLE, Blue.NAME_DAMAGEUPTOTRIANGLE);
+	option.Add("DAMAGEUPTOTRIANGLE", prop_name);
 	prop_name.Empty();
 
 	RuneProperty.Add(FColor::Blue, option);
@@ -107,6 +147,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("STUN", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier1.KNOCKBACK_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.KNOCKBACK_MAX);
+	_option.Add("KNOCKBACK", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier1.LIFESTEAL_MIN);
 	stat.Add("MAX", RuneStatRange.Tier1.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
@@ -117,9 +162,14 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier1.AREAUP_MIN);
-	stat.Add("MAX", RuneStatRange.Tier1.AREAUP_MAX);
-	_option.Add("AREAUP", stat);
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUPONIGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUPONIGNITE_MAX);
+	_option.Add("DAMAGEUPONIGNITE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUPTOCIRCLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUPTOCIRCLE_MAX);
+	_option.Add("DAMAGEUPTOCIRCLE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier1.ATTACKSPEEDUP_MIN);
@@ -142,9 +192,54 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier1.ATTACKTWICE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.ATTACKTWICE_MAX);
+	_option.Add("ATTACKTWICE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.PIERCE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.PIERCE_MAX);
+	_option.Add("PIERCE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.DOTDAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DOTDAMAGEUP_MAX);
+	_option.Add("DOTDAMAGEUP", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier1.RANGEUP_MIN);
 	stat.Add("MAX", RuneStatRange.Tier1.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.EXPUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.EXPUP_MAX);
+	_option.Add("EXPUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.GUIDED_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.GUIDED_MAX);
+	_option.Add("GUIDED", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.SLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.SLOW_MAX);
+	_option.Add("SLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.FREEZEONSLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.FREEZEONSLOW_MAX);
+	_option.Add("FREEZEONSLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.AREAUP_MAX);
+	_option.Add("AREAUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier1.DAMAGEUPTOTRIANGLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DAMAGEUPTOTRIANGLE_MAX);
+	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
 	RuneStat.Add(1, _option);
@@ -161,6 +256,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("STUN", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier2.KNOCKBACK_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.KNOCKBACK_MAX);
+	_option.Add("KNOCKBACK", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier2.LIFESTEAL_MIN);
 	stat.Add("MAX", RuneStatRange.Tier2.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
@@ -171,9 +271,14 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier2.AREAUP_MIN);
-	stat.Add("MAX", RuneStatRange.Tier2.AREAUP_MAX);
-	_option.Add("AREAUP", stat);
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPONIGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPONIGNITE_MAX);
+	_option.Add("DAMAGEUPONIGNITE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPTOCIRCLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPTOCIRCLE_MAX);
+	_option.Add("DAMAGEUPTOCIRCLE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier2.ATTACKSPEEDUP_MIN);
@@ -196,9 +301,54 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier2.ATTACKTWICE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.ATTACKTWICE_MAX);
+	_option.Add("ATTACKTWICE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.PIERCE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.PIERCE_MAX);
+	_option.Add("PIERCE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.DOTDAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DOTDAMAGEUP_MAX);
+	_option.Add("DOTDAMAGEUP", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier2.RANGEUP_MIN);
 	stat.Add("MAX", RuneStatRange.Tier2.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.EXPUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.EXPUP_MAX);
+	_option.Add("EXPUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.GUIDED_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.GUIDED_MAX);
+	_option.Add("GUIDED", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.SLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.SLOW_MAX);
+	_option.Add("SLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.FREEZEONSLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.FREEZEONSLOW_MAX);
+	_option.Add("FREEZEONSLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.AREAUP_MAX);
+	_option.Add("AREAUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPTOTRIANGLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPTOTRIANGLE_MAX);
+	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
 	RuneStat.Add(2, _option);
@@ -215,6 +365,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("STUN", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier3.KNOCKBACK_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.KNOCKBACK_MAX);
+	_option.Add("KNOCKBACK", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier3.LIFESTEAL_MIN);
 	stat.Add("MAX", RuneStatRange.Tier3.LIFESTEAL_MAX);
 	_option.Add("LIFESTEAL", stat);
@@ -225,9 +380,14 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("IGNITE", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier3.AREAUP_MIN);
-	stat.Add("MAX", RuneStatRange.Tier3.AREAUP_MAX);
-	_option.Add("AREAUP", stat);
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUPONIGNITE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUPONIGNITE_MAX);
+	_option.Add("DAMAGEUPONIGNITE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUPTOCIRCLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUPTOCIRCLE_MAX);
+	_option.Add("DAMAGEUPTOCIRCLE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier3.ATTACKSPEEDUP_MIN);
@@ -250,9 +410,54 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOSQARE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier3.ATTACKTWICE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.ATTACKTWICE_MAX);
+	_option.Add("ATTACKTWICE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.PIERCE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.PIERCE_MAX);
+	_option.Add("PIERCE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.DOTDAMAGEUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DOTDAMAGEUP_MAX);
+	_option.Add("DOTDAMAGEUP", stat);
+	stat.Empty();
+
 	stat.Add("MIN", RuneStatRange.Tier3.RANGEUP_MIN);
 	stat.Add("MAX", RuneStatRange.Tier3.RANGEUP_MAX);
 	_option.Add("RANGEUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.EXPUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.EXPUP_MAX);
+	_option.Add("EXPUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.GUIDED_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.GUIDED_MAX);
+	_option.Add("GUIDED", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.SLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.SLOW_MAX);
+	_option.Add("SLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.FREEZEONSLOW_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.FREEZEONSLOW_MAX);
+	_option.Add("FREEZEONSLOW", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.AREAUP_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.AREAUP_MAX);
+	_option.Add("AREAUP", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier3.DAMAGEUPTOTRIANGLE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DAMAGEUPTOTRIANGLE_MAX);
+	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
 	RuneStat.Add(3, _option);
@@ -401,9 +606,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 					break;
 			}
 
-			UE_LOG(LogClass, Log, TEXT("%d"), _runeProperty[FColor::Blue].Num());
-
-			/*_rune->Name += _blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":"))) + " ";
+			_rune->Name += _blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":"))) + " ";
 			_rune->Option.Add(_blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":"))));
 			_rune->Property = _rune->Property | hex;
 
@@ -429,7 +632,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
 			if (_blueRuneOption[hex].Contains("ETC"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);*/
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
 		break;
 	}

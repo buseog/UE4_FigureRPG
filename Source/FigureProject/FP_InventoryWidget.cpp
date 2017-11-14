@@ -27,6 +27,30 @@ bool UFP_InventoryWidget::Initialize()
 		Slots[i - 1]->SetIsEnabled(false);
 	}
 
+	ByTier = Cast<UButton>(GetWidgetFromName("SortByTier"));
+	ByTier->OnClicked.AddDynamic(this, &UFP_InventoryWidget::SortByTierClicked);
+
+	ByColor = Cast<UButton>(GetWidgetFromName("SortByColor"));
+	ByColor->OnClicked.AddDynamic(this, &UFP_InventoryWidget::SortByColorClicked);
+
+	ViewTier1 = Cast<UButton>(GetWidgetFromName("Tier1"));
+	ViewTier1->OnClicked.AddDynamic(this, &UFP_InventoryWidget::ViewTier1Clicked);
+
+	ViewTier2 = Cast<UButton>(GetWidgetFromName("Tier2"));
+	ViewTier2->OnClicked.AddDynamic(this, &UFP_InventoryWidget::ViewTier2Clicked);
+
+	ViewTier3 = Cast<UButton>(GetWidgetFromName("Tier3"));
+	ViewTier3->OnClicked.AddDynamic(this, &UFP_InventoryWidget::ViewTier3Clicked);
+
+	ViewRed = Cast<UButton>(GetWidgetFromName("Red"));
+	ViewRed->OnClicked.AddDynamic(this, &UFP_InventoryWidget::ViewRedClicked);
+
+	ViewGreen = Cast<UButton>(GetWidgetFromName("Green"));
+	ViewGreen->OnClicked.AddDynamic(this, &UFP_InventoryWidget::ViewGreenClicked);
+
+	ViewBlue = Cast<UButton>(GetWidgetFromName("Blue"));
+	ViewBlue->OnClicked.AddDynamic(this, &UFP_InventoryWidget::ViewBlueClicked);
+
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
@@ -108,19 +132,55 @@ void UFP_InventoryWidget::SortInventory()
 	if (Player->Inventory.Num() == 0)
 		return;
 
-	if (Order == TIER || Order == RED || Order == GREEN || Order == BLUE)
+	if (Order == TIER)
 	{
 		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
 			return A.Stat.Tier < B.Stat.Tier;
 		});
 	}
-	else
+	else if (Order == RED)
+	{
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			return A.Color.R == 255.f;
+		});
+	}
+	else if (Order == GREEN)
+	{
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			return A.Color.G == 255.f;
+		});
+	}
+	else if (Order == BLUE)
+	{
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			return A.Color.B == 255.f;
+		});
+	}
+	else if (Order == COLOR)
 	{
 		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
 			if (A.Color.R == 0 && B.Color.R == 0)
 				return A.Color.G > B.Color.G;
 
 			return A.Color.R > B.Color.R;
+		});
+	}
+	else if (Order == TIER1)
+	{
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			return A.Stat.Tier == 1;
+		});
+	}
+	else if (Order == TIER2)
+	{
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			return A.Stat.Tier == 2;
+		});
+	}
+	else if (Order == TIER2)
+	{
+		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+			return A.Stat.Tier == 3;
 		});
 	}
 
@@ -171,4 +231,52 @@ void UFP_InventoryWidget::SortInventory()
 			Slots[slotNum]->SetIsEnabled(true);
 		}
 	}
+}
+
+void UFP_InventoryWidget::SortByTierClicked()
+{
+	Order = TIER;
+	SortInventory();
+}
+
+void UFP_InventoryWidget::SortByColorClicked()
+{
+	Order = COLOR;
+	SortInventory();
+}
+
+void UFP_InventoryWidget::ViewTier1Clicked()
+{
+	Order = TIER1;
+	SortInventory();
+}
+
+void UFP_InventoryWidget::ViewTier2Clicked()
+{
+	Order = TIER2;
+	SortInventory();
+}
+
+void UFP_InventoryWidget::ViewTier3Clicked()
+{
+	Order = TIER3;
+	SortInventory();
+}
+
+void UFP_InventoryWidget::ViewRedClicked()
+{
+	Order = RED;
+	SortInventory();
+}
+
+void UFP_InventoryWidget::ViewGreenClicked()
+{
+	Order = GREEN;
+	SortInventory();
+}
+
+void UFP_InventoryWidget::ViewBlueClicked()
+{
+	Order = BLUE;
+	SortInventory();
 }

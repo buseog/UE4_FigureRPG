@@ -17,6 +17,7 @@ AFP_IceOrb::AFP_IceOrb()
 
 	Stat.Speed = 0.2f;
 	Stat.CoolTimeRatio = 1.5f;
+	SkillInfo.Name = "IceOrb";
 }
 
 void AFP_IceOrb::Tick(float DeltaTime)
