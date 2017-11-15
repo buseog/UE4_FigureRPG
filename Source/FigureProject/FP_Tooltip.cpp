@@ -8,6 +8,7 @@
 #include "FP_InventoryWidget.h"
 #include "FP_Skill.h"
 #include "FP_FireBall.h"
+#include "FP_SkillUI.h"
 #include "VerticalBox.h"
 
 bool UFP_Tooltip::Initialize()

@@ -5,12 +5,12 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "FP_Skill.h"
+#include "FP_Tooltip.h"
 #include "FP_SkillUI.generated.h"
 
 /**
  * 
  */
-class FP_Tooltip;
 
 UCLASS()
 class FIGUREPROJECT_API UFP_SkillUI : public UUserWidget

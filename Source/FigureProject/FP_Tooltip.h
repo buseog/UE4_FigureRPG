@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FP_SKillUI.h"
 #include "Blueprint/UserWidget.h"
 #include "Button.h"
 #include "FP_Tooltip.generated.h"
@@ -19,7 +18,7 @@ class FIGUREPROJECT_API UFP_Tooltip : public UUserWidget
 public:
 	virtual bool Initialize() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
-	inline void SetSKillUI(UFP_SkillUI* skill) { SkillUI = skill; }
+	inline void SetSKillUI(class UFP_SkillUI* skill) { SkillUI = skill; }
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
@@ -60,7 +59,7 @@ public:
 	void EquipRune();
 
 
-	UFP_SkillUI* SkillUI;
+	class UFP_SkillUI* SkillUI;
 	AFP_Skill* CurrentSkill;
 
 	UPROPERTY()

@@ -15,6 +15,8 @@
 #include "FP_MonsterMgr.h"
 #include "FP_DamageUI.h"
 #include "FP_PlayerController.h"
+#include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
+#include "Runtime/Engine/Classes/Engine/RendererSettings.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -234,15 +236,19 @@ void AFP_Monster::MyTakeDamage(float _damage)
 		DamageUI->AddToViewport();
 	}
 
+	const FVector2D viewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
+	const float viewportScale = GetDefault<UUserInterfaceSettings>(UUserInterfaceSettings::StaticClass())->GetDPIScaleBasedOnSize(FIntPoint(viewportSize.X, viewportSize.Y));
+
 	FVector2D location;
 	PC->ProjectWorldLocationToScreen(this->GetActorLocation(), location);
+	location.X /= viewportScale;
+	location.Y /= viewportScale;
+
 	DamageUI->ShowDamage(_damage, location);
-
-	
 	
 
+	//GEngine->AddOnScreenDebugMessage(-1.f, 1.f, FColor::Blue, FString::SanitizeFloat(viewportScale));
 
-	
 	/*float Test = HP / MaxHP;
 	UE_LOG(LogClass, Log, TEXT("%f"), Test);
 	UE_LOG(LogClass, Log, TEXT("%f"), HPBar_Widget->Progress);*/

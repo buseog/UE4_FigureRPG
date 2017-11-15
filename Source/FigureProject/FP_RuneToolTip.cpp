@@ -39,7 +39,7 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 		case 0:
 			Option1 = Option[i];
 
-			if (_rune->OptionVal[i] == NULL)
+			if (_rune->OptionVal[i] == 0.f)
 				break;
 			
 			Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
@@ -47,7 +47,7 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 		case 1:
 			Option2 = Option[i];
 
-			if (_rune->OptionVal[i] == NULL)
+			if (_rune->OptionVal[i] == 0.f)
 				break;
 
 			Val2 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
@@ -55,7 +55,7 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 		case 2:
 			Option3 = Option[i];
 
-			if (_rune->OptionVal[i] == NULL)
+			if (_rune->OptionVal[i] == 0.f)
 				break;
 
 			Val3 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
@@ -63,7 +63,7 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 		case 3:
 			Option4 = Option[i];
 
-			if (_rune->OptionVal[i] == NULL)
+			if (_rune->OptionVal[i] == 0.f)
 				break;
 
 			Val4 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
