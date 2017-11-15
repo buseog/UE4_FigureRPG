@@ -55,6 +55,8 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
+
+
 	if (Cast<UFP_SkillUI>(PC->GetWidgetMap(AFP_PlayerController::SKILLUI))->IsInViewport() == false)
 	{
 		RemoveFromViewport();

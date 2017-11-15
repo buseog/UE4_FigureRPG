@@ -13,6 +13,8 @@
 #include "FP_Player.h"
 #include "FP_ComCollision.h"
 #include "FP_MonsterMgr.h"
+#include "FP_DamageUI.h"
+#include "FP_PlayerController.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -28,7 +30,6 @@ AFP_Monster::AFP_Monster()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Sphere_Monster.Sphere_Monster'"));
 	StaticMesh->SetStaticMesh(MonsterMesh.Object);
-
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	SphereComponent->InitSphereRadius(3.0f);
@@ -54,7 +55,6 @@ AFP_Monster::AFP_Monster()
 	//WidgetComponent->SetupAttachment(RootComponent);
 	WidgetComponent->SetVisibility(false);
 
-
 	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
 	PointLight->Intensity = 50.f;
 	PointLight->LightColor = FColor(0, 0, 255);
@@ -73,6 +73,7 @@ void AFP_Monster::BeginPlay()
 	DropRate = FMath::FRandRange(0.f, 100.f);
 	HPBar_Widget = Cast<UHPBar_Widget>(WidgetComponent->GetUserWidgetObject());
 
+
 	StateMgr.Monster = this;
 
 	TArray<AActor*> FoundActor;
@@ -81,6 +82,9 @@ void AFP_Monster::BeginPlay()
 		return;
 
 	Weapon = Cast<AFP_Weapon>(FoundActor[0]);
+	DamageUI = nullptr;
+	
+	
 }
 
 // Called every frame
@@ -98,9 +102,15 @@ void AFP_Monster::Tick(float DeltaTime)
 	
 	HPShowTime -= DeltaTime;
 	if (HPShowTime > 0)
+	{
 		WidgetComponent->SetVisibility(true);
+	}
+
 	else
+	{
 		WidgetComponent->SetVisibility(false);
+	}
+		
 
 
 	AFP_Player* player = AFP_ComCollision::Collision<USphereComponent, AFP_Player>(SphereComponent);
@@ -209,6 +219,30 @@ void AFP_Monster::MyTakeDamage(float _damage)
 	if (HP <= 0)
 		isDestroy = true;
 
+
+
+	//show damage ui
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	if (DamageUI == nullptr)
+	{
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_DamageNum.FP_DamageNum_C'");
+		TSubclassOf<UFP_DamageUI> DamageUIClass = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		DamageUI = CreateWidget<UFP_DamageUI>(PC, DamageUIClass);
+		DamageUI->AddToViewport();
+	}
+
+	FVector2D location;
+	PC->ProjectWorldLocationToScreen(this->GetActorLocation(), location);
+	DamageUI->ShowDamage(_damage, location);
+
+	
+	
+
+
+	
 	/*float Test = HP / MaxHP;
 	UE_LOG(LogClass, Log, TEXT("%f"), Test);
 	UE_LOG(LogClass, Log, TEXT("%f"), HPBar_Widget->Progress);*/

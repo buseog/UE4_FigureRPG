@@ -95,6 +95,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	UHPBar_Widget* HPBar_Widget;
 
+	UPROPERTY(EditAnywhere)
+	class UFP_DamageUI* DamageUI;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	UPointLightComponent* PointLight;
 	
