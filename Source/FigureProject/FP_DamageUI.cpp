@@ -29,6 +29,7 @@ void UFP_DamageUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 {
 	Super::NativeTick(MyGeometry, DeltaTime);
 
+	int iIndex = 0;
 	for (size_t i = 0; i < TextArray.Num(); ++i)
 	{
 		if (TextArray[i]->GetVisibility() == ESlateVisibility::Visible)
@@ -39,18 +40,20 @@ void UFP_DamageUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 			float NewY = (LifeTimeArray[i] * -1.f + 1.f) * -20.f;
 			TextArray[i]->SetRenderTranslation(FVector2D(OriginLocation[i].X - 50, OriginLocation[i].Y + NewY - 50));
-			
 
-			if(LifeTimeArray[i] < 0)
+
+			if (LifeTimeArray[i] < 0)
 			{
 				TextArray[i]->SetVisibility(ESlateVisibility::Hidden);
 				LifeTimeArray[i] = 1.f;
 			}
 		}
-
-
-
+		else
+			++iIndex;
 	}
+
+	if (iIndex == TextArray.Num())
+		this->RemoveFromViewport();
 }
 
 

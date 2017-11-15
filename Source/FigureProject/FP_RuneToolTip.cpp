@@ -107,13 +107,15 @@ void UFP_RuneToolTip::EquipRune()
 	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	UUserWidget* InventoryWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
 	UFP_Tooltip* SkillToolTip = Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP));
-	UClass* Class = AFP_Skill::StaticClass();
-	AFP_Skill* skill = Class->GetDefaultObject<AFP_Skill>();
 
-	skill->Sockets[SkillToolTip->iSocketIndex].EquipRune(SelectedRune);
+	SkillToolTip->CurrentSkill->Sockets[SkillToolTip->iSocketIndex].EquipRune(SelectedRune);
 	
-	Player->Inventory.Remove(SelectedRune);
+	Player->Inventory[Player->Inventory.Find(SelectedRune)]->bEquiped = true;
 	Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();
 
 	this->RemoveFromViewport();
+	InventoryWidget->RemoveFromViewport();
+
+	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->AddToViewport();
+	PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP)->AddToViewport();
 }

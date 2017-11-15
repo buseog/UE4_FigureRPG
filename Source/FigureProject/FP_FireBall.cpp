@@ -38,8 +38,8 @@ void AFP_FireBall::BeginPlay()
 void AFP_FireBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//UE_LOG(LogClass, Log, TEXT("Damage : %f"), Stat.Damage);
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
+	//UE_LOG(LogClass, Log, TEXT("bullet : %f"), AFP_ComCalculator::CalculateFinalSpeed(Player, this, DeltaTime));
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, AFP_ComCalculator::CalculateFinalSpeed(Player, this, DeltaTime));
 
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(ProxSphere);
 	if (TargetMonster != nullptr)

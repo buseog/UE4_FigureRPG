@@ -7,6 +7,56 @@
 #include "GameFramework/SaveGame.h"
 #include "FP_SaveGame.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInventoryLoad
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	FColor Color;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	uint64 Property;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float Damage;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float Speed;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float CoolTimeRatio;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float Range;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	int Tier;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	TArray<int> Type;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	FString Name;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	FString Option1;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	FString Option2;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	FString Option3;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float OptionVal1;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float OptionVal2;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float OptionVal3;
+};
 
 /**
  * 
@@ -82,6 +132,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	uint32 UserIndex;
-	
-	
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	TArray<FInventoryLoad> Inventory;
 };

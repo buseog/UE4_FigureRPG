@@ -42,4 +42,22 @@ public:
 
 	void OpenInventoryFromSkill();
 	
+
+	template <typename T>
+	void ResetSocket()
+	{
+		UClass* Class = T::StaticClass();
+		T* Skill_CDO = Class->GetDefaultObject<T>();
+
+		Skill_CDO->Stat.ActiveSocketNum = 0;
+
+		for (int i = 0; i < Skill_CDO->Sockets.Num(); ++i)
+		{
+			if (Skill_CDO->Sockets[i].Rune == nullptr)
+				continue;
+
+			Skill_CDO->Sockets[i].Rune->bEquiped = false;
+		}
+		Skill_CDO->Sockets.Empty();
+	}
 };

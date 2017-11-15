@@ -684,18 +684,20 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 				{
 					_rune->Stat.Damage = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DAMAGEUP"]["MIN"], _runeStat[_rune->Stat.Tier]["DAMAGEUP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Damage;
+					UE_LOG(LogClass, Log, TEXT("stat %f"), _rune->Stat.Damage);
+					UE_LOG(LogClass, Log, TEXT("option %f"), _rune->OptionVal[j]);
 				}
 				else if (_rune->Option[j].Contains("RANGE"))
 				{
 					_rune->Stat.Range = FMath::RandRange(_runeStat[_rune->Stat.Tier]["RANGEUP"]["MIN"], _runeStat[_rune->Stat.Tier]["RANGEUP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Range;
 				}
-				else if (_rune->Option[j].Contains("ATTACKSPEED"))
+				else if (_rune->Option[j].Contains("ATTACK SPEED"))
 				{
 					_rune->Stat.CoolTimeRatio = FMath::RandRange(_runeStat[_rune->Stat.Tier]["ATTACKSPEEDUP"]["MIN"], _runeStat[_rune->Stat.Tier]["ATTACKSPEEDUP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.CoolTimeRatio;
 				}
-				else if (_rune->Option[j].Contains("BULLETSPEED"))
+				else if (_rune->Option[j].Contains("BULLET SPEED"))
 				{
 					_rune->Stat.Speed = FMath::RandRange(_runeStat[_rune->Stat.Tier]["BULLETSPEEDUP"]["MIN"], _runeStat[_rune->Stat.Tier]["BULLETSPEEDUP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Speed;

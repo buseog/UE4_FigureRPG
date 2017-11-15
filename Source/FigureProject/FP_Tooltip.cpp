@@ -269,6 +269,10 @@ void UFP_Tooltip::EquipRune()
 		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill();
 	}
 		
-
 	SocketBox->SetVisibility(ESlateVisibility::Hidden);
+
+
+	this->RemoveFromViewport();
+	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->RemoveFromViewport();
+
 }

@@ -161,7 +161,7 @@ void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void AFP_Monster::DropItem()
 {	
-	if(isDestroy)
+	if(!isDestroy)
 		return;
 
 	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
@@ -204,7 +204,7 @@ void AFP_Monster::DropItem()
 		}
 	}
 
-	isDestroy = false;
+	//isDestroy = false;
 }
 
 void AFP_Monster::MyTakeDamage(float _damage)

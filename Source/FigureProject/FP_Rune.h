@@ -18,15 +18,13 @@ public:
 public:
 	struct RuneStat
 	{
-		float Damage = 1.f;
-		float Speed = 1.f; //bullet speed
-		float CoolTimeRatio = 1.f; // attack speed
-		float Range = 1.f;
+		float Damage = 0.f;
+		float Speed = 0.f; //bullet speed
+		float CoolTimeRatio = 0.f; // attack speed
+		float Range = 0.f;
 		int Tier = 1;
 		TArray<TYPE> Type;
 	};
-
-	
 	
 public:
 	UTexture2D* RedTier1Icon;
@@ -45,13 +43,14 @@ public:
 	FColor Color;
 	RuneStat Stat;
 	uint64 Property;
-	float Tier3DropRate = 30.f;
-	float Tier2DropRate = 60.f;
-	float Tier3MaxDropRate = 30.f;
+	float Tier3DropRate = 0.1f;
+	float Tier2DropRate = 0.5f;
+	float Tier3MaxDropRate = 10.f;
 	float Tier2MaxDropRate = 60.f;
 	FString Name = "";
 	TArray<FString> Option;
 	TArray<float> OptionVal;
+	bool bEquiped = false;
 
 public:	
 	// Sets default values for this actor's properties
@@ -64,5 +63,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
+	AFP_Rune* Initiate(FColor _color, uint64 _property, RuneStat _stat, FString _name, TArray<FString> _option, TArray<float> _optionVal);
 };

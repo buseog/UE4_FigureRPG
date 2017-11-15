@@ -8,6 +8,13 @@
 #include "FP_MonsterMgr.h"
 #include "FP_Skill.h"
 
+#include "FP_FireBall.h"
+#include "FP_FireBlast.h"
+#include "FP_FireWall.h"
+#include "FP_IceBall.h"
+#include "FP_IceBlast.h"
+#include "FP_IceOrb.h"
+
 
 void UFP_MainUI::NativeConstruct()
 {
@@ -156,16 +163,24 @@ void UFP_MainUI::Button_Rev()
 	AFP_MonsterMgr::MonsterKillCnt = 0;
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
+	ResetSocket<AFP_FireBall>();
+	ResetSocket<AFP_FireBlast>();
+	ResetSocket<AFP_FireWall>();
+	ResetSocket<AFP_IceBall>();
+	ResetSocket<AFP_IceBlast>();
+	ResetSocket<AFP_IceOrb>();
 
-	Cast<AFP_PlayerController>(Controller)->RestartLevel();
-	Cast<AFP_PlayerController>(Controller)->isRev = true;
+	PC->RestartLevel();
+	PC->isRev = true;
 
-	UClass* Class = AFP_Skill::StaticClass();
-	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
-
-	Skill_CDO->Sockets.Empty();
 	
+		
+	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
+	//Inventory->AddRune();
+
+
 }
 
 void UFP_MainUI::Button_Rune()

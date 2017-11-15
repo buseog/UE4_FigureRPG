@@ -70,8 +70,6 @@ AFP_Player::AFP_Player()
 	Particle->SetTemplate(ParticleSystem.Object);
 	
 	Particle->SetVisibility(false);
-
-
 }
 
 
@@ -79,7 +77,7 @@ AFP_Player::AFP_Player()
 void AFP_Player::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 }
 
 // Called every frame
@@ -337,6 +335,59 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	SaveGameInstance->Stage = AFP_MonsterMgr::Stage;
 	SaveGameInstance->MonsterKillCnt = AFP_MonsterMgr::MonsterKillCnt;
 	SaveGameInstance->Gem = Gem;
+
+	SaveGameInstance->Inventory.Empty();
+
+	for (int i = 0; i < Inventory.Num(); ++i)
+	{
+		FInventoryLoad inventory;
+
+		inventory.Color = Inventory[i]->Color;
+		inventory.Property = Inventory[i]->Property;
+		inventory.Damage = Inventory[i]->Stat.Damage;
+		inventory.Speed = Inventory[i]->Stat.Speed;
+		inventory.CoolTimeRatio = Inventory[i]->Stat.CoolTimeRatio;
+		inventory.Range = Inventory[i]->Stat.Range;
+		inventory.Tier = Inventory[i]->Stat.Tier;
+		inventory.Name = Inventory[i]->Name;
+		
+		for (int j = 0; j < Inventory[i]->Stat.Type.Num(); ++j)
+			inventory.Type.Add(Inventory[i]->Stat.Type[j]);
+
+		for (int j = 0; j < Inventory[i]->Option.Num(); ++j)
+		{
+			switch (j)
+			{
+			case 0:
+				inventory.Option1 = Inventory[i]->Option[j];
+				break;
+			case 1:
+				inventory.Option2 = Inventory[i]->Option[j];
+				break;
+			case 2:
+				inventory.Option3 = Inventory[i]->Option[j];
+				break;
+			}
+		}
+
+		for (int j = 0; j < Inventory[i]->OptionVal.Num(); ++j)
+		{
+			switch (j)
+			{
+			case 0:
+				inventory.OptionVal1 = Inventory[i]->OptionVal[j];
+				break;
+			case 1:
+				inventory.OptionVal2 = Inventory[i]->OptionVal[j];
+				break;
+			case 2:
+				inventory.OptionVal3 = Inventory[i]->OptionVal[j];
+				break;
+			}
+		}
+
+		SaveGameInstance->Inventory.Add(inventory);
+	}
 
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 }
