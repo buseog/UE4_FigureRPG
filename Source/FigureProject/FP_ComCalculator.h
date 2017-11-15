@@ -30,11 +30,11 @@ public:
 	static float CalculateFinalDamage(AFP_Player* _player, T* _skill, AFP_Monster* _monster);
 
 	template<typename T>
-	static float CalculateFinalRange(AFP_Player* _player, T* _skill, AFP_Monster* _monster);
+	static float CalculateFinalRange(AFP_Player* _player, T* _skill);
 
 	template<typename T>
-	static float CalculateFinalSpeed(AFP_Player* _player, T* _skill, AFP_Monster* _monster);
+	static float CalculateFinalSpeed(AFP_Player* _player, T* _skill, float _deltaTime);
 
 	template<typename T>
-	static float CalculateFinalCoolTime(AFP_Player* _player, T* _skill, AFP_Monster* _monster);
+	static float CalculateFinalCoolTime(AFP_Player* _player, T* _skill);
 };

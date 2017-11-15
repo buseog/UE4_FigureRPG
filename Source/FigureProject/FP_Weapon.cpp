@@ -15,6 +15,7 @@
 #include "FP_FireWall.h"
 #include "FP_Tooltip.h"
 #include "FP_PlayerController.h"
+#include "FP_ComCalculator.h"
 
 
 struct CompareDist
@@ -73,8 +74,6 @@ void AFP_Weapon::Tick(float DeltaTime)
 	if (nullptr == pPlayer)
 		return;
 
-	SphereComponent->SetSphereRadius(pPlayer->GetStatus().AttackRange * GetStatfromSkill("Range"));
-
 	if(TargetMonsters.Num() >= 1)
 	{
 		TargetMonsters.Sort(CompareDist(FVector(0.f,0.f,0.f)));
@@ -97,7 +96,8 @@ void AFP_Weapon::Tick(float DeltaTime)
 
 		//attack
 		TimeAcc += DeltaTime;
-		if (TimeAcc > pPlayer->GetStatus().AttackSpeed * GetStatfromSkill("AttackSpeed"))
+			
+		if (TimeAcc > ReloadTime)
 		{
 			TimeAcc = 0.f;
 			SpawnSkill();
@@ -127,33 +127,45 @@ void AFP_Weapon::SpawnSkill()
 {
 	UClass*  Class = AFP_Skill::StaticClass();
 	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
+	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	switch (ActiveSkill)
 	{
 	case FIREBALL:
 		Skill = CustomSpawn<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case FIREBLAST:
 		Skill = CustomSpawn<AFP_FireBlast>(TargetMonsters[0]->GetActorLocation(), FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case FIREWALL:
 		Skill = CustomSpawn<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
 		Cast<AFP_FireBlastSpawnPoint>(Skill)->SetSkill("FireWall", 0.1f, 7 , 0.75f);
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case ICEBALL:
 		Skill = CustomSpawn<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case ICEBLAST:
 		Skill = CustomSpawn<AFP_IceBlast>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case ICEORB:
 		Skill = CustomSpawn<AFP_IceOrb>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		ReloadTime = Skill->Stat.CoolTimeRatio;
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	}	
 }
@@ -244,4 +256,58 @@ float AFP_Weapon::GetStatfromSkill(FString _stat)
 
 	}
 	return 0.f;
+}
+
+void AFP_Weapon::SetAttSpdAndRange(AFP_Player* _player)
+{
+	SphereComponent->SetSphereRadius(_player->GetStatus().AttackRange * GetStatfromSkill("Range"));
+
+	if (ActiveSkill == FIREBALL)
+	{
+		UClass* Class = AFP_FireBall::StaticClass();
+		AFP_FireBall* skill = Cast<AFP_FireBall>(Class->GetDefaultObject());
+
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(_player, skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(_player, skill);
+	}
+	else if (ActiveSkill == FIREBLAST)
+	{
+		UClass* Class = AFP_FireBlast::StaticClass();
+		AFP_FireBlast* skill = Cast<AFP_FireBlast>(Class->GetDefaultObject());
+
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(_player, skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(_player, skill);
+	}
+	else if (ActiveSkill == FIREWALL)
+	{
+		UClass* Class = AFP_FireWall::StaticClass();
+		AFP_FireWall* skill = Cast<AFP_FireWall>(Class->GetDefaultObject());
+
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(_player, skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(_player, skill);
+	}
+	else if (ActiveSkill == ICEBALL)
+	{
+		UClass* Class = AFP_IceBall::StaticClass();
+		AFP_IceBall* skill = Cast<AFP_IceBall>(Class->GetDefaultObject());
+
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(_player, skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(_player, skill);
+	}
+	else if (ActiveSkill == ICEBLAST)
+	{
+		UClass* Class = AFP_IceBlast::StaticClass();
+		AFP_IceBlast* skill = Cast<AFP_IceBlast>(Class->GetDefaultObject());
+
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(_player, skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(_player, skill);
+	}
+	else if (ActiveSkill == ICEORB)
+	{
+		UClass* Class = AFP_IceOrb::StaticClass();
+		AFP_IceOrb* skill = Cast<AFP_IceOrb>(Class->GetDefaultObject());
+
+		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(_player, skill));
+		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(_player, skill);
+	}
 }

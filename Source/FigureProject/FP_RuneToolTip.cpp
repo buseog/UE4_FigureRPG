@@ -112,7 +112,7 @@ void UFP_RuneToolTip::EquipRune()
 
 	skill->Sockets[SkillToolTip->iSocketIndex].EquipRune(SelectedRune);
 	
-	Player->Inventory.Remove(SelectedRune);
+	Player->Inventory[Player->Inventory.Find(SelectedRune)]->bEquiped = true;
 	Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();
 
 	this->RemoveFromViewport();

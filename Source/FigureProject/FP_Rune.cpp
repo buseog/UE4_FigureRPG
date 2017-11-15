@@ -62,6 +62,7 @@ void AFP_Rune::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//UE_LOG(LogClass, Log, TEXT("%d"), Stat.Tier);
 }
 
 AFP_Rune* AFP_Rune::Initiate(FColor _color, uint64 _property, RuneStat _stat, FString _name, TArray<FString> _option, TArray<float> _optionVal)
@@ -99,6 +100,7 @@ AFP_Rune* AFP_Rune::Initiate(FColor _color, uint64 _property, RuneStat _stat, FS
 	Name = _name;
 	Option = _option;
 	OptionVal = _optionVal;
+	Stat = _stat;
 
 	return this;
 }

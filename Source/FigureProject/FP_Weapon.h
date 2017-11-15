@@ -41,6 +41,7 @@ public:
 	void SpawnSkill();
 	float GetStatfromSkill(FString _stat);
 	inline void SetActiveSkill(SKILLTYPE _type) { ActiveSkill = _type; }
+	void SetAttSpdAndRange(AFP_Player* _player);
 	
 	//UStaticMeshComponent* StaticMesh;
 	UPROPERTY()

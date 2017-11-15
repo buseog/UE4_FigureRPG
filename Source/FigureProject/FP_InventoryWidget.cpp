@@ -91,7 +91,6 @@ void UFP_InventoryWidget::SlotSelected()
 			ThrobberSlot->SetColumn(InventorySlot->Column);
 			ThrobberSlot->SetRow(InventorySlot->Row);
 			Throbber->SetVisibility(ESlateVisibility::Visible);
-
 			Cast<UFP_RuneToolTip>(RuneToolTip)->ToggleToolTip(Player->Inventory[i], bFromMain, SelectedSkill);
 		}
 	}
@@ -111,9 +110,11 @@ void UFP_InventoryWidget::AddRune()
 
 	AFP_ComRuneGenerator* runeGenerator = AFP_ComRuneGenerator::StaticClass()->GetDefaultObject<AFP_ComRuneGenerator>();
 
+	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RedRuneOption, runeGenerator->GreenRuneOption, runeGenerator->BlueRuneOption, runeGenerator->RuneStat, rune, stage);
+
 	Player->Inventory.Add(rune);
 
-	AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RedRuneOption, runeGenerator->GreenRuneOption, runeGenerator->BlueRuneOption, runeGenerator->RuneStat, Player->Inventory.Last(), stage);
+	//UE_LOG(LogClass, Log, TEXT("%f"), rune->Stat.Damage);
 }
 
 void UFP_InventoryWidget::SortInventory()
@@ -196,7 +197,11 @@ void UFP_InventoryWidget::SortInventory()
 			Slots[i]->WidgetStyle.Pressed.SetResourceObject(Player->Inventory[i]->Icon);
 			Slots[i]->WidgetStyle.Pressed.ImageSize = IconSize;
 			Slots[i]->WidgetStyle.Pressed.Margin = 0;
-			Slots[i]->SetIsEnabled(true);
+
+			if (!Player->Inventory[i]->bEquiped)
+				Slots[i]->SetIsEnabled(true);
+			else
+				Slots[i]->SetIsEnabled(false);
 		}
 	}
 	else
@@ -227,7 +232,11 @@ void UFP_InventoryWidget::SortInventory()
 			Slots[slotNum]->WidgetStyle.Pressed.SetResourceObject(Player->Inventory[i]->Icon);
 			Slots[slotNum]->WidgetStyle.Pressed.ImageSize = IconSize;
 			Slots[slotNum]->WidgetStyle.Pressed.Margin = 0;
-			Slots[slotNum]->SetIsEnabled(true);
+
+			if (!Player->Inventory[i]->bEquiped)
+				Slots[i]->SetIsEnabled(true);
+			else
+				Slots[i]->SetIsEnabled(false);
 		}
 	}
 }
