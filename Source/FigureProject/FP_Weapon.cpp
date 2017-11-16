@@ -34,6 +34,7 @@ struct CompareDist
 };
 
 // Sets default values
+AFP_Weapon::SKILLTYPE AFP_Weapon::ActiveSkill = AFP_Weapon::FIREBALL;
 AFP_Weapon::AFP_Weapon()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.

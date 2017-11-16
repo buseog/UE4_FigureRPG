@@ -15,24 +15,59 @@ bool UFP_Tooltip::Initialize()
 {
 	Super::Initialize();
 
+	UClass* Class = AFP_Skill::StaticClass();
+	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
+
 	UButton* Button = (UButton*)GetWidgetFromName(TEXT("ActiveButton"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::ActiveSkill);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket0"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
-	Button->SetBackgroundColor(FColor::Black);
+	Button->WidgetStyle.Normal.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Normal.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Normal.Margin = 0;
+	Button->WidgetStyle.Hovered.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Hovered.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Hovered.Margin = 0;
+	Button->WidgetStyle.Pressed.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Pressed.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Pressed.Margin = 0;
 	SocketButton.Add(Button);
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket1"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
-	Button->SetBackgroundColor(FColor::Black);
+	Button->WidgetStyle.Normal.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Normal.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Normal.Margin = 0;
+	Button->WidgetStyle.Hovered.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Hovered.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Hovered.Margin = 0;
+	Button->WidgetStyle.Pressed.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Pressed.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Pressed.Margin = 0;
 	SocketButton.Add(Button);
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket2"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
-	Button->SetBackgroundColor(FColor::Black);
+	Button->WidgetStyle.Normal.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Normal.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Normal.Margin = 0;
+	Button->WidgetStyle.Hovered.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Hovered.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Hovered.Margin = 0;
+	Button->WidgetStyle.Pressed.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Pressed.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Pressed.Margin = 0;
 	SocketButton.Add(Button);
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket3"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
-	Button->SetBackgroundColor(FColor::Black);
+	Button->WidgetStyle.Normal.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Normal.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Normal.Margin = 0;
+	Button->WidgetStyle.Hovered.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Hovered.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Hovered.Margin = 0;
+	Button->WidgetStyle.Pressed.SetResourceObject(Skill_CDO->EmptySocketIcon);
+	Button->WidgetStyle.Pressed.ImageSize = FVector2D(20.f, 20.f);
+	Button->WidgetStyle.Pressed.Margin = 0;
 	SocketButton.Add(Button);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Create"));
@@ -41,6 +76,8 @@ bool UFP_Tooltip::Initialize()
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::ChangeColor);
 	Button = (UButton*)GetWidgetFromName(TEXT("Equip"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::EquipRune);
+	Button = (UButton*)GetWidgetFromName(TEXT("Unequip"));
+	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::UnequipRune);
 
 
 	SocketBox = (UVerticalBox*)GetWidgetFromName(TEXT("SocketButtonBox"));
@@ -56,7 +93,7 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
-
+	SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ActiveSkill * (SkillUI->SizeY / SkillUI->SkillCnt)));
 
 	if (Cast<UFP_SkillUI>(PC->GetWidgetMap(AFP_PlayerController::SKILLUI))->IsInViewport() == false)
 	{
@@ -69,14 +106,29 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	{
 		for (size_t i = 0; i < SocketButton.Num(); ++i)
 		{
-			SocketButton[i]->SetBackgroundColor(FColor::Black);
+			SocketButton[i]->WidgetStyle.Normal.SetResourceObject(CurrentSkill->EmptySocketIcon);
+			SocketButton[i]->WidgetStyle.Hovered.SetResourceObject(CurrentSkill->EmptySocketIcon);
+			SocketButton[i]->WidgetStyle.Pressed.SetResourceObject(CurrentSkill->EmptySocketIcon);
 		}
 	}
 	else
 	{
 		for (size_t i = 0; i < CurrentSkill->Sockets.Num(); ++i)
 		{
-			SocketButton[i]->SetBackgroundColor(CurrentSkill->Sockets[i].Color);
+			if (CurrentSkill->Sockets[i].Rune == nullptr)
+			{
+				UTexture2D* SocketIcon = nullptr;
+				if (CurrentSkill->Sockets[i].Color == FColor::Red)
+					SocketIcon = CurrentSkill->RedSocketIcon;
+				else if (CurrentSkill->Sockets[i].Color == FColor::Green)
+					SocketIcon = CurrentSkill->GreenSocketIcon;
+				else
+					SocketIcon = CurrentSkill->BlueSocketIcon;
+
+				SocketButton[i]->WidgetStyle.Normal.SetResourceObject(SocketIcon);
+				SocketButton[i]->WidgetStyle.Hovered.SetResourceObject(SocketIcon);
+				SocketButton[i]->WidgetStyle.Pressed.SetResourceObject(SocketIcon);
+			}
 		}
 	}
 
@@ -93,30 +145,14 @@ void UFP_Tooltip::ActiveSkill()
 		if (pPlayer->SkillLv.FireBall == 0)
 			return;
 
-
-		SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::FIREBALL * (SkillUI->SizeY / SkillUI->SkillCnt)));
-
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		if (FoundActor[0] == nullptr)
-			return;
-
-		Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::FIREBALL);
+		AFP_Weapon::ActiveSkill = AFP_Weapon::FIREBALL;
 	}
 	else if (SkillName.ToString() == "FireBlast")
 	{
 		if (pPlayer->SkillLv.FireBlast == 0)
 			return;
 
-
-		SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::FIREBLAST * (SkillUI->SizeY / SkillUI->SkillCnt)));
-
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		if (FoundActor[0] == nullptr)
-			return;
-
-		Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::FIREBLAST);
+		AFP_Weapon::ActiveSkill = AFP_Weapon::FIREBLAST;
 
 	}
 	else if (SkillName.ToString() == "FireWall")
@@ -124,45 +160,21 @@ void UFP_Tooltip::ActiveSkill()
 		if (pPlayer->SkillLv.FireWall == 0)
 			return;
 
-
-		SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::FIREWALL * (SkillUI->SizeY / SkillUI->SkillCnt)));
-
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		if (FoundActor[0] == nullptr)
-			return;
-
-		Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::FIREWALL);
+		AFP_Weapon::ActiveSkill = AFP_Weapon::FIREWALL;
 	}
 	else if (SkillName.ToString() == "IceBall")
 	{
 		if (pPlayer->SkillLv.IceBall == 0)
 			return;
 
-
-		SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEBALL * (SkillUI->SizeY / SkillUI->SkillCnt)));
-
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		if (FoundActor[0] == nullptr)
-			return;
-
-		Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::ICEBALL);
+		AFP_Weapon::ActiveSkill = AFP_Weapon::ICEBALL;
 	}
 	else if (SkillName.ToString() == "IceBlast")
 	{
 		if (pPlayer->SkillLv.IceBlast == 0)
 			return;
 
-
-		SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEBLAST * (SkillUI->SizeY / SkillUI->SkillCnt)));
-
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		if (FoundActor[0] == nullptr)
-			return;
-
-		Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::ICEBLAST);
+		AFP_Weapon::ActiveSkill = AFP_Weapon::ICEBLAST;
 	}
 	else if (SkillName.ToString() == "IceOrb")
 	{
@@ -170,14 +182,7 @@ void UFP_Tooltip::ActiveSkill()
 			return;
 
 
-		SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEORB * (SkillUI->SizeY / SkillUI->SkillCnt)));
-
-		TArray<AActor*> FoundActor;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
-		if (FoundActor[0] == nullptr)
-			return;
-
-		Cast<AFP_Weapon>(FoundActor[0])->SetActiveSkill(AFP_Weapon::ICEORB);
+		AFP_Weapon::ActiveSkill = AFP_Weapon::ICEORB;
 
 	}
 }
@@ -235,10 +240,19 @@ void UFP_Tooltip::ChangeColor()
 		break;
 	}
 
-	SocketButton[iSocketIndex]->SetBackgroundColor(color);
+	UTexture2D* SocketIcon = nullptr;
+	if (color == FColor::Red)
+		SocketIcon = CurrentSkill->RedSocketIcon;
+	else if (color == FColor::Green)
+		SocketIcon = CurrentSkill->GreenSocketIcon;
+	else
+		SocketIcon = CurrentSkill->BlueSocketIcon;
+
+	SocketButton[iSocketIndex]->WidgetStyle.Normal.SetResourceObject(SocketIcon);
+	SocketButton[iSocketIndex]->WidgetStyle.Hovered.SetResourceObject(SocketIcon);
+	SocketButton[iSocketIndex]->WidgetStyle.Pressed.SetResourceObject(SocketIcon);
+
 	CurrentSkill->Sockets[iSocketIndex].Color = color;
-
-
 	SocketBox->SetVisibility(ESlateVisibility::Hidden);
 }
 void UFP_Tooltip::EquipRune()
@@ -270,6 +284,43 @@ void UFP_Tooltip::EquipRune()
 		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill();
 	}
 		
+	SocketBox->SetVisibility(ESlateVisibility::Hidden);
+
+
+	this->RemoveFromViewport();
+	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->RemoveFromViewport();
+
+}
+
+void UFP_Tooltip::UnequipRune()
+{
+	if (CurrentSkill->Sockets.Num() < iSocketIndex + 1)
+		return;
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
+
+	//open inventory
+	if (Inventory->IsInViewport() == false)
+	{
+		Inventory->bFromMain = false;
+
+		FColor color = CurrentSkill->Sockets[iSocketIndex].Color;
+
+		if (color == FColor::Red)
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::RED;
+		else if (color == FColor::Green)
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::GREEN;
+		else
+			Inventory->Order = UFP_InventoryWidget::SORTORDER::BLUE;
+
+		Inventory->SelectedSkill = CurrentSkill;
+
+		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill();
+	}
+
 	SocketBox->SetVisibility(ESlateVisibility::Hidden);
 
 

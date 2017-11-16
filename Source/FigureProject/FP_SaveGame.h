@@ -106,6 +106,8 @@ public:
 	int IceOrb = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
 	int SkillPoint = 10;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)
+	int ActiveSkill;
 
 	//Lv
 

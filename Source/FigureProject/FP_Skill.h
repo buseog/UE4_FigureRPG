@@ -90,6 +90,13 @@ public:
 	
 	int MaxSocketNum = 4;
 	TArray<Socket> Sockets;
+
+	UTexture2D* RedSocketIcon;
+	UTexture2D* GreenSocketIcon;
+	UTexture2D* BlueSocketIcon;
+	UTexture2D* EmptySocketIcon;
 	/*------------------------------*/
+
+	float TimelimitForDot = 0.f;
 	
 };

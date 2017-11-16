@@ -17,6 +17,19 @@ AFP_Skill::AFP_Skill()
 	Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
 	Particle->SetupAttachment(RootComponent);
 
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> RedSocket(TEXT("Texture2D'/Game/Icon/RedSocket.RedSocket'"));
+	RedSocketIcon = RedSocket.Object;
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> GreenSocket(TEXT("Texture2D'/Game/Icon/GreenSocket.GreenSocket'"));
+	GreenSocketIcon = GreenSocket.Object;
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> BlueSocket(TEXT("Texture2D'/Game/Icon/BlueSocket.BlueSocket'"));
+	BlueSocketIcon = BlueSocket.Object;
+
+	static ConstructorHelpers::FObjectFinder<UTexture2D> EmptySocket(TEXT("Texture2D'/Game/Icon/EmptySocket.EmptySocket'"));
+	EmptySocketIcon = EmptySocket.Object;
+
 }
 
 // Called when the game starts or when spawned

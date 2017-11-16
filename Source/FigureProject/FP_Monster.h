@@ -28,6 +28,7 @@ public:
 		float Damage = 0.005f;
 		MSTATE eState = NORMAL;
 		AFP_Monster* Monster = nullptr;
+		float TimelimitForIgnite = 0.f;
 
 		void SetState(MSTATE _state, float _duration, float _damage = 0.f)
 		{

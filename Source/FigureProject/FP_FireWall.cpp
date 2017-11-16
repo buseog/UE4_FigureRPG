@@ -36,14 +36,27 @@ void AFP_FireWall::Tick(float DeltaTime)
 	//Particle->SetWorldScale3D(FVector(CurrentScale.X - CurrentTime * 0.1f, CurrentScale.Y - CurrentTime * 0.1f, CurrentScale.Z - CurrentTime * 0.1f));
 
 	CurrentTime += DeltaTime;
-
 	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
+
+	if (CurrentTime >= LifeTime)
+		Destroy();
+
+
+	
+
 
 	Targets.Empty();
 	AFP_ComCollision::CollisionWithMulti<USphereComponent, AFP_Monster>(ProxSphere, Targets);
+	if (Targets.Num() != 0)
+	{
+		TimelimitForDot -= DeltaTime;
+		if (TimelimitForDot > 0.f)
+			return;
+	}
 
 	for (int i = 0; i < Targets.Num(); ++i)
 	{
+
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
 
 		/*AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(this->GetActorLocation(), FRotator(0.f, 0.f, 0.f));
@@ -56,8 +69,9 @@ void AFP_FireWall::Tick(float DeltaTime)
 			Cast<AFP_Weapon>(Weapon)->DeleteTargetMonsterInArray(Targets[i]);
 	}
 
-	if (CurrentTime >= LifeTime)
-		Destroy();
+	TimelimitForDot = 1.f;
+
+	
 }
 
 void AFP_FireWall::EndPlay(const EEndPlayReason::Type EndPlayReason)

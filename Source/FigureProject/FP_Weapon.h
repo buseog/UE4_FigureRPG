@@ -56,7 +56,7 @@ public:
 	UPROPERTY()
 	TArray<AFP_Monster*> TargetMonsters;
 
-	SKILLTYPE ActiveSkill;
+	static SKILLTYPE ActiveSkill;
 	class AFP_Skill* Skill;
 	//UStaticMesh* Mesh;
 

@@ -29,15 +29,23 @@ void AFP_IceOrb::Tick(float DeltaTime)
 
 	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
 
+
+
+
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(CollisionSphere);
 	if (TargetMonster != nullptr)
 	{
+		TimelimitForDot -= DeltaTime;
+		if (TimelimitForDot > 0.f)
+			return;
+
 		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
 		if (TargetMonster->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(TargetMonster);
 
 		//Destroy();
 	}
+	TimelimitForDot = 1.f;
 }
 
 void AFP_IceOrb::EndPlay(const EEndPlayReason::Type EndPlayReason)

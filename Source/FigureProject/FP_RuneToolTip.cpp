@@ -118,4 +118,15 @@ void UFP_RuneToolTip::EquipRune()
 
 	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->AddToViewport();
 	PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP)->AddToViewport();
+
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Normal.SetResourceObject(SelectedRune->Icon);
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Normal.ImageSize = FVector2D(20.f,20.f);
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Normal.Margin = 0;
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Hovered.SetResourceObject(SelectedRune->Icon);
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Hovered.ImageSize = FVector2D(20.f, 20.f);
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Hovered.Margin = 0;
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Pressed.SetResourceObject(SelectedRune->Icon);
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Pressed.ImageSize = FVector2D(20.f, 20.f);
+	SkillToolTip->SocketButton[SkillToolTip->iSocketIndex]->WidgetStyle.Pressed.Margin = 0;
+	
 }

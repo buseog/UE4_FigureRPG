@@ -38,6 +38,7 @@ void AFP_PlayerController::BeginPlay()
 	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
 	TSubclassOf<UFP_StatusWidget> Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 	UFP_StatusWidget* StatusWidget = CreateWidget<UFP_StatusWidget>(this, Widget);
+	StatusWidget->SetRenderScale(FVector2D(3.f, 3.f));
 	WidgetMap.Add(STATUS, StatusWidget);
 
 	FName GameStartWidget_Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_GameStart_BP.FP_GameStart_BP_C'");
@@ -58,6 +59,7 @@ void AFP_PlayerController::BeginPlay()
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_SkillUI.FP_SkillUI_C'");
 	TSubclassOf<UFP_SkillUI> SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 	UFP_SkillUI* SkillUIWidget = CreateWidget<UFP_SkillUI>(this, SkillUI);
+	SkillUIWidget->SetRenderScale(FVector2D(3.f, 3.f));
 	WidgetMap.Add(SKILLUI, SkillUIWidget);
 
 
@@ -65,6 +67,7 @@ void AFP_PlayerController::BeginPlay()
 	TSubclassOf<UFP_Tooltip> SkillToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 	UFP_Tooltip* SkillToolTipWidget = CreateWidget<UFP_Tooltip>(this, SkillToolTip);
 	SkillToolTipWidget->SetSKillUI(SkillUIWidget);
+	SkillToolTipWidget->SetRenderScale(FVector2D(3.f, 3.f));
 	WidgetMap.Add(SKILLTOOLTIP, SkillToolTipWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
@@ -136,6 +139,18 @@ bool AFP_PlayerController::Load()
 
 	player->Gem = LoadGameInstance->Gem;
 
+	if (LoadGameInstance->ActiveSkill == 0)
+		AFP_Weapon::ActiveSkill = AFP_Weapon::FIREBALL;
+	else if (LoadGameInstance->ActiveSkill == 1)
+		AFP_Weapon::ActiveSkill = AFP_Weapon::FIREBLAST;
+	else if (LoadGameInstance->ActiveSkill == 2)
+		AFP_Weapon::ActiveSkill = AFP_Weapon::FIREWALL;
+	else if (LoadGameInstance->ActiveSkill == 3)
+		AFP_Weapon::ActiveSkill = AFP_Weapon::ICEBALL;
+	else if (LoadGameInstance->ActiveSkill == 4)
+		AFP_Weapon::ActiveSkill = AFP_Weapon::ICEBLAST;
+	else if (LoadGameInstance->ActiveSkill == 5)
+		AFP_Weapon::ActiveSkill = AFP_Weapon::ICEORB;
 
 	//TArray<AActor*> FoundActor;
 	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_MonsterMgr::StaticClass(), FoundActor);

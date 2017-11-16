@@ -190,6 +190,7 @@ void AFP_Player::CheckLevelUp()
 		Level.Point += 1;
 		Level.Exp -= Level.FullExp;
 		Level.FullExp = FMath::Pow(2, Level.Level) * 50.f; // ½Â·Ä¼öÁ¤
+		Status.Hp = Status.MaxHp;
 
 		if (Level.Level % 5 == 0)
 			SkillLv.SkillPoint++;
@@ -338,6 +339,7 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	SaveGameInstance->Exp = Level.Exp;
 	SaveGameInstance->FullExp = Level.FullExp;
 	SaveGameInstance->Point = Level.Point;
+	SaveGameInstance->ActiveSkill = int(AFP_Weapon::ActiveSkill);
 
 	SaveGameInstance->Stage = AFP_MonsterMgr::Stage;
 	SaveGameInstance->MonsterKillCnt = AFP_MonsterMgr::MonsterKillCnt;
