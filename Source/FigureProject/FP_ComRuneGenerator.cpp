@@ -17,9 +17,9 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	TMap<FString, TMap<FString, float>> _option;
 	
 	//RED
-	prop_name.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
-	RedRuneOption.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
-	option.Add("RANDOMEFFECT", prop_name);
+	prop_name.Add(Red.DAMAGEUP, Red.NAME_DAMAGEUP);
+	RedRuneOption.Add(Red.DAMAGEUP, Red.NAME_DAMAGEUP);
+	option.Add("DAMAGEUP", prop_name);
 	prop_name.Empty();
 
 	prop_name.Add(Red.STUN, Red.NAME_STUN);
@@ -27,30 +27,30 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("STUN", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
-	RedRuneOption.Add(Red.KNOCKBACK, Red.NAME_KNOCKBACK);
-	option.Add("KNOCKBACK", prop_name);
-	prop_name.Empty();
-
-	prop_name.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
-	RedRuneOption.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
-	option.Add("LIFESTEAL", prop_name);
-	prop_name.Empty();
-
 	prop_name.Add(Red.IGNITE, Red.NAME_IGNITE);
 	RedRuneOption.Add(Red.IGNITE, Red.NAME_IGNITE);
 	option.Add("IGNITE", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Red.DAMAGEUPONIGNITE, Red.NAME_DAMAGEUPONIGNITE);
+	/*prop_name.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
+	RedRuneOption.Add(Red.RANDOMEFFECT, Red.NAME_RANDOMEFFECT);
+	option.Add("RANDOMEFFECT", prop_name);
+	prop_name.Empty();*/
+
+	/*prop_name.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
+	RedRuneOption.Add(Red.LIFESTEAL, Red.NAME_LIFESTEAL);
+	option.Add("LIFESTEAL", prop_name);
+	prop_name.Empty();*/
+
+	/*prop_name.Add(Red.DAMAGEUPONIGNITE, Red.NAME_DAMAGEUPONIGNITE);
 	RedRuneOption.Add(Red.DAMAGEUPONIGNITE, Red.NAME_DAMAGEUPONIGNITE);
 	option.Add("DAMAGEUPONIGNITE", prop_name);
-	prop_name.Empty();
+	prop_name.Empty();*/
 
-	prop_name.Add(Red.DAMAGEUPTOCIRCLE, Red.NAME_DAMAGEUPTOCIRCLE);
+	/*prop_name.Add(Red.DAMAGEUPTOCIRCLE, Red.NAME_DAMAGEUPTOCIRCLE);
 	RedRuneOption.Add(Red.DAMAGEUPTOCIRCLE, Red.NAME_DAMAGEUPTOCIRCLE);
 	option.Add("DAMAGEUPTOCIRCLE", prop_name);
-	prop_name.Empty();
+	prop_name.Empty();*/
 
 	RuneProperty.Add(FColor::Red, option);
 	option.Empty();
@@ -67,30 +67,30 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("BULLETSPEEDUP", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
-	GreenRuneOption.Add(Green.DAMAGEUP, Green.NAME_DAMAGEUP);
-	option.Add("DAMAGEUP", prop_name);
-	prop_name.Empty();
-
-	prop_name.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
-	GreenRuneOption.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
-	option.Add("DAMAGEUPTOSQARE", prop_name);
-	prop_name.Empty();
-
-	prop_name.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
-	GreenRuneOption.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
-	option.Add("DAMAGEUPTOSQARE", prop_name);
-	prop_name.Empty();
-
 	prop_name.Add(Green.PIERCE, Green.NAME_PIERCE);
 	GreenRuneOption.Add(Green.PIERCE, Green.NAME_PIERCE);
 	option.Add("PIERCE", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Green.DOTDAMAGEUP, Green.NAME_DOTDAMAGEUP);
+	/*prop_name.Add(Green.KNOCKBACK, Green.NAME_KNOCKBACK);
+	GreenRuneOption.Add(Green.KNOCKBACK, Green.NAME_KNOCKBACK);
+	option.Add("KNOCKBACK", prop_name);
+	prop_name.Empty();*/
+
+	/*prop_name.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
+	GreenRuneOption.Add(Green.DAMAGEUPTOSQARE, Green.NAME_DAMAGEUPTOSQARE);
+	option.Add("DAMAGEUPTOSQARE", prop_name);
+	prop_name.Empty();*/
+
+	/*prop_name.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
+	GreenRuneOption.Add(Green.ATTACKTWICE, Green.NAME_ATTACKTWICE);
+	option.Add("DAMAGEUPTOSQARE", prop_name);
+	prop_name.Empty();*/
+
+	/*prop_name.Add(Green.DOTDAMAGEUP, Green.NAME_DOTDAMAGEUP);
 	GreenRuneOption.Add(Green.DOTDAMAGEUP, Green.NAME_DOTDAMAGEUP);
-	option.Add("PIERCE", prop_name);
-	prop_name.Empty();
+	option.Add("DOTDAMAGEUP", prop_name);
+	prop_name.Empty();*/
 
 	RuneProperty.Add(FColor::Green, option);
 	option.Empty();
@@ -107,30 +107,30 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("EXPUP", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Blue.GUIDED, Blue.NAME_GUIDED);
-	BlueRuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
-	option.Add("GUIDED", prop_name);
-	prop_name.Empty();
-
 	prop_name.Add(Blue.SLOW, Blue.NAME_SLOW);
 	BlueRuneOption.Add(Blue.SLOW, Blue.NAME_SLOW);
 	option.Add("SLOW", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
+	/*prop_name.Add(Blue.GUIDED, Blue.NAME_GUIDED);
+	BlueRuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
+	option.Add("GUIDED", prop_name);
+	prop_name.Empty();*/
+
+	/*prop_name.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
 	BlueRuneOption.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
 	option.Add("FREEZEONSLOW", prop_name);
-	prop_name.Empty();
+	prop_name.Empty();*/
 
-	prop_name.Add(Blue.AREAUP, Blue.NAME_AREAUP);
+	/*prop_name.Add(Blue.AREAUP, Blue.NAME_AREAUP);
 	BlueRuneOption.Add(Blue.AREAUP, Blue.NAME_AREAUP);
 	option.Add("AREAUP", prop_name);
-	prop_name.Empty();
+	prop_name.Empty();*/
 
-	prop_name.Add(Blue.DAMAGEUPTOTRIANGLE, Blue.NAME_DAMAGEUPTOTRIANGLE);
+	/*prop_name.Add(Blue.DAMAGEUPTOTRIANGLE, Blue.NAME_DAMAGEUPTOTRIANGLE);
 	BlueRuneOption.Add(Blue.DAMAGEUPTOTRIANGLE, Blue.NAME_DAMAGEUPTOTRIANGLE);
 	option.Add("DAMAGEUPTOTRIANGLE", prop_name);
-	prop_name.Empty();
+	prop_name.Empty();*/
 
 	RuneProperty.Add(FColor::Blue, option);
 	option.Empty();
@@ -513,7 +513,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Red].Num() - 1);
+				random = FMath::FRandRange(0, _runeProperty[FColor::Red].Num());
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Red].Num())
@@ -556,7 +556,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Green].Num() - 1);
+				random = FMath::FRandRange(0, _runeProperty[FColor::Green].Num());
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Green].Num())
@@ -599,7 +599,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			while (1)
 			{
-				random = FMath::FRandRange(0, _runeProperty[FColor::Blue].Num() - 1);
+				random = FMath::FRandRange(0, _runeProperty[FColor::Blue].Num());
 				hex = (uint64)pow(16, random);
 
 				if ((_rune->Property & hex) == 0 || random == _runeProperty[FColor::Blue].Num())
@@ -684,8 +684,6 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 				{
 					_rune->Stat.Damage = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DAMAGEUP"]["MIN"], _runeStat[_rune->Stat.Tier]["DAMAGEUP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Damage;
-					UE_LOG(LogClass, Log, TEXT("stat %f"), _rune->Stat.Damage);
-					UE_LOG(LogClass, Log, TEXT("option %f"), _rune->OptionVal[j]);
 				}
 				else if (_rune->Option[j].Contains("RANGE"))
 				{
@@ -705,7 +703,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			}
 		}
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
+		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
 		{
 
 		}
@@ -738,7 +736,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::ETC)
 		{
 
-		}
+		}*/
 	}
 
 	//UE_LOG(LogClass, Log, TEXT("========================================================"));

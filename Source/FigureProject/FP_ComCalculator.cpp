@@ -3,7 +3,6 @@
 #include "FP_ComCalculator.h"
 #include "FP_Player.h"
 #include "FP_Skill.h"
-#include "FP_Monster.h"
 #include "FP_Tooltip.h"
 
 // Sets default values
@@ -29,7 +28,7 @@ void AFP_ComCalculator::Tick(float DeltaTime)
 }
 
 template<typename T>
-float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AFP_Monster* _monster)
+float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AFP_Monster* _monster, AFP_Monster::MSTATE _additionalDmgOn)
 {
 	float RuneDmg = 0.f;
 
@@ -43,15 +42,38 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AF
 				break;
 			}
 
-			RuneDmg += _skill->Sockets[i].Rune->Stat.Damage;
+			RuneDmg += (_skill->Sockets[i].Rune->Stat.Damage - 1.f);
+
+			for (int j = 0; j < _skill->Sockets[i].Rune->Option.Num(); ++j)
+			{
+				if (_skill->Sockets[i].Rune->Option[j].Contains("Ignite") && _monster->StateMgr.eState != AFP_Monster::IGNITE)
+				{
+					_monster->StateMgr.Damage += _skill->Sockets[i].Rune->OptionVal[j];
+					_monster->StateMgr.eState = AFP_Monster::IGNITE;
+				}
+			}
 		}
+		RuneDmg += 1.f;
 	}
 	else
 		RuneDmg = 1.f;
 
-	/*switch (_monster->StateMgr.eState)
+	if (_skill->Debuff == AFP_Monster::IGNITE && _monster->StateMgr.eState != AFP_Monster::IGNITE)
 	{
-	}*/
+		_monster->StateMgr.eState = AFP_Monster::IGNITE;
+		_monster->StateMgr.Damage += _skill->DebuffDamage;
+		_monster->StateMgr.Duration = _skill->DebuffDuration;
+	}
+
+	switch (_monster->StateMgr.eState)
+	{
+	case AFP_Monster::IGNITE:
+		break;
+
+	case AFP_Monster::SLOW:
+		break;
+	}
+
 	if (RuneDmg == 0)
 		RuneDmg = 1.f;
 	//UE_LOG(LogClass, Error, TEXT("damage %f"), RuneDmg);
@@ -74,8 +96,9 @@ float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, T* _skill)
 				break;
 			}
 
-			RuneRange += _skill->Sockets[i].Rune->Stat.Range;
+			RuneRange += (_skill->Sockets[i].Rune->Stat.Range - 1.f);
 		}
+		RuneRange += 1.f;
 	}
 	else
 		RuneRange = 1.f;
@@ -102,8 +125,9 @@ float AFP_ComCalculator::CalculateFinalSpeed(AFP_Player* _player, T* _skill, flo
 				break;
 			}
 
-			RuneSpeed += _skill->Sockets[i].Rune->Stat.Speed;
+			RuneSpeed += (_skill->Sockets[i].Rune->Stat.Speed - 1.f);
 		}
+		RuneSpeed += 1.f;
 	}
 	else
 		RuneSpeed = 1.f;
@@ -130,8 +154,9 @@ float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill)
 				break;
 			}
 
-			RuneCoolTime += _skill->Sockets[i].Rune->Stat.CoolTimeRatio;
+			RuneCoolTime += (_skill->Sockets[i].Rune->Stat.CoolTimeRatio - 1.f);
 		}
+		RuneCoolTime += 1.f;
 	}
 	else
 		RuneCoolTime = 1.f;
@@ -140,5 +165,5 @@ float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill)
 		RuneCoolTime = 1.f;
 	//UE_LOG(LogClass, Log, TEXT("att speed %f"), RuneCoolTime);
 	//UE_LOG(LogClass, Log, TEXT("att speed %f"), _player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio + RuneCoolTime);
-	return _player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio * RuneCoolTime;
+	return _player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio / RuneCoolTime;
 }

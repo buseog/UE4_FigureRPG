@@ -19,21 +19,20 @@ public:
 	// Sets default values for this actor's properties
 	AFP_Monster();
 
+	enum MSTATE { NORMAL, SLOW, IGNITE };
+
 	struct MonsterState
 	{
-		enum MSTATE {NORMAL, SLOW, IGNITE};
-
 		float Duration = 0.f;
 		float SpeedOffset = 0.5f;
-		float Damage = 0.005f;
+		float Damage = 0.f;
 		MSTATE eState = NORMAL;
 		AFP_Monster* Monster = nullptr;
 
-		void SetState(MSTATE _state, float _duration, float _damage = 0.f)
+		void SetState(MSTATE _state, float _duration)
 		{
 			eState = _state;
 			Duration = _duration;
-			Damage += _damage;
 		}
 
 		void CustomTick(float _delta)

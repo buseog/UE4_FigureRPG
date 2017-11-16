@@ -43,9 +43,9 @@ public:
 	FColor Color;
 	RuneStat Stat;
 	uint64 Property;
-	float Tier3DropRate = 0.1f;
-	float Tier2DropRate = 0.5f;
-	float Tier3MaxDropRate = 10.f;
+	float Tier3DropRate = 60.f;
+	float Tier2DropRate = 60.f;
+	float Tier3MaxDropRate = 60.f;
 	float Tier2MaxDropRate = 60.f;
 	FString Name = "";
 	TArray<FString> Option;

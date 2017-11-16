@@ -129,9 +129,11 @@ void AFP_Monster::Tick(float DeltaTime)
 	//State Control
 	StateMgr.CustomTick(DeltaTime);
 	
-	if (StateMgr.eState == MonsterState::IGNITE)
+	if (StateMgr.eState == IGNITE)
 	{
-		MyTakeDamage(StateMgr.Damage);
+		/*UE_LOG(LogClass, Log, TEXT("StateMgr.Damage : %f"), StateMgr.Damage);
+		UE_LOG(LogClass, Log, TEXT("Damage : %f"), MaxHP * StateMgr.Damage);*/
+		MyTakeDamage(MaxHP * StateMgr.Damage);
 		if (isDestroy)
 			Weapon->DeleteTargetMonsterInArray(this);
 	}

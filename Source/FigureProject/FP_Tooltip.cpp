@@ -220,6 +220,9 @@ void UFP_Tooltip::ChangeColor()
 	if (CurrentSkill->Sockets.Num() < iSocketIndex + 1)
 		return;
 
+	if (CurrentSkill->Sockets[iSocketIndex].Rune->IsValidLowLevel())
+		return;
+
 	int icolor = FMath::FRandRange(1, 4);
 	FColor color;
 	switch (icolor)

@@ -41,8 +41,12 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 
 			if (_rune->OptionVal[i] == 0.f)
 				break;
-			
-			Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+
+			if(_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
+			else
+				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+
 			break;
 		case 1:
 			Option2 = Option[i];
@@ -50,7 +54,11 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 			if (_rune->OptionVal[i] == 0.f)
 				break;
 
-			Val2 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
+			else
+				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+
 			break;
 		case 2:
 			Option3 = Option[i];
@@ -58,7 +66,11 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 			if (_rune->OptionVal[i] == 0.f)
 				break;
 
-			Val3 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
+			else
+				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+
 			break;
 		case 3:
 			Option4 = Option[i];
@@ -66,7 +78,11 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 			if (_rune->OptionVal[i] == 0.f)
 				break;
 
-			Val4 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
+			else
+				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+
 			break;
 		}
 	}
@@ -108,9 +124,12 @@ void UFP_RuneToolTip::EquipRune()
 	UUserWidget* InventoryWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
 	UFP_Tooltip* SkillToolTip = Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP));
 
+	if(SkillToolTip->CurrentSkill->Sockets[SkillToolTip->iSocketIndex].Rune->IsValidLowLevel())
+		SkillToolTip->CurrentSkill->Sockets[SkillToolTip->iSocketIndex].Rune->bEquiped = false;
+
 	SkillToolTip->CurrentSkill->Sockets[SkillToolTip->iSocketIndex].EquipRune(SelectedRune);
-	
 	Player->Inventory[Player->Inventory.Find(SelectedRune)]->bEquiped = true;
+
 	Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();
 
 	this->RemoveFromViewport();
