@@ -216,6 +216,7 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 		BuffTime = 0.f;
 		bIsBuffed = false;
 		PointLight->SetIntensity(0.f);
+		Particle->EmitterInstances[4]->bEnabled = false;
 
 		switch (Type)
 		{
@@ -265,6 +266,8 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 	BuffType = Type;
 	PointLight->SetLightColor(Color);
 	PointLight->SetIntensity(500.f);
+	Particle->EmitterInstances[4]->bEnabled = true;
+	FVector color;
 
 	switch (Type)
 	{
@@ -278,6 +281,8 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 
 	case 2:
 		Status.Attack *= Diff;
+		color = FVector(0.f, 0.f, 1.f);
+		Particle->SetVectorParameter(TEXT("ItemColor"), color);
 		break;
 
 	case 3:
@@ -286,6 +291,8 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 
 	case 4:
 		Status.AttackSpeed -= Diff;
+		color = FVector(0.f, 1.f, 0.f);
+		Particle->SetVectorParameter(TEXT("ItemColor"), color);
 		break;
 
 	case 5:

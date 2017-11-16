@@ -40,6 +40,10 @@ void UFP_GameStart::ChooseFire()
 
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	player->Particle->SetVisibility(true);
+	FVector color = FVector(1.f, 0.f, 0.f);
+	player->Particle->SetVectorParameter(TEXT("Color"), color);
+	player->Particle->EmitterInstances[4]->bEnabled = false;
+
 	player->SkillLv.FireBall = 1;
 
 }
@@ -59,6 +63,11 @@ void UFP_GameStart::ChooseIce()
 
 
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	player->Particle->SetVisibility(true);
+	FVector color = FVector(0.f, 0.f, 1.f);
+	player->Particle->SetVectorParameter(TEXT("Color"), color);
+	player->Particle->EmitterInstances[4]->bEnabled = false;
+
 	player->Particle->SetVisibility(true);
 	player->SkillLv.IceBall = 1;
 

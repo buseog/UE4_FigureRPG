@@ -36,8 +36,13 @@ void AFP_MonsterMgr::Tick(float DeltaTime)
 	{
 		TimeAcc = 0.f;
 
-		int32 iSpawnX = FMath::RandRange(30, 100) * (rand() % 2 - 0.5);
-		int32 iSpawnY = FMath::RandRange(30, 120) * (rand() % 2 - 0.5);
+		FVector2D ViewportSize = GEngine->GameViewport->Viewport->GetSizeXY();
+
+		int32 X = (ViewportSize.X / 2.f);
+		int32 Y = (ViewportSize.Y / 2.f);
+
+		int32 iSpawnX = FMath::RandRange(100, X) * (rand() % 2 - 0.5);
+		int32 iSpawnY = FMath::RandRange(100, Y) * (rand() % 2 - 0.5);
 		
 		AFP_Monster* SpawnedMonster = nullptr;
 		int iRand = rand() % 2;
