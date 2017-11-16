@@ -172,15 +172,11 @@ void UFP_MainUI::Button_Rev()
 	ResetSocket<AFP_IceBlast>();
 	ResetSocket<AFP_IceOrb>();
 
+	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
+	Inventory->AddRune();
+
 	PC->RestartLevel();
 	PC->isRev = true;
-
-	
-		
-	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
-	//Inventory->AddRune();
-
-
 }
 
 void UFP_MainUI::Button_Rune()
@@ -198,7 +194,7 @@ void UFP_MainUI::Button_Rune()
 		PC->WidgetMap.Add(AFP_PlayerController::INVENTORY, InventoryWidget);
 	}
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->bFromMain = true;
-	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->Order = UFP_InventoryWidget::SORTORDER::TIER;
+	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->Order = UFP_InventoryWidget::SORTORDER::COLOR;
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
 
 	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();

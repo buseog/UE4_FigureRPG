@@ -19,6 +19,9 @@ AFP_FireBlast::AFP_FireBlast()
 	Particle->SetWorldScale3D(FVector(0.7f, 0.7f, 0.7f));
 
 	SkillInfo.Name = "FireBlast";
+	Debuff = AFP_Monster::IGNITE;
+	DebuffDamage = 0.01f;
+	DebuffDuration = 2.f;
 }
 
 // Called when the game starts or when spawned
@@ -26,9 +29,6 @@ void AFP_FireBlast::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Debuff = AFP_Monster::MonsterState::IGNITE;
-	DebuffDamage = 0.005f;
-	DebuffDuration = 2.f;
 }
 
 // Called every frame
@@ -58,8 +58,6 @@ void AFP_FireBlast::Tick(float DeltaTime)
 		if (Impact == nullptr)
 			continue;
 		Impact->SetImpact(AFP_Impact::FIREBALLIMPACT);
-
-		Targets[i]->StateMgr.SetState(Debuff, DebuffDuration, DebuffDamage);
 	}
 
 	bActivated = true;

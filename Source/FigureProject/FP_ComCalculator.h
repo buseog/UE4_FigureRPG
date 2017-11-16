@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "FP_Monster.h"
 #include "FP_ComCalculator.generated.h"
 
 class AFP_Player;
 class AFP_Skill;
-class AFP_Monster;
 UCLASS()
 class FIGUREPROJECT_API AFP_ComCalculator : public AActor
 {
@@ -27,7 +27,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	template<typename T>
-	static float CalculateFinalDamage(AFP_Player* _player, T* _skill, AFP_Monster* _monster);
+	static float CalculateFinalDamage(AFP_Player* _player, T* _skill, AFP_Monster* _monster, AFP_Monster::MSTATE _additionalDmgOn = AFP_Monster::NORMAL);
 
 	template<typename T>
 	static float CalculateFinalRange(AFP_Player* _player, T* _skill);

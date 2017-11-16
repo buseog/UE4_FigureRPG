@@ -132,11 +132,79 @@ void UFP_InventoryWidget::SortInventory()
 	if (Player->Inventory.Num() == 0)
 		return;
 
+	TArray<AFP_Rune*> red;
+	TArray<AFP_Rune*> green;
+	TArray<AFP_Rune*> blue;
+	TArray<AFP_Rune*> tier1;
+	TArray<AFP_Rune*> tier2;
+	TArray<AFP_Rune*> tier3;
+
+	for (int i = 0; i < Player->Inventory.Num(); ++i)
+	{
+		if (Player->Inventory[i]->Color == FColor::Red)
+			red.Add(Player->Inventory[i]);
+		else if (Player->Inventory[i]->Color == FColor::Green)
+			green.Add(Player->Inventory[i]);
+		else
+			blue.Add(Player->Inventory[i]);
+
+		if (Player->Inventory[i]->Stat.Tier == 1)
+			tier1.Add(Player->Inventory[i]);
+		else if (Player->Inventory[i]->Stat.Tier == 2)
+			tier2.Add(Player->Inventory[i]);
+		else
+			tier3.Add(Player->Inventory[i]);
+	}
+
+	red.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		return A.Stat.Tier < B.Stat.Tier;
+	});
+
+	green.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		return A.Stat.Tier < B.Stat.Tier;
+	});
+
+	blue.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		return A.Stat.Tier < B.Stat.Tier;
+	});
+
+	tier1.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		if (A.Color.R == 0 && B.Color.R == 0)
+			return A.Color.G > B.Color.G;
+
+		return A.Color.R > B.Color.R;
+	});
+
+	tier2.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		if (A.Color.R == 0 && B.Color.R == 0)
+			return A.Color.G > B.Color.G;
+
+		return A.Color.R > B.Color.R;
+	});
+
+	tier3.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		if (A.Color.R == 0 && B.Color.R == 0)
+			return A.Color.G > B.Color.G;
+
+		return A.Color.R > B.Color.R;
+	});
+
 	if (Order == TIER)
 	{
-		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		/*Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
 			return A.Stat.Tier < B.Stat.Tier;
-		});
+		});*/
+
+		Player->Inventory.Empty();
+
+		for (int i = 0; i < tier1.Num(); ++i)
+			Player->Inventory.Add(tier1[i]);
+
+		for (int i = 0; i < tier2.Num(); ++i)
+			Player->Inventory.Add(tier2[i]);
+
+		for (int i = 0; i < tier3.Num(); ++i)
+			Player->Inventory.Add(tier3[i]);
 	}
 	else if (Order == RED)
 	{
@@ -158,12 +226,23 @@ void UFP_InventoryWidget::SortInventory()
 	}
 	else if (Order == COLOR)
 	{
-		Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
+		/*Player->Inventory.Sort([](AFP_Rune& A, AFP_Rune& B) {
 			if (A.Color.R == 0 && B.Color.R == 0)
 				return A.Color.G > B.Color.G;
 
 			return A.Color.R > B.Color.R;
-		});
+		});*/
+
+		Player->Inventory.Empty();
+
+		for (int i = 0; i < red.Num(); ++i)
+			Player->Inventory.Add(red[i]);
+
+		for (int i = 0; i < green.Num(); ++i)
+			Player->Inventory.Add(green[i]);
+
+		for (int i = 0; i < blue.Num(); ++i)
+			Player->Inventory.Add(blue[i]);
 	}
 	else if (Order == TIER1)
 	{

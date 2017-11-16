@@ -67,7 +67,7 @@ void AFP_PlayerController::BeginPlay()
 	TSubclassOf<UFP_Tooltip> SkillToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 	UFP_Tooltip* SkillToolTipWidget = CreateWidget<UFP_Tooltip>(this, SkillToolTip);
 	SkillToolTipWidget->SetSKillUI(SkillUIWidget);
-	SkillToolTipWidget->SetRenderScale(FVector2D(3.f, 3.f));
+	//SkillToolTipWidget->SetRenderScale(FVector2D(3.f, 3.f));
 	WidgetMap.Add(SKILLTOOLTIP, SkillToolTipWidget);
 
 	Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");

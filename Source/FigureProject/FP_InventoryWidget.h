@@ -35,7 +35,7 @@ public:
 	FVector2D IconSize = FVector2D(63.f, 62.f);
 	AFP_Player* Player;
 	class UCircularThrobber* Throbber;
-	SORTORDER Order = TIER;
+	SORTORDER Order = COLOR;
 	bool bFromMain = true;
 	AFP_Skill* SelectedSkill;
 	

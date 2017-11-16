@@ -28,7 +28,7 @@ void AFP_IceBlast::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Debuff = AFP_Monster::MonsterState::SLOW;
+	Debuff = AFP_Monster::SLOW;
 	DebuffDuration = 0.5f;
 }
 
