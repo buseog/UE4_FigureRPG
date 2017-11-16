@@ -93,7 +93,7 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
-	SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ActiveSkill * (SkillUI->SizeY / SkillUI->SkillCnt)));
+	
 
 	if (Cast<UFP_SkillUI>(PC->GetWidgetMap(AFP_PlayerController::SKILLUI))->IsInViewport() == false)
 	{

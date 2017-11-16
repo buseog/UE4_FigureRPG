@@ -44,7 +44,7 @@ AFP_Weapon::AFP_Weapon()
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	SphereComponent->SetupAttachment(RootComponent);
-	SphereComponent->InitSphereRadius(50.f);
+	SphereComponent->InitSphereRadius(100.f);
 
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AFP_Weapon::OnOverlapBegin);
 
@@ -74,6 +74,7 @@ void AFP_Weapon::Tick(float DeltaTime)
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
+	SetAttSpdAndRange(pPlayer);
 
 	if(TargetMonsters.Num() >= 1)
 	{

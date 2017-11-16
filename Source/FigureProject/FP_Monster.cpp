@@ -60,7 +60,7 @@ AFP_Monster::AFP_Monster()
 	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
 	PointLight->Intensity = 50.f;
 	PointLight->LightColor = FColor(0, 0, 255);
-	PointLight->AttenuationRadius = 10.f;
+	PointLight->AttenuationRadius = 20.f;
 	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z), FRotator(), false);
 	PointLight->SetupAttachment(RootComponent);
 
