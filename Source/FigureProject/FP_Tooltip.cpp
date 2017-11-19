@@ -19,7 +19,7 @@ bool UFP_Tooltip::Initialize()
 	AFP_Skill* Skill_CDO = Class->GetDefaultObject<AFP_Skill>();
 
 	UButton* Button = (UButton*)GetWidgetFromName(TEXT("ActiveButton"));
-	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::ActiveSkill);
+	//Button->OnClicked.AddDynamic(this, &UFP_Tooltip::ActiveSkill);
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Socket0"));
 	Button->OnClicked.AddDynamic(this, &UFP_Tooltip::SocketButtonClick);
@@ -101,6 +101,7 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 		Cast<UFP_SkillUI>(PC->GetWidgetMap(AFP_PlayerController::SKILLUI))->isSkillClicked = false;
 		SocketBox->SetVisibility(ESlateVisibility::Hidden);
 	}
+
 
 	if (CurrentSkill->Sockets.Num() == 0)
 	{

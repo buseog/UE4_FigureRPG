@@ -98,9 +98,9 @@ public:
 
 		if (isSkillClicked == false)
 		{
-			FVector2D MousePosition;
+			/*FVector2D MousePosition;
 			Controller->GetMousePosition(MousePosition.X, MousePosition.Y);
-			ToolTip->SetRenderTranslation(MousePosition);
+			ToolTip->SetRenderTranslation(MousePosition);*/
 
 			UFP_Tooltip* ToolTipClass = Cast<UFP_Tooltip>(ToolTip);
 			ToolTipClass->SkillName = Skillname;// FText::FromString(TEXT("FireBall"));

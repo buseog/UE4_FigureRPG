@@ -53,6 +53,23 @@ void UFP_StageWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 		FString PlayerHPTextString = FString::FromInt(Player->Status.Hp) + TEXT(" / ") + FString::FromInt(Player->Status.MaxHp);
 		PlayerHPText = FText::FromString(PlayerHPTextString);
 
+
+		FString SkillTextStr = TEXT("Skill : ");
+		if (AFP_Weapon::ActiveSkill == AFP_Weapon::FIREBALL)
+			SkillTextStr += TEXT("FireBall");
+		else if (AFP_Weapon::ActiveSkill == AFP_Weapon::FIREBLAST)
+			SkillTextStr += TEXT("FireBlast");
+		else if (AFP_Weapon::ActiveSkill == AFP_Weapon::FIREWALL)
+			SkillTextStr += TEXT("FireWall");
+		else if (AFP_Weapon::ActiveSkill == AFP_Weapon::ICEBALL)
+			SkillTextStr += TEXT("IceBall");
+		else if (AFP_Weapon::ActiveSkill == AFP_Weapon::ICEBLAST)
+			SkillTextStr += TEXT("IceBlast");
+		else 
+			SkillTextStr += TEXT("IceOrb");
+
+		SkillText = FText::FromString(SkillTextStr);
+
 		//UE_LOG(LogClass, Log, TEXT("%f"), CountTime);
 
 		if (CountTime >= 0.f && CountTime < 6.f)

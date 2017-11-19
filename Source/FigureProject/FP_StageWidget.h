@@ -29,8 +29,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Progress")
 	float PlayerHP = 0.5f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
 	FText PlayerHPText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
+	FText SkillText;
 
 	virtual bool Initialize() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
