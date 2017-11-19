@@ -57,6 +57,8 @@ public:
 	void ChangeColor();
 	UFUNCTION()
 	void EquipRune();
+	UFUNCTION()
+	void UnequipRune();
 
 
 	class UFP_SkillUI* SkillUI;
@@ -68,5 +70,8 @@ public:
 	//Socket
 	class UVerticalBox* SocketBox;
 	int iSocketIndex = 0;
+
+
+
 	
 };

@@ -38,9 +38,17 @@ void AFP_IceBlast::Tick(float DeltaTime)
 
 	if (Particle->GetNumActiveParticles() <= 0 && Particle->AccumTickTime > 0.3f)
 		Destroy();
+
 	
 	Targets.Empty();
 	AFP_ComCollision::CollisionWithMulti<UBoxComponent, AFP_Monster>(CollisionBox, Targets);
+	if (Targets.Num() != 0)
+	{
+		TimelimitForDot -= DeltaTime;
+		if (TimelimitForDot > 0.f)
+			return;
+	}
+
 	for (size_t i = 0; i < Targets.Num(); ++i)
 	{
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
@@ -61,6 +69,8 @@ void AFP_IceBlast::Tick(float DeltaTime)
 		}
 		
 	}
+
+	TimelimitForDot = 1.f;
 }
 
 void AFP_IceBlast::EndPlay(const EEndPlayReason::Type EndPlayReason)

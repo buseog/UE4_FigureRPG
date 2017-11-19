@@ -74,7 +74,7 @@ void UFP_SkillUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
 
-
+	Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ActiveSkill * (SizeY / SkillCnt)));
 }
 
 

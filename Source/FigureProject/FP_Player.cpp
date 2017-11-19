@@ -77,6 +77,13 @@ AFP_Player::AFP_Player()
 void AFP_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Particle->EmitterInstances[1]->bEnabled = false;
+	Particle->EmitterInstances[2]->bEnabled = false;
+	Particle->EmitterInstances[3]->bEnabled = false;
+	Particle->EmitterInstances[4]->bEnabled = false;
+	Particle->EmitterInstances[5]->bEnabled = false;
+	Particle->EmitterInstances[6]->bEnabled = false;
 	
 }
 
@@ -190,6 +197,7 @@ void AFP_Player::CheckLevelUp()
 		Level.Point += 1;
 		Level.Exp -= Level.FullExp;
 		Level.FullExp = FMath::Pow(2, Level.Level) * 50.f; // ½Â·Ä¼öÁ¤
+		Status.Hp = Status.MaxHp;
 
 		if (Level.Level % 5 == 0)
 			SkillLv.SkillPoint++;
@@ -216,7 +224,12 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 		BuffTime = 0.f;
 		bIsBuffed = false;
 		PointLight->SetIntensity(0.f);
+		Particle->EmitterInstances[1]->bEnabled = false;
+		Particle->EmitterInstances[2]->bEnabled = false;
+		Particle->EmitterInstances[3]->bEnabled = false;
 		Particle->EmitterInstances[4]->bEnabled = false;
+		Particle->EmitterInstances[5]->bEnabled = false;
+		Particle->EmitterInstances[6]->bEnabled = false;
 
 		switch (Type)
 		{
@@ -266,7 +279,7 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 	BuffType = Type;
 	PointLight->SetLightColor(Color);
 	PointLight->SetIntensity(500.f);
-	Particle->EmitterInstances[4]->bEnabled = true;
+
 	FVector color;
 
 	switch (Type)
@@ -281,8 +294,9 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 
 	case 2:
 		Status.Attack *= Diff;
-		color = FVector(0.f, 0.f, 1.f);
-		Particle->SetVectorParameter(TEXT("ItemColor"), color);
+		Particle->EmitterInstances[1]->bEnabled = true;
+		Particle->EmitterInstances[2]->bEnabled = true;
+		Particle->EmitterInstances[3]->bEnabled = true;
 		break;
 
 	case 3:
@@ -291,8 +305,9 @@ void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //D
 
 	case 4:
 		Status.AttackSpeed -= Diff;
-		color = FVector(0.f, 1.f, 0.f);
-		Particle->SetVectorParameter(TEXT("ItemColor"), color);
+		Particle->EmitterInstances[4]->bEnabled = true;
+		Particle->EmitterInstances[5]->bEnabled = true;
+		Particle->EmitterInstances[6]->bEnabled = true;
 		break;
 
 	case 5:
@@ -338,6 +353,7 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	SaveGameInstance->Exp = Level.Exp;
 	SaveGameInstance->FullExp = Level.FullExp;
 	SaveGameInstance->Point = Level.Point;
+	SaveGameInstance->ActiveSkill = int(AFP_Weapon::ActiveSkill);
 
 	SaveGameInstance->Stage = AFP_MonsterMgr::Stage;
 	SaveGameInstance->MonsterKillCnt = AFP_MonsterMgr::MonsterKillCnt;

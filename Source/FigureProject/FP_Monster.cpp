@@ -60,7 +60,7 @@ AFP_Monster::AFP_Monster()
 	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
 	PointLight->Intensity = 50.f;
 	PointLight->LightColor = FColor(0, 0, 255);
-	PointLight->AttenuationRadius = 10.f;
+	PointLight->AttenuationRadius = 20.f;
 	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z), FRotator(), false);
 	PointLight->SetupAttachment(RootComponent);
 
@@ -125,18 +125,22 @@ void AFP_Monster::Tick(float DeltaTime)
 
 		Weapon->DeleteTargetMonsterInArray(this);
 	}
-		
 	//State Control
 	StateMgr.CustomTick(DeltaTime);
 	
+		
 	if (StateMgr.eState == IGNITE)
 	{
-		/*UE_LOG(LogClass, Log, TEXT("StateMgr.Damage : %f"), StateMgr.Damage);
-		UE_LOG(LogClass, Log, TEXT("Damage : %f"), MaxHP * StateMgr.Damage);*/
+		StateMgr.TimelimitForIgnite -= DeltaTime;
+		if (StateMgr.TimelimitForIgnite > 0.f)
+			return;
+
 		MyTakeDamage(MaxHP * StateMgr.Damage);
+
 		if (isDestroy)
 			Weapon->DeleteTargetMonsterInArray(this);
 	}
+	StateMgr.TimelimitForIgnite = 1.f;
 }
 
 void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
