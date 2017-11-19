@@ -55,9 +55,9 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 				break;
 
 			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
-				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
+				Val2 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
 			else
-				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+				Val2 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
 
 			break;
 		case 2:
@@ -67,9 +67,9 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 				break;
 
 			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
-				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
+				Val3 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
 			else
-				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+				Val3 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
 
 			break;
 		case 3:
@@ -79,9 +79,9 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 				break;
 
 			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
-				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
+				Val4 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
 			else
-				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+				Val4 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
 
 			break;
 		}
