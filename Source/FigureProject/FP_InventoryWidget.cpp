@@ -91,6 +91,18 @@ void UFP_InventoryWidget::SlotSelected()
 			ThrobberSlot->SetColumn(InventorySlot->Column);
 			ThrobberSlot->SetRow(InventorySlot->Row);
 			Throbber->SetVisibility(ESlateVisibility::Visible);
+
+			AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+			UUserWidget* RuneWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
+
+			if (RuneWidget->IsValidLowLevel() == false)
+			{
+				FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_RuneToolTip_BP.FP_RuneToolTip_BP_C'");
+				TSubclassOf<UFP_InventoryWidget> RuneToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+				UFP_InventoryWidget* ToolTipWidget = CreateWidget<UFP_InventoryWidget>(PC, RuneToolTip);
+				PC->WidgetMap.Add(AFP_PlayerController::RUNETOOLTIP, ToolTipWidget);
+			}
+
 			Cast<UFP_RuneToolTip>(RuneToolTip)->ToggleToolTip(Player->Inventory[i], bFromMain, SelectedSkill);
 		}
 	}

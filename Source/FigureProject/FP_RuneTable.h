@@ -7,7 +7,7 @@
 struct RED {
 	const uint64 DAMAGEUP					= 0x00000001;	// 스탯, 퍼센트
 	const uint64 STUN						= 0x00000010;	// 확률
-	const uint64 IGNITE						= 0x00000100;	// 확정, 상대 체력의 퍼센트
+	const uint64 IGNITE						= 0x00000100;	// 확정, 디버프, 상대 체력의 퍼센트
 	//const uint64 RANDOMEFFECT				= 0x00000001;	// 확률
 	//const uint64 LIFESTEAL				= 0x00001000;	// 확정, 퍼센트
 	//const uint64 DAMAGEUPONIGNITE			= 0x00100000;	// 확정, 퍼센트
@@ -15,7 +15,7 @@ struct RED {
 
 	const FString NAME_DAMAGEUP				= "DAMAGE UP:STAT";
 	const FString NAME_STUN					= "STUN:PROBABILITY";
-	const FString NAME_IGNITE				= "IGNITE:FIXED";
+	const FString NAME_IGNITE				= "IGNITE:FIXED, DEBUFF";
 	//const FString NAME_RANDOMEFFECT		= "RANDOM EFFECT:PROBABILITY";
 	//const FString NAME_LIFESTEAL			= "LIFE STEAL:FIXED";
 	//const FString NAME_DAMAGEUPONIGNITE	= "DAMAGE UP ON IGNITE:FIXED";
@@ -43,7 +43,7 @@ struct GREEN {
 struct BLUE {
 	const uint64 RANGEUP					= 0x00000001;	// 스탯, 퍼센트
 	const uint64 EXPUP						= 0x00000010;	// 획득 경험치 증가, 퍼센트
-	const uint64 SLOW						= 0x00000100;	// 확정, 퍼센트
+	const uint64 SLOW						= 0x00000100;	// 확정, 디버프, 퍼센트
 	//const uint64 GUIDED					= 0x00000100;	// 확정, PROJECTILE
 	//const uint64 FREEZEONSLOW				= 0x00010000;	// 확률
 	//const uint64 AREAUP					= 0x00100000;	// AOE, 퍼센트
@@ -51,7 +51,7 @@ struct BLUE {
 
 	const FString NAME_RANGEUP				= "RANGE UP:STAT";
 	const FString NAME_EXPUP				= "EXP UP:EXP";
-	const FString NAME_SLOW					= "SLOW:FIXED";
+	const FString NAME_SLOW					= "SLOW:FIXED, DEBUFF";
 	//const FString NAME_GUIDED				= "GUIDED:FIXED_PROJECTILE";
 	//const FString NAME_FREEZEONSLOW		= "FREEZE ON SLOW:PROBABILITY";
 	//const FString NAME_AREAUP				= "AREA UP:AOE";
@@ -74,8 +74,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 0.5f;
-		const float IGNITE_MAX				= 1.f;
+		const float IGNITE_MIN				= 0.01f;
+		const float IGNITE_MAX				= 0.02f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;
@@ -124,6 +124,9 @@ struct RUNESTATRANGE
 
 		const float DAMAGEUPTOTRIANGLE_MIN	= 1.1f;
 		const float DAMAGEUPTOTRIANGLE_MAX	= 1.2f;
+
+		const float DEBUFFDURATION_MIN		= 1.f;
+		const float DEBUFFDURATION_MAX		= 2.f;
 	};
 
 	struct TIER2
@@ -140,8 +143,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 1.f;
-		const float IGNITE_MAX				= 1.5f;
+		const float IGNITE_MIN				= 0.01f;
+		const float IGNITE_MAX				= 0.02f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;
@@ -190,6 +193,9 @@ struct RUNESTATRANGE
 
 		const float DAMAGEUPTOTRIANGLE_MIN	= 1.1f;
 		const float DAMAGEUPTOTRIANGLE_MAX	= 1.2f;
+
+		const float DEBUFFDURATION_MIN		= 1.f;
+		const float DEBUFFDURATION_MAX		= 2.f;
 	};
 
 	struct TIER3
@@ -206,8 +212,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 1.5f;
-		const float IGNITE_MAX				= 2.f;
+		const float IGNITE_MIN				= 0.01f;
+		const float IGNITE_MAX				= 0.02f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;
@@ -256,6 +262,9 @@ struct RUNESTATRANGE
 
 		const float DAMAGEUPTOTRIANGLE_MIN	= 1.1f;
 		const float DAMAGEUPTOTRIANGLE_MAX	= 1.2f;
+
+		const float DEBUFFDURATION_MIN		= 1.f;
+		const float DEBUFFDURATION_MAX		= 2.f;
 	};
 
 	TIER1 Tier1;

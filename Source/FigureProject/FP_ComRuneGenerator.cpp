@@ -242,6 +242,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier1.DEBUFFDURATION_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.DEBUFFDURATION_MAX);
+	_option.Add("DEBUFFDURATION", stat);
+	stat.Empty();
+
 	RuneStat.Add(1, _option);
 	_option.Empty();
 
@@ -349,6 +354,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	stat.Add("MIN", RuneStatRange.Tier2.DAMAGEUPTOTRIANGLE_MIN);
 	stat.Add("MAX", RuneStatRange.Tier2.DAMAGEUPTOTRIANGLE_MAX);
 	_option.Add("DAMAGEUPTOTRIANGLE", stat);
+	stat.Empty();
+
+	stat.Add("MIN", RuneStatRange.Tier2.DEBUFFDURATION_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.DEBUFFDURATION_MAX);
+	_option.Add("DEBUFFDURATION", stat);
 	stat.Empty();
 
 	RuneStat.Add(2, _option);
@@ -460,6 +470,11 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("DAMAGEUPTOTRIANGLE", stat);
 	stat.Empty();
 
+	stat.Add("MIN", RuneStatRange.Tier3.DEBUFFDURATION_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.DEBUFFDURATION_MAX);
+	_option.Add("DEBUFFDURATION", stat);
+	stat.Empty();
+
 	RuneStat.Add(3, _option);
 	_option.Empty();
 }
@@ -545,6 +560,9 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			if (_redRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
+			if (_redRuneOption[hex].Contains("DEBUFF"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::DEBUFF);
+
 			if (_redRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
@@ -588,6 +606,9 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			if (_greenRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
 
+			if (_greenRuneOption[hex].Contains("DEBUFF"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::DEBUFF);
+
 			if (_greenRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
 		}
@@ -630,6 +651,9 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 
 			if (_blueRuneOption[hex].Contains("EXP"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
+
+			if (_blueRuneOption[hex].Contains("DEBUFF"))
+				_rune->Stat.Type.Add(AFP_Rune::TYPE::DEBUFF);
 
 			if (_blueRuneOption[hex].Contains("ETC"))
 				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
@@ -706,34 +730,41 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
 		{
 
-		}
+		}*/
 
 		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::FIXED)
 		{
-
+			for (int j = 0; j < _rune->Option.Num(); ++j)
+			{
+				if (_rune->Option[i].Contains("IGNITE"))
+					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["IGNITE"]["MIN"], _runeStat[_rune->Stat.Tier]["IGNITE"]["MAX"]);
+			}
 		}
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROJECTILE)
+		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROJECTILE)
 		{
 
-		}
+		}*/
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::AOE)
+		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::AOE)
 		{
 
-		}
+		}*/
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::DOT)
+		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::DOT)
 		{
 
-		}
+		}*/
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::EXP)
+		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::EXP)
 		{
 
-		}
+		}*/
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::ETC)
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::DEBUFF)
+			_rune->Stat.DebuffDuration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+
+		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::ETC)
 		{
 
 		}*/

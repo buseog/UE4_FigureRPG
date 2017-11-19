@@ -13,7 +13,7 @@ class FIGUREPROJECT_API AFP_Rune : public AActor
 	GENERATED_BODY()
 
 public:
-	enum TYPE{STAT, PROBABILITY, FIXED, PROJECTILE, AOE, DOT, EXP, ETC};
+	enum TYPE{STAT, PROBABILITY, FIXED, PROJECTILE, AOE, DOT, EXP, DEBUFF, ETC};
 
 public:
 	struct RuneStat
@@ -22,6 +22,7 @@ public:
 		float Speed = 0.f; //bullet speed
 		float CoolTimeRatio = 0.f; // attack speed
 		float Range = 0.f;
+		float DebuffDuration = 0.f;
 		int Tier = 1;
 		TArray<TYPE> Type;
 	};

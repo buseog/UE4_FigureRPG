@@ -46,9 +46,12 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AF
 
 			for (int j = 0; j < _skill->Sockets[i].Rune->Option.Num(); ++j)
 			{
-				if (_skill->Sockets[i].Rune->Option[j].Contains("Ignite") && _monster->StateMgr.eState != AFP_Monster::IGNITE)
+				if (_skill->Sockets[i].Rune->Option[j].Contains("IGNITE") && _monster->StateMgr.eState != AFP_Monster::IGNITE)
 				{
 					_monster->StateMgr.Damage += _skill->Sockets[i].Rune->OptionVal[j];
+					_monster->StateMgr.Duration = _skill->Sockets[i].Rune->Stat.DebuffDuration;
+					_monster->StateMgr.Damage += _skill->DebuffDamage;
+					_monster->StateMgr.Duration = _skill->DebuffDuration;
 					_monster->StateMgr.eState = AFP_Monster::IGNITE;
 				}
 			}
@@ -98,7 +101,7 @@ float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, T* _skill)
 
 			RuneRange += (_skill->Sockets[i].Rune->Stat.Range - 1.f);
 		}
-		RuneRange += 1.f;
+		//RuneRange += 1.f;
 	}
 	else
 		RuneRange = 1.f;
@@ -156,7 +159,7 @@ float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill)
 
 			RuneCoolTime += (_skill->Sockets[i].Rune->Stat.CoolTimeRatio - 1.f);
 		}
-		RuneCoolTime += 1.f;
+		//RuneCoolTime += 1.f;
 	}
 	else
 		RuneCoolTime = 1.f;

@@ -140,6 +140,7 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ComCalculator.h">
       <Filter>Source\FigureProject\97. Component\02. ComCalculator</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_SkillUI.h" />
     <ClInclude Include="..\..\Source\FigureProject\FP_RuneToolTip.h">
       <Filter>Source\FigureProject\98. UI\06. ToolTip</Filter>
     </ClInclude>
@@ -157,12 +158,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_ComRuneGenerator.h">
       <Filter>Source\FigureProject\97. Component\03. ComRuneGenerator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_SkillUI.h">
-      <Filter>Source\FigureProject\98. UI\07. SkillUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_SaveGame.h">
-      <Filter>Source\FigureProject\96. SaveLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +272,7 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_ComCalculator.cpp">
       <Filter>Source\FigureProject\97. Component\02. ComCalculator</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_SkillUI.cpp" />
     <ClCompile Include="..\..\Source\FigureProject\FP_RuneToolTip.cpp">
       <Filter>Source\FigureProject\98. UI\06. ToolTip</Filter>
     </ClCompile>
@@ -291,12 +287,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_ComRuneGenerator.cpp">
       <Filter>Source\FigureProject\97. Component\03. ComRuneGenerator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_SkillUI.cpp">
-      <Filter>Source\FigureProject\98. UI\07. SkillUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_SaveGame.cpp">
-      <Filter>Source\FigureProject\96. SaveLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,12 +406,6 @@
     </Filter>
     <Filter Include="Source\FigureProject\97. Component\03. ComRuneGenerator">
       <UniqueIdentifier>{3483306a-9617-4e13-88d1-6d2e7d74ad6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\FigureProject\98. UI\07. SkillUI">
-      <UniqueIdentifier>{c3af59f4-a337-4727-95f5-b359060f022c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\FigureProject\96. SaveLoad">
-      <UniqueIdentifier>{0c915f40-9b5e-48d3-b0d6-8c23211db372}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

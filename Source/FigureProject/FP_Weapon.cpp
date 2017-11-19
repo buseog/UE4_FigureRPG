@@ -16,7 +16,8 @@
 #include "FP_Tooltip.h"
 #include "FP_PlayerController.h"
 #include "FP_ComCalculator.h"
-
+#include "FP_ComCollision.h"
+#include "FP_Monster.h"
 
 struct CompareDist
 {
@@ -46,11 +47,11 @@ AFP_Weapon::AFP_Weapon()
 	SphereComponent->SetupAttachment(RootComponent);
 	SphereComponent->InitSphereRadius(100.f);
 
-	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AFP_Weapon::OnOverlapBegin);
+	//SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AFP_Weapon::OnOverlapBegin);
 
 	SetActorEnableCollision(true);
-	SphereComponent->bGenerateOverlapEvents = true;
-	SphereComponent->SetNotifyRigidBodyCollision(true);
+	//SphereComponent->bGenerateOverlapEvents = false;
+	//SphereComponent->SetNotifyRigidBodyCollision(true);
 }
 
 // Called when the game starts or when spawned
@@ -67,14 +68,21 @@ void AFP_Weapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	/*UE_LOG(LogClass, Log, TEXT("%f"), GetRangefromSkill());*/
+
 	
 	
 	//SphereRadius
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
+
+	UE_LOG(LogClass, Log, TEXT("%d"), TargetMonsters.Num());
+
 	SetAttSpdAndRange(pPlayer);
+
+	TargetMonsters.Empty();
+	AFP_ComCollision::CollisionWithMulti<USphereComponent, AFP_Monster>(SphereComponent, TargetMonsters);
+
 
 	if(TargetMonsters.Num() >= 1)
 	{
@@ -114,8 +122,12 @@ void AFP_Weapon::Tick(float DeltaTime)
 void AFP_Weapon::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	AFP_Monster* TargetMonster = Cast<AFP_Monster>(OtherActor);
-	if (TargetMonster != NULL)
+	if (TargetMonster != NULL && TargetMonster->isTargeting == false && TargetMonsters.Num() <= 10)
+	{
+		TargetMonster->isTargeting = true;
 		TargetMonsters.Add(TargetMonster);
+	}
+		
 }
 
 

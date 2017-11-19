@@ -38,8 +38,8 @@ AFP_Monster::AFP_Monster()
 	SphereComponent->SetupAttachment(RootComponent);
 
 	SetActorEnableCollision(true);
-	SphereComponent->bGenerateOverlapEvents = true;
-	SphereComponent->SetNotifyRigidBodyCollision(true);
+	//SphereComponent->bGenerateOverlapEvents = true;
+	//SphereComponent->SetNotifyRigidBodyCollision(true);
 
 	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
 	WidgetComponent->SetupAttachment(SphereComponent);
@@ -140,7 +140,7 @@ void AFP_Monster::Tick(float DeltaTime)
 		if (isDestroy)
 			Weapon->DeleteTargetMonsterInArray(this);
 	}
-	StateMgr.TimelimitForIgnite = 1.f;
+	StateMgr.TimelimitForIgnite = 0.2f;
 }
 
 void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)

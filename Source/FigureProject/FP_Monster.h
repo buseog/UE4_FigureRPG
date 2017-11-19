@@ -81,6 +81,7 @@ public:
 	float Exp = 15.f;
 	float HPShowTime = 0.f;
 	MonsterState StateMgr;
+	bool isTargeting = false;
 	
 public:
 	UPROPERTY(EditAnywhere)
