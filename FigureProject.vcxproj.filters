@@ -30,6 +30,7 @@
       <Filter>Source\FigureProject\99. Default</Filter>
     </None>
     <None Include="..\..\Config\DefaultInput.ini" />
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\FigureProject\FigureProject.h">
@@ -140,7 +141,6 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ComCalculator.h">
       <Filter>Source\FigureProject\97. Component\02. ComCalculator</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\FigureProject\FP_SkillUI.h" />
     <ClInclude Include="..\..\Source\FigureProject\FP_RuneToolTip.h">
       <Filter>Source\FigureProject\98. UI\06. ToolTip</Filter>
     </ClInclude>
@@ -158,6 +158,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_ComRuneGenerator.h">
       <Filter>Source\FigureProject\97. Component\03. ComRuneGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_SkillUI.h">
+      <Filter>Source\FigureProject\98. UI\07. SkillUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_DamageUI.h">
+      <Filter>Source\FigureProject\98. UI\08. DamageUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_SaveGame.h">
+      <Filter>Source\FigureProject\96. SaveLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,7 +281,6 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_ComCalculator.cpp">
       <Filter>Source\FigureProject\97. Component\02. ComCalculator</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\FigureProject\FP_SkillUI.cpp" />
     <ClCompile Include="..\..\Source\FigureProject\FP_RuneToolTip.cpp">
       <Filter>Source\FigureProject\98. UI\06. ToolTip</Filter>
     </ClCompile>
@@ -287,6 +295,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_ComRuneGenerator.cpp">
       <Filter>Source\FigureProject\97. Component\03. ComRuneGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_SkillUI.cpp">
+      <Filter>Source\FigureProject\98. UI\07. SkillUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_DamageUI.cpp">
+      <Filter>Source\FigureProject\98. UI\08. DamageUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_SaveGame.cpp">
+      <Filter>Source\FigureProject\96. SaveLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +423,15 @@
     </Filter>
     <Filter Include="Source\FigureProject\97. Component\03. ComRuneGenerator">
       <UniqueIdentifier>{3483306a-9617-4e13-88d1-6d2e7d74ad6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\07. SkillUI">
+      <UniqueIdentifier>{c9586789-996c-43bc-97fa-3a70c514f825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\08. DamageUI">
+      <UniqueIdentifier>{60048127-6833-4da8-ab7b-1cd426ac5e8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\96. SaveLoad">
+      <UniqueIdentifier>{a4302723-3c08-43c8-b077-e840053c391a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
