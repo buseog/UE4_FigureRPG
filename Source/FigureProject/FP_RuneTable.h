@@ -143,8 +143,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 1.f;
-		const float IGNITE_MAX				= 1.5f;
+		const float IGNITE_MIN				= 0.01f;
+		const float IGNITE_MAX				= 0.02f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;
@@ -212,8 +212,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 1.5f;
-		const float IGNITE_MAX				= 2.f;
+		const float IGNITE_MIN				= 0.01f;
+		const float IGNITE_MAX				= 0.02f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;
