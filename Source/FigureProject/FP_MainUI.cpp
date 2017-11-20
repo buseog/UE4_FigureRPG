@@ -7,7 +7,7 @@
 #include "FP_InventoryWidget.h"
 #include "FP_MonsterMgr.h"
 #include "FP_Skill.h"
-
+#include "FP_Player.h"
 #include "FP_FireBall.h"
 #include "FP_FireBlast.h"
 #include "FP_FireWall.h"
@@ -114,16 +114,6 @@ void UFP_MainUI::Button_Stat()
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-	UUserWidget* StatWidget = PC->GetWidgetMap(AFP_PlayerController::STATUS);
-
-	if (StatWidget->IsValidLowLevel() == false)
-	{
-		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
-		TSubclassOf<UFP_StatusWidget> Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-		UFP_StatusWidget* StatusWidget = CreateWidget<UFP_StatusWidget>(PC, Widget);
-		PC->WidgetMap.Add(AFP_PlayerController::STATUS, StatusWidget);
-	}
-
 	PC->GetWidgetMap(AFP_PlayerController::STATUS)->AddToViewport();
 	
 }
@@ -133,17 +123,6 @@ void UFP_MainUI::Button_Skill()
 {
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-	UUserWidget* SkillWidget = PC->GetWidgetMap(AFP_PlayerController::SKILLUI);
-
-	if (SkillWidget->IsValidLowLevel() == false)
-	{
-		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_SkillUI.FP_SkillUI_C'");
-		TSubclassOf<UFP_SkillUI> SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-		UFP_SkillUI* SkillUIWidget = CreateWidget<UFP_SkillUI>(PC, SkillUI);
-		PC->WidgetMap.Add(AFP_PlayerController::SKILLUI, SkillUIWidget);
-	}
-
-
 	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->AddToViewport();
 	
 }
@@ -157,7 +136,9 @@ void UFP_MainUI::Button_Rev()
 	pPlayer->Status = pPlayer->InitStatus;
 	pPlayer->SkillLv = pPlayer->InitSkillLv;
 	pPlayer->Level = pPlayer->InitLevel;
-	pPlayer->Gem = 5;
+	TSubclassOf<AFP_Player> PlayerClass = AFP_Player::StaticClass();
+	AFP_Player* Player_CDO = PlayerClass->GetDefaultObject<AFP_Player>();
+	pPlayer->Gem = Player_CDO->Gem;
 	
 	AFP_MonsterMgr::Stage = 1;
 	AFP_MonsterMgr::MonsterKillCnt = 0;
@@ -183,16 +164,7 @@ void UFP_MainUI::Button_Rune()
 {
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-	UUserWidget* RuneWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
-
-	if (RuneWidget->IsValidLowLevel() == false)
-	{
-		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
-		TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-		UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(PC, Inventory);
-		
-		PC->WidgetMap.Add(AFP_PlayerController::INVENTORY, InventoryWidget);
-	}
+	
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->bFromMain = true;
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->Order = UFP_InventoryWidget::SORTORDER::COLOR;
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();

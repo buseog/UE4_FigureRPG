@@ -26,12 +26,14 @@ public:
 		AFP_Rune* Rune = nullptr;
 		FColor Color;
 
-		void EquipRune(AFP_Rune* _rune)
+		void EquipRune(AFP_Rune* _rune, int iSocketIndex, int iSkillIndex)
 		{
 			if (Color != _rune->Color)
 				return;
 
 			Rune = _rune;
+			Rune->iSocketIndex = iSocketIndex;
+			Rune->iSkillIndex = iSkillIndex;
 		}
 	};
 
@@ -39,7 +41,7 @@ public:
 	{
 		FString Name;
 		float DmgPerLv = 10.f;
-		float AtkSpdPerLv = 0.05f;
+		float AtkSpdPerLv = 0.025f;
 	};
 
 public:	

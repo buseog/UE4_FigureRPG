@@ -67,10 +67,10 @@ void AFP_IceBlast::Tick(float DeltaTime)
 			//state slow
 			Targets[i]->StateMgr.SetState(Debuff, DebuffDuration);
 		}
-		
+		TimelimitForDot = 1.f;
 	}
-
-	TimelimitForDot = 1.f;
+	
+	
 }
 
 void AFP_IceBlast::EndPlay(const EEndPlayReason::Type EndPlayReason)

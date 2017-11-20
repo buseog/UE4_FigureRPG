@@ -91,10 +91,7 @@ public:
 	USphereComponent* SphereComponent;
 
 	UPROPERTY(EditAnywhere)
-	class UWidgetComponent* WidgetComponent;
-
-	UPROPERTY(EditAnywhere)
-	UHPBar_Widget* HPBar_Widget;
+	UHPBar_Widget* HP_UI;
 
 	UPROPERTY(EditAnywhere)
 	class UFP_DamageUI* DamageUI;
@@ -109,5 +106,5 @@ public:
 public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	void DropItem();
-	void MyTakeDamage(float _damage);
+	void MyTakeDamage(float _damage, int fontsize = 40, FColor color = FColor::White);
 };

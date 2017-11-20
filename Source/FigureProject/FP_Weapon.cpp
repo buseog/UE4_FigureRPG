@@ -67,16 +67,13 @@ void AFP_Weapon::BeginPlay()
 void AFP_Weapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-
-	
 	
 	//SphereRadius
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
 
-	UE_LOG(LogClass, Log, TEXT("%d"), TargetMonsters.Num());
+	//UE_LOG(LogClass, Log, TEXT("%d"), TargetMonsters.Num());
 
 	SetAttSpdAndRange(pPlayer);
 

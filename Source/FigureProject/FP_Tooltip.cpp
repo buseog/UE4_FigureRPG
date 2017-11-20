@@ -81,6 +81,15 @@ bool UFP_Tooltip::Initialize()
 
 
 	SocketBox = (UVerticalBox*)GetWidgetFromName(TEXT("SocketButtonBox"));
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+
+
+	PC->InputComponent->BindAction("TooltipUp", IE_Released, this, &UFP_Tooltip::PositionUp);
+
+	
 	
 	return true;
 }
@@ -92,6 +101,9 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	if(ingDebug == true)
+		this->SetRenderTranslation(FVector2D(this->RenderTransform.Translation.X, -400));
 
 	
 
@@ -116,7 +128,7 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 	{
 		for (size_t i = 0; i < CurrentSkill->Sockets.Num(); ++i)
 		{
-			if (CurrentSkill->Sockets[i].Rune == nullptr)
+			if (CurrentSkill->Sockets[i].Rune == nullptr || SocketButton[i]->WidgetStyle.Normal.GetResourceObject() == CurrentSkill->EmptySocketIcon)
 			{
 				UTexture2D* SocketIcon = nullptr;
 				if (CurrentSkill->Sockets[i].Color == FColor::Red)
@@ -129,6 +141,22 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 				SocketButton[i]->WidgetStyle.Normal.SetResourceObject(SocketIcon);
 				SocketButton[i]->WidgetStyle.Hovered.SetResourceObject(SocketIcon);
 				SocketButton[i]->WidgetStyle.Pressed.SetResourceObject(SocketIcon);
+			}
+			else if (CurrentSkill->Sockets[i].Rune != nullptr && CurrentSkill->Sockets[i].Rune->IsValidLowLevel() == true)
+			{
+				APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+				AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+				UFP_Tooltip* SkillToolTip = Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP));
+
+				SkillToolTip->SocketButton[i]->WidgetStyle.Normal.SetResourceObject(CurrentSkill->Sockets[i].Rune->Icon);
+				SkillToolTip->SocketButton[i]->WidgetStyle.Normal.ImageSize = FVector2D(20.f, 20.f);
+				SkillToolTip->SocketButton[i]->WidgetStyle.Normal.Margin = 0;
+				SkillToolTip->SocketButton[i]->WidgetStyle.Hovered.SetResourceObject(CurrentSkill->Sockets[i].Rune->Icon);
+				SkillToolTip->SocketButton[i]->WidgetStyle.Hovered.ImageSize = FVector2D(20.f, 20.f);
+				SkillToolTip->SocketButton[i]->WidgetStyle.Hovered.Margin = 0;
+				SkillToolTip->SocketButton[i]->WidgetStyle.Pressed.SetResourceObject(CurrentSkill->Sockets[i].Rune->Icon);
+				SkillToolTip->SocketButton[i]->WidgetStyle.Pressed.ImageSize = FVector2D(20.f, 20.f);
+				SkillToolTip->SocketButton[i]->WidgetStyle.Pressed.Margin = 0;
 			}
 		}
 	}
@@ -211,8 +239,9 @@ void UFP_Tooltip::CreateSocket()
 	if (nullptr == pPlayer)
 		return;
 
+	
 	int RequiredGem = FMath::Pow(2, iSocketIndex);
-	if (pPlayer->Gem >= RequiredGem)
+	if (pPlayer->Gem >= RequiredGem && CurrentSkill->Sockets.IsValidIndex(iSocketIndex) == false)
 	{
 		FColor color = CurrentSkill->AddSocket();
 		pPlayer->Gem -= RequiredGem;
@@ -268,7 +297,7 @@ void UFP_Tooltip::EquipRune()
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
 	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
-
+	
 	//open inventory
 	if (Inventory->IsInViewport() == false)
 	{
@@ -301,6 +330,9 @@ void UFP_Tooltip::UnequipRune()
 	if (CurrentSkill->Sockets.Num() < iSocketIndex + 1)
 		return;
 
+	if (CurrentSkill->Sockets[iSocketIndex].Rune == nullptr || CurrentSkill->Sockets[iSocketIndex].Rune->IsValidLowLevel() == false)
+		return;
+
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 	
@@ -312,4 +344,9 @@ void UFP_Tooltip::UnequipRune()
 	
 
 
+}
+
+void UFP_Tooltip::PositionUp()
+{
+	ingDebug = true;
 }

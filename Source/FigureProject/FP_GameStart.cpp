@@ -34,17 +34,17 @@ void UFP_GameStart::ChooseFire()
 	PlayerController->SetVisibility(AFP_PlayerController::GAMESTART, false);
 	PlayerController->SetVisibility(AFP_PlayerController::STAGE, true);
 
-	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(AFP_PlayerController::STAGE));
-	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
-
 
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	player->Particle->SetVisibility(true);
+
 	FVector color = FVector(1.f, 0.f, 0.f);
 	player->Particle->SetVectorParameter(TEXT("Color"), color);
 	player->Particle->EmitterInstances[4]->bEnabled = false;
 
 	player->SkillLv.FireBall = 1;
+	player->InitSkillLv.FireBall = 1;
+	player->MyType = AFP_Player::FIRE;
 
 }
 
@@ -58,21 +58,19 @@ void UFP_GameStart::ChooseIce()
 	PlayerController->SetVisibility(AFP_PlayerController::GAMESTART, false);
 	PlayerController->SetVisibility(AFP_PlayerController::STAGE, true);
 
-	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(AFP_PlayerController::STAGE));
-	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
-
 
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	player->Particle->SetVisibility(true);
+
 	FVector color = FVector(0.f, 0.f, 1.f);
 	player->Particle->SetVectorParameter(TEXT("Color"), color);
 	player->Particle->EmitterInstances[4]->bEnabled = false;
 
 	player->Particle->SetVisibility(true);
 	player->SkillLv.IceBall = 1;
+	player->InitSkillLv.IceBall = 1;
+	player->MyType = AFP_Player::ICE;
 
-	UFP_SkillUI* SkillUI = Cast<UFP_SkillUI>(PlayerController->GetWidgetMap(AFP_PlayerController::SKILLUI));
-	SkillUI->Throbber->SetRenderTranslation(FVector2D(0.f, (int)AFP_Weapon::ICEBALL * (SkillUI->SizeY / SkillUI->SkillCnt)));
 }
 
 void UFP_GameStart::StartWithLoad()
@@ -83,9 +81,19 @@ void UFP_GameStart::StartWithLoad()
 	AFP_PlayerController* PlayerController = Cast<AFP_PlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	PlayerController->SetVisibility(AFP_PlayerController::STAGE, true);
 
-	UUserWidget* UserWidget = (PlayerController->GetWidgetMap(AFP_PlayerController::STAGE));
-	Cast<UFP_StageWidget>(UserWidget)->StageText = FText::FromString(TEXT("BABO"));
-
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	player->Particle->SetVisibility(true);
+
+	if (player->MyType == AFP_Player::FIRE)
+	{
+		FVector color = FVector(1.f, 0.f, 0.f);
+		player->Particle->SetVectorParameter(TEXT("Color"), color);
+		player->Particle->EmitterInstances[4]->bEnabled = false;
+	}
+	else
+	{
+		FVector color = FVector(0.f, 0.f, 1.f);
+		player->Particle->SetVectorParameter(TEXT("Color"), color);
+		player->Particle->EmitterInstances[4]->bEnabled = false;
+	}
 }

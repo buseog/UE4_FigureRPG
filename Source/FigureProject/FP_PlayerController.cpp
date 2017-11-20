@@ -115,6 +115,11 @@ bool AFP_PlayerController::Load()
 	player->Status.AttackRange = LoadGameInstance->AttackRange;
 	player->Status.AttackSpeed = LoadGameInstance->AttackSpeed;
 	player->Status.BulletSpeed = LoadGameInstance->BulletSpeed;
+	
+	if(LoadGameInstance->PlayerType == 0)
+		player->MyType = AFP_Player::FIRE;
+	else
+		player->MyType = AFP_Player::ICE;
 
 	//////////
 	player->SkillLv.FireBall = LoadGameInstance->FireBall;
@@ -170,6 +175,9 @@ bool AFP_PlayerController::Load()
 		stat.Speed = LoadGameInstance->Inventory[i].Speed;
 		stat.CoolTimeRatio = LoadGameInstance->Inventory[i].CoolTimeRatio;
 		stat.Range = LoadGameInstance->Inventory[i].Range;
+		if (stat.Range == 0)
+			UE_LOG(LogClass, Log, TEXT("BUG"));
+
 		stat.Tier = LoadGameInstance->Inventory[i].Tier;
 		
 		for (int j = 0; j < LoadGameInstance->Inventory[i].Type.Num(); ++j)
@@ -214,6 +222,33 @@ bool AFP_PlayerController::Load()
 		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal3);
 
 		rune->Initiate(LoadGameInstance->Inventory[i].Color, LoadGameInstance->Inventory[i].Property, stat, LoadGameInstance->Inventory[i].Name, option, optionVal);
+
+		//½Â·ÄÃß°¡
+		if (isRev == false)
+		{
+			rune->bEquiped = LoadGameInstance->Inventory[i].bEquiped;
+			rune->iSkillIndex = LoadGameInstance->Inventory[i].SkillIndex;
+			rune->iSocketIndex = LoadGameInstance->Inventory[i].SocketIndex;
+
+			if (rune->bEquiped == true)
+			{
+				if (rune->iSkillIndex == 0)
+					LoadRuneInfoIntoSocket<AFP_FireBall>(rune->iSocketIndex, rune);
+				else if (rune->iSkillIndex == 1)
+					LoadRuneInfoIntoSocket<AFP_FireBlast>(rune->iSocketIndex, rune);
+				else if (rune->iSkillIndex == 2)
+					LoadRuneInfoIntoSocket<AFP_FireWall>(rune->iSocketIndex, rune);
+				else if (rune->iSkillIndex == 3)
+					LoadRuneInfoIntoSocket<AFP_IceBall>(rune->iSocketIndex, rune);
+				else if (rune->iSkillIndex == 4)
+					LoadRuneInfoIntoSocket<AFP_IceBlast>(rune->iSocketIndex, rune);
+				else if (rune->iSkillIndex == 5)
+					LoadRuneInfoIntoSocket<AFP_IceOrb>(rune->iSocketIndex, rune);
+			}
+		}
+		///////////////////
+		
+
 		player->Inventory.Add(rune);
 	}
 
@@ -222,42 +257,30 @@ bool AFP_PlayerController::Load()
 
 void AFP_PlayerController::ToggleMainUI()
 {
-	if (WidgetMap[MAINUI]->IsValidLowLevel() == false)
-	{
-		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_MainUI.FP_MainUI_C'");
-		TSubclassOf<UFP_MainUI> MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-		UFP_MainUI* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
-		WidgetMap.Add(MAINUI, MainUIWidget);
-	}
-
-
-
 	if (nullptr == WidgetMap[MAINUI])
 		return;
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-
-
+	UFP_MainUI* MainUI = Cast<UFP_MainUI>(GetWidgetMap(MAINUI));
+	
 	if (bShowMainUI)
 	{
 		bShowMainUI = false;
-		Cast<UFP_MainUI>(WidgetMap[MAINUI])->eState = UFP_MainUI::END;
+		MainUI->eState = UFP_MainUI::END;
 
 		PC->SetPause(false);
 		
 	}
 	else
 	{
-	
-
-		if (WidgetMap[MAINUI]->IsInViewport() == true)
+		if (MainUI->IsInViewport() == true)
 			return;
 
 		bShowMainUI = true;
-		Cast<UFP_MainUI>(WidgetMap[MAINUI])->TimeAcc = 0.f;
-		Cast<UFP_MainUI>(WidgetMap[MAINUI])->eState = UFP_MainUI::START;
-		WidgetMap[MAINUI]->AddToViewport();
+		MainUI->TimeAcc = 0.f;
+		MainUI->eState = UFP_MainUI::START;
+		MainUI->AddToViewport();
 
 		PC->SetPause(true);
 	}
@@ -271,3 +294,79 @@ void AFP_PlayerController::SetVisibility(eWIDGET _WidgetNum, bool _isvisible)
 		WidgetMap[_WidgetNum]->SetVisibility(ESlateVisibility::Hidden);
 }
 
+UUserWidget* AFP_PlayerController::GetWidgetMap(eWIDGET _key)
+{
+	if (WidgetMap[_key]->IsValidLowLevel() == false)
+	{
+		FName Path;
+		if (_key == STATUS)
+		{
+			Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_StatusWidget_BP.FP_StatusWidget_BP_C'");
+			TSubclassOf<UFP_StatusWidget> Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+			UFP_StatusWidget* StatusWidget = CreateWidget<UFP_StatusWidget>(this, Widget);
+			StatusWidget->SetRenderScale(FVector2D(3.f, 3.f));
+			WidgetMap[_key] = StatusWidget;
+		}
+		else if (_key == MAINUI)
+		{
+			Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_MainUI.FP_MainUI_C'");
+			TSubclassOf<UFP_MainUI> MainUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+			UFP_MainUI* MainUIWidget = CreateWidget<UFP_MainUI>(this, MainUI);
+			WidgetMap[_key] = MainUIWidget;
+		}
+		else if (_key == SKILLUI)
+		{
+			Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_SkillUI.FP_SkillUI_C'");
+			TSubclassOf<UFP_SkillUI> SkillUI = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+			UFP_SkillUI* SkillUIWidget = CreateWidget<UFP_SkillUI>(this, SkillUI);
+			SkillUIWidget->SetRenderScale(FVector2D(2.f, 2.f));
+			WidgetMap[_key] = SkillUIWidget;
+		}
+		else if (_key == SKILLTOOLTIP)
+		{
+			Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_ToolTip_BP.FP_ToolTip_BP_C'");
+			TSubclassOf<UFP_Tooltip> SkillToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+			UFP_Tooltip* SkillToolTipWidget = CreateWidget<UFP_Tooltip>(this, SkillToolTip);
+			SkillToolTipWidget->SetSKillUI(Cast<UFP_SkillUI>(GetWidgetMap(SKILLUI)));
+			SkillToolTipWidget->SetRenderScale(FVector2D(2.f, 2.f));
+			WidgetMap[_key] = SkillToolTipWidget;
+		}
+		else if (_key == INVENTORY)
+		{
+			Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
+			TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+			UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(this, Inventory);
+			WidgetMap[_key] = InventoryWidget;
+		}
+		else if (_key == RUNETOOLTIP)
+		{
+			Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_RuneToolTip_BP.FP_RuneToolTip_BP_C'");
+			TSubclassOf<UFP_RuneToolTip> RuneToolTip = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+			UFP_RuneToolTip* RuneToolTipWidget = CreateWidget<UFP_RuneToolTip>(this, RuneToolTip);
+			WidgetMap[_key] = RuneToolTipWidget;
+		}
+	}
+
+	return WidgetMap[_key];
+}
+
+template<typename T>
+void AFP_PlayerController::LoadRuneInfoIntoSocket(int _socketIndex, class AFP_Rune* _rune)
+{
+	UClass* Class = T::StaticClass();
+	T* SkillCDO = Class->GetDefaultObject<T>();
+
+	AFP_Skill::Socket Socket;
+	for (int i = 0; i < _socketIndex + 1; ++i)
+	{
+		if(SkillCDO->Sockets.IsValidIndex(i) == false)
+			SkillCDO->Sockets.Add(Socket);
+	}
+		
+	
+		
+
+	SkillCDO->Sockets[_socketIndex].Rune = _rune;
+	SkillCDO->Sockets[_socketIndex].Color = _rune->Color;
+
+}

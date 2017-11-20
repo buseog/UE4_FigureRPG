@@ -67,9 +67,11 @@ void AFP_FireWall::Tick(float DeltaTime)
 
 		if(Targets[i]->GetisDestory())
 			Cast<AFP_Weapon>(Weapon)->DeleteTargetMonsterInArray(Targets[i]);
+
+		TimelimitForDot = 1.f;
 	}
 
-	TimelimitForDot = 1.f;
+
 
 	
 }

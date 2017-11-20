@@ -19,6 +19,11 @@ bool UFP_DamageUI::Initialize()
 
 		FVector2D Origin = FVector2D(0.f, 0.f);
 		OriginLocation.Add(Origin);
+
+		FColor OriginColor = FColor::White;
+		ColorArray.Add(OriginColor);
+
+		FontArray.Add(40.f);
 	}
 	
 	return true;
@@ -35,7 +40,7 @@ void UFP_DamageUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 		if (TextArray[i]->GetVisibility() == ESlateVisibility::Visible)
 		{
 			LifeTimeArray[i] -= DeltaTime;
-			FLinearColor color = FLinearColor(1.f, 1.f, 1.f, LifeTimeArray[i]);
+			FLinearColor color = FLinearColor(ColorArray[i].R, ColorArray[i].G, ColorArray[i].B, LifeTimeArray[i]);
 			TextArray[i]->SetColorAndOpacity(color);
 
 			float NewY = (LifeTimeArray[i] * -1.f + 1.f) * -20.f;
@@ -57,7 +62,7 @@ void UFP_DamageUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 }
 
 
-void UFP_DamageUI::ShowDamage(float _damage, FVector2D _uilocation)
+void UFP_DamageUI::ShowDamage(float _damage, FVector2D _uilocation,int fontsize,  FColor color)
 {
 	for (size_t i = 0; i < TextArray.Num(); ++i)
 	{
@@ -65,8 +70,17 @@ void UFP_DamageUI::ShowDamage(float _damage, FVector2D _uilocation)
 			continue;
 
 		TextArray[i]->SetVisibility(ESlateVisibility::Visible);
-		FString Damage = "-" + FString::SanitizeFloat(_damage);
+		ColorArray[i] = color;
+
+		FSlateFontInfo NewInfo = TextArray[i]->Font;
+		NewInfo.Size = fontsize;
+		TextArray[i]->SetFont(NewInfo);
+
+		//UE_LOG(LogClass, Log, TEXT("%d"), fontsize);
+		
+		FString Damage = "-" + FString::FromInt(FMath::RoundHalfToZero(_damage));
 		TextArray[i]->SetText(FText::FromString(Damage));
+
 		OriginLocation[i] = _uilocation;
 		break;
 

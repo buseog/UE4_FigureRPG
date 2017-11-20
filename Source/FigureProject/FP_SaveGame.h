@@ -56,6 +56,15 @@ struct FInventoryLoad
 
 	UPROPERTY(VisibleAnywhere, Category = Inventory)
 	float OptionVal3;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	bool bEquiped;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	int SkillIndex;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	int SocketIndex;
 };
 
 /**
@@ -90,6 +99,8 @@ public:
 		float CriticalDamage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		float Splash;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		int PlayerType;
 
 	//Skill
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)

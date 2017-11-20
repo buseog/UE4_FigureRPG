@@ -80,7 +80,8 @@ UCLASS()
 class FIGUREPROJECT_API AFP_Player : public APawn
 {
 	GENERATED_BODY()
-
+public:
+	enum PLAYERTYPE {FIRE,ICE};
 public:	
 	// Sets default values for this actor's properties
 	AFP_Player();
@@ -172,8 +173,9 @@ public:
 
 	FName Test;
 	float TimeAcc = 0.f;
+	PLAYERTYPE MyType;
 
 	//---------------------Gem-----------------------//
-	int Gem = 5;
+	int Gem = 50;
 	//-----------------------------------------------//
 };

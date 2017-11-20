@@ -146,8 +146,6 @@ void AFP_Player::StatusLevelUp(int _Type)
 	if (Level.Point <= 0)
 		return;
 
-	Level.Point--;
-
 	switch (_Type)
 	{
 	case 0:
@@ -168,7 +166,9 @@ void AFP_Player::StatusLevelUp(int _Type)
 		break;
 
 	case 4:
-		Status.AttackSpeed -= 0.01f;
+		if(Status.AttackSpeed <= 0.75)
+		Status.AttackSpeed -= 0.005f;
+		
 		break;
 
 	case 5:
@@ -187,6 +187,8 @@ void AFP_Player::StatusLevelUp(int _Type)
 		Status.Splash += 1.f;
 		break;
 	}
+
+	Level.Point--;
 }
 
 void AFP_Player::CheckLevelUp()
@@ -354,6 +356,7 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	SaveGameInstance->FullExp = Level.FullExp;
 	SaveGameInstance->Point = Level.Point;
 	SaveGameInstance->ActiveSkill = int(AFP_Weapon::ActiveSkill);
+	SaveGameInstance->PlayerType = int(MyType);
 
 	SaveGameInstance->Stage = AFP_MonsterMgr::Stage;
 	SaveGameInstance->MonsterKillCnt = AFP_MonsterMgr::MonsterKillCnt;
@@ -373,6 +376,10 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 		inventory.Range = Inventory[i]->Stat.Range;
 		inventory.Tier = Inventory[i]->Stat.Tier;
 		inventory.Name = Inventory[i]->Name;
+
+		inventory.bEquiped = Inventory[i]->bEquiped;
+		inventory.SkillIndex = Inventory[i]->iSkillIndex;
+		inventory.SocketIndex = Inventory[i]->iSocketIndex;
 		
 		for (int j = 0; j < Inventory[i]->Stat.Type.Num(); ++j)
 			inventory.Type.Add(Inventory[i]->Stat.Type[j]);
@@ -419,6 +426,11 @@ void AFP_Player::RestartStage()
 {
 	//UE_LOG(LogClass, Log, TEXT("DEAD"));
 	Status.Hp = Status.MaxHp;
+	if (BuffTime < BuffDuration)
+	{
+		BuffTime += BuffDuration;
+		SetStat(BuffType, BuffDiff, BuffDuration);
+	}
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);

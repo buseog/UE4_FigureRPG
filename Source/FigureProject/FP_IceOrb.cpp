@@ -12,7 +12,7 @@ AFP_IceOrb::AFP_IceOrb()
 	Particle->SetWorldScale3D(FVector(0.1f, 0.1f, 0.1f));
 
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
-	CollisionSphere->SetSphereRadius(2.f);
+	CollisionSphere->SetSphereRadius(4.f);
 	CollisionSphere->SetupAttachment(RootComponent);
 
 	Stat.Speed = 0.2f;
@@ -43,9 +43,11 @@ void AFP_IceOrb::Tick(float DeltaTime)
 		if (TargetMonster->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(TargetMonster);
 
+		TimelimitForDot = 0.5f;
+
 		//Destroy();
 	}
-	TimelimitForDot = 1.f;
+	
 }
 
 void AFP_IceOrb::EndPlay(const EEndPlayReason::Type EndPlayReason)

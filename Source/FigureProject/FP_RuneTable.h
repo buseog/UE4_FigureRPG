@@ -83,8 +83,8 @@ struct RUNESTATRANGE
 		const float DAMAGEUPTOCIRCLE_MIN	= 1.1f;
 		const float DAMAGEUPTOCIRCLE_MAX	= 1.2f;
 
-		const float ATTACKSPEEDUP_MIN		= 1.1f;
-		const float ATTACKSPEEDUP_MAX		= 1.2f;
+		const float ATTACKSPEEDUP_MIN		= 1.01f;
+		const float ATTACKSPEEDUP_MAX		= 1.1f;
 
 		const float BULLETSPEEDUP_MIN		= 1.f;
 		const float BULLETSPEEDUP_MAX		= 2.f;
@@ -105,7 +105,7 @@ struct RUNESTATRANGE
 		const float DOTDAMAGEUP_MAX			= 1.2f;
 
 		const float RANGEUP_MIN				= 1.f;
-		const float RANGEUP_MAX				= 2.f;
+		const float RANGEUP_MAX				= 1.2f;
 
 		const float EXPUP_MIN				= 1.1f;
 		const float EXPUP_MAX				= 1.2f;
@@ -152,8 +152,8 @@ struct RUNESTATRANGE
 		const float DAMAGEUPTOCIRCLE_MIN	= 1.1f;
 		const float DAMAGEUPTOCIRCLE_MAX	= 1.2f;
 
-		const float ATTACKSPEEDUP_MIN		= 1.1f;
-		const float ATTACKSPEEDUP_MAX		= 1.2f;
+		const float ATTACKSPEEDUP_MIN		= 1.01f;
+		const float ATTACKSPEEDUP_MAX		= 1.1f;
 
 		const float BULLETSPEEDUP_MIN		= 1.f;
 		const float BULLETSPEEDUP_MAX		= 2.f;
@@ -174,7 +174,7 @@ struct RUNESTATRANGE
 		const float DOTDAMAGEUP_MAX			= 1.2f;
 
 		const float RANGEUP_MIN				= 1.f;
-		const float RANGEUP_MAX				= 2.f;
+		const float RANGEUP_MAX				= 1.2f;
 
 		const float EXPUP_MIN				= 1.1f;
 		const float EXPUP_MAX				= 1.2f;
@@ -221,8 +221,8 @@ struct RUNESTATRANGE
 		const float DAMAGEUPTOCIRCLE_MIN	= 1.1f;
 		const float DAMAGEUPTOCIRCLE_MAX	= 1.2f;
 
-		const float ATTACKSPEEDUP_MIN		= 1.1f;
-		const float ATTACKSPEEDUP_MAX		= 1.2f;
+		const float ATTACKSPEEDUP_MIN		= 1.01f;
+		const float ATTACKSPEEDUP_MAX		= 1.1f;
 
 		const float BULLETSPEEDUP_MIN		= 1.f;
 		const float BULLETSPEEDUP_MAX		= 2.f;
@@ -243,7 +243,7 @@ struct RUNESTATRANGE
 		const float DOTDAMAGEUP_MAX			= 1.2f;
 
 		const float RANGEUP_MIN				= 1.f;
-		const float RANGEUP_MAX				= 2.f;
+		const float RANGEUP_MAX				= 1.2f;
 
 		const float EXPUP_MIN				= 1.1f;
 		const float EXPUP_MAX				= 1.2f;

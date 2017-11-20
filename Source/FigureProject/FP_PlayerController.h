@@ -42,7 +42,7 @@ public:
 	
 	TMap<eWIDGET, UUserWidget*> WidgetMap;
 
-	inline UUserWidget* GetWidgetMap(eWIDGET _key) { return WidgetMap[_key]; }
+	UUserWidget* GetWidgetMap(eWIDGET _key);
 
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)
@@ -61,4 +61,8 @@ public:
 		SkillCDO->Stat.Damage = 1.f + SkillCDO->SkillInfo.DmgPerLv*0.01f * iSkillLv;
 		SkillCDO->Stat.CoolTimeRatio = 1.f - SkillCDO->SkillInfo.AtkSpdPerLv * iSkillLv;
 	}
+
+	template<typename T>
+	void LoadRuneInfoIntoSocket(int _socketIndex, class AFP_Rune* _rune);
+
 };

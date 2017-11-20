@@ -23,5 +23,7 @@ public:
 	TArray<class UTextBlock*> TextArray;
 	TArray<float> LifeTimeArray;
 	TArray<FVector2D> OriginLocation;
-	void ShowDamage(float _damage, FVector2D _uilocation);
+	TArray<FColor> ColorArray;
+	TArray<float> FontArray;
+	void ShowDamage(float _damage, FVector2D _uilocation, int fontsize, FColor color);
 };

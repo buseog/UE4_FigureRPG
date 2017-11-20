@@ -38,24 +38,6 @@ AFP_Monster::AFP_Monster()
 	SphereComponent->SetupAttachment(RootComponent);
 
 	SetActorEnableCollision(true);
-	//SphereComponent->bGenerateOverlapEvents = true;
-	//SphereComponent->SetNotifyRigidBodyCollision(true);
-
-	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
-	WidgetComponent->SetupAttachment(SphereComponent);
-	
-	FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/HealthBar.HealthBar_C'");
-	UClass* Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
-
-	WidgetComponent->SetWidgetClass(Widget);
-	WidgetComponent->SetDrawSize(FVector2D(10.f, 1.f));
-	WidgetComponent->SetBlendMode(EWidgetBlendMode::Opaque);
-	WidgetComponent->SetRelativeRotation(FRotator(-90.f, 0.f, 90.f));
-	WidgetComponent->SetRelativeLocation(FVector(0.f, 10.f, 0.f));
-	WidgetComponent->bGenerateOverlapEvents = false;
-	//WidgetComponent->SetRelativeScale3D(FVector(0.5f, 0.5f, 1.f));
-	//WidgetComponent->SetupAttachment(RootComponent);
-	WidgetComponent->SetVisibility(false);
 
 	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
 	PointLight->Intensity = 50.f;
@@ -73,7 +55,7 @@ void AFP_Monster::BeginPlay()
 	Super::BeginPlay();
 
 	DropRate = FMath::FRandRange(0.f, 100.f);
-	HPBar_Widget = Cast<UHPBar_Widget>(WidgetComponent->GetUserWidgetObject());
+	
 
 
 	StateMgr.Monster = this;
@@ -84,6 +66,8 @@ void AFP_Monster::BeginPlay()
 		return;
 
 	Weapon = Cast<AFP_Weapon>(FoundActor[0]);
+	
+	HP_UI = nullptr;
 	DamageUI = nullptr;
 	
 	
@@ -96,21 +80,35 @@ void AFP_Monster::Tick(float DeltaTime)
 	
 	if (isDestroy == true)
 	{
-
+		if(HP_UI != nullptr)
+			HP_UI->RemoveFromViewport();
 		//isDestroy = false;
 		Destroy();
 		return;
 	}
 	
 	HPShowTime -= DeltaTime;
-	if (HPShowTime > 0)
+	if (HP_UI != nullptr)
 	{
-		WidgetComponent->SetVisibility(true);
-	}
+		if( HPShowTime > 0)
+			HP_UI->SetVisibility(ESlateVisibility::Visible);
+		else
+			HP_UI->SetVisibility(ESlateVisibility::Hidden);
 
-	else
-	{
-		WidgetComponent->SetVisibility(false);
+		APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+		const FVector2D viewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
+		const float viewportScale = GetDefault<UUserInterfaceSettings>(UUserInterfaceSettings::StaticClass())->GetDPIScaleBasedOnSize(FIntPoint(viewportSize.X, viewportSize.Y));
+
+		FVector2D location;
+		PC->ProjectWorldLocationToScreen(this->GetActorLocation(), location);
+		location.X /= viewportScale;
+		location.Y /= viewportScale;
+		location.X -= 25.f;
+		location.Y -= 45.f;
+
+		HP_UI->ProgressBar->SetRenderTranslation(location);
 	}
 		
 
@@ -135,7 +133,7 @@ void AFP_Monster::Tick(float DeltaTime)
 		if (StateMgr.TimelimitForIgnite > 0.f)
 			return;
 
-		MyTakeDamage(MaxHP * StateMgr.Damage);
+		MyTakeDamage(MaxHP * StateMgr.Damage, 30, FColor(255, 0, 0));
 
 		if (isDestroy)
 			Weapon->DeleteTargetMonsterInArray(this);
@@ -215,19 +213,18 @@ void AFP_Monster::DropItem()
 	//isDestroy = false;
 }
 
-void AFP_Monster::MyTakeDamage(float _damage)
+void AFP_Monster::MyTakeDamage(float _damage, int fontsize, FColor color)
 {
 	if (isDestroy == true)
 		return;
 	
 	HP -= _damage;
-	HPBar_Widget->Progress = (HP) / MaxHP;
 	HPShowTime = 1.f;
 
 	if (HP <= 0)
 		isDestroy = true;
 
-
+	
 
 	//show damage ui
 
@@ -239,7 +236,15 @@ void AFP_Monster::MyTakeDamage(float _damage)
 		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_DamageNum.FP_DamageNum_C'");
 		TSubclassOf<UFP_DamageUI> DamageUIClass = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 		DamageUI = CreateWidget<UFP_DamageUI>(PC, DamageUIClass);
-		DamageUI->AddToViewport();
+		DamageUI->AddToViewport(-1);
+	}
+	if (HP_UI == nullptr)
+	{
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/HealthBar.HealthBar_C'");
+		TSubclassOf<UHPBar_Widget> HPUIClass = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		HP_UI = CreateWidget<UHPBar_Widget>(PC, HPUIClass);
+		//HP_UI->viewport
+		HP_UI->AddToViewport(-1);
 	}
 
 	const FVector2D viewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
@@ -250,7 +255,11 @@ void AFP_Monster::MyTakeDamage(float _damage)
 	location.X /= viewportScale;
 	location.Y /= viewportScale;
 
-	DamageUI->ShowDamage(_damage, location);
+	DamageUI->ShowDamage(_damage, location, fontsize, color);
+
+	HP_UI->Progress = (HP) / MaxHP;
+
+	
 	
 
 	//GEngine->AddOnScreenDebugMessage(-1.f, 1.f, FColor::Blue, FString::SanitizeFloat(viewportScale));

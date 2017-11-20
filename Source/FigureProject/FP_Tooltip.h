@@ -59,6 +59,8 @@ public:
 	void EquipRune();
 	UFUNCTION()
 	void UnequipRune();
+	UFUNCTION()
+	void PositionUp();
 
 
 	class UFP_SkillUI* SkillUI;
@@ -71,7 +73,9 @@ public:
 	class UVerticalBox* SocketBox;
 	int iSocketIndex = 0;
 
+	bool ingDebug = false;
 
+	
 
 	
 };
