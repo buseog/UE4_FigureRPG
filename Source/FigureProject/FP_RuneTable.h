@@ -6,7 +6,7 @@
 
 struct RED {
 	const uint64 DAMAGEUP					= 0x00000001;	// 스탯, 퍼센트
-	const uint64 STUN						= 0x00000010;	// 확률
+	const uint64 PIERCE						= 0x00000010;	// 확정, PROJECTILE
 	const uint64 IGNITE						= 0x00000100;	// 확정, 디버프, 상대 체력의 퍼센트
 	//const uint64 RANDOMEFFECT				= 0x00000001;	// 확률
 	//const uint64 LIFESTEAL				= 0x00001000;	// 확정, 퍼센트
@@ -14,8 +14,8 @@ struct RED {
 	//const uint64 DAMAGEUPTOCIRCLE			= 0x01000000;	// 확정, 퍼센트
 
 	const FString NAME_DAMAGEUP				= "DAMAGE UP:STAT";
-	const FString NAME_STUN					= "STUN:PROBABILITY";
-	const FString NAME_IGNITE				= "IGNITE:FIXED, DEBUFF";
+	const FString NAME_PIERCE				= "PIERCE:FIXED_PROJECTILE";
+	const FString NAME_IGNITE				= "IGNITE:FIXED_DEBUFF_FIRE";
 	//const FString NAME_RANDOMEFFECT		= "RANDOM EFFECT:PROBABILITY";
 	//const FString NAME_LIFESTEAL			= "LIFE STEAL:FIXED";
 	//const FString NAME_DAMAGEUPONIGNITE	= "DAMAGE UP ON IGNITE:FIXED";
@@ -25,7 +25,7 @@ struct RED {
 struct GREEN {
 	const uint64 ATTACKSPEEDUP				= 0x00000001;	// 스탯, 퍼센트
 	const uint64 BULLETSPEEDUP				= 0x00000010;	// 스탯, 퍼센트
-	const uint64 PIERCE						= 0x00000100;	// 확정, PROJECTILE
+	const uint64 STUN						= 0x00000100;	// 확률
 	//const uint64 KNOCKBACK				= 0x00000100;	// 거리
 	//const uint64 DAMAGEUPTOSQARE			= 0x00001000;	// 확정, 퍼센트
 	//const uint64 ATTACKTWICE				= 0x00010000;	// 확률
@@ -33,7 +33,7 @@ struct GREEN {
 
 	const FString NAME_ATTACKSPEEDUP		= "ATTACK SPEED UP:STAT";
 	const FString NAME_BULLETSPEEDUP		= "BULLET SPEED UP:STAT";
-	const FString NAME_PIERCE				= "PIERCE:FIXED_PROJECTILE";
+	const FString NAME_STUN					= "STUN:PROBABILITY_DEBUFF";
 	//const FString NAME_KNOCKBACK			= "KNOCK BACK:FIXED";
 	//const FString NAME_DAMAGEUPTOSQARE	= "DAMAGE UP TO SQARE:FIXED";
 	//const FString NAME_ATTACKTWICE		= "ATTACK TWICE:PROBABILITY";
@@ -45,15 +45,15 @@ struct BLUE {
 	const uint64 EXPUP						= 0x00000010;	// 획득 경험치 증가, 퍼센트
 	const uint64 SLOW						= 0x00000100;	// 확정, 디버프, 퍼센트
 	//const uint64 GUIDED					= 0x00000100;	// 확정, PROJECTILE
-	//const uint64 FREEZEONSLOW				= 0x00010000;	// 확률
+	//const uint64 FREEZE					= 0x00010000;	// 확률
 	//const uint64 AREAUP					= 0x00100000;	// AOE, 퍼센트
 	//const uint64 DAMAGEUPTOTRIANGLE		= 0x01000000;	// 확정, 퍼센트
 
 	const FString NAME_RANGEUP				= "RANGE UP:STAT";
 	const FString NAME_EXPUP				= "EXP UP:EXP";
-	const FString NAME_SLOW					= "SLOW:FIXED, DEBUFF";
+	const FString NAME_SLOW					= "SLOW:FIXED_DEBUFF";
 	//const FString NAME_GUIDED				= "GUIDED:FIXED_PROJECTILE";
-	//const FString NAME_FREEZEONSLOW		= "FREEZE ON SLOW:PROBABILITY";
+	//const FString NAME_FREEZE				= "FREEZE:PROBABILITY_DEBUFF_ICE";
 	//const FString NAME_AREAUP				= "AREA UP:AOE";
 	//const FString NAME_DAMAGEUPTOTRIANGLE = "DAMAGE UP TO TRIANGLE:FIXED";
 };
@@ -74,8 +74,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 0.01f;
-		const float IGNITE_MAX				= 0.02f;
+		const float IGNITE_MIN				= 0.05f;
+		const float IGNITE_MAX				= 0.1f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;
@@ -143,8 +143,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 0.01f;
-		const float IGNITE_MAX				= 0.02f;
+		const float IGNITE_MIN				= 0.05f;
+		const float IGNITE_MAX				= 0.1f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;
@@ -212,8 +212,8 @@ struct RUNESTATRANGE
 		const float LIFESTEAL_MIN			= 1.f;
 		const float LIFESTEAL_MAX			= 2.f;
 
-		const float IGNITE_MIN				= 0.01f;
-		const float IGNITE_MAX				= 0.02f;
+		const float IGNITE_MIN				= 0.05f;
+		const float IGNITE_MAX				= 0.1f;
 
 		const float DAMAGEUPONIGNITE_MIN	= 1.1f;
 		const float DAMAGEUPONIGNITE_MAX	= 1.2f;

@@ -2,7 +2,7 @@
 
 #include "FP_FireBall.h"
 #include "FP_ComCalculator.h"
-
+#include "FP_ComMonsterStateMgr.h"
 
 AFP_FireBall::AFP_FireBall()
 {
@@ -49,6 +49,7 @@ void AFP_FireBall::Tick(float DeltaTime)
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(ProxSphere);
 	if (TargetMonster != nullptr)
 	{
+		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
 		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
 		
 		if (TargetMonster->GetisDestory() == true)

@@ -106,13 +106,15 @@ void AFP_Player::Tick(float DeltaTime)
 	//Level.Exp += 1.f;
 
 	//철의 추가
-	if (bIsBuffed)
+	/*if (bIsBuffed)
 	{
 		if (BuffTime >= BuffDuration)
 			SetStat(BuffType, BuffDiff, BuffDuration);
 
 		BuffTime += DeltaTime;
-	}
+	}*/
+
+	CheckBuff(DeltaTime);
 }
 
 void AFP_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -211,123 +213,123 @@ void AFP_Player::OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _Othe
 }
 
 //철의 추가
-void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //Duration이 0이면 영구 적용
-{
-	if (Duration == 0)
-	{
-		BuffTime = 0.f;
-		bIsBuffed = false;
-		return;
-	}
-
-	if (BuffTime >= Duration)
-	{
-		BuffTime = 0.f;
-		bIsBuffed = false;
-		PointLight->SetIntensity(0.f);
-		Particle->EmitterInstances[1]->bEnabled = false;
-		Particle->EmitterInstances[2]->bEnabled = false;
-		Particle->EmitterInstances[3]->bEnabled = false;
-		Particle->EmitterInstances[4]->bEnabled = false;
-		Particle->EmitterInstances[5]->bEnabled = false;
-		Particle->EmitterInstances[6]->bEnabled = false;
-
-		switch (Type)
-		{
-		case 0:
-			Status.MaxHp -= Diff;
-			break;
-
-		case 1:
-			Status.HpRegen -= Diff;
-			break;
-
-		case 2:
-			Status.Attack /= Diff;
-			break;
-
-		case 3:
-			Status.AttackRange -= Diff;
-			break;
-
-		case 4:
-			Status.AttackSpeed += Diff;
-			break;
-
-		case 5:
-			Status.BulletSpeed -= Diff;
-			break;
-
-		case 6:
-			Status.Critical -= Diff;
-			break;
-
-		case 7:
-			Status.CriticalDamage -= Diff;
-			break;
-
-		case 8:
-			Status.Splash -= Diff;
-			break;
-		}
-
-		return;
-	}
-
-	bIsBuffed = true;
-	BuffDuration = Duration;
-	BuffDiff = Diff;
-	BuffType = Type;
-	PointLight->SetLightColor(Color);
-	PointLight->SetIntensity(500.f);
-
-	FVector color;
-
-	switch (Type)
-	{
-	case 0:
-		Status.MaxHp += Diff;
-		break;
-
-	case 1:
-		Status.HpRegen += Diff;
-		break;
-
-	case 2:
-		Status.Attack *= Diff;
-		Particle->EmitterInstances[1]->bEnabled = true;
-		Particle->EmitterInstances[2]->bEnabled = true;
-		Particle->EmitterInstances[3]->bEnabled = true;
-		break;
-
-	case 3:
-		Status.AttackRange += Diff;
-		break;
-
-	case 4:
-		Status.AttackSpeed -= Diff;
-		Particle->EmitterInstances[4]->bEnabled = true;
-		Particle->EmitterInstances[5]->bEnabled = true;
-		Particle->EmitterInstances[6]->bEnabled = true;
-		break;
-
-	case 5:
-		Status.BulletSpeed += Diff;
-		break;
-
-	case 6:
-		Status.Critical += Diff;
-		break;
-
-	case 7:
-		Status.CriticalDamage += Diff;
-		break;
-
-	case 8:
-		Status.Splash += Diff;
-		break;
-	}
-}
+//void AFP_Player::SetStat(int Type, float Diff, float Duration, FColor Color) //Duration이 0이면 영구 적용
+//{
+//	if (Duration == 0)
+//	{
+//		BuffTime = 0.f;
+//		bIsBuffed = false;
+//		return;
+//	}
+//
+//	if (BuffTime >= Duration)
+//	{
+//		BuffTime = 0.f;
+//		bIsBuffed = false;
+//		PointLight->SetIntensity(0.f);
+//		Particle->EmitterInstances[1]->bEnabled = false;
+//		Particle->EmitterInstances[2]->bEnabled = false;
+//		Particle->EmitterInstances[3]->bEnabled = false;
+//		Particle->EmitterInstances[4]->bEnabled = false;
+//		Particle->EmitterInstances[5]->bEnabled = false;
+//		Particle->EmitterInstances[6]->bEnabled = false;
+//
+//		switch (Type)
+//		{
+//		case 0:
+//			Status.MaxHp -= Diff;
+//			break;
+//
+//		case 1:
+//			Status.HpRegen -= Diff;
+//			break;
+//
+//		case 2:
+//			Status.Attack /= Diff;
+//			break;
+//
+//		case 3:
+//			Status.AttackRange -= Diff;
+//			break;
+//
+//		case 4:
+//			Status.AttackSpeed += Diff;
+//			break;
+//
+//		case 5:
+//			Status.BulletSpeed -= Diff;
+//			break;
+//
+//		case 6:
+//			Status.Critical -= Diff;
+//			break;
+//
+//		case 7:
+//			Status.CriticalDamage -= Diff;
+//			break;
+//
+//		case 8:
+//			Status.Splash -= Diff;
+//			break;
+//		}
+//
+//		return;
+//	}
+//
+//	bIsBuffed = true;
+//	BuffDuration = Duration;
+//	BuffDiff = Diff;
+//	BuffType = Type;
+//	PointLight->SetLightColor(Color);
+//	PointLight->SetIntensity(500.f);
+//
+//	FVector color;
+//
+//	switch (Type)
+//	{
+//	case 0:
+//		Status.MaxHp += Diff;
+//		break;
+//
+//	case 1:
+//		Status.HpRegen += Diff;
+//		break;
+//
+//	case 2:
+//		Status.Attack *= Diff;
+//		Particle->EmitterInstances[1]->bEnabled = true;
+//		Particle->EmitterInstances[2]->bEnabled = true;
+//		Particle->EmitterInstances[3]->bEnabled = true;
+//		break;
+//
+//	case 3:
+//		Status.AttackRange += Diff;
+//		break;
+//
+//	case 4:
+//		Status.AttackSpeed -= Diff;
+//		Particle->EmitterInstances[4]->bEnabled = true;
+//		Particle->EmitterInstances[5]->bEnabled = true;
+//		Particle->EmitterInstances[6]->bEnabled = true;
+//		break;
+//
+//	case 5:
+//		Status.BulletSpeed += Diff;
+//		break;
+//
+//	case 6:
+//		Status.Critical += Diff;
+//		break;
+//
+//	case 7:
+//		Status.CriticalDamage += Diff;
+//		break;
+//
+//	case 8:
+//		Status.Splash += Diff;
+//		break;
+//	}
+//}
 
 void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
@@ -374,6 +376,10 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 		inventory.CoolTimeRatio = Inventory[i]->Stat.CoolTimeRatio;
 		inventory.Range = Inventory[i]->Stat.Range;
 		inventory.Tier = Inventory[i]->Stat.Tier;
+		inventory.IgniteDamage = Inventory[i]->Ignite.Damage;
+		inventory.IgniteDuration = Inventory[i]->Ignite.Duration;
+		inventory.SlowDamage = Inventory[i]->Slow.Damage;
+		inventory.SlowDuration = Inventory[i]->Slow.Duration;
 		inventory.Name = Inventory[i]->Name;
 
 		inventory.bEquiped = Inventory[i]->bEquiped;
@@ -425,11 +431,14 @@ void AFP_Player::RestartStage()
 {
 	//UE_LOG(LogClass, Log, TEXT("DEAD"));
 	Status.Hp = Status.MaxHp;
-	if (BuffTime < BuffDuration)
+	/*if (BuffTime < BuffDuration)
 	{
 		BuffTime += BuffDuration;
 		SetStat(BuffType, BuffDiff, BuffDuration);
-	}
+	}*/
+
+	Buff = NORMAL;
+	TimeAccForBuff = 0.f;
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
@@ -437,4 +446,49 @@ void AFP_Player::RestartStage()
 
 	PC->SetPause(true);
 	
+}
+
+void AFP_Player::CheckBuff(float _deltaTime)
+{
+	if (TimeAccForBuff >= Duration)
+	{
+		TimeAccForBuff = 0.f;
+		Buff = NORMAL;
+	}
+
+	switch (Buff)
+	{
+	case DMGUP:
+		TimeAccForBuff += _deltaTime;
+		Particle->EmitterInstances[1]->bEnabled = true;
+		Particle->EmitterInstances[2]->bEnabled = true;
+		Particle->EmitterInstances[3]->bEnabled = true;
+		bIsBuffed = true;
+		break;
+
+	case ATTSPDUP:
+		TimeAccForBuff += _deltaTime;
+		Particle->EmitterInstances[4]->bEnabled = true;
+		Particle->EmitterInstances[5]->bEnabled = true;
+		Particle->EmitterInstances[6]->bEnabled = true;
+		bIsBuffed = true;
+		break;
+
+	case NORMAL:
+		Particle->EmitterInstances[1]->bEnabled = false;
+		Particle->EmitterInstances[2]->bEnabled = false;
+		Particle->EmitterInstances[3]->bEnabled = false;
+		Particle->EmitterInstances[4]->bEnabled = false;
+		Particle->EmitterInstances[5]->bEnabled = false;
+		Particle->EmitterInstances[6]->bEnabled = false;
+		bIsBuffed = false;
+		break;
+	}
+}
+
+void AFP_Player::SetBuff(BUFFTYPE _buff, float _multiplier, float _duration)
+{
+	Buff = _buff;
+	Multiplier = _multiplier;
+	Duration = _duration;
 }

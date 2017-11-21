@@ -23,6 +23,7 @@ AFP_IceBlast::AFP_IceBlast()
 
 	Particle->SetVectorParameter(TEXT("AttackRange"), FVector(0.1f, 0.1f, 0.1f));
 	SkillInfo.Name = "IceBlast";
+<<<<<<< .mine
 
 	Stat.Speed = 1.f;
 	Stat.CoolTimeRatio = 1.2f;
@@ -31,6 +32,16 @@ AFP_IceBlast::AFP_IceBlast()
 
 	SkillInfo.AtkSpdPerLv = 0.02f;
 	SkillInfo.DmgPerLv = 15.f;
+=======
+	Debuff = AFP_Monster::SLOW;
+
+
+
+
+
+
+
+>>>>>>> .theirs
 }
 
 void AFP_IceBlast::BeginPlay()
@@ -61,6 +72,8 @@ void AFP_IceBlast::Tick(float DeltaTime)
 
 	for (size_t i = 0; i < Targets.Num(); ++i)
 	{
+		AFP_ComMonsterStateMgr::StateControl(this, Targets[i]);
+
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
 		if (Targets[i]->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(Targets[i]);
@@ -75,7 +88,7 @@ void AFP_IceBlast::Tick(float DeltaTime)
 			Impact->SetImpact(AFP_Impact::ICEBLASTIMPACT);
 
 			//state slow
-			Targets[i]->StateMgr.SetState(Debuff, DebuffDuration);
+			//Targets[i]->StateMgr.SetState(Debuff, DebuffDuration);
 		}
 		TimelimitForDot = 1.f;
 	}

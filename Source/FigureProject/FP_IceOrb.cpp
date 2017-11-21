@@ -45,6 +45,8 @@ void AFP_IceOrb::Tick(float DeltaTime)
 		if (TimelimitForDot > 0.f)
 			return;
 
+		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
+
 		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
 		if (TargetMonster->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(TargetMonster);

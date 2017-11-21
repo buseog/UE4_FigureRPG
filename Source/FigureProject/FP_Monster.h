@@ -26,40 +26,8 @@ public:
 		float Duration = 0.f;
 		float SpeedOffset = 0.5f;
 		float Damage = 0.f;
-		MSTATE eState = NORMAL;
-		AFP_Monster* Monster = nullptr;
+		MSTATE eState = SLOW;
 		float TimelimitForIgnite = 0.f;
-
-		void SetState(MSTATE _state, float _duration)
-		{
-			eState = _state;
-			Duration = _duration;
-		}
-
-		void CustomTick(float _delta)
-		{
-			if (Duration <= 0.f)
-			{
-				eState = NORMAL;
-				SpeedOffset = 1.f;
-				Monster->Particle->SetVisibility(false);
-			}
-
-			if (eState == SLOW)
-			{
-				SpeedOffset = 0.5f;
-				Duration -= _delta;	
-				Monster->Particle->SetVisibility(true);
-				Monster->Particle->SetVectorParameter(TEXT("Color"), FVector(0.f, 0.f, 1.f));
-			}
-
-			if (eState == IGNITE)
-			{
-				Duration -= _delta;
-				Monster->Particle->SetVisibility(true);
-				Monster->Particle->SetVectorParameter(TEXT("Color"), FVector(1.f, 0.f, 0.f));
-			}
-		}
 	};
 
 protected:
@@ -80,7 +48,7 @@ public:
 	float Speed = 10.f;
 	float Exp = 15.f;
 	float HPShowTime = 0.f;
-	MonsterState StateMgr;
+	TArray<MonsterState> StateMgr;
 	bool isTargeting = false;
 	
 public:
@@ -96,8 +64,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UFP_DamageUI* DamageUI;
 
+
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;
+
 	
 	bool isDestroy = false;
 	AFP_Item* Item;
@@ -107,4 +77,7 @@ public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	void DropItem();
 	void MyTakeDamage(float _damage, int fontsize = 40, FColor color = FColor::White);
+
+	void ChangeState(float _delta);
+	
 };

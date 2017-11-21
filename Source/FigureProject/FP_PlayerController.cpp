@@ -176,6 +176,15 @@ bool AFP_PlayerController::Load()
 		stat.Speed = LoadGameInstance->Inventory[i].Speed;
 		stat.CoolTimeRatio = LoadGameInstance->Inventory[i].CoolTimeRatio;
 		stat.Range = LoadGameInstance->Inventory[i].Range;
+		
+		AFP_Rune::DebuffStat ignite;
+		ignite.Damage = LoadGameInstance->Inventory[i].IgniteDamage;
+		ignite.Duration = LoadGameInstance->Inventory[i].IgniteDuration;
+
+		AFP_Rune::DebuffStat slow;
+		slow.Damage = LoadGameInstance->Inventory[i].SlowDamage;
+		slow.Duration = LoadGameInstance->Inventory[i].SlowDuration;
+
 		if (stat.Range == 0)
 			UE_LOG(LogClass, Log, TEXT("BUG"));
 
@@ -222,7 +231,7 @@ bool AFP_PlayerController::Load()
 		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal2);
 		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal3);
 
-		rune->Initiate(LoadGameInstance->Inventory[i].Color, LoadGameInstance->Inventory[i].Property, stat, LoadGameInstance->Inventory[i].Name, option, optionVal);
+		rune->Initiate(LoadGameInstance->Inventory[i].Color, LoadGameInstance->Inventory[i].Property, stat, ignite, slow, LoadGameInstance->Inventory[i].Name, option, optionVal);
 
 		//½Â·ÄÃß°¡
 		if (isRev == false)
@@ -264,6 +273,8 @@ void AFP_PlayerController::ToggleMainUI()
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 	UFP_MainUI* MainUI = Cast<UFP_MainUI>(GetWidgetMap(MAINUI));
+	if (MainUI == nullptr)
+		return;
 	
 	if (bShowMainUI)
 	{
