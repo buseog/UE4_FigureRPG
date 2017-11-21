@@ -57,6 +57,8 @@ void AFP_FireWall::Tick(float DeltaTime)
 	for (int i = 0; i < Targets.Num(); ++i)
 	{
 
+		AFP_ComMonsterStateMgr::StateControl(this, Targets[i]);
+
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
 
 		/*AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(this->GetActorLocation(), FRotator(0.f, 0.f, 0.f));

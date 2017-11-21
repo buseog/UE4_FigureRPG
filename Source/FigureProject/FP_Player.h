@@ -82,6 +82,8 @@ class FIGUREPROJECT_API AFP_Player : public APawn
 	GENERATED_BODY()
 public:
 	enum PLAYERTYPE {FIRE,ICE};
+	enum BUFFTYPE {DMGUP, ATTSPDUP, NORMAL};
+
 public:	
 	// Sets default values for this actor's properties
 	AFP_Player();
@@ -99,16 +101,13 @@ private:
 	float	HitTime;
 
 	//√∂¿« √ﬂ∞°
-	float	BuffTime = 0.f;
+	/*float	BuffTime = 0.f;
 	float	BuffDuration = 0.f;
 	float	BuffDiff;
-	int		BuffType;
+	int		BuffType;*/
 
 public:
 	TArray<AFP_Rune*> Inventory;
-
-public:
-	bool	bIsBuffed = false;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
@@ -169,8 +168,24 @@ public:
 	void OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult);
 
 	//√∂¿« √ﬂ∞°
-	void SetStat(int Type, float Diff, float Duration, FColor Color = FColor(0.f, 0.f, 0.f));
+	//void SetStat(int Type, float Diff, float Duration, FColor Color = FColor(0.f, 0.f, 0.f));
 
+
+	/////////////////////////////æ∆¿Ã≈€ ∏Æ∆Â≈‰∏µ///////////////////////////////////
+public:
+	void CheckBuff(float _deltaTime);
+	void SetBuff(BUFFTYPE _buff, float _multiplier, float _duration);
+
+public:
+	BUFFTYPE Buff = NORMAL;
+	float Multiplier = 1.f;
+	float Duration = 0.f;
+	float TimeAccForBuff = 0.f;
+	bool bIsBuffed = false;
+	///////////////////////////////////////////////////////////////////////////////
+
+
+public:
 	FName Test;
 	float TimeAcc = 0.f;
 	PLAYERTYPE MyType;

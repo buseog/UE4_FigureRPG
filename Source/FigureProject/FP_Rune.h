@@ -22,9 +22,14 @@ public:
 		float Speed = 1.f; //bullet speed
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
-		float DebuffDuration = 0.f;
 		int Tier = 1;
 		TArray<TYPE> Type;
+	};
+
+	struct DebuffStat
+	{
+		float Damage = 0.f;
+		float Duration = 0.f;
 	};
 	
 public:
@@ -43,6 +48,8 @@ public:
 	UTexture2D* Icon;
 	FColor Color;
 	RuneStat Stat;
+	DebuffStat Ignite;
+	DebuffStat Slow;
 	uint64 Property;
 	float Tier3DropRate = 60.f;
 	float Tier2DropRate = 60.f;
@@ -68,5 +75,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	AFP_Rune* Initiate(FColor _color, uint64 _property, RuneStat _stat, FString _name, TArray<FString> _option, TArray<float> _optionVal);
+	AFP_Rune* Initiate(FColor _color, uint64 _property, RuneStat _stat, DebuffStat _ignite, DebuffStat _slow, FString _name, TArray<FString> _option, TArray<float> _optionVal);
 };

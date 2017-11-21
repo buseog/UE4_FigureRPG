@@ -39,14 +39,8 @@ AFP_Monster::AFP_Monster()
 
 	SetActorEnableCollision(true);
 
-	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
-	PointLight->Intensity = 50.f;
-	PointLight->LightColor = FColor(0, 0, 255);
-	PointLight->AttenuationRadius = 20.f;
-	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z), FRotator(), false);
-	PointLight->SetupAttachment(RootComponent);
 
-	
+
 }
 
 // Called when the game starts or when spawned
@@ -56,10 +50,6 @@ void AFP_Monster::BeginPlay()
 
 	DropRate = FMath::FRandRange(0.f, 100.f);
 	
-
-
-	StateMgr.Monster = this;
-
 	TArray<AActor*> FoundActor;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
 	if (FoundActor[0] == nullptr)
@@ -124,21 +114,8 @@ void AFP_Monster::Tick(float DeltaTime)
 		Weapon->DeleteTargetMonsterInArray(this);
 	}
 	//State Control
-	StateMgr.CustomTick(DeltaTime);
-	
-		
-	if (StateMgr.eState == IGNITE)
-	{
-		StateMgr.TimelimitForIgnite -= DeltaTime;
-		if (StateMgr.TimelimitForIgnite > 0.f)
-			return;
 
-		MyTakeDamage(MaxHP * StateMgr.Damage, 30, FColor(255, 0, 0));
-
-		if (isDestroy)
-			Weapon->DeleteTargetMonsterInArray(this);
-	}
-	StateMgr.TimelimitForIgnite = 0.2f;
+	ChangeState(DeltaTime);
 }
 
 void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -267,4 +244,33 @@ void AFP_Monster::MyTakeDamage(float _damage, int fontsize, FColor color)
 	/*float Test = HP / MaxHP;
 	UE_LOG(LogClass, Log, TEXT("%f"), Test);
 	UE_LOG(LogClass, Log, TEXT("%f"), HPBar_Widget->Progress);*/
+}
+
+void AFP_Monster::ChangeState(float _delta)
+{
+	for (int i = 0; i < StateMgr.Num(); ++i)
+	{
+		StateMgr[i].Duration -= _delta;
+		if (StateMgr[i].Duration < 0)
+		{
+			//StateMgr.Remove(StateMgr[i]);
+			StateMgr.RemoveAt(i);
+			continue;
+		}
+				
+		if (StateMgr[i].eState == SLOW)
+		{
+			StateMgr[i].SpeedOffset = 0.5f;
+		}
+		//damage
+		else if (StateMgr[i].eState == IGNITE)
+		{
+			StateMgr[i].TimelimitForIgnite -= _delta;
+			if (StateMgr[i].TimelimitForIgnite > 0.f)
+				return;
+
+			MyTakeDamage(MaxHP * StateMgr[i].Damage, 30, FColor(255, 0, 0));
+		}
+		StateMgr[i].TimelimitForIgnite = 0.2f;
+	}
 }
