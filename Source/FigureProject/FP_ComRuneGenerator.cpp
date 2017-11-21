@@ -747,8 +747,8 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 				if (_rune->Option[j].Contains("SLOW"))
 				{
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["SLOW"]["MIN"], _runeStat[_rune->Stat.Tier]["SLOW"]["MAX"]);
-					_rune->Ignite.Damage = _rune->OptionVal[j];
-					_rune->Ignite.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+					_rune->Slow.Damage = _rune->OptionVal[j];
+					_rune->Slow.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
 				}
 			}
 		}

@@ -36,7 +36,7 @@ AFP_Skill::AFP_Skill()
 void AFP_Skill::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 
 	if (nullptr == Player)
@@ -61,6 +61,23 @@ void AFP_Skill::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	//·é ¹Ù²î¸é ·é ¿É¼Ç °Ë»ç
+	if (RuneChanged)
+	{
+		Stat.EnablePierce = false;
+
+		for (int i = 0; i < this->Sockets.Num(); ++i)
+		{
+			if (this->Sockets[i].Rune == nullptr || !this->Sockets[i].Rune->IsValidLowLevel())
+				continue;
+
+			//ÇÇ¾î½º °Ë»ç
+			if (this->Sockets[i].Rune->Name.Contains("PIERCE"))
+				Stat.EnablePierce = true;
+		}
+
+		RuneChanged = false;
+	}
 }
 
 void AFP_Skill::SetTargetDirection(FVector _location)

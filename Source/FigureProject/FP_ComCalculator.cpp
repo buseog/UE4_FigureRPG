@@ -42,7 +42,7 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AF
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
 		{
 			if (!_skill->Sockets[i].Rune->IsValidLowLevel() || _skill->Sockets[i].Rune == nullptr)
-				break;
+				continue;
 
 			RuneDmg += (_skill->Sockets[i].Rune->Stat.Damage - 1.f);
 		}
@@ -74,7 +74,7 @@ float AFP_ComCalculator::CalculateFinalRange(AFP_Player* _player, T* _skill)
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
 		{
 			if (!_skill->Sockets[i].Rune->IsValidLowLevel() || _skill->Sockets[i].Rune == nullptr)
-				break;
+				continue;
 
 			RuneRange += (_skill->Sockets[i].Rune->Stat.Range - 1.f);
 		}
@@ -97,7 +97,7 @@ float AFP_ComCalculator::CalculateFinalSpeed(AFP_Player* _player, T* _skill, flo
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
 		{
 			if (!_skill->Sockets[i].Rune->IsValidLowLevel() || _skill->Sockets[i].Rune == nullptr)
-				break;
+				continue;
 
 			RuneSpeed += (_skill->Sockets[i].Rune->Stat.Speed - 1.f);
 		}
@@ -124,7 +124,7 @@ float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill)
 		for (int i = 0; i < _skill->Sockets.Num(); ++i)
 		{
 			if (!_skill->Sockets[i].Rune->IsValidLowLevel() || _skill->Sockets[i].Rune == nullptr)
-					break;
+				continue;
 
 			RuneCoolTime += (_skill->Sockets[i].Rune->Stat.CoolTimeRatio - 1.f);
 		}

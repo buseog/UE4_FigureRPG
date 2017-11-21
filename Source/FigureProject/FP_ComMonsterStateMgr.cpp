@@ -60,7 +60,7 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 		if (_skill->Debuff == AFP_Monster::SLOW)
 			slowDuration = _skill->DebuffDuration;
 
-		if (igniteDuration != 0)
+		if (igniteDuration != 0 && !_skill->SkillInfo.Name.Contains("Ice"))
 		{
 			AFP_Monster::MonsterState state;
 			state.Damage = igniteDamage;
@@ -112,7 +112,7 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 				}
 			}
 
-			if (isIgnite == 0)
+			if (isIgnite == 0 && !_skill->SkillInfo.Name.Contains("Ice"))
 			{
 				AFP_Monster::MonsterState state;
 				state.Damage = igniteDamage;

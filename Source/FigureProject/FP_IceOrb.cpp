@@ -27,7 +27,7 @@ void AFP_IceOrb::Tick(float DeltaTime)
 	if (Particle->AccumTickTime > 5.f)
 		Destroy();
 
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, AFP_ComCalculator::CalculateFinalSpeed(Player, this, DeltaTime));
 
 
 
