@@ -272,6 +272,8 @@ void AFP_PlayerController::ToggleMainUI()
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 	UFP_MainUI* MainUI = Cast<UFP_MainUI>(GetWidgetMap(MAINUI));
+	if (MainUI == nullptr)
+		return;
 	
 	if (bShowMainUI)
 	{
