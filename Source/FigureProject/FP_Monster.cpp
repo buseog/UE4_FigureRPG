@@ -261,29 +261,47 @@ void AFP_Monster::MyTakeDamage(float _damage, int fontsize, FColor color)
 
 void AFP_Monster::ChangeState(float _delta)
 {
-	for (int i = 0; i < StateMgr.Num(); ++i)
+	if (StateMgr.Num() == 0)
 	{
-		StateMgr[i].Duration -= _delta;
-		if (StateMgr[i].Duration < 0)
+		Particle->SetVisibility(false);
+	}
+	else
+	{
+		for (int i = 0; i < StateMgr.Num(); ++i)
 		{
-			//StateMgr.Remove(StateMgr[i]);
-			StateMgr.RemoveAt(i);
-			continue;
-		}
-				
-		if (StateMgr[i].eState == SLOW)
-		{
-			StateMgr[i].SpeedOffset = 0.5f;
-		}
-		//damage
-		else if (StateMgr[i].eState == IGNITE)
-		{
-			StateMgr[i].TimelimitForIgnite -= _delta;
-			if (StateMgr[i].TimelimitForIgnite > 0.f)
-				return;
+			StateMgr[i].Duration -= _delta;
+			if (StateMgr[i].Duration < 0)
+			{
+				//StateMgr.Remove(StateMgr[i]);
+				StateMgr.RemoveAt(i);
+				continue;
+			}
 
-			MyTakeDamage(MaxHP * StateMgr[i].Damage, 30, FColor(255, 0, 0));
+			if (StateMgr[i].eState == SLOW)
+			{
+				StateMgr[i].SpeedOffset = 0.5f;
+				Particle->SetVisibility(true);
+				Particle->SetVectorParameter("Color", FVector(0.f, 1.f, 0.f));
+			}
+			//damage
+			else if (StateMgr[i].eState == IGNITE)
+			{
+				Particle->SetVisibility(true);
+				Particle->SetVectorParameter("Color", FVector(1.f, 0.f, 0.f));
+
+				StateMgr[i].TimelimitForIgnite -= _delta;
+				if (StateMgr[i].TimelimitForIgnite > 0.f)
+					return;
+
+				MyTakeDamage(MaxHP * StateMgr[i].Damage, 30, FColor(255, 0, 0));
+			}
+			else if (StateMgr[i].eState == FROZEN)
+			{
+				Particle->SetVisibility(true);
+				Particle->SetVectorParameter("Color", FVector(0.f, 0.f, 1.f));
+				StateMgr[i].SpeedOffset = 0.f;
+			}
+			StateMgr[i].TimelimitForIgnite = 0.2f;
 		}
-		StateMgr[i].TimelimitForIgnite = 0.2f;
 	}
 }

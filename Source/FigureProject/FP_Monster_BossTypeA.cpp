@@ -27,10 +27,19 @@ void AFP_Monster_BossTypeA::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	
+	float speedOffset = 1.f;
 
-	TimeAcc += DeltaTime;
-	Distance -= DeltaTime;
+	for (int i = 0; i < StateMgr.Num(); ++i)
+	{
+		if (StateMgr[i].eState == FROZEN || StateMgr[i].eState == FROZEN)
+		{
+			speedOffset = StateMgr[i].SpeedOffset;
+			break;
+		}
+	}
+
+	TimeAcc += DeltaTime * speedOffset;
+	Distance -= DeltaTime*3.f *speedOffset;
 	float fNewDist = Distance + cosf(TimeAcc);
 
 	FVector NewLocation = GetActorLocation();

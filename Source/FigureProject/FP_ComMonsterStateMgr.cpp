@@ -27,12 +27,12 @@ void AFP_ComMonsterStateMgr::Tick(float DeltaTime)
 
 void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monster)
 {
-	bool bIgnite = false;
-	bool bSlow = false;
 	float igniteDamage = 0.f;
 	float igniteDuration = 0.f;
 	float slowDamage = 0.f;
 	float slowDuration = 0.f;
+	float frozenDuration = 0.f;
+	float frozenProbability = 0.f;
 
 	if (_monster->StateMgr.Num() == 0)
 	{
@@ -43,11 +43,13 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 
 			igniteDuration = FMath::Max<float>(igniteDuration, _skill->Sockets[i].Rune->Ignite.Duration);
 			slowDuration = FMath::Max<float>(slowDuration, _skill->Sockets[i].Rune->Slow.Duration);
+			frozenDuration = FMath::Max<float>(slowDuration, _skill->Sockets[i].Rune->Frozen.Duration);
 
 			if (_skill->Sockets[i].Rune->Ignite.Duration != 0)
 				igniteDamage += _skill->Sockets[i].Rune->Ignite.Damage;
 			else if (_skill->Sockets[i].Rune->Slow.Duration != 0)
 				slowDamage += _skill->Sockets[i].Rune->Slow.Damage;
+		
 		}
 
 		if (_skill->Debuff == AFP_Monster::IGNITE)
@@ -56,9 +58,14 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 			igniteDuration = FMath::Max<float>(igniteDuration, _skill->DebuffDuration);
 		}
 			
-
 		if (_skill->Debuff == AFP_Monster::SLOW)
 			slowDuration = _skill->DebuffDuration;
+		if (_skill->Debuff == AFP_Monster::FROZEN)
+		{
+			frozenDuration = _skill->DebuffDuration;
+			frozenProbability = _skill->DebuffProbability;
+		}
+
 
 		if (igniteDuration != 0)
 		{
@@ -77,6 +84,17 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 			state.Duration = slowDuration;
 			state.eState = AFP_Monster::SLOW;
 			_monster->StateMgr.Add(state);
+		}
+
+		if (frozenDuration != 0)
+		{
+			if (FMath::FRandRange(0.f, 100.f) <= frozenProbability)
+			{
+				AFP_Monster::MonsterState state;
+				state.Duration = frozenDuration;
+				state.eState = AFP_Monster::FROZEN;
+				_monster->StateMgr.Add(state);
+			}
 		}
 	}
 	else

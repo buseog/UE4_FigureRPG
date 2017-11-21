@@ -30,6 +30,7 @@ public:
 	{
 		float Damage = 0.f;
 		float Duration = 0.f;
+		float Probability = 100.f;
 	};
 	
 public:
@@ -50,6 +51,7 @@ public:
 	RuneStat Stat;
 	DebuffStat Ignite;
 	DebuffStat Slow;
+	DebuffStat Frozen;
 	uint64 Property;
 	float Tier3DropRate = 60.f;
 	float Tier2DropRate = 60.f;

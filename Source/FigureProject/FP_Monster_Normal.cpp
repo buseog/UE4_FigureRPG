@@ -33,7 +33,7 @@ void AFP_Monster_Normal::Tick(float DeltaTime)
 
 	for (int i = 0; i < StateMgr.Num(); ++i)
 	{
-		if (StateMgr[i].eState == SLOW)
+		if (StateMgr[i].eState == SLOW || StateMgr[i].eState == FROZEN)
 		{
 			speedOffset = StateMgr[i].SpeedOffset;
 			break;

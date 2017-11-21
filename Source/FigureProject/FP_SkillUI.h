@@ -135,6 +135,6 @@ public:
 	{
 		TSubclassOf<T> Widget = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *_path.ToString()));
 		T* SkillWidget = CreateWidget<T>(_pc, Widget);
-		_pc->WidgetMap.Add(_widgetname, SkillWidget);
+		_pc->WidgetArray[_widgetname] = SkillWidget;
 	}
 };

@@ -184,7 +184,7 @@ void UFP_MainUI::OpenInventoryFromSkill()
 		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_Inventory_BP.FP_Inventory_BP_C'");
 		TSubclassOf<UFP_InventoryWidget> Inventory = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
 		UFP_InventoryWidget* InventoryWidget = CreateWidget<UFP_InventoryWidget>(PC, Inventory);
-		PC->WidgetMap.Add(AFP_PlayerController::INVENTORY, InventoryWidget);
+		PC->WidgetArray[AFP_PlayerController::INVENTORY] = InventoryWidget;
 	}
 
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();

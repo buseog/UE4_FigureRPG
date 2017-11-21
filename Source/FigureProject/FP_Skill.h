@@ -84,6 +84,7 @@ public:
 	AFP_Monster::MSTATE Debuff = AFP_Monster::NORMAL;
 	float DebuffDamage = 0.f;
 	float DebuffDuration = 0.f;
+	float DebuffProbability = 100.f;
 	/*------------------------------*/
 
 

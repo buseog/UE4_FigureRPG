@@ -25,7 +25,9 @@ AFP_IceBall::AFP_IceBall()
 
 	SkillInfo.Name = "IceBall";
 
-	
+	Debuff = AFP_Monster::FROZEN;
+	DebuffDuration = 1.f;
+	DebuffProbability = 30.f;
 }
 
 void AFP_IceBall::Tick(float DeltaTime)

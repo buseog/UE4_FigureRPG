@@ -23,7 +23,6 @@ AFP_IceBlast::AFP_IceBlast()
 
 	Particle->SetVectorParameter(TEXT("AttackRange"), FVector(0.1f, 0.1f, 0.1f));
 	SkillInfo.Name = "IceBlast";
-<<<<<<< .mine
 
 	Stat.Speed = 1.f;
 	Stat.CoolTimeRatio = 1.2f;
@@ -32,16 +31,8 @@ AFP_IceBlast::AFP_IceBlast()
 
 	SkillInfo.AtkSpdPerLv = 0.02f;
 	SkillInfo.DmgPerLv = 15.f;
-=======
 	Debuff = AFP_Monster::SLOW;
 
-
-
-
-
-
-
->>>>>>> .theirs
 }
 
 void AFP_IceBlast::BeginPlay()

@@ -19,14 +19,14 @@ public:
 	// Sets default values for this actor's properties
 	AFP_Monster();
 
-	enum MSTATE { NORMAL, SLOW, IGNITE };
+	enum MSTATE { NORMAL, SLOW, IGNITE , FROZEN};
 
 	struct MonsterState
 	{
 		float Duration = 0.f;
 		float SpeedOffset = 0.5f;
 		float Damage = 0.f;
-		MSTATE eState = SLOW;
+		MSTATE eState = NORMAL;
 		float TimelimitForIgnite = 0.f;
 	};
 

@@ -40,7 +40,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = StatusUI)
 	UFP_StatusWidget* StatusWidget;*/
 	
-	TMap<eWIDGET, UUserWidget*> WidgetMap;
+	//TMap<eWIDGET, UUserWidget*> WidgetMap;
+	UPROPERTY()
+	TArray<UUserWidget*> WidgetArray;
 
 	UUserWidget* GetWidgetMap(eWIDGET _key);
 
