@@ -31,6 +31,11 @@ template<typename T>
 float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AFP_Monster* _monster, AFP_Monster::MSTATE _additionalDmgOn)
 {
 	float RuneDmg = 1.f;
+	float Multiplier = 1.f;
+	bool isDebuffRune = false;
+
+	if (_player->Buff == AFP_Player::DMGUP)
+		Multiplier = _player->Multiplier;
 
 	if (_skill->Sockets.Num() != 0)
 	{
@@ -40,42 +45,23 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AF
 				break;
 
 			RuneDmg += (_skill->Sockets[i].Rune->Stat.Damage - 1.f);
-
-			for (int j = 0; j < _skill->Sockets[i].Rune->Option.Num(); ++j)
-			{
-				if (_skill->Sockets[i].Rune->Option[j].Contains("IGNITE") && _monster->StateMgr.eState != AFP_Monster::IGNITE)
-				{
-					_monster->StateMgr.Damage += _skill->Sockets[i].Rune->OptionVal[j];
-					_monster->StateMgr.Duration = _skill->Sockets[i].Rune->Stat.DebuffDuration;
-					_monster->StateMgr.Damage += _skill->DebuffDamage;
-					_monster->StateMgr.Duration = _skill->DebuffDuration;
-					_monster->StateMgr.eState = AFP_Monster::IGNITE;
-				}
-			}
 		}
 	}
 
-	if (_skill->Debuff == AFP_Monster::IGNITE && _monster->StateMgr.eState != AFP_Monster::IGNITE)
-	{
-		_monster->StateMgr.eState = AFP_Monster::IGNITE;
-		_monster->StateMgr.Damage += _skill->DebuffDamage;
-		_monster->StateMgr.Duration = _skill->DebuffDuration;
-	}
-
-	switch (_monster->StateMgr.eState)
+	/*switch (_monster->StateMgr.eState)
 	{
 	case AFP_Monster::IGNITE:
 		break;
 
 	case AFP_Monster::SLOW:
 		break;
-	}
+	}*/
 
 	if (RuneDmg == 0)
 		RuneDmg = 1.f;
 	//UE_LOG(LogClass, Error, TEXT("damage %f"), RuneDmg);
 	//UE_LOG(LogClass, Error, TEXT("damage %f"), _player->Status.Attack * _skill->Stat.Damage * RuneDmg);
-	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg;
+	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg * Multiplier;
 }
 
 template<typename T>
@@ -128,6 +114,10 @@ template<typename T>
 float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill)
 {
 	float RuneCoolTime = 1.f;
+	float Multiplier = 1.f;
+
+	if (_player->Buff == AFP_Player::ATTSPDUP)
+		Multiplier = _player->Multiplier;
 
 	if (_skill->Sockets.Num() != 0)
 	{
@@ -146,5 +136,5 @@ float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill)
 	//UE_LOG(LogClass, Log, TEXT("att speed %f"), _player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio + RuneCoolTime);
 
 	//target = 0.4f
-	return FMath::Max<float>(_player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio / RuneCoolTime, 0.4f);
+	return FMath::Max<float>(_player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio / RuneCoolTime, 0.4f) * Multiplier;
 }

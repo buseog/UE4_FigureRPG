@@ -100,5 +100,4 @@ public:
 	/*------------------------------*/
 
 	float TimelimitForDot = 0.f;
-	
 };

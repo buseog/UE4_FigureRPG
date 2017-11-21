@@ -33,7 +33,8 @@ void AFP_Item_PowerUp::OnProxOverlapBegin(UPrimitiveComponent* HitComp, AActor* 
 {
 	if (OtherActor->GetName().Contains("Player"))
 	{
-		Cast<AFP_Player>(OtherActor)->SetStat(2, 2.f, 3.f, LightColor);
+		//Cast<AFP_Player>(OtherActor)->SetStat(2, 2.f, 3.f, LightColor);
+		Cast<AFP_Player>(OtherActor)->SetBuff(AFP_Player::DMGUP, 2.f, 3.f);
 		Destroy();
 	}
 }

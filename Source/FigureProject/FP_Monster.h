@@ -26,40 +26,8 @@ public:
 		float Duration = 0.f;
 		float SpeedOffset = 0.5f;
 		float Damage = 0.f;
-		MSTATE eState = NORMAL;
-		AFP_Monster* Monster = nullptr;
+		MSTATE eState = SLOW;
 		float TimelimitForIgnite = 0.f;
-
-		void SetState(MSTATE _state, float _duration)
-		{
-			eState = _state;
-			Duration = _duration;
-		}
-
-		void CustomTick(float _delta)
-		{
-			if (Duration <= 0.f)
-			{
-				eState = NORMAL;
-				SpeedOffset = 1.f;
-				Monster->PointLight->SetIntensity(0.f);
-			}
-
-			if (eState == SLOW)
-			{
-				SpeedOffset = 0.5f;
-				Duration -= _delta;	
-				Monster->PointLight->SetLightColor(FColor::Blue);
-				Monster->PointLight->SetIntensity(150.f);
-			}
-
-			if (eState == IGNITE)
-			{
-				Duration -= _delta;
-				Monster->PointLight->SetLightColor(FColor::Red);
-				Monster->PointLight->SetIntensity(150.f);
-			}
-		}
 	};
 
 protected:
@@ -80,7 +48,7 @@ public:
 	float Speed = 10.f;
 	float Exp = 15.f;
 	float HPShowTime = 0.f;
-	MonsterState StateMgr;
+	TArray<MonsterState> StateMgr;
 	bool isTargeting = false;
 	
 public:
@@ -96,8 +64,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UFP_DamageUI* DamageUI;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-	UPointLightComponent* PointLight;
+
 	
 	bool isDestroy = false;
 	AFP_Item* Item;
@@ -107,4 +74,7 @@ public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	void DropItem();
 	void MyTakeDamage(float _damage, int fontsize = 40, FColor color = FColor::White);
+
+	void ChangeState(float _delta);
+	
 };

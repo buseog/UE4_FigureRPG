@@ -22,6 +22,7 @@ AFP_IceBlast::AFP_IceBlast()
 	Particle->OnSystemFinished.AddDynamic(this, &AFP_IceBlast::OnFinished);
 	Stat.Damage = 0.005f;
 	SkillInfo.Name = "IceBlast";
+	Debuff = AFP_Monster::SLOW;
 }
 
 void AFP_IceBlast::BeginPlay()
@@ -51,6 +52,8 @@ void AFP_IceBlast::Tick(float DeltaTime)
 
 	for (size_t i = 0; i < Targets.Num(); ++i)
 	{
+		AFP_ComMonsterStateMgr::StateControl(this, Targets[i]);
+
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
 		if (Targets[i]->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(Targets[i]);
@@ -65,7 +68,7 @@ void AFP_IceBlast::Tick(float DeltaTime)
 			Impact->SetImpact(AFP_Impact::ICEBLASTIMPACT);
 
 			//state slow
-			Targets[i]->StateMgr.SetState(Debuff, DebuffDuration);
+			//Targets[i]->StateMgr.SetState(Debuff, DebuffDuration);
 		}
 		TimelimitForDot = 1.f;
 	}

@@ -31,6 +31,18 @@ struct FInventoryLoad
 	float Range;
 
 	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float IgniteDamage;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float IgniteDuration;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float SlowDamage;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float SlowDuration;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
 	int Tier;
 
 	UPROPERTY(VisibleAnywhere, Category = Inventory)

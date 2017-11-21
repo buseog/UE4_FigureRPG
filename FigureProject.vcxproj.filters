@@ -30,7 +30,6 @@
       <Filter>Source\FigureProject\99. Default</Filter>
     </None>
     <None Include="..\..\Config\DefaultInput.ini" />
-    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\FigureProject\FigureProject.h">
@@ -167,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\FigureProject\FP_SaveGame.h">
       <Filter>Source\FigureProject\96. SaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComMonsterStateMgr.h">
+      <Filter>Source\FigureProject\97. Component\04. ComMonsterStateMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +307,9 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_SaveGame.cpp">
       <Filter>Source\FigureProject\96. SaveLoad</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComMonsterStateMgr.cpp">
+      <Filter>Source\FigureProject\97. Component\04. ComMonsterStateMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source\FigureProject\00. GameSetting">
@@ -432,6 +437,9 @@
     </Filter>
     <Filter Include="Source\FigureProject\96. SaveLoad">
       <UniqueIdentifier>{a4302723-3c08-43c8-b077-e840053c391a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\97. Component\04. ComMonsterStateMgr">
+      <UniqueIdentifier>{74f733da-02bb-4c04-a892-33fffbf615ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
