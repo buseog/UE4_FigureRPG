@@ -138,5 +138,5 @@ void UFP_RuneToolTip::EquipRune()
 	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->AddToViewport();
 	PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP)->AddToViewport();
 
-	
+	SkillToolTip->CurrentSkill->RuneChanged = true;
 }

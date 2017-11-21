@@ -46,16 +46,35 @@ void AFP_FireBall::Tick(float DeltaTime)
 	//UE_LOG(LogClass, Log, TEXT("bullet : %f"), AFP_ComCalculator::CalculateFinalSpeed(Player, this, DeltaTime));
 	AFP_ComProjectile::MoveToTarget(this, TargetDirection, AFP_ComCalculator::CalculateFinalSpeed(Player, this, DeltaTime));
 
+	if (Particle->AccumTickTime > 5.f)
+		Destroy();
+
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(ProxSphere);
+
 	if (TargetMonster != nullptr)
 	{
-		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
-		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
-		
-		if (TargetMonster->GetisDestory() == true)
-			Cast<AFP_Weapon>(Weapon)->DeleteTargetMonsterInArray(TargetMonster);
+		TimelimitForDot -= DeltaTime;
+		if (TimelimitForDot > 0.f)
+			return;
 
-		Destroy();
+		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
+
+		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
+		if (TargetMonster->GetisDestory() == true)
+			Weapon->DeleteTargetMonsterInArray(TargetMonster);
+
+		TimelimitForDot = 1.f;
+
+		if (!Stat.EnablePierce)
+			Destroy();
+		else
+		{
+			AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(this->GetActorLocation(), FRotator(0.f, 0.f, 0.f));
+			if (Impact == nullptr)
+				return;
+
+			Impact->SetImpact(AFP_Impact::FIREBALLIMPACT);
+		}
 	}
 }
 

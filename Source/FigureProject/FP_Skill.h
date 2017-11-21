@@ -54,6 +54,7 @@ public:
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
 		int ActiveSocketNum = 0;
+		bool EnablePierce = false;
 	};
 
 	AFP_Skill();
@@ -98,6 +99,7 @@ public:
 	UTexture2D* GreenSocketIcon;
 	UTexture2D* BlueSocketIcon;
 	UTexture2D* EmptySocketIcon;
+	bool RuneChanged = true;
 	/*------------------------------*/
 
 	float TimelimitForDot = 0.f;

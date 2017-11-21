@@ -336,7 +336,7 @@ void UFP_Tooltip::UnequipRune()
 	UUserWidget* InventoryWidget = PC->GetWidgetMap(AFP_PlayerController::INVENTORY);
 	Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();
 	
-
+	CurrentSkill->RuneChanged = true;
 
 }
 
