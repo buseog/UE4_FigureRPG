@@ -22,6 +22,14 @@ AFP_FireBlast::AFP_FireBlast()
 	Debuff = AFP_Monster::IGNITE;
 	DebuffDamage = 0.01f;
 	DebuffDuration = 2.f;
+
+	Stat.Speed = 1.f;
+	Stat.CoolTimeRatio = 2.f;
+	Stat.Damage = 1.f;
+	Stat.Range = 1.f;
+
+	SkillInfo.AtkSpdPerLv = 0.015f;
+	SkillInfo.DmgPerLv = 30.f;
 }
 
 // Called when the game starts or when spawned

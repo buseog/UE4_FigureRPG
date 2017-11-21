@@ -20,7 +20,7 @@
 #include "FP_FireBlastSpawnPoint.h"
 #include "FP_FireBlast.h"
 #include "FP_FireWall.h"
-
+#include "FP_ComMessageUI.h"
 
 bool AFP_PlayerController::isRev = false;
 bool AFP_PlayerController::isDead = false;
@@ -93,8 +93,9 @@ void AFP_PlayerController::BeginPlay()
 	else
 		Cast<UFP_GameStart>(WidgetMap[GAMESTART])->StartWithLoad();
 		
-	
-	
+
+	//Message Component
+	GetWorld()->SpawnActor<AFP_ComMessageUI>(FVector::ZeroVector, FRotator::ZeroRotator);
 	
 }
 

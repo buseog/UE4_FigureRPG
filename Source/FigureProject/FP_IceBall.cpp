@@ -16,7 +16,16 @@ AFP_IceBall::AFP_IceBall()
 	CollisionSphere->SetupAttachment(RootComponent);
 
 	Stat.Speed = 1.f;
+	Stat.CoolTimeRatio = 0.8f;
+	Stat.Damage = 1.5f;
+	Stat.Range = 1.f;
+
+	SkillInfo.AtkSpdPerLv = 0.025f;
+	SkillInfo.DmgPerLv = 15.f;
+
 	SkillInfo.Name = "IceBall";
+
+	
 }
 
 void AFP_IceBall::Tick(float DeltaTime)

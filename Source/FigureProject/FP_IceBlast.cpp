@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FP_IceBlast.h"
-
+#include "FP_Weapon.h"
 
 
 
@@ -14,14 +14,23 @@ AFP_IceBlast::AFP_IceBlast()
 
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
-	CollisionBox->InitBoxExtent(FVector(20.f, 30.f, 1.f));
-	CollisionBox->SetRelativeLocation(FVector(20.f, 0.f, 0.f));
+	CollisionBox->InitBoxExtent(FVector(30.f, 30.f, 1.f));
+	CollisionBox->SetRelativeLocation(FVector(30.f, 0.f, 0.f));
 	CollisionBox->SetupAttachment(RootComponent);
 	//CollisionBox->SetHiddenInGame(false);
 
 	Particle->OnSystemFinished.AddDynamic(this, &AFP_IceBlast::OnFinished);
-	Stat.Damage = 0.005f;
+
+	Particle->SetVectorParameter(TEXT("AttackRange"), FVector(0.1f, 0.1f, 0.1f));
 	SkillInfo.Name = "IceBlast";
+
+	Stat.Speed = 1.f;
+	Stat.CoolTimeRatio = 1.2f;
+	Stat.Damage = 1.f;
+	Stat.Range = 0.8f;
+
+	SkillInfo.AtkSpdPerLv = 0.02f;
+	SkillInfo.DmgPerLv = 15.f;
 }
 
 void AFP_IceBlast::BeginPlay()
@@ -35,6 +44,7 @@ void AFP_IceBlast::BeginPlay()
 void AFP_IceBlast::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	SetAttackArea();
 
 	if (Particle->GetNumActiveParticles() <= 0 && Particle->AccumTickTime > 0.3f)
 		Destroy();
@@ -94,4 +104,19 @@ void AFP_IceBlast::OnFinished(UParticleSystemComponent* _particle)
 
 
 	Destroy();
+}
+
+void AFP_IceBlast::SetAttackArea()
+{
+	TArray<AActor*> FoundActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFP_Weapon::StaticClass(), FoundActor);
+	if (FoundActor[0] == nullptr)
+		return;
+
+	Weapon = Cast<AFP_Weapon>(FoundActor[0]);
+	float Radius = Weapon->SphereComponent->GetScaledSphereRadius();
+	CollisionBox->SetBoxExtent(FVector(Radius*0.5f, 30.f, 1.f));
+	CollisionBox->SetRelativeLocation(FVector(Radius*0.5f, 0.f, 0.f));
+	Particle->SetVectorParameter(TEXT("AttackRange"), FVector(0.1f + Radius*0.001f, 0.1f, 0.1f));
+
 }

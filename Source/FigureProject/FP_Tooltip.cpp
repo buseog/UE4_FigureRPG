@@ -10,6 +10,7 @@
 #include "FP_FireBall.h"
 #include "FP_SkillUI.h"
 #include "VerticalBox.h"
+#include "FP_ComMessageUI.h"
 
 bool UFP_Tooltip::Initialize()
 {
@@ -83,7 +84,7 @@ bool UFP_Tooltip::Initialize()
 	SocketBox = (UVerticalBox*)GetWidgetFromName(TEXT("SocketButtonBox"));
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	PC = Cast<AFP_PlayerController>(Controller);
 
 
 
@@ -99,8 +100,6 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 {
 	Super::NativeTick(MyGeometry, DeltaTime);
 
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
 	if(ingDebug == true)
 		this->SetRenderTranslation(FVector2D(this->RenderTransform.Translation.X, -400));
@@ -144,8 +143,6 @@ void UFP_Tooltip::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 			}
 			else if (CurrentSkill->Sockets[i].Rune != nullptr && CurrentSkill->Sockets[i].Rune->IsValidLowLevel() == true)
 			{
-				APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-				AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 				UFP_Tooltip* SkillToolTip = Cast<UFP_Tooltip>(PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP));
 
 				SkillToolTip->SocketButton[i]->WidgetStyle.Normal.SetResourceObject(CurrentSkill->Sockets[i].Rune->Icon);
@@ -247,6 +244,9 @@ void UFP_Tooltip::CreateSocket()
 		pPlayer->Gem -= RequiredGem;
 		//SocketButton[iSocketIndex]->SetBackgroundColor(color);
 	}
+	else if (pPlayer->Gem < RequiredGem)
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString(TEXT("No Gem")), 2.f);
+
 
 	SocketBox->SetVisibility(ESlateVisibility::Hidden);
 }
@@ -293,9 +293,6 @@ void UFP_Tooltip::EquipRune()
 	if (CurrentSkill->Sockets.Num() < iSocketIndex + 1)
 		return;
 
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-
 	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
 	
 	//open inventory
@@ -333,9 +330,6 @@ void UFP_Tooltip::UnequipRune()
 	if (CurrentSkill->Sockets[iSocketIndex].Rune == nullptr || CurrentSkill->Sockets[iSocketIndex].Rune->IsValidLowLevel() == false)
 		return;
 
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
-	
 	CurrentSkill->Sockets[iSocketIndex].Rune->bEquiped = false;
 	CurrentSkill->Sockets[iSocketIndex].Rune = nullptr;
 

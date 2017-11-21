@@ -75,6 +75,7 @@ public:
 
 	bool ingDebug = false;
 
+	class AFP_PlayerController* PC;
 	
 
 	

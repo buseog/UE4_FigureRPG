@@ -42,22 +42,22 @@ public:
 			{
 				eState = NORMAL;
 				SpeedOffset = 1.f;
-				Monster->PointLight->SetIntensity(0.f);
+				Monster->Particle->SetVisibility(false);
 			}
 
 			if (eState == SLOW)
 			{
 				SpeedOffset = 0.5f;
 				Duration -= _delta;	
-				Monster->PointLight->SetLightColor(FColor::Blue);
-				Monster->PointLight->SetIntensity(150.f);
+				Monster->Particle->SetVisibility(true);
+				Monster->Particle->SetVectorParameter(TEXT("Color"), FVector(0.f, 0.f, 1.f));
 			}
 
 			if (eState == IGNITE)
 			{
 				Duration -= _delta;
-				Monster->PointLight->SetLightColor(FColor::Red);
-				Monster->PointLight->SetIntensity(150.f);
+				Monster->Particle->SetVisibility(true);
+				Monster->Particle->SetVectorParameter(TEXT("Color"), FVector(1.f, 0.f, 0.f));
 			}
 		}
 	};
@@ -96,8 +96,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UFP_DamageUI* DamageUI;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-	UPointLightComponent* PointLight;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
+	class UParticleSystemComponent* Particle;
 	
 	bool isDestroy = false;
 	AFP_Item* Item;

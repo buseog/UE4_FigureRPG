@@ -18,6 +18,14 @@ AFP_FireWall::AFP_FireWall()
 	//Particle->SetWorldScale3D(FVector(0.3f, 0.3f, 0.3f));
 
 	SkillInfo.Name = "FireWall";
+
+	Stat.Speed = 1.f;
+	Stat.CoolTimeRatio = 3.f;
+	Stat.Damage = 0.5f;
+	Stat.Range = 1.f;
+
+	SkillInfo.AtkSpdPerLv = 0.015f;
+	SkillInfo.DmgPerLv = 30.f;
 }
 
 // Called when the game starts or when spawned
@@ -68,7 +76,7 @@ void AFP_FireWall::Tick(float DeltaTime)
 		if(Targets[i]->GetisDestory())
 			Cast<AFP_Weapon>(Weapon)->DeleteTargetMonsterInArray(Targets[i]);
 
-		TimelimitForDot = 1.f;
+		TimelimitForDot = 0.25f;
 	}
 
 

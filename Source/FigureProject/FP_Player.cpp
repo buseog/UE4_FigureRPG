@@ -96,7 +96,6 @@ void AFP_Player::Tick(float DeltaTime)
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
 	Regeneration(DeltaTime);
-
 	
 	/*TimeAcc += DeltaTime;
 	UUserWidget* Test = PC->GetWidgetMap(AFP_PlayerController::MAINUI);
@@ -149,8 +148,8 @@ void AFP_Player::StatusLevelUp(int _Type)
 	switch (_Type)
 	{
 	case 0:
-		Status.MaxHp += 1.f;
-		Status.Hp += 1.f;
+		Status.MaxHp += 10.f;
+		Status.Hp += 10.f;
 		break;
 
 	case 1:
@@ -158,7 +157,7 @@ void AFP_Player::StatusLevelUp(int _Type)
 		break;
 
 	case 2:
-		Status.Attack += 0.01f;
+		Status.Attack += 0.5f;
 		break;
 
 	case 3:

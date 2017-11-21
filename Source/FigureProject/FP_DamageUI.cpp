@@ -57,7 +57,7 @@ void UFP_DamageUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 			++iIndex;
 	}
 
-	if (iIndex == TextArray.Num())
+	if (iIndex == TextArray.Num() && bDestroy == true)
 		this->RemoveFromViewport();
 }
 

@@ -15,9 +15,15 @@ AFP_IceOrb::AFP_IceOrb()
 	CollisionSphere->SetSphereRadius(4.f);
 	CollisionSphere->SetupAttachment(RootComponent);
 
+	SkillInfo.Name = "IceOrb";
+
 	Stat.Speed = 0.2f;
 	Stat.CoolTimeRatio = 1.5f;
-	SkillInfo.Name = "IceOrb";
+	Stat.Damage = 1.f;
+	Stat.Range = 0.8f;
+
+	SkillInfo.AtkSpdPerLv = 0.015f;
+	SkillInfo.DmgPerLv = 15.f;
 }
 
 void AFP_IceOrb::Tick(float DeltaTime)
@@ -43,7 +49,7 @@ void AFP_IceOrb::Tick(float DeltaTime)
 		if (TargetMonster->GetisDestory() == true)
 			Weapon->DeleteTargetMonsterInArray(TargetMonster);
 
-		TimelimitForDot = 0.5f;
+		TimelimitForDot = 0.25f;
 
 		//Destroy();
 	}

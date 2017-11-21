@@ -16,6 +16,16 @@ AFP_FireBall::AFP_FireBall()
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireBall.FP_FireBall'"));
 	Particle->SetTemplate(ParticleSystem.Object);
+
+	SkillInfo.Name = "FireBall";
+
+	Stat.Speed = 0.5f;
+	Stat.CoolTimeRatio = 1.5f;
+	Stat.Damage = 1.f;
+	Stat.Range = 1.f;
+
+	SkillInfo.AtkSpdPerLv = 0.015f;
+	SkillInfo.DmgPerLv = 25.f;
 }
 
 // Called when the game starts or when spawned
@@ -26,11 +36,6 @@ void AFP_FireBall::BeginPlay()
 	//Stat.Damage += SkillInfo.FireBallDmgLv * (Player->SkillLv.FireBall - 1);
 	//Stat.CoolTimeRatio -= SkillInfo.FireBallAtkSpdLv * (Player->SkillLv.FireBall - 1);
 
-	Stat.Damage = 1.f;
-	Stat.Speed = 0.5f;
-	Stat.Range = 2.f;
-	Stat.CoolTimeRatio = 1.f;
-	SkillInfo.Name = "FireBall";
 
 }
 

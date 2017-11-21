@@ -29,4 +29,6 @@ public:
 	void OnFinished(UParticleSystemComponent* _particle);
 	
 	TArray<AFP_Monster*> Targets;
+
+	void SetAttackArea();
 };

@@ -45,8 +45,8 @@ void AFP_MonsterMgr::Tick(float DeltaTime)
 		int32 iSpawnY = FMath::RandRange(100, Y) * (rand() % 2 - 0.5);
 		
 		AFP_Monster* SpawnedMonster = nullptr;
-		int iRand = rand() % 2;
-		if(iRand == 0)
+		int iRand = rand() % 10;
+		if(iRand >= 7)
 			SpawnedMonster = GetWorld()->SpawnActor<AFP_Monster_BossTypeA>(FVector(iSpawnX, iSpawnY, 0.f), FRotator(0.f, 0.f, 0.f));
 		else
 			SpawnedMonster = GetWorld()->SpawnActor<AFP_Monster_Normal>(FVector(iSpawnX, iSpawnY, 0.f), FRotator(0.f, 0.f, 0.f));
@@ -54,9 +54,9 @@ void AFP_MonsterMgr::Tick(float DeltaTime)
 
 		//FVector2D ViewportSize = GEngine->GameViewport->Viewport->GetSizeXY();
 		
-		SpawnedMonster->HP = Stage * Stage + 3;
+		SpawnedMonster->HP = FMath::Pow(1.2f, Stage) * 20;
 		SpawnedMonster->MaxHP = SpawnedMonster->HP;
-		SpawnedMonster->Exp = SpawnedMonster->HP * 5;
+		SpawnedMonster->Exp = SpawnedMonster->HP*3;
 
 		
 		//MonsterArray.Add(SpawnedMonster);

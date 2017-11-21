@@ -16,6 +16,7 @@
 #include "FP_DamageUI.h"
 #include "FP_PlayerController.h"
 #include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Runtime/Engine/Classes/Engine/RendererSettings.h"
 
 // Sets default values
@@ -39,12 +40,12 @@ AFP_Monster::AFP_Monster()
 
 	SetActorEnableCollision(true);
 
-	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("PointLight"));
-	PointLight->Intensity = 50.f;
-	PointLight->LightColor = FColor(0, 0, 255);
-	PointLight->AttenuationRadius = 20.f;
-	PointLight->MoveComponent(FVector(this->GetActorLocation().X, this->GetActorLocation().Y, this->GetActorLocation().Z), FRotator(), false);
-	PointLight->SetupAttachment(RootComponent);
+
+	Particle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle"));
+	Particle->SetupAttachment(RootComponent);
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Player/Debuf.Debuf'"));
+	Particle->SetTemplate(ParticleSystem.Object);
+	Particle->SetVisibility(false);
 
 	
 }
@@ -82,6 +83,9 @@ void AFP_Monster::Tick(float DeltaTime)
 	{
 		if(HP_UI != nullptr)
 			HP_UI->RemoveFromViewport();
+
+		if (DamageUI != nullptr)
+			DamageUI->bDestroy = true;
 		//isDestroy = false;
 		Destroy();
 		return;
@@ -118,10 +122,12 @@ void AFP_Monster::Tick(float DeltaTime)
 	{
 		isDestroy = true;
 		player->Status.Hp -= HP;
-		if (player->Status.Hp <= 0)
+		if (player->Status.Hp < 1)
 			player->RestartStage();
 
-		Weapon->DeleteTargetMonsterInArray(this);
+		return;
+
+		//Weapon->DeleteTargetMonsterInArray(this);
 	}
 	//State Control
 	StateMgr.CustomTick(DeltaTime);
@@ -135,8 +141,8 @@ void AFP_Monster::Tick(float DeltaTime)
 
 		MyTakeDamage(MaxHP * StateMgr.Damage, 30, FColor(255, 0, 0));
 
-		if (isDestroy)
-			Weapon->DeleteTargetMonsterInArray(this);
+		//if (isDestroy)
+			//Weapon->DeleteTargetMonsterInArray(this);
 	}
 	StateMgr.TimelimitForIgnite = 0.2f;
 }
