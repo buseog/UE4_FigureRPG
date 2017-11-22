@@ -61,6 +61,7 @@ public:
 	TArray<FString> Option;
 	TArray<float> OptionVal;
 	bool bEquiped = false;
+	float ExpBonus = 1.f;
 
 	//½Â·ÄÃß°¡
 	int iSkillIndex;

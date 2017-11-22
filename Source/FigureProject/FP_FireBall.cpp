@@ -53,16 +53,14 @@ void AFP_FireBall::Tick(float DeltaTime)
 
 	if (TargetMonster != nullptr)
 	{
+		TargetMonster->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
+
 		TimelimitForDot -= DeltaTime;
 		if (TimelimitForDot > 0.f)
 			return;
 
 		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
-
-		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
-		if (TargetMonster->GetisDestory() == true)
-			Weapon->DeleteTargetMonsterInArray(TargetMonster);
-
+		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));	
 		TimelimitForDot = 1.f;
 
 		if (!Stat.EnablePierce)

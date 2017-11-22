@@ -58,12 +58,11 @@ void AFP_FireBlast::Tick(float DeltaTime)
 	AFP_ComCollision::CollisionWithMulti<USphereComponent, AFP_Monster>(ProxSphere, Targets);
 	for (size_t i = 0; i < Targets.Num(); ++i)
 	{
+		Targets[i]->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
 		AFP_ComMonsterStateMgr::StateControl(this, Targets[i]);
 
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
-		if (Targets[i]->GetisDestory() == true)
-			Weapon->DeleteTargetMonsterInArray(Targets[i]);
-
+		
 		AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(Targets[i]->GetActorLocation(), FRotator(0.f, 0.f, 0.f));
 		if (Impact == nullptr)
 			continue;

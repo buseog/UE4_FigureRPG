@@ -64,7 +64,7 @@ void AFP_FireWall::Tick(float DeltaTime)
 
 	for (int i = 0; i < Targets.Num(); ++i)
 	{
-
+		Targets[i]->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
 		AFP_ComMonsterStateMgr::StateControl(this, Targets[i]);
 
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
@@ -74,9 +74,6 @@ void AFP_FireWall::Tick(float DeltaTime)
 			return;
 
 		Impact->SetImpact(AFP_Impact::FIREBALLIMPACT);*/
-
-		if(Targets[i]->GetisDestory())
-			Cast<AFP_Weapon>(Weapon)->DeleteTargetMonsterInArray(Targets[i]);
 
 		TimelimitForDot = 0.25f;
 	}

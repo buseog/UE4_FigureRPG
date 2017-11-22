@@ -33,7 +33,8 @@ public:
 		for (int i = 0; i < Actors.Num(); ++i)
 		{
 			B* Target = Cast<B>(Actors[i]);
-			if (Target == NULL)
+			AFP_Monster* MonsterTarget = Cast<AFP_Monster>(Target);
+			if (Target == NULL || (MonsterTarget != NULL && MonsterTarget->MyBehaviour == AFP_Monster::DEAD))
 				continue;
 
 			return Target;
@@ -52,7 +53,7 @@ public:
 		for (int i = 0; i < Actors.Num(); ++i)
 		{
 			B* Target = Cast<B>(Actors[i]);
-			if (Target != NULL)
+			if (Target != NULL && Target->MyBehaviour != AFP_Monster::DEAD)
 			{
 				_Array.Add(Target);
 			}

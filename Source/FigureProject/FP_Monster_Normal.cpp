@@ -12,7 +12,7 @@ void AFP_Monster_Normal::BeginPlay()
 	MaxHP = 2.f;
 	HP = MaxHP;
 
-	int iRand = FMath::RandRange(5, 8);
+	int iRand = FMath::RandRange(TRIANGLE_WHITE_A, TRIANGLE_WHITE_D);
 	PaperSprite->SetSprite(MonsterIconArray[iRand]);
 	OriginIcon = (AFP_Monster::MONSTERICON)iRand;
 }
@@ -20,6 +20,9 @@ void AFP_Monster_Normal::BeginPlay()
 void AFP_Monster_Normal::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (MyBehaviour == DEAD)
+		return;
 
 	FVector CurrentLocation = GetActorLocation();
 	/*if (CurrentLocation.Size() < 1)

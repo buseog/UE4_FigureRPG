@@ -61,6 +61,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Button")
 	UButton* EquipButton;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Button")
+	UButton* DeleteButton;
+
 	AFP_Skill* SelectedSkill = nullptr;
 	AFP_Rune* SelectedRune = nullptr;
 	
@@ -70,4 +73,7 @@ public:
 
 	UFUNCTION()
 	void EquipRune();
+
+	UFUNCTION()
+	void DeleteRune();
 };

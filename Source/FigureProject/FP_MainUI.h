@@ -28,6 +28,7 @@ public:
 	virtual void NativeConstruct() override;
 	virtual bool Initialize() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
+	void SetMyVisibility(ESlateVisibility _visibility);
 	
 	float TimeAcc = 0.f;
 

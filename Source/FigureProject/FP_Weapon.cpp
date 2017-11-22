@@ -128,12 +128,6 @@ void AFP_Weapon::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * O
 }
 
 
-void AFP_Weapon::DeleteTargetMonsterInArray(AFP_Monster* _monster)
-{
-	TargetMonsters.Remove(_monster);
-
-}
-
 void AFP_Weapon::SpawnSkill()
 {
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));

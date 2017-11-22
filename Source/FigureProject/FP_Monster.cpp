@@ -13,6 +13,7 @@
 #include "FP_Player.h"
 #include "FP_ComCollision.h"
 #include "FP_MonsterMgr.h"
+#include "FP_ComCalculator.h"
 #include "FP_DamageUI.h"
 #include "FP_PlayerController.h"
 #include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
@@ -20,6 +21,8 @@
 #include "Runtime/Engine/Classes/Engine/RendererSettings.h"
 #include "PaperSpriteComponent.h"
 #include "PaperSprite.h"
+#include "FP_Tooltip.h"
+#include "FP_Skill.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -60,6 +63,8 @@ AFP_Monster::AFP_Monster()
 	MonsterIconArray.Add(Sprite4.Object);
 	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite5(TEXT("PaperSprite'/Game/Icon/Monster/WhiteSqareMonsterHit_Sprite.WhiteSqareMonsterHit_Sprite'"));
 	MonsterIconArray.Add(Sprite5.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite11(TEXT("PaperSprite'/Game/Icon/Monster/WhiteSqareMonsterDie_Sprite.WhiteSqareMonsterDie_Sprite'"));
+	MonsterIconArray.Add(Sprite11.Object);
 
 	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite6(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterA_Sprite.WhiteTriangleMonsterA_Sprite'"));
 	MonsterIconArray.Add(Sprite6.Object);
@@ -71,6 +76,8 @@ AFP_Monster::AFP_Monster()
 	MonsterIconArray.Add(Sprite9.Object);
 	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite10(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterHit_Sprite.WhiteTriangleMonsterHit_Sprite'"));
 	MonsterIconArray.Add(Sprite10.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite12(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterDie_Sprite.WhiteTriangleMonsterDie_Sprite'"));
+	MonsterIconArray.Add(Sprite12.Object);
 }
 
 // Called when the game starts or when spawned
@@ -104,8 +111,7 @@ void AFP_Monster::Tick(float DeltaTime)
 	
 	if (isDestroy == true)
 	{
-		if(HP_UI != nullptr)
-			HP_UI->RemoveFromViewport();
+
 
 		if (DamageUI != nullptr)
 			DamageUI->bDestroy = true;
@@ -146,7 +152,7 @@ void AFP_Monster::Tick(float DeltaTime)
 	if (player != nullptr)
 	{
 		player->MyState = AFP_Player::HIT;
-		isDestroy = true;
+		MyBehaviour = DEAD;
 		player->Status.Hp -= HP;
 		if (player->Status.Hp < 1)
 			player->RestartStage();
@@ -178,8 +184,8 @@ void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	AFP_PlayerController* CustomPlayerController = Cast<AFP_PlayerController>(PlayerController);
 
 	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-	Player->Level.Exp += Exp;
 	
+	Player->Level.Exp += Exp * 	ExpBonus;
 	AFP_MonsterMgr::MonsterKillCnt++;
 
 }
@@ -235,7 +241,7 @@ void AFP_Monster::DropItem()
 
 void AFP_Monster::MyTakeDamage(float _damage, int fontsize, FColor color)
 {
-	if (isDestroy == true)
+	if (isDestroy == true || MyBehaviour == DEAD)
 		return;
 	
 	MyBehaviour = HIT;
@@ -243,8 +249,13 @@ void AFP_Monster::MyTakeDamage(float _damage, int fontsize, FColor color)
 	HPShowTime = 1.f;
 
 	if (HP <= 0)
-		isDestroy = true;
+	{
+		MyBehaviour = DEAD;
 
+		if (HP_UI != nullptr)
+			HP_UI->RemoveFromViewport();
+	}
+		
 	
 
 	//show damage ui
@@ -338,7 +349,7 @@ void AFP_Monster::ChangeState(float _delta)
 }
 void AFP_Monster::BehaviourChanger(float _delta)
 {
-	if (MyBehaviour != IDLE)
+	if (MyBehaviour != IDLE && MyBehaviour != DEAD)
 	{
 		StateTimeAcc += _delta;
 		if (StateTimeAcc > 0.5f)
@@ -348,6 +359,7 @@ void AFP_Monster::BehaviourChanger(float _delta)
 		}
 	}
 
+	float Alpha;
 	switch (MyBehaviour)
 	{
 	case IDLE:
@@ -358,6 +370,22 @@ void AFP_Monster::BehaviourChanger(float _delta)
 			PaperSprite->SetSprite(MonsterIconArray[SQUARE_WHITE_HIT]);
 		else
 			PaperSprite->SetSprite(MonsterIconArray[TRIANGLE_WHITE_HIT]);
+		break;
+	case DEAD:
+		if (OriginIcon < SQUARE_WHITE_HIT)
+			PaperSprite->SetSprite(MonsterIconArray[SQUARE_WHITE_DEAD]);
+		else
+			PaperSprite->SetSprite(MonsterIconArray[TRIANGLE_WHITE_DEAD]);
+
+		DeadTimeAcc += _delta;
+
+		Alpha = 1 - DeadTimeAcc;
+		PaperSprite->SetSpriteColor(FLinearColor(PaperSprite->GetSpriteColor().R, PaperSprite->GetSpriteColor().G, PaperSprite->GetSpriteColor().B, Alpha));
+		if (DeadTimeAcc > 1.f)
+			isDestroy = true;
+
+
+		
 		break;
 	}
 }

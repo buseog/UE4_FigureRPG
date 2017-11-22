@@ -423,6 +423,8 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 		inventory.FreezeProbability = Inventory[i]->Frozen.Probability;
 		inventory.FreezeDuration = Inventory[i]->Frozen.Duration;
 
+		inventory.ExpBonus = Inventory[i]->ExpBonus;
+
 		inventory.Name = Inventory[i]->Name;
 
 		inventory.bEquiped = Inventory[i]->bEquiped;

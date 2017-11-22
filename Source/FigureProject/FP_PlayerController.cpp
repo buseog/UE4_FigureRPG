@@ -187,6 +187,8 @@ bool AFP_PlayerController::Load()
 		AFP_Rune::DebuffStat Frozen;
 		Frozen.Probability = LoadGameInstance->Inventory[i].FreezeProbability;
 		Frozen.Duration = LoadGameInstance->Inventory[i].FreezeDuration;
+
+		rune->ExpBonus = LoadGameInstance->Inventory[i].ExpBonus;
 			
 		if (stat.Range == 0)
 			UE_LOG(LogClass, Log, TEXT("BUG"));

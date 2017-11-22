@@ -41,6 +41,8 @@ void AFP_IceOrb::Tick(float DeltaTime)
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(CollisionSphere);
 	if (TargetMonster != nullptr)
 	{
+		TargetMonster->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
+
 		TimelimitForDot -= DeltaTime;
 		if (TimelimitForDot > 0.f)
 			return;
@@ -48,8 +50,6 @@ void AFP_IceOrb::Tick(float DeltaTime)
 		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
 
 		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
-		if (TargetMonster->GetisDestory() == true)
-			Weapon->DeleteTargetMonsterInArray(TargetMonster);
 
 		TimelimitForDot = 0.25f;
 

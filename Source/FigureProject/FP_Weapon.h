@@ -36,8 +36,7 @@ public:
 
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	void DeleteTargetMonsterInArray(AFP_Monster* _monster);
+	
 	void SpawnSkill();
 	float GetStatfromSkill(FString _stat);
 	inline void SetActiveSkill(SKILLTYPE _type) { ActiveSkill = _type; }

@@ -21,7 +21,7 @@ void AFP_Monster_BossTypeA::BeginPlay()
 
 	SphereComponent->SetSphereRadius(8.f);
 
-	int iRand = FMath::RandRange(0, 3);
+	int iRand = FMath::RandRange(SQUARE_WHITE_A, SQUARE_WHITE_D);
 	PaperSprite->SetSprite(MonsterIconArray[iRand]);
 	PaperSprite->SetRelativeScale3D(FVector(0.075f, 0.075f, 0.075f));
 	OriginIcon = (AFP_Monster::MONSTERICON)iRand;
@@ -32,8 +32,10 @@ void AFP_Monster_BossTypeA::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	float speedOffset = 1.f;
+	if (MyBehaviour == DEAD)
+		return;
 
+	float speedOffset = 1.f;
 	for (int i = 0; i < StateMgr.Num(); ++i)
 	{
 		if (StateMgr[i].eState == FROZEN || StateMgr[i].eState == FROZEN)

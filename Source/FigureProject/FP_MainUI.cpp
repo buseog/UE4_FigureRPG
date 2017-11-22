@@ -115,6 +115,8 @@ void UFP_MainUI::Button_Stat()
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 	PC->GetWidgetMap(AFP_PlayerController::STATUS)->AddToViewport();
+
+	SetMyVisibility(ESlateVisibility::Hidden);
 	
 }
 
@@ -124,6 +126,8 @@ void UFP_MainUI::Button_Skill()
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 	PC->GetWidgetMap(AFP_PlayerController::SKILLUI)->AddToViewport();
+
+	SetMyVisibility(ESlateVisibility::Hidden);
 	
 }
 
@@ -170,6 +174,7 @@ void UFP_MainUI::Button_Rune()
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
 
 	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
+	SetMyVisibility(ESlateVisibility::Hidden);
 
 }
 
@@ -189,4 +194,12 @@ void UFP_MainUI::OpenInventoryFromSkill()
 
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
 	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
+}
+
+void UFP_MainUI::SetMyVisibility(ESlateVisibility _visibility)
+{
+	for (int i = 0; i < ButtonArray.Num(); ++i)
+	{
+		ButtonArray[i]->SetVisibility(_visibility);
+	}
 }

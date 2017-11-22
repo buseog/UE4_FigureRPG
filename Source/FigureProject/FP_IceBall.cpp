@@ -44,12 +44,10 @@ void AFP_IceBall::Tick(float DeltaTime)
 		if (TimelimitForDot > 0.f)
 			return;
 
+		TargetMonster->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
 		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
 
 		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
-		if (TargetMonster->GetisDestory() == true)
-			Weapon->DeleteTargetMonsterInArray(TargetMonster);
-
 		TimelimitForDot = 1.f;
 
 		if (!Stat.EnablePierce)

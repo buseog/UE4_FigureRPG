@@ -63,11 +63,10 @@ void AFP_IceBlast::Tick(float DeltaTime)
 
 	for (size_t i = 0; i < Targets.Num(); ++i)
 	{
+		Targets[i]->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
 		AFP_ComMonsterStateMgr::StateControl(this, Targets[i]);
 
 		Targets[i]->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, Targets[i]));
-		if (Targets[i]->GetisDestory() == true)
-			Weapon->DeleteTargetMonsterInArray(Targets[i]);
 
 		//UE_LOG(LogClass, Log, TEXT("%s"), *Targets[i]->GetName());
 		

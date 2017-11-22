@@ -48,6 +48,9 @@ struct FInventoryLoad
 	UPROPERTY(VisibleAnywhere, Category = Inventory)
 	float FreezeDuration;
 
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	float ExpBonus;
+
 
 	UPROPERTY(VisibleAnywhere, Category = Inventory)
 	int Tier;

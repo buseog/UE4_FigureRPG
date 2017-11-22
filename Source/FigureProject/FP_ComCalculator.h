@@ -37,4 +37,7 @@ public:
 
 	template<typename T>
 	static float CalculateFinalCoolTime(AFP_Player* _player, T* _skill);
+
+	template<typename T>
+	static float CalculateExpBonus(T* _skill);
 };

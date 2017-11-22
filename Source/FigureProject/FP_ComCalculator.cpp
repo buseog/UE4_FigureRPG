@@ -138,3 +138,20 @@ float AFP_ComCalculator::CalculateFinalCoolTime(AFP_Player* _player, T* _skill)
 	//target = 0.4f
 	return FMath::Max<float>(_player->Status.AttackSpeed * _skill->Stat.CoolTimeRatio / RuneCoolTime, 0.4f) * Multiplier;
 }
+
+template<typename T>
+float AFP_ComCalculator::CalculateExpBonus(T* _skill)
+{
+	float ExpBonus = 1.f;
+	if (_skill->Sockets.Num() != 0)
+	{
+		for (int i = 0; i < _skill->Sockets.Num(); ++i)
+		{
+			if (!_skill->Sockets[i].Rune->IsValidLowLevel() || _skill->Sockets[i].Rune == nullptr)
+				continue;
+
+			ExpBonus += (_skill->Sockets[i].Rune->ExpBonus - 1.f);
+		}
+	}
+	return ExpBonus;
+}

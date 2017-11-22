@@ -10,9 +10,10 @@ bool UFP_RuneToolTip::Initialize()
 	Super::Initialize();
 
 	EquipButton = Cast<UButton>(GetWidgetFromName(TEXT("EquipBtn")));
-
 	EquipButton->OnClicked.AddDynamic(this, &UFP_RuneToolTip::EquipRune);
 
+	DeleteButton = Cast<UButton>(GetWidgetFromName(TEXT("Delete")));
+	DeleteButton->OnClicked.AddDynamic(this, &UFP_RuneToolTip::DeleteRune);
 	return true;
 }
 
@@ -91,9 +92,16 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 	Tier = FText::FromString(FString::FromInt(_rune->Stat.Tier) + " Tier");
 
 	if (_fromInventory)
+	{
 		EquipButton->SetVisibility(ESlateVisibility::Hidden);
+		DeleteButton->SetVisibility(ESlateVisibility::Visible);
+	}
 	else
+	{
 		EquipButton->SetVisibility(ESlateVisibility::Visible);
+		DeleteButton->SetVisibility(ESlateVisibility::Hidden);
+	}
+		
 
 	SelectedSkill = _skill;
 	SelectedRune = _rune;
@@ -139,4 +147,25 @@ void UFP_RuneToolTip::EquipRune()
 	PC->GetWidgetMap(AFP_PlayerController::SKILLTOOLTIP)->AddToViewport();
 
 	SkillToolTip->CurrentSkill->RuneChanged = true;
+}
+void UFP_RuneToolTip::DeleteRune()
+{
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (nullptr == pPlayer)
+		return;
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+
+	int iFound = 0;
+	if (false == pPlayer->Inventory.Find(SelectedRune, iFound))
+		return;
+
+	pPlayer->Inventory.RemoveAt(iFound);
+	SelectedRune->Destroy();
+	SelectedRune = nullptr;
+	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
+
+	RemoveFromViewport();
 }

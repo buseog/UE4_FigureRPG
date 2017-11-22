@@ -7,6 +7,7 @@
 #include "FP_PlayerController.h"
 #include "FP_InventoryWidget.h"
 #include "Button.h"
+#include "FP_MainUI.h"
 #include "Runtime/UMG/Public/Components/TextBlock.h"
 
 
@@ -118,12 +119,14 @@ void UFP_StageWidget::Button_Exit()
 {
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->SetMyVisibility(ESlateVisibility::Visible);
 
 	if (PC->GetWidgetMap(AFP_PlayerController::STATUS)->IsValidLowLevel() == true)
 	{
 		if (PC->GetWidgetMap(AFP_PlayerController::STATUS)->IsInViewport() == true)
 		{
 			PC->GetWidgetMap(AFP_PlayerController::STATUS)->RemoveFromViewport();
+			
 		}
 	}
 
