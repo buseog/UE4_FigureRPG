@@ -25,7 +25,7 @@ struct RED {
 struct GREEN {
 	const uint64 ATTACKSPEEDUP				= 0x00000001;	// 스탯, 퍼센트
 	const uint64 BULLETSPEEDUP				= 0x00000010;	// 스탯, 퍼센트
-	const uint64 STUN						= 0x00000100;	// 확률
+	const uint64 SLOW						= 0x00000100;	// 확정, 디버프, 퍼센트
 	//const uint64 KNOCKBACK				= 0x00000100;	// 거리
 	//const uint64 DAMAGEUPTOSQARE			= 0x00001000;	// 확정, 퍼센트
 	//const uint64 ATTACKTWICE				= 0x00010000;	// 확률
@@ -33,7 +33,7 @@ struct GREEN {
 
 	const FString NAME_ATTACKSPEEDUP		= "ATTACK SPEED UP:STAT";
 	const FString NAME_BULLETSPEEDUP		= "BULLET SPEED UP:STAT";
-	const FString NAME_STUN					= "STUN:PROBABILITY_DEBUFF";
+	const FString NAME_SLOW					= "SLOW:FIXED_DEBUFF";
 	//const FString NAME_KNOCKBACK			= "KNOCK BACK:FIXED";
 	//const FString NAME_DAMAGEUPTOSQARE	= "DAMAGE UP TO SQARE:FIXED";
 	//const FString NAME_ATTACKTWICE		= "ATTACK TWICE:PROBABILITY";
@@ -43,17 +43,17 @@ struct GREEN {
 struct BLUE {
 	const uint64 RANGEUP					= 0x00000001;	// 스탯, 퍼센트
 	const uint64 EXPUP						= 0x00000010;	// 획득 경험치 증가, 퍼센트
-	const uint64 SLOW						= 0x00000100;	// 확정, 디버프, 퍼센트
+	const uint64 FREEZE						= 0x00000100;	// 확률
+	//const uint64 STUN						= 0x00000100;	// 확률
 	//const uint64 GUIDED					= 0x00000100;	// 확정, PROJECTILE
-	//const uint64 FREEZE					= 0x00010000;	// 확률
 	//const uint64 AREAUP					= 0x00100000;	// AOE, 퍼센트
 	//const uint64 DAMAGEUPTOTRIANGLE		= 0x01000000;	// 확정, 퍼센트
 
 	const FString NAME_RANGEUP				= "RANGE UP:STAT";
 	const FString NAME_EXPUP				= "EXP UP:EXP";
-	const FString NAME_SLOW					= "SLOW:FIXED_DEBUFF";
+	const FString NAME_FREEZE				= "FREEZE:PROBABILITY_DEBUFF_ICE";
+	//const FString NAME_STUN				= "STUN:PROBABILITY_DEBUFF";
 	//const FString NAME_GUIDED				= "GUIDED:FIXED_PROJECTILE";
-	//const FString NAME_FREEZE				= "FREEZE:PROBABILITY_DEBUFF_ICE";
 	//const FString NAME_AREAUP				= "AREA UP:AOE";
 	//const FString NAME_DAMAGEUPTOTRIANGLE = "DAMAGE UP TO TRIANGLE:FIXED";
 };
@@ -116,8 +116,8 @@ struct RUNESTATRANGE
 		const float SLOW_MIN				= 0.5f;
 		const float SLOW_MAX				= 1.f;
 
-		const float FREEZEONSLOW_MIN		= 0.5f;
-		const float FREEZEONSLOW_MAX		= 1.f;
+		const float FREEZE_MIN				= 1.f;
+		const float FREEZE_MAX				= 4.f;
 
 		const float AREAUP_MAX				= 1.1f;
 		const float AREAUP_MIN				= 1.2f;
@@ -185,8 +185,8 @@ struct RUNESTATRANGE
 		const float SLOW_MIN				= 0.5f;
 		const float SLOW_MAX				= 1.f;
 
-		const float FREEZEONSLOW_MIN		= 0.5f;
-		const float FREEZEONSLOW_MAX		= 1.f;
+		const float FREEZE_MIN				= 4.f;
+		const float FREEZE_MAX				= 8.f;
 
 		const float AREAUP_MAX				= 1.1f;
 		const float AREAUP_MIN				= 1.2f;
@@ -254,8 +254,8 @@ struct RUNESTATRANGE
 		const float SLOW_MIN				= 0.5f;
 		const float SLOW_MAX				= 1.f;
 
-		const float FREEZEONSLOW_MIN		= 0.5f;
-		const float FREEZEONSLOW_MAX		= 1.f;
+		const float FREEZE_MIN				= 8.f;
+		const float FREEZE_MAX				= 12.f;
 
 		const float AREAUP_MAX				= 1.1f;
 		const float AREAUP_MIN				= 1.2f;

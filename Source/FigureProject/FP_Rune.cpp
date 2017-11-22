@@ -65,7 +65,7 @@ void AFP_Rune::Tick(float DeltaTime)
 	//UE_LOG(LogClass, Log, TEXT("%d"), Stat.Tier);
 }
 
-AFP_Rune* AFP_Rune::Initiate(FColor _color, uint64 _property, RuneStat _stat, DebuffStat _ignite, DebuffStat _slow, FString _name, TArray<FString> _option, TArray<float> _optionVal)
+AFP_Rune* AFP_Rune::Initiate(FColor _color, uint64 _property, RuneStat _stat, DebuffStat _ignite, DebuffStat _slow, DebuffStat _frozen, FString _name, TArray<FString> _option, TArray<float> _optionVal)
 {
 	if (_stat.Tier == 1)
 	{
@@ -103,6 +103,7 @@ AFP_Rune* AFP_Rune::Initiate(FColor _color, uint64 _property, RuneStat _stat, De
 	Stat = _stat;
 	Ignite = _ignite;
 	Slow = _slow;
+	Frozen = _frozen;
 
 	return this;
 }

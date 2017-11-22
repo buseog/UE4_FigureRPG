@@ -18,6 +18,8 @@
 #include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Runtime/Engine/Classes/Engine/RendererSettings.h"
+#include "PaperSpriteComponent.h"
+#include "PaperSprite.h"
 
 // Sets default values
 AFP_Monster::AFP_Monster()
@@ -28,12 +30,6 @@ AFP_Monster::AFP_Monster()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	StaticMesh->SetupAttachment(RootComponent);
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MonsterMesh(TEXT("StaticMesh'/Game/Mesh/Sphere_Monster.Sphere_Monster'"));
-	StaticMesh->SetStaticMesh(MonsterMesh.Object);
-
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	SphereComponent->InitSphereRadius(3.0f);
 	SphereComponent->SetupAttachment(RootComponent);
@@ -49,6 +45,32 @@ AFP_Monster::AFP_Monster()
 
 
 
+	PaperSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaperSprite"));
+	PaperSprite->SetupAttachment(RootComponent);
+	PaperSprite->SetRelativeScale3D(FVector(0.05f, 0.05f, 0.05f));
+	PaperSprite->SetRelativeRotation(FRotator(0.f, 0.f, 90.f));
+
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite1(TEXT("PaperSprite'/Game/Icon/Monster/WhiteSqareMonsterA_Sprite.WhiteSqareMonsterA_Sprite'"));
+	MonsterIconArray.Add(Sprite1.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite2(TEXT("PaperSprite'/Game/Icon/Monster/WhiteSqareMonsterB_Sprite.WhiteSqareMonsterB_Sprite'"));
+	MonsterIconArray.Add(Sprite2.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite3(TEXT("PaperSprite'/Game/Icon/Monster/WhiteSqareMonsterC_Sprite.WhiteSqareMonsterC_Sprite'"));
+	MonsterIconArray.Add(Sprite3.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite4(TEXT("PaperSprite'/Game/Icon/Monster/WhiteSqareMonsterD_Sprite.WhiteSqareMonsterD_Sprite'"));
+	MonsterIconArray.Add(Sprite4.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite5(TEXT("PaperSprite'/Game/Icon/Monster/WhiteSqareMonsterHit_Sprite.WhiteSqareMonsterHit_Sprite'"));
+	MonsterIconArray.Add(Sprite5.Object);
+
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite6(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterA_Sprite.WhiteTriangleMonsterA_Sprite'"));
+	MonsterIconArray.Add(Sprite6.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite7(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterB_Sprite.WhiteTriangleMonsterB_Sprite'"));
+	MonsterIconArray.Add(Sprite7.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite8(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterC_Sprite.WhiteTriangleMonsterC_Sprite'"));
+	MonsterIconArray.Add(Sprite8.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite9(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterD_Sprite.WhiteTriangleMonsterD_Sprite'"));
+	MonsterIconArray.Add(Sprite9.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite10(TEXT("PaperSprite'/Game/Icon/Monster/WhiteTriangleMonsterHit_Sprite.WhiteTriangleMonsterHit_Sprite'"));
+	MonsterIconArray.Add(Sprite10.Object);
 }
 
 // Called when the game starts or when spawned
@@ -67,6 +89,10 @@ void AFP_Monster::BeginPlay()
 	
 	HP_UI = nullptr;
 	DamageUI = nullptr;
+
+
+
+	
 	
 	
 }
@@ -88,6 +114,8 @@ void AFP_Monster::Tick(float DeltaTime)
 		return;
 	}
 	
+	BehaviourChanger(DeltaTime);
+
 	HPShowTime -= DeltaTime;
 	if (HP_UI != nullptr)
 	{
@@ -107,7 +135,7 @@ void AFP_Monster::Tick(float DeltaTime)
 		location.X /= viewportScale;
 		location.Y /= viewportScale;
 		location.X -= 25.f;
-		location.Y -= 45.f;
+		location.Y -= 80.f;
 
 		HP_UI->ProgressBar->SetRenderTranslation(location);
 	}
@@ -117,10 +145,12 @@ void AFP_Monster::Tick(float DeltaTime)
 	AFP_Player* player = AFP_ComCollision::Collision<USphereComponent, AFP_Player>(SphereComponent);
 	if (player != nullptr)
 	{
+		player->MyState = AFP_Player::HIT;
 		isDestroy = true;
 		player->Status.Hp -= HP;
 		if (player->Status.Hp < 1)
 			player->RestartStage();
+
 
 		return;
 
@@ -208,6 +238,7 @@ void AFP_Monster::MyTakeDamage(float _damage, int fontsize, FColor color)
 	if (isDestroy == true)
 		return;
 	
+	MyBehaviour = HIT;
 	HP -= _damage;
 	HPShowTime = 1.f;
 
@@ -303,5 +334,30 @@ void AFP_Monster::ChangeState(float _delta)
 			}
 			StateMgr[i].TimelimitForIgnite = 0.2f;
 		}
+	}
+}
+void AFP_Monster::BehaviourChanger(float _delta)
+{
+	if (MyBehaviour != IDLE)
+	{
+		StateTimeAcc += _delta;
+		if (StateTimeAcc > 0.5f)
+		{
+			MyBehaviour = IDLE;
+			StateTimeAcc = 0.f;
+		}
+	}
+
+	switch (MyBehaviour)
+	{
+	case IDLE:
+		PaperSprite->SetSprite(MonsterIconArray[OriginIcon]);
+		break;
+	case HIT:
+		if(OriginIcon < SQUARE_WHITE_HIT)
+			PaperSprite->SetSprite(MonsterIconArray[SQUARE_WHITE_HIT]);
+		else
+			PaperSprite->SetSprite(MonsterIconArray[TRIANGLE_WHITE_HIT]);
+		break;
 	}
 }

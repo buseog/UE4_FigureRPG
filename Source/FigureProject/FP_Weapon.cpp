@@ -98,8 +98,8 @@ void AFP_Weapon::Tick(float DeltaTime)
 		SetActorRotation(FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 
 		float fYaw = GetActorRotation().Yaw;
-		FirePoint.X = 12.f * cosf((fYaw * PI) / 180.f);
-		FirePoint.Y = 12.f * sinf((fYaw * PI) / 180.f);
+		FirePoint.X = 18.f * cosf((fYaw * PI) / 180.f);
+		FirePoint.Y = 18.f * sinf((fYaw * PI) / 180.f);
 
 		//attack
 		TimeAcc += DeltaTime;
@@ -139,6 +139,8 @@ void AFP_Weapon::SpawnSkill()
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (player == nullptr)
 		return;
+
+	player->MyState = AFP_Player::ATTACK;
 
 	switch (ActiveSkill)
 	{
@@ -186,6 +188,7 @@ float AFP_Weapon::GetStatfromSkill(FString _stat)
 {
 	UClass* SkillClass = nullptr;
 	AFP_Skill* Skill = nullptr;
+	
 	switch (ActiveSkill)
 	{
 	case FIREBALL:

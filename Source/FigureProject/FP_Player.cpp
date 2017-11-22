@@ -10,7 +10,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "FP_StageWidget.h"
 #include "FP_Tooltip.h"
-
+#include "PaperSpriteComponent.h"
+#include "PaperSprite.h"
 
 
 // Sets default values
@@ -70,6 +71,35 @@ AFP_Player::AFP_Player()
 	Particle->SetTemplate(ParticleSystem.Object);
 	
 	Particle->SetVisibility(false);
+
+
+	PaperSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaperSprite"));
+	
+
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite1(TEXT("PaperSprite'/Game/Icon/Player/FirePlayerNormal_Sprite.FirePlayerNormal_Sprite'"));
+	FirePlayerIcon.Add(Sprite1.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite2(TEXT("PaperSprite'/Game/Icon/Player/FirePlayerBuff_Sprite.FirePlayerBuff_Sprite'"));
+	FirePlayerIcon.Add(Sprite2.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite3(TEXT("PaperSprite'/Game/Icon/Player/FirePlayerHit_Sprite.FirePlayerHit_Sprite'"));
+	FirePlayerIcon.Add(Sprite3.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite4(TEXT("PaperSprite'/Game/Icon/Player/FirePlayerAtt_Sprite.FirePlayerAtt_Sprite'"));
+	FirePlayerIcon.Add(Sprite4.Object);
+	
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite5(TEXT("PaperSprite'/Game/Icon/Player/IcePlayerNormal_Sprite.IcePlayerNormal_Sprite'"));
+	IcePlayerIcon.Add(Sprite5.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite6(TEXT("PaperSprite'/Game/Icon/Player/IcePlayerBuff_Sprite.IcePlayerBuff_Sprite'"));
+	IcePlayerIcon.Add(Sprite6.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite7(TEXT("PaperSprite'/Game/Icon/Player/IcePlayerHit_Sprite.IcePlayerHit_Sprite'"));
+	IcePlayerIcon.Add(Sprite7.Object);
+	static ConstructorHelpers::FObjectFinder<UPaperSprite> Sprite8(TEXT("PaperSprite'/Game/Icon/Player/IcePlayerAtt_Sprite.IcePlayerAtt_Sprite'"));
+	IcePlayerIcon.Add(Sprite8.Object);
+
+	PaperSprite->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
+	PaperSprite->SetRelativeRotation(FRotator(0.f, 0.f, 90.f));
+	PaperSprite->SetVisibility(false);
+
+	
+	
 }
 
 
@@ -77,6 +107,11 @@ AFP_Player::AFP_Player()
 void AFP_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (MyType == FIRE)
+		PaperSprite->SetSprite(FirePlayerIcon[0]);
+	else
+		PaperSprite->SetSprite(IcePlayerIcon[0]);
 
 	Particle->EmitterInstances[1]->bEnabled = false;
 	Particle->EmitterInstances[2]->bEnabled = false;
@@ -95,7 +130,9 @@ void AFP_Player::Tick(float DeltaTime)
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
-	Regeneration(DeltaTime);
+	//Regeneration(DeltaTime);
+
+	StateChanger(DeltaTime);
 	
 	/*TimeAcc += DeltaTime;
 	UUserWidget* Test = PC->GetWidgetMap(AFP_PlayerController::MAINUI);
@@ -167,9 +204,11 @@ void AFP_Player::StatusLevelUp(int _Type)
 		break;
 
 	case 4:
-		if(Status.AttackSpeed <= 0.75)
-		Status.AttackSpeed -= 0.005f;
-		
+		if (Status.AttackSpeed >= 0.75)
+			Status.AttackSpeed -= 0.005f;
+		else
+			return;
+
 		break;
 
 	case 5:
@@ -380,6 +419,10 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 		inventory.IgniteDuration = Inventory[i]->Ignite.Duration;
 		inventory.SlowDamage = Inventory[i]->Slow.Damage;
 		inventory.SlowDuration = Inventory[i]->Slow.Duration;
+
+		inventory.FreezeProbability = Inventory[i]->Frozen.Probability;
+		inventory.FreezeDuration = Inventory[i]->Frozen.Duration;
+
 		inventory.Name = Inventory[i]->Name;
 
 		inventory.bEquiped = Inventory[i]->bEquiped;
@@ -491,4 +534,71 @@ void AFP_Player::SetBuff(BUFFTYPE _buff, float _multiplier, float _duration)
 	Buff = _buff;
 	Multiplier = _multiplier;
 	Duration = _duration;
+}
+
+void AFP_Player::StateChanger(float _deltaTime)
+{
+	TArray<UPaperSprite*> PaperSpriteArray;
+	if (MyType == FIRE)
+		PaperSpriteArray = FirePlayerIcon;
+	else
+		PaperSpriteArray = IcePlayerIcon;
+
+
+	if (Buff == NORMAL)
+	{
+		if (MyState == BUFF)
+			MyState = IDLE;
+		else if (MyState != IDLE)
+		{
+			StateTimeAcc += _deltaTime;
+			if (StateTimeAcc > 0.5f)
+			{
+				MyState = IDLE;
+				StateTimeAcc = 0.f;
+			}
+		}
+	}
+	else
+	{
+		if (MyState == IDLE)
+			MyState = BUFF;
+		else if (MyState != BUFF) // BUFF, ATTACK , HIT
+		{
+			StateTimeAcc += _deltaTime;
+			if (StateTimeAcc > 0.5f)
+			{
+				MyState = BUFF;
+				StateTimeAcc = 0.f;
+			}
+		}
+	}
+
+	//if (MyState != IDLE && MyState != BUFF)
+	//{
+	//	StateTimeAcc += _deltaTime;
+	//	if (StateTimeAcc > 0.5f)
+	//	{
+	//		MyState = IDLE;
+	//		StateTimeAcc = 0.f;
+	//	}
+	//}
+	
+	switch (MyState)
+	{
+	case IDLE:
+		PaperSprite->SetSprite(PaperSpriteArray[IDLE]);
+		break;
+	case BUFF:
+		PaperSprite->SetSprite(PaperSpriteArray[BUFF]);
+		break;
+	case HIT:
+		PaperSprite->SetSprite(PaperSpriteArray[HIT]);
+		break;
+	case ATTACK:
+		PaperSprite->SetSprite(PaperSpriteArray[ATTACK]);
+		break;
+	}
+
+
 }

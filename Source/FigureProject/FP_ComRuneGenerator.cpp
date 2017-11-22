@@ -66,9 +66,9 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("BULLET SPEED UP", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Green.STUN, Green.NAME_STUN);
-	GreenRuneOption.Add(Green.STUN, Green.NAME_STUN);
-	option.Add("STUN", prop_name);
+	prop_name.Add(Green.SLOW, Green.NAME_SLOW);
+	GreenRuneOption.Add(Green.SLOW, Green.NAME_SLOW);
+	option.Add("SLOW", prop_name);
 	prop_name.Empty();
 
 	/*prop_name.Add(Green.KNOCKBACK, Green.NAME_KNOCKBACK);
@@ -106,19 +106,19 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	option.Add("EXP UP", prop_name);
 	prop_name.Empty();
 
-	prop_name.Add(Blue.SLOW, Blue.NAME_SLOW);
-	BlueRuneOption.Add(Blue.SLOW, Blue.NAME_SLOW);
-	option.Add("SLOW", prop_name);
+	prop_name.Add(Blue.FREEZE, Blue.NAME_FREEZE);
+	BlueRuneOption.Add(Blue.FREEZE, Blue.NAME_FREEZE);
+	option.Add("FREEZE", prop_name);
 	prop_name.Empty();
+
+	/*prop_name.Add(Green.STUN, Blue.NAME_STUN);
+	BlueRuneOption.Add(Green.STUN, Blue.NAME_STUN);
+	option.Add("STUN", prop_name);
+	prop_name.Empty();*/
 
 	/*prop_name.Add(Blue.GUIDED, Blue.NAME_GUIDED);
 	BlueRuneOption.Add(Blue.GUIDED, Blue.NAME_GUIDED);
 	option.Add("GUIDED", prop_name);
-	prop_name.Empty();*/
-
-	/*prop_name.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
-	BlueRuneOption.Add(Blue.FREEZEONSLOW, Blue.NAME_FREEZEONSLOW);
-	option.Add("FREEZEONSLOW", prop_name);
 	prop_name.Empty();*/
 
 	/*prop_name.Add(Blue.AREAUP, Blue.NAME_AREAUP);
@@ -226,9 +226,9 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("SLOW", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier1.FREEZEONSLOW_MIN);
-	stat.Add("MAX", RuneStatRange.Tier1.FREEZEONSLOW_MAX);
-	_option.Add("FREEZEONSLOW", stat);
+	stat.Add("MIN", RuneStatRange.Tier1.FREEZE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier1.FREEZE_MAX);
+	_option.Add("FREEZE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier1.AREAUP_MIN);
@@ -340,9 +340,9 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("SLOW", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier2.FREEZEONSLOW_MIN);
-	stat.Add("MAX", RuneStatRange.Tier2.FREEZEONSLOW_MAX);
-	_option.Add("FREEZEONSLOW", stat);
+	stat.Add("MIN", RuneStatRange.Tier2.FREEZE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier2.FREEZE_MAX);
+	_option.Add("FREEZE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier2.AREAUP_MIN);
@@ -454,9 +454,9 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 	_option.Add("SLOW", stat);
 	stat.Empty();
 
-	stat.Add("MIN", RuneStatRange.Tier3.FREEZEONSLOW_MIN);
-	stat.Add("MAX", RuneStatRange.Tier3.FREEZEONSLOW_MAX);
-	_option.Add("FREEZEONSLOW", stat);
+	stat.Add("MIN", RuneStatRange.Tier3.FREEZE_MIN);
+	stat.Add("MAX", RuneStatRange.Tier3.FREEZE_MAX);
+	_option.Add("FREEZE", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier3.AREAUP_MIN);
@@ -725,10 +725,18 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			}
 		}
 
-		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
+		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
 		{
-
-		}*/
+			for (int j = 0; j < _rune->Option.Num(); ++j)
+			{
+				if (_rune->Option[j].Contains("FREEZE"))
+				{
+					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["FREEZE"]["MIN"], _runeStat[_rune->Stat.Tier]["FREEZE"]["MAX"]);
+					_rune->Frozen.Probability = _rune->OptionVal[j];
+					_rune->Frozen.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+				}
+			}
+		}
 
 		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::FIXED)
 		{

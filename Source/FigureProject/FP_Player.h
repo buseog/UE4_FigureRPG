@@ -75,6 +75,7 @@ struct FPlayerLevel
 };
 
 class AFP_Weapon;
+class UPaperSpriteComponent;
 
 UCLASS()
 class FIGUREPROJECT_API AFP_Player : public APawn
@@ -83,6 +84,7 @@ class FIGUREPROJECT_API AFP_Player : public APawn
 public:
 	enum PLAYERTYPE {FIRE,ICE};
 	enum BUFFTYPE {DMGUP, ATTSPDUP, NORMAL};
+	enum STATE {IDLE , BUFF, HIT , ATTACK};
 
 public:	
 	// Sets default values for this actor's properties
@@ -150,6 +152,16 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
+	class UPaperSpriteComponent* PaperSprite;
+
+public:
+	UPROPERTY()
+	TArray<class UPaperSprite*> FirePlayerIcon;
+	UPROPERTY()
+	TArray<class UPaperSprite*> IcePlayerIcon;
+
+
 private:
 	void Regeneration(float DeltaTime);
 
@@ -166,6 +178,9 @@ public:
 
 	UFUNCTION()
 	void OnProxOverlapBegin(UPrimitiveComponent* _HitComp, AActor* _OtherActor, UPrimitiveComponent* _OtherComp, int32 _OtherBodyIndex, bool _bFromSweep, const FHitResult& _SweepResult);
+
+	UFUNCTION()
+	void StateChanger(float _deltaTime);
 
 	//Ã¶ÀÇ Ãß°¡
 	//void SetStat(int Type, float Diff, float Duration, FColor Color = FColor(0.f, 0.f, 0.f));
@@ -189,6 +204,9 @@ public:
 	FName Test;
 	float TimeAcc = 0.f;
 	PLAYERTYPE MyType;
+	STATE MyState;
+	float IconShowtime = 0.5f;
+	float StateTimeAcc = 0.f;
 
 	//---------------------Gem-----------------------//
 	int Gem = 50;

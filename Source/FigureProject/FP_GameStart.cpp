@@ -12,6 +12,8 @@
 #include "FP_StatusWidget.h"
 #include "CircularThrobber.h"
 #include "FP_SkillUI.h"
+#include "PaperSpriteComponent.h"
+#include "PaperSprite.h"
 
 void UFP_GameStart::NativeConstruct()
 {
@@ -37,14 +39,16 @@ void UFP_GameStart::ChooseFire()
 
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	player->Particle->SetVisibility(true);
+	player->PaperSprite->SetVisibility(true);
 
-	FVector color = FVector(1.f, 0.f, 0.f);
-	player->Particle->SetVectorParameter(TEXT("Color"), color);
-	player->Particle->EmitterInstances[4]->bEnabled = false;
+	//FVector color = FVector(1.f, 0.f, 0.f);
+	//player->Particle->SetVectorParameter(TEXT("Color"), color);
+	//player->Particle->EmitterInstances[4]->bEnabled = false;
 
 	player->SkillLv.FireBall = 1;
 	player->InitSkillLv.FireBall = 1;
 	player->MyType = AFP_Player::FIRE;
+	
 
 }
 
@@ -61,10 +65,11 @@ void UFP_GameStart::ChooseIce()
 
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	player->Particle->SetVisibility(true);
+	player->PaperSprite->SetVisibility(true);
 
-	FVector color = FVector(0.f, 0.f, 1.f);
-	player->Particle->SetVectorParameter(TEXT("Color"), color);
-	player->Particle->EmitterInstances[4]->bEnabled = false;
+	//FVector color = FVector(0.f, 0.f, 1.f);
+	//player->Particle->SetVectorParameter(TEXT("Color"), color);
+	//player->Particle->EmitterInstances[4]->bEnabled = false;
 
 	player->Particle->SetVisibility(true);
 	player->SkillLv.IceBall = 1;
@@ -83,17 +88,6 @@ void UFP_GameStart::StartWithLoad()
 
 	AFP_Player* player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	player->Particle->SetVisibility(true);
+	player->PaperSprite->SetVisibility(true);
 
-	if (player->MyType == AFP_Player::FIRE)
-	{
-		FVector color = FVector(1.f, 0.f, 0.f);
-		player->Particle->SetVectorParameter(TEXT("Color"), color);
-		player->Particle->EmitterInstances[4]->bEnabled = false;
-	}
-	else
-	{
-		FVector color = FVector(0.f, 0.f, 1.f);
-		player->Particle->SetVectorParameter(TEXT("Color"), color);
-		player->Particle->EmitterInstances[4]->bEnabled = false;
-	}
 }

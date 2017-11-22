@@ -80,13 +80,13 @@ void UFP_MainUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 			ButtonArray[i]->SetRenderScale(FVector2D(NewScale, NewScale));
 
 			FVector2D NewLocation;
-			float Radius = TimeAcc * 200.f;
-			Radius = FMath::Clamp(Radius, 0.f, 100.f);
+			float Radius = TimeAcc * 500.f;
+			Radius = FMath::Clamp(Radius, 0.f, 500.f);
 
 			float AngleOffSet = 2 * PI / ButtonArray.Num();
 
-			NewLocation.X = Radius * cosf(TimeAcc * -5.f + AngleOffSet * i) - 32.5f;
-			NewLocation.Y = Radius * sinf(TimeAcc * -5.f + AngleOffSet * i) - 32.5f;
+			NewLocation.X = Radius * cosf(TimeAcc * -5.f + AngleOffSet * i) - 100.f;
+			NewLocation.Y = Radius * sinf(TimeAcc * -5.f + AngleOffSet * i) - 100.f;
 			ButtonArray[i]->SetRenderTranslation(NewLocation);
 		}
 	}

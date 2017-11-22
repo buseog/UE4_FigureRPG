@@ -47,8 +47,10 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 
 			if (_skill->Sockets[i].Rune->Ignite.Duration != 0)
 				igniteDamage += _skill->Sockets[i].Rune->Ignite.Damage;
-			else if (_skill->Sockets[i].Rune->Slow.Duration != 0)
+			if (_skill->Sockets[i].Rune->Slow.Duration != 0)
 				slowDamage += _skill->Sockets[i].Rune->Slow.Damage;
+			if (_skill->Sockets[i].Rune->Frozen.Duration != 0)
+				frozenProbability += _skill->Sockets[i].Rune->Frozen.Probability;
 		
 		}
 
@@ -60,10 +62,11 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 			
 		if (_skill->Debuff == AFP_Monster::SLOW)
 			slowDuration = _skill->DebuffDuration;
+
 		if (_skill->Debuff == AFP_Monster::FROZEN)
 		{
-			frozenDuration = _skill->DebuffDuration;
-			frozenProbability = _skill->DebuffProbability;
+			frozenDuration = FMath::Max<float>(frozenDuration, _skill->DebuffDuration);
+			frozenProbability += _skill->DebuffProbability;
 		}
 
 
@@ -106,14 +109,26 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 
 			igniteDuration = FMath::Max<float>(igniteDuration, _skill->Sockets[i].Rune->Ignite.Duration);
 			slowDuration = FMath::Max<float>(slowDuration, _skill->Sockets[i].Rune->Slow.Duration);
+			frozenDuration = FMath::Max<float>(frozenDuration, _skill->Sockets[i].Rune->Frozen.Duration);
 
 			if (_skill->Sockets[i].Rune->Ignite.Duration != 0)
 				igniteDamage += _skill->Sockets[i].Rune->Ignite.Damage;
-			else if (_skill->Sockets[i].Rune->Slow.Duration != 0)
+			if (_skill->Sockets[i].Rune->Slow.Duration != 0)
 				slowDamage += _skill->Sockets[i].Rune->Slow.Damage;
+			if (_skill->Sockets[i].Rune->Frozen.Duration != 0)
+				frozenProbability += _skill->Sockets[i].Rune->Frozen.Probability;
 		}
 		if (_skill->Debuff == AFP_Monster::IGNITE)
 			igniteDamage += _skill->DebuffDamage;
+
+		if (_skill->Debuff == AFP_Monster::SLOW)
+			slowDuration = FMath::Max<float>(slowDuration, _skill->DebuffDuration);
+
+		if (_skill->Debuff == AFP_Monster::FROZEN)
+		{
+			frozenDuration = FMath::Max<float>(frozenDuration, _skill->DebuffDuration);
+			frozenProbability += _skill->DebuffProbability;
+		}
 
 
 
@@ -160,6 +175,29 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 				state.Damage = slowDamage;
 				state.Duration = slowDuration;
 				state.eState = AFP_Monster::SLOW;
+				_monster->StateMgr.Add(state);
+			}
+		}
+
+
+		if (frozenDuration != 0)
+		{
+			int isFrozen = 0;
+			for (int j = 0; j < _monster->StateMgr.Num(); ++j)
+			{
+				if (_monster->StateMgr[j].eState == AFP_Monster::FROZEN)
+				{
+					_monster->StateMgr[j].Duration = FMath::Max<float>(_monster->StateMgr[j].Duration, frozenDuration);
+					++isFrozen;
+				}
+			}
+			float fProbability = FMath::FRandRange(0.f, 100.f);
+			UE_LOG(LogClass, Log, TEXT("%f"), fProbability);
+			if (isFrozen == 0 && fProbability <= frozenProbability && !_skill->SkillInfo.Name.Contains("Fire"))
+			{
+				AFP_Monster::MonsterState state;
+				state.Duration = frozenDuration;
+				state.eState = AFP_Monster::FROZEN;
 				_monster->StateMgr.Add(state);
 			}
 		}

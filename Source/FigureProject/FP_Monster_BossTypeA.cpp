@@ -2,6 +2,8 @@
 
 #include "FP_Monster_BossTypeA.h"
 #include "FP_Weapon.h"
+#include "PaperSpriteComponent.h"
+#include "PaperSprite.h"
 
 void AFP_Monster_BossTypeA::BeginPlay()
 {
@@ -10,8 +12,7 @@ void AFP_Monster_BossTypeA::BeginPlay()
 	FVector NewScale = FVector(2.f, 2.f, 2.f);
 	//SetActorScale3D(NewScale);
 
-	StaticMesh->SetWorldScale3D(NewScale);
-
+	
 
 	Distance = GetActorLocation().Size();
 
@@ -20,6 +21,10 @@ void AFP_Monster_BossTypeA::BeginPlay()
 
 	SphereComponent->SetSphereRadius(8.f);
 
+	int iRand = FMath::RandRange(0, 3);
+	PaperSprite->SetSprite(MonsterIconArray[iRand]);
+	PaperSprite->SetRelativeScale3D(FVector(0.075f, 0.075f, 0.075f));
+	OriginIcon = (AFP_Monster::MONSTERICON)iRand;
 
 }
 

@@ -2,6 +2,8 @@
 
 #include "FP_Monster_Normal.h"
 #include "FP_Weapon.h"
+#include "PaperSpriteComponent.h"
+#include "PaperSprite.h"
 
 void AFP_Monster_Normal::BeginPlay()
 {
@@ -9,6 +11,10 @@ void AFP_Monster_Normal::BeginPlay()
 
 	MaxHP = 2.f;
 	HP = MaxHP;
+
+	int iRand = FMath::RandRange(5, 8);
+	PaperSprite->SetSprite(MonsterIconArray[iRand]);
+	OriginIcon = (AFP_Monster::MONSTERICON)iRand;
 }
 
 void AFP_Monster_Normal::Tick(float DeltaTime)

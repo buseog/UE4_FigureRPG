@@ -77,5 +77,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	AFP_Rune* Initiate(FColor _color, uint64 _property, RuneStat _stat, DebuffStat _ignite, DebuffStat _slow, FString _name, TArray<FString> _option, TArray<float> _optionVal);
+	AFP_Rune* Initiate(FColor _color, uint64 _property, RuneStat _stat, DebuffStat _ignite, DebuffStat _slow, DebuffStat _frozen, FString _name, TArray<FString> _option, TArray<float> _optionVal);
 };

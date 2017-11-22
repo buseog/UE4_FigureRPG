@@ -20,6 +20,8 @@ public:
 	AFP_Monster();
 
 	enum MSTATE { NORMAL, SLOW, IGNITE , FROZEN};
+	enum MONSTERICON {SQUARE_WHITE_A, SQUARE_WHITE_B, SQUARE_WHITE_C, SQUARE_WHITE_D, SQUARE_WHITE_HIT, TRIANGLE_WHITE_A, TRIANGLE_WHITE_B, TRIANGLE_WHITE_C, TRIANGLE_WHITE_D, TRIANGLE_WHITE_HIT};
+	enum BEHAVIOUR { IDLE, HIT };
 
 	struct MonsterState
 	{
@@ -52,8 +54,6 @@ public:
 	bool isTargeting = false;
 	
 public:
-	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* StaticMesh;
 	
 	UPROPERTY(EditAnywhere)
 	USphereComponent* SphereComponent;
@@ -68,16 +68,25 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UParticleSystemComponent* Particle;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
+	class UPaperSpriteComponent* PaperSprite;
+
+	UPROPERTY()
+	TArray<class UPaperSprite*> MonsterIconArray;;
 	
 	bool isDestroy = false;
 	AFP_Item* Item;
 	AFP_Weapon* Weapon;
+	BEHAVIOUR MyBehaviour;
+	MONSTERICON OriginIcon;
+	float StateTimeAcc = 0.f;
 
 public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	void DropItem();
-	void MyTakeDamage(float _damage, int fontsize = 40, FColor color = FColor::White);
+	void MyTakeDamage(float _damage, int fontsize = 40, FColor color = FColor::Black);
 
 	void ChangeState(float _delta);
+	void BehaviourChanger(float _delta);
 	
 };

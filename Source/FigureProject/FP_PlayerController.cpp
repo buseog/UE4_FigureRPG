@@ -184,6 +184,10 @@ bool AFP_PlayerController::Load()
 		slow.Damage = LoadGameInstance->Inventory[i].SlowDamage;
 		slow.Duration = LoadGameInstance->Inventory[i].SlowDuration;
 
+		AFP_Rune::DebuffStat Frozen;
+		Frozen.Probability = LoadGameInstance->Inventory[i].FreezeProbability;
+		Frozen.Duration = LoadGameInstance->Inventory[i].FreezeDuration;
+			
 		if (stat.Range == 0)
 			UE_LOG(LogClass, Log, TEXT("BUG"));
 
@@ -230,7 +234,7 @@ bool AFP_PlayerController::Load()
 		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal2);
 		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal3);
 
-		rune->Initiate(LoadGameInstance->Inventory[i].Color, LoadGameInstance->Inventory[i].Property, stat, ignite, slow, LoadGameInstance->Inventory[i].Name, option, optionVal);
+		rune->Initiate(LoadGameInstance->Inventory[i].Color, LoadGameInstance->Inventory[i].Property, stat, ignite, slow,Frozen, LoadGameInstance->Inventory[i].Name, option, optionVal);
 
 		//½Â·ÄÃß°¡
 		if (isRev == false)
