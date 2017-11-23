@@ -60,8 +60,8 @@ public:
 		UClass* Class = T::StaticClass();
 		T* SkillCDO = Class->GetDefaultObject<T>();
 
-		SkillCDO->Stat.Damage = 1.f + SkillCDO->SkillInfo.DmgPerLv*0.01f * iSkillLv;
-		SkillCDO->Stat.CoolTimeRatio = 1.f - SkillCDO->SkillInfo.AtkSpdPerLv * iSkillLv;
+		SkillCDO->Stat.Damage = SkillCDO->InitStat.Damage + SkillCDO->SkillInfo.DmgPerLv*0.01f * iSkillLv;
+		SkillCDO->Stat.CoolTimeRatio = SkillCDO->InitStat.CoolTimeRatio - SkillCDO->SkillInfo.AtkSpdPerLv * iSkillLv;
 	}
 
 	template<typename T>

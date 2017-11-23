@@ -200,28 +200,28 @@ bool AFP_PlayerController::Load()
 			switch (LoadGameInstance->Inventory[i].Type[j])
 			{
 			case 0:
-				stat.Type.Add(AFP_Rune::TYPE::STAT);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::STAT);
 				break;
 			case 1:
-				stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::PROBABILITY);
 				break;
 			case 2:
-				stat.Type.Add(AFP_Rune::TYPE::FIXED);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::FIXED);
 				break;
 			case 3:
-				stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::PROJECTILE);
 				break;
 			case 4:
-				stat.Type.Add(AFP_Rune::TYPE::AOE);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::AOE);
 				break;
 			case 5:
-				stat.Type.Add(AFP_Rune::TYPE::DOT);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::DOT);
 				break;
 			case 6:
-				stat.Type.Add(AFP_Rune::TYPE::EXP);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::EXP);
 				break;
 			case 7:
-				stat.Type.Add(AFP_Rune::TYPE::ETC);
+				stat.Type.Add(LoadGameInstance->Inventory[i].Name, AFP_Rune::TYPE::ETC);
 				break;
 			}
 		}

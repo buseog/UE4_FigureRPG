@@ -8,10 +8,8 @@ AFP_FireWall::AFP_FireWall()
 	PrimaryActorTick.bCanEverTick = true;
 
 	ProxSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereProx"));
-	ProxSphere->SetSphereRadius(50.f);
+	ProxSphere->SetSphereRadius(70.f);
 	ProxSphere->SetupAttachment(RootComponent);
-	ProxSphere->SetHiddenInGame(false);
-	Stat.Damage = 0.005f;
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireWall.FP_FireWall'"));
 	Particle->SetTemplate(ParticleSystem.Object);
@@ -21,11 +19,13 @@ AFP_FireWall::AFP_FireWall()
 
 	Stat.Speed = 1.f;
 	Stat.CoolTimeRatio = 3.f;
-	Stat.Damage = 0.5f;
+	Stat.Damage = 0.3f;
 	Stat.Range = 1.f;
 
-	SkillInfo.AtkSpdPerLv = 0.015f;
+	SkillInfo.AtkSpdPerLv = 0.f;
 	SkillInfo.DmgPerLv = 30.f;
+
+	InitStat = Stat;
 }
 
 // Called when the game starts or when spawned
@@ -40,18 +40,16 @@ void AFP_FireWall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector CurrentScale = Particle->RelativeScale3D;
-	//Particle->SetWorldScale3D(FVector(CurrentScale.X - CurrentTime * 0.1f, CurrentScale.Y - CurrentTime * 0.1f, CurrentScale.Z - CurrentTime * 0.1f));
-
 	CurrentTime += DeltaTime;
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
+
+	if (bStart)
+	{
+		ProxSphere->SetRelativeScale3D(FVector(Scale, Scale, Scale));
+		bStart = false;
+	}
 
 	if (CurrentTime >= LifeTime)
 		Destroy();
-
-
-	
-
 
 	Targets.Empty();
 	AFP_ComCollision::CollisionWithMulti<USphereComponent, AFP_Monster>(ProxSphere, Targets);

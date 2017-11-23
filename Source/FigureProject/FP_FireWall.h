@@ -34,4 +34,6 @@ public:
 	float LifeTime = 5.f;
 	float CurrentTime = 0.f;
 	TArray<AFP_Monster*> Targets;
+	float Scale = 1.f;
+	bool bStart = true;
 };

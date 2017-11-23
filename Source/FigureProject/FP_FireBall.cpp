@@ -24,8 +24,11 @@ AFP_FireBall::AFP_FireBall()
 	Stat.Damage = 1.f;
 	Stat.Range = 1.f;
 
-	SkillInfo.AtkSpdPerLv = 0.015f;
-	SkillInfo.DmgPerLv = 25.f;
+	SkillInfo.AtkSpdPerLv = 0.f;
+	SkillInfo.DmgPerLv = 45.f;
+
+
+	InitStat = Stat;
 }
 
 // Called when the game starts or when spawned

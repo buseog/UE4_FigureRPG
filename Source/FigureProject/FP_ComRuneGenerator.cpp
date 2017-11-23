@@ -441,7 +441,7 @@ AFP_ComRuneGenerator::AFP_ComRuneGenerator()
 
 	stat.Add("MIN", RuneStatRange.Tier3.EXPUP_MIN);
 	stat.Add("MAX", RuneStatRange.Tier3.EXPUP_MAX);
-	_option.Add("EXPUP", stat);
+	_option.Add("EXP UP", stat);
 	stat.Empty();
 
 	stat.Add("MIN", RuneStatRange.Tier3.GUIDED_MIN);
@@ -538,31 +538,31 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			_rune->Property = _rune->Property | hex;
 
 			if (_redRuneOption[hex].Contains("STAT"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
-
-			if (_redRuneOption[hex].Contains("PROBABILITY"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
-
-			if (_redRuneOption[hex].Contains("FIXED"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
-
-			if (_redRuneOption[hex].Contains("PROJECTILE"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
-
-			if (_redRuneOption[hex].Contains("AOE"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
-
-			if (_redRuneOption[hex].Contains("DOT"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
-
-			if (_redRuneOption[hex].Contains("EXP"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::STAT);
 
 			if (_redRuneOption[hex].Contains("DEBUFF"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::DEBUFF);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::DEBUFF);
+
+			if (_redRuneOption[hex].Contains("PROBABILITY"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::PROBABILITY);
+
+			if (_redRuneOption[hex].Contains("FIXED"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::FIXED);
+
+			if (_redRuneOption[hex].Contains("PROJECTILE"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::PROJECTILE);
+
+			if (_redRuneOption[hex].Contains("AOE"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::AOE);
+
+			if (_redRuneOption[hex].Contains("DOT"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::DOT);
+
+			if (_redRuneOption[hex].Contains("EXP"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::EXP);
 
 			if (_redRuneOption[hex].Contains("ETC"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::ETC);
 		}
 		break;
 
@@ -584,31 +584,31 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			_rune->Property = _rune->Property | hex;
 
 			if (_greenRuneOption[hex].Contains("STAT"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
-
-			if (_greenRuneOption[hex].Contains("PROBABILITY"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
-
-			if (_greenRuneOption[hex].Contains("FIXED"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
-
-			if (_greenRuneOption[hex].Contains("PROJECTILE"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
-
-			if (_greenRuneOption[hex].Contains("AOE"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
-
-			if (_greenRuneOption[hex].Contains("DOT"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
-
-			if (_greenRuneOption[hex].Contains("EXP"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::STAT);
 
 			if (_greenRuneOption[hex].Contains("DEBUFF"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::DEBUFF);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::DEBUFF);
+
+			if (_greenRuneOption[hex].Contains("PROBABILITY"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::PROBABILITY);
+
+			if (_greenRuneOption[hex].Contains("FIXED"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::FIXED);
+
+			if (_greenRuneOption[hex].Contains("PROJECTILE"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::PROJECTILE);
+
+			if (_greenRuneOption[hex].Contains("AOE"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::AOE);
+
+			if (_greenRuneOption[hex].Contains("DOT"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::DOT);
+
+			if (_greenRuneOption[hex].Contains("EXP"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::EXP);
 
 			if (_greenRuneOption[hex].Contains("ETC"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::ETC);
 		}
 		break;
 
@@ -630,31 +630,31 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 			_rune->Property = _rune->Property | hex;
 
 			if (_blueRuneOption[hex].Contains("STAT"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::STAT);
-
-			if (_blueRuneOption[hex].Contains("PROBABILITY"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROBABILITY);
-
-			if (_blueRuneOption[hex].Contains("FIXED"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::FIXED);
-
-			if (_blueRuneOption[hex].Contains("PROJECTILE"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::PROJECTILE);
-
-			if (_blueRuneOption[hex].Contains("AOE"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::AOE);
-
-			if (_blueRuneOption[hex].Contains("DOT"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::DOT);
-
-			if (_blueRuneOption[hex].Contains("EXP"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::EXP);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::STAT);
 
 			if (_blueRuneOption[hex].Contains("DEBUFF"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::DEBUFF);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::DEBUFF);
+
+			if (_blueRuneOption[hex].Contains("PROBABILITY"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::PROBABILITY);
+
+			if (_blueRuneOption[hex].Contains("FIXED"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::FIXED);
+
+			if (_blueRuneOption[hex].Contains("PROJECTILE"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::PROJECTILE);
+
+			if (_blueRuneOption[hex].Contains("AOE"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::AOE);
+
+			if (_blueRuneOption[hex].Contains("DOT"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::DOT);
+
+			if (_blueRuneOption[hex].Contains("EXP"))
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::EXP);
 
 			if (_blueRuneOption[hex].Contains("ETC"))
-				_rune->Stat.Type.Add(AFP_Rune::TYPE::ETC);
+				_rune->Stat.Type.Add(_rune->Option.Last(), AFP_Rune::TYPE::ETC);
 		}
 		break;
 	}
@@ -696,9 +696,9 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 
 
 	//Stat
-	for (i = 0; i < _rune->Stat.Type.Num(); ++i)
+	for (const auto& Entry : _rune->Stat.Type)
 	{
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+		if (Entry.Value == AFP_Rune::TYPE::STAT)
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
@@ -706,26 +706,30 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 				{
 					_rune->Stat.Damage = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DAMAGE UP"]["MIN"], _runeStat[_rune->Stat.Tier]["DAMAGE UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Damage;
+					_rune->Discription[j] = "Increase Damage By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
 				}
 				else if (_rune->Option[j].Contains("RANGE"))
 				{
 					_rune->Stat.Range = FMath::RandRange(_runeStat[_rune->Stat.Tier]["RANGE UP"]["MIN"], _runeStat[_rune->Stat.Tier]["RANGE UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Range;
+					_rune->Discription[j] = "Increase Range By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
 				}
 				else if (_rune->Option[j].Contains("ATTACK SPEED"))
 				{
 					_rune->Stat.CoolTimeRatio = FMath::RandRange(_runeStat[_rune->Stat.Tier]["ATTACK SPEED UP"]["MIN"], _runeStat[_rune->Stat.Tier]["ATTACK SPEED UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.CoolTimeRatio;
+					_rune->Discription[j] = "Increase Attack Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
 				}
 				else if (_rune->Option[j].Contains("BULLET SPEED"))
 				{
 					_rune->Stat.Speed = FMath::RandRange(_runeStat[_rune->Stat.Tier]["BULLET SPEED UP"]["MIN"], _runeStat[_rune->Stat.Tier]["BULLET SPEED UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Speed;
+					_rune->Discription[j] = "Increase Bullet Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
 				}
 			}
 		}
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
+		if (Entry.Value == AFP_Rune::TYPE::PROBABILITY)
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
@@ -734,11 +738,12 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["FREEZE"]["MIN"], _runeStat[_rune->Stat.Tier]["FREEZE"]["MAX"]);
 					_rune->Frozen.Probability = _rune->OptionVal[j];
 					_rune->Frozen.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+					_rune->Discription[j] = "Freeze Enemy With " + FString::FromInt(_rune->Frozen.Probability) + "% Chance For " + FString::FromInt(_rune->Frozen.Duration) + "Sec";
 				}
 			}
 		}
 
-		if (_rune->Stat.Type[i] == AFP_Rune::TYPE::FIXED)
+		if (Entry.Value == AFP_Rune::TYPE::FIXED)
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
@@ -747,6 +752,7 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["IGNITE"]["MIN"], _runeStat[_rune->Stat.Tier]["IGNITE"]["MAX"]);
 					_rune->Ignite.Damage = _rune->OptionVal[j];
 					_rune->Ignite.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+					_rune->Discription[j] = "Deal " + FString::SanitizeFloat(_rune->Ignite.Damage * 5.f) + "%/sec of Enemy's Health For " + FString::FromInt(_rune->Ignite.Duration) + " Sec";
 				}
 			}
 
@@ -757,35 +763,147 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["SLOW"]["MIN"], _runeStat[_rune->Stat.Tier]["SLOW"]["MAX"]);
 					_rune->Slow.Damage = _rune->OptionVal[j];
 					_rune->Slow.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+					_rune->Discription[j] = "Slow Enemy For " + FString::FromInt(_rune->Slow.Duration) + " Sec ";
 				}
 			}
 		}
 
-		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROJECTILE)
+		if (Entry.Value == AFP_Rune::TYPE::PROJECTILE)
+		{
+			for (int j = 0; j < _rune->Option.Num(); ++j)
+			{
+				if (_rune->Option[j].Contains("PIERCE"))
+				{
+					_rune->Discription[j] = "Projectiles Pierce Enemies";
+				}
+			}
+		}
+
+		/*if (Entry.Value == AFP_Rune::TYPE::AOE)
 		{
 
 		}*/
 
-		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::AOE)
+		/*if (Entry.Value == AFP_Rune::TYPE::DOT)
 		{
 
 		}*/
 
-		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::DOT)
+		if (Entry.Value == AFP_Rune::TYPE::EXP)
 		{
+			for (int j = 0; j < _rune->Option.Num(); ++j)
+			{
+				if (_rune->Option[j].Contains("EXP"))
+				{
+					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["EXP UP"]["MIN"], _runeStat[_rune->Stat.Tier]["EXP UP"]["MAX"]);
+					_rune->Discription[j] = "Gain " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "% Increased Exp";
+				}
+			}
+		}
 
-		}*/
-
-		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::EXP)
-		{
-
-		}*/
-
-		/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::ETC)
+		/*if (Entry.Value == AFP_Rune::TYPE::ETC)
 		{
 
 		}*/
 	}
+
+
+	//for (i = 0; i < _rune->Stat.Type.Num(); ++i)
+	//{
+	//	if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+	//	{
+	//		for (int j = 0; j < _rune->Option.Num(); ++j)
+	//		{
+	//			if (_rune->Option[j].Contains("DAMAGE") && !_rune->Option[j].Contains("TO"))
+	//			{
+	//				_rune->Stat.Damage = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DAMAGE UP"]["MIN"], _runeStat[_rune->Stat.Tier]["DAMAGE UP"]["MAX"]);
+	//				_rune->OptionVal[j] = _rune->Stat.Damage;
+	//			}
+	//			else if (_rune->Option[j].Contains("RANGE"))
+	//			{
+	//				_rune->Stat.Range = FMath::RandRange(_runeStat[_rune->Stat.Tier]["RANGE UP"]["MIN"], _runeStat[_rune->Stat.Tier]["RANGE UP"]["MAX"]);
+	//				_rune->OptionVal[j] = _rune->Stat.Range;
+	//			}
+	//			else if (_rune->Option[j].Contains("ATTACK SPEED"))
+	//			{
+	//				_rune->Stat.CoolTimeRatio = FMath::RandRange(_runeStat[_rune->Stat.Tier]["ATTACK SPEED UP"]["MIN"], _runeStat[_rune->Stat.Tier]["ATTACK SPEED UP"]["MAX"]);
+	//				_rune->OptionVal[j] = _rune->Stat.CoolTimeRatio;
+	//			}
+	//			else if (_rune->Option[j].Contains("BULLET SPEED"))
+	//			{
+	//				_rune->Stat.Speed = FMath::RandRange(_runeStat[_rune->Stat.Tier]["BULLET SPEED UP"]["MIN"], _runeStat[_rune->Stat.Tier]["BULLET SPEED UP"]["MAX"]);
+	//				_rune->OptionVal[j] = _rune->Stat.Speed;
+	//			}
+	//		}
+	//	}
+
+	//	if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROBABILITY)
+	//	{
+	//		for (int j = 0; j < _rune->Option.Num(); ++j)
+	//		{
+	//			if (_rune->Option[j].Contains("FREEZE"))
+	//			{
+	//				_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["FREEZE"]["MIN"], _runeStat[_rune->Stat.Tier]["FREEZE"]["MAX"]);
+	//				_rune->Frozen.Probability = _rune->OptionVal[j];
+	//				_rune->Frozen.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+	//			}
+	//		}
+	//	}
+
+	//	if (_rune->Stat.Type[i] == AFP_Rune::TYPE::FIXED)
+	//	{
+	//		for (int j = 0; j < _rune->Option.Num(); ++j)
+	//		{
+	//			if (_rune->Option[j].Contains("IGNITE"))
+	//			{
+	//				_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["IGNITE"]["MIN"], _runeStat[_rune->Stat.Tier]["IGNITE"]["MAX"]);
+	//				_rune->Ignite.Damage = _rune->OptionVal[j];
+	//				_rune->Ignite.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+	//			}
+	//		}
+
+	//		for (int j = 0; j < _rune->Option.Num(); ++j)
+	//		{
+	//			if (_rune->Option[j].Contains("SLOW"))
+	//			{
+	//				_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["SLOW"]["MIN"], _runeStat[_rune->Stat.Tier]["SLOW"]["MAX"]);
+	//				_rune->Slow.Damage = _rune->OptionVal[j];
+	//				_rune->Slow.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+	//			}
+	//		}
+	//	}
+
+	//	/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::PROJECTILE)
+	//	{
+
+	//	}*/
+
+	//	/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::AOE)
+	//	{
+
+	//	}*/
+
+	//	/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::DOT)
+	//	{
+
+	//	}*/
+
+	//	if (_rune->Stat.Type[i] == AFP_Rune::TYPE::EXP)
+	//	{
+	//		for (int j = 0; j < _rune->Option.Num(); ++j)
+	//		{
+	//			if (_rune->Option[j].Contains("EXP"))
+	//			{
+	//				_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["EXP UP"]["MIN"], _runeStat[_rune->Stat.Tier]["EXP UP"]["MAX"]);
+	//			}
+	//		}
+	//	}
+
+	//	/*if (_rune->Stat.Type[i] == AFP_Rune::TYPE::ETC)
+	//	{
+
+	//	}*/
+	//}
 
 	//UE_LOG(LogClass, Log, TEXT("========================================================"));
 	//UE_LOG(LogClass, Log, TEXT("Tier : %d"), _rune->Stat.Tier);

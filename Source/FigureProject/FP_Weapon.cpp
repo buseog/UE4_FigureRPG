@@ -141,39 +141,27 @@ void AFP_Weapon::SpawnSkill()
 	case FIREBALL:
 		Skill = CustomSpawn<AFP_FireBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
-		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
-
 		break;
 	case FIREBLAST:
 		Skill = CustomSpawn<AFP_FireBlast>(TargetMonsters[0]->GetActorLocation(), FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
-		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case FIREWALL:
-		Skill = CustomSpawn<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
+		Skill = GetWorld()->SpawnActor<AFP_FireBlastSpawnPoint>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		Cast<AFP_FireBlastSpawnPoint>(Skill)->SetSkill("FireWall", 0.1f, 7 , 0.75f);
-		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
-		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
+		Cast<AFP_FireBlastSpawnPoint>(Skill)->SetSkill("FireWall", 0.2f, SphereComponent->GetScaledSphereRadius(), 0.75f);
+		Cast<AFP_FireBlastSpawnPoint>(Skill)->AttackRange = SphereComponent->GetScaledSphereRadius();
 		break;
 	case ICEBALL:
 		Skill = CustomSpawn<AFP_IceBall>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
-		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case ICEBLAST:
 		Skill = CustomSpawn<AFP_IceBlast>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
-		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
-		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	case ICEORB:
 		Skill = CustomSpawn<AFP_IceOrb>(FirePoint, FRotator(0.f, AngleZ * 180.f / PI, 0.f));
 		Skill->SetTargetDirection(TargetMonsters[0]->GetActorLocation());
-		SphereComponent->SetSphereRadius(AFP_ComCalculator::CalculateFinalRange(player, Skill));
-		ReloadTime = AFP_ComCalculator::CalculateFinalCoolTime(player, Skill);
 		break;
 	}	
 }

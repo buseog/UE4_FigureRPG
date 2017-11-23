@@ -89,7 +89,7 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 			_monster->StateMgr.Add(state);
 		}
 
-		if (frozenDuration != 0)
+		if (frozenDuration != 0 && !_skill->SkillInfo.Name.Contains("Fire"))
 		{
 			if (FMath::FRandRange(0.f, 100.f) <= frozenProbability)
 			{
@@ -192,7 +192,7 @@ void AFP_ComMonsterStateMgr::StateControl(AFP_Skill* _skill, AFP_Monster* _monst
 				}
 			}
 			float fProbability = FMath::FRandRange(0.f, 100.f);
-			UE_LOG(LogClass, Log, TEXT("%f"), fProbability);
+			
 			if (isFrozen == 0 && fProbability <= frozenProbability && !_skill->SkillInfo.Name.Contains("Fire"))
 			{
 				AFP_Monster::MonsterState state;

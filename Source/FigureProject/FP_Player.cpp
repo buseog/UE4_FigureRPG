@@ -12,6 +12,7 @@
 #include "FP_Tooltip.h"
 #include "PaperSpriteComponent.h"
 #include "PaperSprite.h"
+#include "FP_FireWall.h"
 
 
 // Sets default values
@@ -382,7 +383,7 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	SaveGameInstance->AttackSpeed = Status.AttackSpeed;
 	SaveGameInstance->AttackRange = Status.AttackRange;
 	SaveGameInstance->BulletSpeed = Status.BulletSpeed;
-
+	
 	SaveGameInstance->FireBall = SkillLv.FireBall;
 	SaveGameInstance->FireBlast = SkillLv.FireBlast;
 	SaveGameInstance->FireWall = SkillLv.FireWall;
@@ -431,8 +432,11 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 		inventory.SkillIndex = Inventory[i]->iSkillIndex;
 		inventory.SocketIndex = Inventory[i]->iSocketIndex;
 		
-		for (int j = 0; j < Inventory[i]->Stat.Type.Num(); ++j)
-			inventory.Type.Add(Inventory[i]->Stat.Type[j]);
+		for (const auto& Entry : Inventory[i]->Stat.Type)
+			inventory.Type.Add(Entry.Value);
+
+		/*for (int j = 0; j < Inventory[i]->Stat.Type.Num(); ++j)
+			inventory.Type.Add(Inventory[i]->Stat.Type[j]);*/
 
 		for (int j = 0; j < Inventory[i]->Option.Num(); ++j)
 		{

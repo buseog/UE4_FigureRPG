@@ -23,7 +23,8 @@ public:
 		float CoolTimeRatio = 1.f; // attack speed
 		float Range = 1.f;
 		int Tier = 1;
-		TArray<TYPE> Type;
+		//TArray<TYPE> Type;
+		TMultiMap<FString, TYPE> Type;
 	};
 
 	struct DebuffStat
@@ -62,6 +63,7 @@ public:
 	TArray<float> OptionVal;
 	bool bEquiped = false;
 	float ExpBonus = 1.f;
+	FString Discription[3];
 
 	//½Â·ÄÃß°¡
 	int iSkillIndex;

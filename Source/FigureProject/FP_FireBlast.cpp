@@ -9,18 +9,18 @@ AFP_FireBlast::AFP_FireBlast()
 	PrimaryActorTick.bCanEverTick = true;
 
 	ProxSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereProx"));
-	ProxSphere->SetSphereRadius(20.f);
+	ProxSphere->SetSphereRadius(30.f);
 	ProxSphere->SetupAttachment(RootComponent);
 	Stat.Damage = 1.f;
 
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystem(TEXT("ParticleSystem'/Game/Effect/Skill/Fire/FP_FireBlastImpact.FP_FireBlastImpact'"));
 	Particle->SetTemplate(ParticleSystem.Object);
 	Particle->SetupAttachment(RootComponent);
-	Particle->SetWorldScale3D(FVector(0.7f, 0.7f, 0.7f));
+	Particle->SetWorldScale3D(FVector(1.7f, 1.7f, 1.7f));
 
 	SkillInfo.Name = "FireBlast";
 	Debuff = AFP_Monster::IGNITE;
-	DebuffDamage = 0.01f;
+	DebuffDamage = 0.03f;
 	DebuffDuration = 2.f;
 
 	Stat.Speed = 1.f;
@@ -28,8 +28,10 @@ AFP_FireBlast::AFP_FireBlast()
 	Stat.Damage = 1.f;
 	Stat.Range = 1.f;
 
-	SkillInfo.AtkSpdPerLv = 0.015f;
-	SkillInfo.DmgPerLv = 30.f;
+	SkillInfo.AtkSpdPerLv = 0.f;
+	SkillInfo.DmgPerLv = 40.f;
+
+	InitStat = Stat;
 }
 
 // Called when the game starts or when spawned

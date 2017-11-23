@@ -108,7 +108,7 @@ struct RUNESTATRANGE
 		const float RANGEUP_MAX				= 1.2f;
 
 		const float EXPUP_MIN				= 1.1f;
-		const float EXPUP_MAX				= 1.2f;
+		const float EXPUP_MAX				= 1.15f;
 
 		const float GUIDED_MIN				= 1.f;
 		const float GUIDED_MAX				= 1.f;
@@ -176,7 +176,7 @@ struct RUNESTATRANGE
 		const float RANGEUP_MIN				= 1.f;
 		const float RANGEUP_MAX				= 1.2f;
 
-		const float EXPUP_MIN				= 1.1f;
+		const float EXPUP_MIN				= 1.15f;
 		const float EXPUP_MAX				= 1.2f;
 
 		const float GUIDED_MIN				= 1.f;
@@ -245,8 +245,8 @@ struct RUNESTATRANGE
 		const float RANGEUP_MIN				= 1.f;
 		const float RANGEUP_MAX				= 1.2f;
 
-		const float EXPUP_MIN				= 1.1f;
-		const float EXPUP_MAX				= 1.2f;
+		const float EXPUP_MIN				= 1.2f;
+		const float EXPUP_MAX				= 1.25f;
 
 		const float GUIDED_MIN				= 1.f;
 		const float GUIDED_MAX				= 1.f;
