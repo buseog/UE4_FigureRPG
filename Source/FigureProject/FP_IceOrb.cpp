@@ -24,6 +24,8 @@ AFP_IceOrb::AFP_IceOrb()
 
 	SkillInfo.AtkSpdPerLv = 0.015f;
 	SkillInfo.DmgPerLv = 15.f;
+
+	InitStat = Stat;
 }
 
 void AFP_IceOrb::Tick(float DeltaTime)

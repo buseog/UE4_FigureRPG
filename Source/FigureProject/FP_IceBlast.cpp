@@ -33,6 +33,7 @@ AFP_IceBlast::AFP_IceBlast()
 	SkillInfo.DmgPerLv = 15.f;
 	Debuff = AFP_Monster::SLOW;
 
+	InitStat = Stat;
 }
 
 void AFP_IceBlast::BeginPlay()

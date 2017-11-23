@@ -28,6 +28,8 @@ AFP_IceBall::AFP_IceBall()
 	Debuff = AFP_Monster::FROZEN;
 	DebuffDuration = 1.f;
 	DebuffProbability = 30.f;
+
+	InitStat = Stat;
 }
 
 void AFP_IceBall::Tick(float DeltaTime)

@@ -29,62 +29,117 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 
 	InitializeToolTip();
 
+	TArray<AFP_Rune::TYPE> type;
+	FString option;
+
 	for (int i = 0; i < _rune->Option.Num(); ++i)
 		Option.Add(FText::FromString(_rune->Option[i]));
 
 	for (int i = 0; i < Option.Num(); ++i)
 	{
+		_rune->Stat.Type.MultiFind(_rune->Option[i], type, true);
+
 		switch (i)
 		{
 		case 0:
-			Option1 = Option[i];
+			//Option1 = Option[i];
 
-			if (_rune->OptionVal[i] == 0.f)
-				break;
+			/*if (_rune->OptionVal[i] == 0.f)
+				break;*/
 
-			if(_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+			/*for (int j = 0; j < type.Num(); ++j)
+			{
+				if(type[j] == AFP_Rune::STAT)
+					option = "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
+				else if(type[j] == AFP_Rune::DEBUFF)
+					option += FString::SanitizeFloat(_rune->OptionVal[i]);
+			}
+			Val1 = FText::FromString(option);
+			option.Empty();*/
+
+			Val1 = FText::FromString(_rune->Discription[i]);
+
+			/*if(_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
 				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
 			else
-				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
 
 			break;
 		case 1:
-			Option2 = Option[i];
+			//Option2 = Option[i];
 
-			if (_rune->OptionVal[i] == 0.f)
-				break;
+			/*if (_rune->OptionVal[i] == 0.f)
+				break;*/
 
-			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+			/*for (int j = 0; j < type.Num(); ++j)
+			{
+				if (type[j] == AFP_Rune::STAT)
+					option += "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
+				else
+					option += FString::SanitizeFloat(_rune->OptionVal[i]);
+			}
+			Val2 = FText::FromString(option);
+			option.Empty();*/
+
+			Val2 = FText::FromString(_rune->Discription[i]);
+
+			/*if (_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
 				Val2 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
 			else
-				Val2 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+				Val2 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
 
 			break;
 		case 2:
-			Option3 = Option[i];
+			//Option3 = Option[i];
 
-			if (_rune->OptionVal[i] == 0.f)
-				break;
+			/*if (_rune->OptionVal[i] == 0.f)
+				break;*/
 
-			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+			/*for (int j = 0; j < type.Num(); ++j)
+			{
+				if (type[j] == AFP_Rune::STAT)
+					option += "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
+				else
+					option += FString::SanitizeFloat(_rune->OptionVal[i]);
+			}
+			Val3 = FText::FromString(option);
+			option.Empty();*/
+
+			Val3 = FText::FromString(_rune->Discription[i]);
+
+			/*if (_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
 				Val3 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
 			else
-				Val3 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+				Val3 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
 
 			break;
 		case 3:
-			Option4 = Option[i];
+			//Option4 = Option[i];
 
-			if (_rune->OptionVal[i] == 0.f)
-				break;
+			/*if (_rune->OptionVal[i] == 0.f)
+				break;*/
 
-			if (_rune->Stat.Type[i] == AFP_Rune::TYPE::STAT)
+			/*for (int j = 0; j < type.Num(); ++j)
+			{
+				if (type[j] == AFP_Rune::STAT)
+					option += "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
+				else
+					option += FString::SanitizeFloat(_rune->OptionVal[i]);
+			}
+			Val4 = FText::FromString(option);
+			option.Empty();*/
+
+			Val4 = FText::FromString(_rune->Discription[i]);
+
+			/*if (_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
 				Val4 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
 			else
-				Val4 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));
+				Val4 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
 
 			break;
 		}
+
+		type.Empty();
 	}
 
 	//Name = FText::FromString(_rune->Name);

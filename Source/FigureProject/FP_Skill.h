@@ -79,6 +79,7 @@ public:
 	class AFP_Weapon* Weapon;
 
 	SkillStat Stat;
+	SkillStat InitStat;
 	SkillInfo SkillInfo;
 
 	/*-----Debuff-------------------*/

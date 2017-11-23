@@ -29,40 +29,46 @@ void AFP_FireBlastSpawnPoint::BeginPlay()
 void AFP_FireBlastSpawnPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	float distance = FVector::Dist(this->GetActorLocation(), Player->GetActorLocation());
 
-	AFP_ComProjectile::MoveToTarget(this, TargetDirection, Player->GetStatus().BulletSpeed * Stat.Speed * DeltaTime);
+	AFP_ComProjectile::MoveToTarget(this, TargetDirection, 100.f * DeltaTime);
 
 	CurrentTime += DeltaTime;
 	Scale += DeltaTime;
+	FireWallProxScale += DeltaTime * 0.8f;
 
 	if (CurrentTime >= SpawnDelay)
 	{
-		if (CurrentSpawnNum >= MaxSpawnNum)
+		if (distance >= AttackRange)
 		{
 			Destroy();
 			return;
 		}
 
-		++CurrentSpawnNum;
 		CurrentTime = 0.f;
 		FVector Location = this->GetActorLocation();
 
-		if(SkillName == "FireBlast")
-			FireSkill = GetWorld()->SpawnActor<AFP_FireBlast>(Location, FRotator(0.f, 0.f, 0.f));
-		else if (SkillName == "FireWall")
+		if (SkillName == "FireWall")
 		{
-			
-			FireSkill = GetWorld()->SpawnActor<AFP_FireWall>(AFP_FireWall::StaticClass(),FTransform(FRotator(0.f,0.f,0.f),Location, FVector(0.1f + Scale * 0.3f, 0.1f + Scale * 0.3f, 0.1f)));
-			//FireSkill->SetActorScale3D(FVector(0.1f + Scale * 2.f, 0.1f + Scale * 2.f, 0.1f + Scale * 2.f));
+			FireSkill = Weapon->CustomSpawn<AFP_FireWall>(this->GetActorLocation(), this->GetActorRotation());
+			Cast<AFP_FireWall>(FireSkill)->SetActorScale3D(FVector(0.1f + Scale * 0.3f, 0.1f + Scale * 0.3f, 0.1f));
+			Cast<AFP_FireWall>(FireSkill)->Scale = FireWallProxScale;
 		}
 	}
 }
 
-void AFP_FireBlastSpawnPoint::SetSkill(FString _skillName, float _spawnDelay, int _maxSpawnNum, float _speed)
+void AFP_FireBlastSpawnPoint::SetSkill(FString _skillName, float _spawnDelay, float _attRange, float _speed)
 {
 	SkillName = _skillName;
 	SpawnDelay = _spawnDelay;
 	CurrentTime = SpawnDelay;
-	MaxSpawnNum = _maxSpawnNum;
+	AttackRange = _attRange;
 	Stat.Speed = _speed;
+
+	if (SkillName == "FireWall")
+	{
+		FireSkill = GetWorld()->SpawnActor<AFP_FireWall>(AFP_FireWall::StaticClass(), FTransform(FRotator(0.f, 0.f, 0.f), this->GetActorLocation(), FVector(0.1f + Scale * 0.3f, 0.1f + Scale * 0.3f, 0.1f)));
+		Cast<AFP_FireWall>(FireSkill)->Scale = FireWallProxScale;
+	}
 }
