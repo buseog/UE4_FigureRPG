@@ -36,6 +36,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Text")
 	FText SkillText;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Progress")
+	float Ultimate1Gage = 0.f;
+
 	virtual bool Initialize() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
 
@@ -46,9 +49,13 @@ public:
 	UFUNCTION()
 	void Button_Exit();
 
+	UFUNCTION()
+	void Button_Ultimate1();
+
 
 public:
 	class UTextBlock* CountText;
+	class UTextBlock* UltText;
 	float CountTime = 10.f;
 public:
 	void DeadCount();

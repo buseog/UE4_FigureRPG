@@ -58,3 +58,18 @@ void AFP_Monster_BossTypeA::Tick(float DeltaTime)
 
 	//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Blue, TEXT("Test"));
 }
+
+void AFP_Monster_BossTypeA::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	int Rand = FMath::RandRange(0, 100);
+	if (Rand <= 10)
+	{
+		AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+		if (Player == nullptr)
+			return;
+
+		Player->Gem++;
+	}
+}

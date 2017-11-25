@@ -61,7 +61,14 @@ float AFP_ComCalculator::CalculateFinalDamage(AFP_Player* _player, T* _skill, AF
 		RuneDmg = 1.f;
 	//UE_LOG(LogClass, Error, TEXT("damage %f"), RuneDmg);
 	//UE_LOG(LogClass, Error, TEXT("damage %f"), _player->Status.Attack * _skill->Stat.Damage * RuneDmg);
-	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg * Multiplier;
+	float bonus = 1.f;
+	if ((_player->MyType == AFP_Player::FIRE && _skill->SkillInfo.Name.Contains("Fire")) || (_player->MyType == AFP_Player::ICE && _skill->SkillInfo.Name.Contains("Ice")))
+		bonus = 1.2f;
+
+	if(_skill->SkillInfo.Name.Contains("Ultimate"))
+		return _skill->Stat.Damage * RuneDmg * Multiplier;
+
+	return _player->Status.Attack * _skill->Stat.Damage * RuneDmg * Multiplier * bonus;
 }
 
 template<typename T>

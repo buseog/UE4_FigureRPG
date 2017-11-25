@@ -75,4 +75,6 @@ public:
 	void ViewBlueClicked();
 
 	void AddRune();
+
+	void CheckEquiped(SORTORDER _order);
 };

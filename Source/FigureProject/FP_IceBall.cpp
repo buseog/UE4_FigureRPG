@@ -20,8 +20,8 @@ AFP_IceBall::AFP_IceBall()
 	Stat.Damage = 1.5f;
 	Stat.Range = 1.f;
 
-	SkillInfo.AtkSpdPerLv = 0.025f;
-	SkillInfo.DmgPerLv = 15.f;
+	SkillInfo.AtkSpdPerLv = 0.015f;
+	SkillInfo.DmgPerLv = 25.f;
 
 	SkillInfo.Name = "IceBall";
 
@@ -42,24 +42,24 @@ void AFP_IceBall::Tick(float DeltaTime)
 
 	if (TargetMonster != nullptr)
 	{
-		TimelimitForDot -= DeltaTime;
-		if (TimelimitForDot > 0.f)
-			return;
-
 		TargetMonster->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
 		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
-
-		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
-		TimelimitForDot = 1.f;
+		
+		//TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
 
 		if (!Stat.EnablePierce)
+		{
+			TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
 			Destroy();
+		}
 		else
 		{
+			if(TargetMonster->MyBehaviour == AFP_Monster::IDLE)
+				TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
+
 			AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(this->GetActorLocation(), FRotator(0.f, 0.f, 0.f));
 			if (Impact == nullptr)
 				return;
-
 			Impact->SetImpact(AFP_Impact::ICEBALLIMPACT);
 		}
 	}

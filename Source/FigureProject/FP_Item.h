@@ -40,6 +40,8 @@ public:
 	USphereComponent* CollisionSphere;
 	UPointLightComponent* PointLight;
 	class UParticleSystemComponent* Particle;
+
+	float TimeAccForDestroy = 0.f;
 	
 	UFUNCTION()
 	virtual void OnProxOverlapBegin(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

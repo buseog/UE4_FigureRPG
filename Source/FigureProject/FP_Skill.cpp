@@ -61,6 +61,9 @@ void AFP_Skill::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (Particle->AccumTickTime > 5.f)
+		Destroy();
+	
 	//·é ¹Ù²î¸é ·é ¿É¼Ç °Ë»ç
 	if (RuneChanged)
 	{

@@ -14,8 +14,8 @@ struct RED {
 	//const uint64 DAMAGEUPTOCIRCLE			= 0x01000000;	// 확정, 퍼센트
 
 	const FString NAME_DAMAGEUP				= "DAMAGE UP:STAT";
-	const FString NAME_PIERCE				= "PIERCE:FIXED_PROJECTILE";
-	const FString NAME_IGNITE				= "IGNITE:FIXED_DEBUFF_FIRE";
+	const FString NAME_PIERCE				= "PIERCE:PROJECTILE";
+	const FString NAME_IGNITE				= "IGNITE:FIXED";
 	//const FString NAME_RANDOMEFFECT		= "RANDOM EFFECT:PROBABILITY";
 	//const FString NAME_LIFESTEAL			= "LIFE STEAL:FIXED";
 	//const FString NAME_DAMAGEUPONIGNITE	= "DAMAGE UP ON IGNITE:FIXED";
@@ -33,7 +33,7 @@ struct GREEN {
 
 	const FString NAME_ATTACKSPEEDUP		= "ATTACK SPEED UP:STAT";
 	const FString NAME_BULLETSPEEDUP		= "BULLET SPEED UP:STAT";
-	const FString NAME_SLOW					= "SLOW:FIXED_DEBUFF";
+	const FString NAME_SLOW					= "SLOW:FIXED";
 	//const FString NAME_KNOCKBACK			= "KNOCK BACK:FIXED";
 	//const FString NAME_DAMAGEUPTOSQARE	= "DAMAGE UP TO SQARE:FIXED";
 	//const FString NAME_ATTACKTWICE		= "ATTACK TWICE:PROBABILITY";
@@ -51,7 +51,7 @@ struct BLUE {
 
 	const FString NAME_RANGEUP				= "RANGE UP:STAT";
 	const FString NAME_EXPUP				= "EXP UP:EXP";
-	const FString NAME_FREEZE				= "FREEZE:PROBABILITY_DEBUFF_ICE";
+	const FString NAME_FREEZE				= "FREEZE:PROBABILITY";
 	//const FString NAME_STUN				= "STUN:PROBABILITY_DEBUFF";
 	//const FString NAME_GUIDED				= "GUIDED:FIXED_PROJECTILE";
 	//const FString NAME_AREAUP				= "AREA UP:AOE";
@@ -84,13 +84,13 @@ struct RUNESTATRANGE
 		const float DAMAGEUPTOCIRCLE_MAX	= 1.2f;
 
 		const float ATTACKSPEEDUP_MIN		= 1.01f;
-		const float ATTACKSPEEDUP_MAX		= 1.1f;
+		const float ATTACKSPEEDUP_MAX		= 1.05f;
 
 		const float BULLETSPEEDUP_MIN		= 1.f;
 		const float BULLETSPEEDUP_MAX		= 2.f;
 
-		const float DAMAGEUP_MIN			= 1.f;
-		const float DAMAGEUP_MAX			= 2.f;
+		const float DAMAGEUP_MIN			= 1.1f;
+		const float DAMAGEUP_MAX			= 1.5f;
 
 		const float DAMAGEUPTOSQARE_MIN		= 2.f;
 		const float DAMAGEUPTOSQARE_MAX		= 3.f;
@@ -104,8 +104,8 @@ struct RUNESTATRANGE
 		const float DOTDAMAGEUP_MIN			= 1.1f;
 		const float DOTDAMAGEUP_MAX			= 1.2f;
 
-		const float RANGEUP_MIN				= 1.f;
-		const float RANGEUP_MAX				= 1.2f;
+		const float RANGEUP_MIN				= 1.1f;
+		const float RANGEUP_MAX				= 1.15f;
 
 		const float EXPUP_MIN				= 1.1f;
 		const float EXPUP_MAX				= 1.15f;
@@ -152,13 +152,13 @@ struct RUNESTATRANGE
 		const float DAMAGEUPTOCIRCLE_MIN	= 1.1f;
 		const float DAMAGEUPTOCIRCLE_MAX	= 1.2f;
 
-		const float ATTACKSPEEDUP_MIN		= 1.01f;
+		const float ATTACKSPEEDUP_MIN		= 1.05f;
 		const float ATTACKSPEEDUP_MAX		= 1.1f;
 
 		const float BULLETSPEEDUP_MIN		= 1.f;
 		const float BULLETSPEEDUP_MAX		= 2.f;
 
-		const float DAMAGEUP_MIN			= 1.f;
+		const float DAMAGEUP_MIN			= 1.5f;
 		const float DAMAGEUP_MAX			= 2.f;
 
 		const float DAMAGEUPTOSQARE_MIN		= 2.f;
@@ -173,7 +173,7 @@ struct RUNESTATRANGE
 		const float DOTDAMAGEUP_MIN			= 1.1f;
 		const float DOTDAMAGEUP_MAX			= 1.2f;
 
-		const float RANGEUP_MIN				= 1.f;
+		const float RANGEUP_MIN				= 1.15f;
 		const float RANGEUP_MAX				= 1.2f;
 
 		const float EXPUP_MIN				= 1.15f;
@@ -221,14 +221,14 @@ struct RUNESTATRANGE
 		const float DAMAGEUPTOCIRCLE_MIN	= 1.1f;
 		const float DAMAGEUPTOCIRCLE_MAX	= 1.2f;
 
-		const float ATTACKSPEEDUP_MIN		= 1.01f;
-		const float ATTACKSPEEDUP_MAX		= 1.1f;
+		const float ATTACKSPEEDUP_MIN		= 1.1f;
+		const float ATTACKSPEEDUP_MAX		= 1.15f;
 
 		const float BULLETSPEEDUP_MIN		= 1.f;
 		const float BULLETSPEEDUP_MAX		= 2.f;
 
-		const float DAMAGEUP_MIN			= 1.f;
-		const float DAMAGEUP_MAX			= 2.f;
+		const float DAMAGEUP_MIN			= 2.f;
+		const float DAMAGEUP_MAX			= 2.5f;
 
 		const float DAMAGEUPTOSQARE_MIN		= 2.f;
 		const float DAMAGEUPTOSQARE_MAX		= 3.f;
@@ -242,8 +242,8 @@ struct RUNESTATRANGE
 		const float DOTDAMAGEUP_MIN			= 1.1f;
 		const float DOTDAMAGEUP_MAX			= 1.2f;
 
-		const float RANGEUP_MIN				= 1.f;
-		const float RANGEUP_MAX				= 1.2f;
+		const float RANGEUP_MIN				= 1.2f;
+		const float RANGEUP_MAX				= 1.25f;
 
 		const float EXPUP_MIN				= 1.2f;
 		const float EXPUP_MAX				= 1.25f;

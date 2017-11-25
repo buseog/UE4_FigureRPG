@@ -40,8 +40,10 @@ public:
 	void Button_Rev();
 	UFUNCTION()
 	void Button_Rune();
+	UFUNCTION()
+	void Button_Exit();
 
-	void OpenInventoryFromSkill();
+	void OpenInventoryFromSkill(UFP_InventoryWidget::SORTORDER _order);
 	
 
 	template <typename T>

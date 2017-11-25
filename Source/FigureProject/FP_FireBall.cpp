@@ -19,9 +19,9 @@ AFP_FireBall::AFP_FireBall()
 
 	SkillInfo.Name = "FireBall";
 
-	Stat.Speed = 0.5f;
-	Stat.CoolTimeRatio = 1.5f;
-	Stat.Damage = 1.f;
+	Stat.Speed = 1.f;
+	Stat.CoolTimeRatio = 1.f;
+	Stat.Damage = 1.5f;
 	Stat.Range = 1.f;
 
 	SkillInfo.AtkSpdPerLv = 0.f;
@@ -49,31 +49,27 @@ void AFP_FireBall::Tick(float DeltaTime)
 	//UE_LOG(LogClass, Log, TEXT("bullet : %f"), AFP_ComCalculator::CalculateFinalSpeed(Player, this, DeltaTime));
 	AFP_ComProjectile::MoveToTarget(this, TargetDirection, AFP_ComCalculator::CalculateFinalSpeed(Player, this, DeltaTime));
 
-	if (Particle->AccumTickTime > 5.f)
-		Destroy();
-
 	AFP_Monster* TargetMonster = AFP_ComCollision::Collision<USphereComponent, AFP_Monster>(ProxSphere);
 
 	if (TargetMonster != nullptr)
 	{
 		TargetMonster->ExpBonus = AFP_ComCalculator::CalculateExpBonus(this);
 
-		TimelimitForDot -= DeltaTime;
-		if (TimelimitForDot > 0.f)
-			return;
-
-		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);
-		TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));	
-		TimelimitForDot = 1.f;
+		AFP_ComMonsterStateMgr::StateControl(this, TargetMonster);	
 
 		if (!Stat.EnablePierce)
+		{
+			TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
 			Destroy();
+		}
 		else
 		{
+			if (TargetMonster->MyBehaviour == AFP_Monster::IDLE)
+				TargetMonster->MyTakeDamage(AFP_ComCalculator::CalculateFinalDamage(Player, this, TargetMonster));
+
 			AFP_Impact* Impact = GetWorld()->SpawnActor<AFP_Impact>(this->GetActorLocation(), FRotator(0.f, 0.f, 0.f));
 			if (Impact == nullptr)
 				return;
-
 			Impact->SetImpact(AFP_Impact::FIREBALLIMPACT);
 		}
 	}

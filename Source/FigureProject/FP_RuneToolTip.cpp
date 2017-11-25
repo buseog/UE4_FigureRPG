@@ -4,7 +4,10 @@
 #include "FP_PlayerController.h"
 #include "FP_InventoryWidget.h"
 #include "FP_Tooltip.h"
+#include "FP_ComRuneGenerator.h"
 
+
+AFP_Rune* UFP_RuneToolTip::SelectedRune = nullptr;
 bool UFP_RuneToolTip::Initialize()
 {
 	Super::Initialize();
@@ -14,6 +17,22 @@ bool UFP_RuneToolTip::Initialize()
 
 	DeleteButton = Cast<UButton>(GetWidgetFromName(TEXT("Delete")));
 	DeleteButton->OnClicked.AddDynamic(this, &UFP_RuneToolTip::DeleteRune);
+
+	UButton* GambleButton = Cast<UButton>(GetWidgetFromName(TEXT("Gamble")));
+	GambleButton->OnClicked.AddDynamic(this, &UFP_RuneToolTip::Gamble);
+
+
+	UButton* Prop1Button = Cast<UButton>(GetWidgetFromName(TEXT("Prop1")));
+	Prop1Button->OnClicked.AddDynamic(this, &UFP_RuneToolTip::ChangeOptionRune);
+	PropButtonArray.Add(Prop1Button);
+	UButton* Prop2Button = Cast<UButton>(GetWidgetFromName(TEXT("Prop2")));
+	Prop2Button->OnClicked.AddDynamic(this, &UFP_RuneToolTip::ChangeOptionRune);
+	PropButtonArray.Add(Prop2Button);
+	UButton* Prop3Button = Cast<UButton>(GetWidgetFromName(TEXT("Prop3")));
+	Prop3Button->OnClicked.AddDynamic(this, &UFP_RuneToolTip::ChangeOptionRune);
+	PropButtonArray.Add(Prop3Button);
+
+
 	return true;
 }
 
@@ -43,99 +62,31 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 		switch (i)
 		{
 		case 0:
-			//Option1 = Option[i];
-
-			/*if (_rune->OptionVal[i] == 0.f)
-				break;*/
-
-			/*for (int j = 0; j < type.Num(); ++j)
-			{
-				if(type[j] == AFP_Rune::STAT)
-					option = "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
-				else if(type[j] == AFP_Rune::DEBUFF)
-					option += FString::SanitizeFloat(_rune->OptionVal[i]);
-			}
-			Val1 = FText::FromString(option);
-			option.Empty();*/
+			if (_rune->Option[i].IsEmpty())
+				break;
 
 			Val1 = FText::FromString(_rune->Discription[i]);
 
-			/*if(_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
-				Val1 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
-			else
-				Val1 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
-
 			break;
 		case 1:
-			//Option2 = Option[i];
-
-			/*if (_rune->OptionVal[i] == 0.f)
-				break;*/
-
-			/*for (int j = 0; j < type.Num(); ++j)
-			{
-				if (type[j] == AFP_Rune::STAT)
-					option += "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
-				else
-					option += FString::SanitizeFloat(_rune->OptionVal[i]);
-			}
-			Val2 = FText::FromString(option);
-			option.Empty();*/
+			if (_rune->Option[i].IsEmpty())
+				break;
 
 			Val2 = FText::FromString(_rune->Discription[i]);
 
-			/*if (_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
-				Val2 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
-			else
-				Val2 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
-
 			break;
 		case 2:
-			//Option3 = Option[i];
-
-			/*if (_rune->OptionVal[i] == 0.f)
-				break;*/
-
-			/*for (int j = 0; j < type.Num(); ++j)
-			{
-				if (type[j] == AFP_Rune::STAT)
-					option += "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
-				else
-					option += FString::SanitizeFloat(_rune->OptionVal[i]);
-			}
-			Val3 = FText::FromString(option);
-			option.Empty();*/
+			if (_rune->Option[i].IsEmpty())
+				break;
 
 			Val3 = FText::FromString(_rune->Discription[i]);
 
-			/*if (_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
-				Val3 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
-			else
-				Val3 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
-
 			break;
 		case 3:
-			//Option4 = Option[i];
-
-			/*if (_rune->OptionVal[i] == 0.f)
-				break;*/
-
-			/*for (int j = 0; j < type.Num(); ++j)
-			{
-				if (type[j] == AFP_Rune::STAT)
-					option += "Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%";
-				else
-					option += FString::SanitizeFloat(_rune->OptionVal[i]);
-			}
-			Val4 = FText::FromString(option);
-			option.Empty();*/
+			if (_rune->Option[i].IsEmpty())
+				break;
 
 			Val4 = FText::FromString(_rune->Discription[i]);
-
-			/*if (_rune->Stat.Type.FindRef(_rune->Option[i]) == AFP_Rune::STAT)
-				Val4 = FText::FromString("Increase " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[i] - 1) * 1000.f) / 10)) + "%");
-			else
-				Val4 = FText::FromString(FString::SanitizeFloat(_rune->OptionVal[i]));*/
 
 			break;
 		}
@@ -156,8 +107,6 @@ void UFP_RuneToolTip::ToggleToolTip(AFP_Rune* _rune, bool _fromInventory, AFP_Sk
 		EquipButton->SetVisibility(ESlateVisibility::Visible);
 		DeleteButton->SetVisibility(ESlateVisibility::Hidden);
 	}
-		
-
 	SelectedSkill = _skill;
 	SelectedRune = _rune;
 
@@ -193,7 +142,7 @@ void UFP_RuneToolTip::EquipRune()
 	SkillToolTip->CurrentSkill->Sockets[SkillToolTip->iSocketIndex].EquipRune(SelectedRune, SkillToolTip->iSocketIndex, int(AFP_Weapon::ActiveSkill));
 	Player->Inventory[Player->Inventory.Find(SelectedRune)]->bEquiped = true;
 
-	Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();
+	//Cast<UFP_InventoryWidget>(InventoryWidget)->SortInventory();
 
 	this->RemoveFromViewport();
 	InventoryWidget->RemoveFromViewport();
@@ -223,4 +172,116 @@ void UFP_RuneToolTip::DeleteRune()
 	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
 
 	RemoveFromViewport();
+}
+
+void UFP_RuneToolTip::Gamble()
+{
+	for (int i = 0; i < SelectedRune->Discription.Num(); ++i)
+	{
+		PropButtonArray[i]->SetIsEnabled(true);
+	}
+}
+
+void UFP_RuneToolTip::ChangeOptionRune()
+{
+	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (Player->Gem <= 0)
+		return;
+
+	Player->Gem--;
+	AFP_ComRuneGenerator* runeGenerator = AFP_ComRuneGenerator::StaticClass()->GetDefaultObject<AFP_ComRuneGenerator>();
+	for (int i = 0; i < PropButtonArray.Num(); ++i)
+	{
+		if (PropButtonArray[i]->IsPressed())
+		{
+			int index = 0;
+			int j = 0;
+
+			switch (i)
+			{
+			case 0:
+				for (; j < SelectedRune->Discription.Num(); ++j)
+				{
+					if (Val1.ToString() == SelectedRune->Discription[j])
+						index = j;
+				}
+				break;
+
+			case 1:
+				for (; j < SelectedRune->Discription.Num(); ++j)
+				{
+					if (Val2.ToString() == SelectedRune->Discription[j])
+						index = j;
+				}
+				break;
+
+			case 2:
+				for (; j < SelectedRune->Discription.Num(); ++j)
+				{
+					if (Val3.ToString() == SelectedRune->Discription[j])
+						index = j;
+				}
+				break;
+			}
+
+			AFP_ComRuneGenerator::ChangeOption(index, runeGenerator->RuneProperty, runeGenerator->RedRuneOption, runeGenerator->GreenRuneOption, runeGenerator->BlueRuneOption, runeGenerator->RuneStat);
+			break;
+		}
+	}
+
+	for (int i = 0; i < PropButtonArray.Num(); ++i)
+		PropButtonArray[i]->SetIsEnabled(false);
+
+
+
+	////
+	InitializeToolTip();
+
+	TArray<AFP_Rune::TYPE> type;
+	FString option;
+
+	for (int i = 0; i < SelectedRune->Option.Num(); ++i)
+		Option.Add(FText::FromString(SelectedRune->Option[i]));
+
+	for (int i = 0; i < Option.Num(); ++i)
+	{
+		SelectedRune->Stat.Type.MultiFind(SelectedRune->Option[i], type, true);
+
+		switch (i)
+		{
+		case 0:
+			if (SelectedRune->Option[i].IsEmpty())
+				break;
+
+			Val1 = FText::FromString(SelectedRune->Discription[i]);
+
+			break;
+		case 1:
+			if (SelectedRune->Option[i].IsEmpty())
+				break;
+
+			Val2 = FText::FromString(SelectedRune->Discription[i]);
+
+			break;
+		case 2:
+			if (SelectedRune->Option[i].IsEmpty())
+				break;
+
+			Val3 = FText::FromString(SelectedRune->Discription[i]);
+
+			break;
+		case 3:
+			if (SelectedRune->Option[i].IsEmpty())
+				break;
+
+			Val4 = FText::FromString(SelectedRune->Discription[i]);
+
+			break;
+		}
+
+		type.Empty();
+	}
+
+	Tier = FText::FromString(FString::FromInt(SelectedRune->Stat.Tier) + " Tier");
+
 }

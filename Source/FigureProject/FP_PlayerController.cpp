@@ -130,12 +130,12 @@ bool AFP_PlayerController::Load()
 	player->SkillLv.IceOrb = LoadGameInstance->IceOrb;
 	player->SkillLv.SkillPoint = LoadGameInstance->SkillPoint;
 
-	SetSkillDetail<AFP_FireBall>(player->SkillLv.FireBall);
-	SetSkillDetail<AFP_FireBlast>(player->SkillLv.FireBlast);
-	SetSkillDetail<AFP_FireWall>(player->SkillLv.FireWall);
-	SetSkillDetail<AFP_IceBall>(player->SkillLv.IceBall);
-	SetSkillDetail<AFP_IceBlast>(player->SkillLv.IceBlast);
-	SetSkillDetail<AFP_IceOrb>(player->SkillLv.IceOrb);
+	SetSkillDetail<AFP_FireBall>(player->SkillLv.FireBall, "FireBall");
+	SetSkillDetail<AFP_FireBlast>(player->SkillLv.FireBlast, "FireBlast");
+	SetSkillDetail<AFP_FireWall>(player->SkillLv.FireWall, "FireWall");
+	SetSkillDetail<AFP_IceBall>(player->SkillLv.IceBall, "IceBall");
+	SetSkillDetail<AFP_IceBlast>(player->SkillLv.IceBlast, "IceBlast");
+	SetSkillDetail<AFP_IceOrb>(player->SkillLv.IceOrb, "IceOrb");
 
 	player->Level.Level = LoadGameInstance->Level;
 	player->Level.Exp = LoadGameInstance->Exp;
@@ -189,6 +189,7 @@ bool AFP_PlayerController::Load()
 		Frozen.Duration = LoadGameInstance->Inventory[i].FreezeDuration;
 
 		rune->ExpBonus = LoadGameInstance->Inventory[i].ExpBonus;
+		rune->Discription = LoadGameInstance->Inventory[i].Discription;
 			
 		if (stat.Range == 0)
 			UE_LOG(LogClass, Log, TEXT("BUG"));
@@ -227,9 +228,14 @@ bool AFP_PlayerController::Load()
 		}
 
 		TArray<FString> option;
-		option.Add(LoadGameInstance->Inventory[i].Option1);
-		option.Add(LoadGameInstance->Inventory[i].Option2);
-		option.Add(LoadGameInstance->Inventory[i].Option3);
+		if(!LoadGameInstance->Inventory[i].Option1.IsEmpty())
+			option.Add(LoadGameInstance->Inventory[i].Option1);
+
+		if (!LoadGameInstance->Inventory[i].Option2.IsEmpty())
+			option.Add(LoadGameInstance->Inventory[i].Option2);
+
+		if (!LoadGameInstance->Inventory[i].Option3.IsEmpty())
+			option.Add(LoadGameInstance->Inventory[i].Option3);
 
 		TArray<float> optionVal;
 		optionVal.Add(LoadGameInstance->Inventory[i].OptionVal1);

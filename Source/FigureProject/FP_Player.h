@@ -155,6 +155,9 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Particle)
 	class UPaperSpriteComponent* PaperSprite;
 
+	UPROPERTY(EditAnywhere)
+	class UFP_DamageUI* HPUP_UI;
+
 public:
 	UPROPERTY()
 	TArray<class UPaperSprite*> FirePlayerIcon;
@@ -197,6 +200,7 @@ public:
 	float Duration = 0.f;
 	float TimeAccForBuff = 0.f;
 	bool bIsBuffed = false;
+	float TImeAccForHeal = 0.f;
 	///////////////////////////////////////////////////////////////////////////////
 
 
@@ -207,8 +211,11 @@ public:
 	STATE MyState;
 	float IconShowtime = 0.5f;
 	float StateTimeAcc = 0.f;
+	bool isOnceForRune = false;
 
 	//---------------------Gem-----------------------//
-	int Gem = 50;
+	int Gem = 10;
 	//-----------------------------------------------//
+
+	int KillCountForUltimate = 0;
 };

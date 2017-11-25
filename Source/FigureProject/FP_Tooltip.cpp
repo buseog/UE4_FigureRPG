@@ -258,6 +258,16 @@ void UFP_Tooltip::ChangeColor()
 	if (CurrentSkill->Sockets[iSocketIndex].Rune->IsValidLowLevel())
 		return;
 
+	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (nullptr == pPlayer)
+		return;
+
+	if (pPlayer->Gem == 0)
+		return;
+	else
+		pPlayer->Gem--;
+
+
 	int icolor = FMath::FRandRange(1, 4);
 	FColor color;
 	switch (icolor)
@@ -303,15 +313,22 @@ void UFP_Tooltip::EquipRune()
 		FColor color = CurrentSkill->Sockets[iSocketIndex].Color;
 
 		if (color == FColor::Red)
-			Inventory->Order = UFP_InventoryWidget::SORTORDER::RED;
+		{
+			//Inventory->Order = UFP_InventoryWidget::SORTORDER::RED;
+			Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill(UFP_InventoryWidget::SORTORDER::RED);
+		}
 		else if (color == FColor::Green)
-			Inventory->Order = UFP_InventoryWidget::SORTORDER::GREEN;
+		{
+			//Inventory->Order = UFP_InventoryWidget::SORTORDER::GREEN;
+			Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill(UFP_InventoryWidget::SORTORDER::GREEN);
+		}
 		else
-			Inventory->Order = UFP_InventoryWidget::SORTORDER::BLUE;
+		{
+			//Inventory->Order = UFP_InventoryWidget::SORTORDER::BLUE;
+			Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill(UFP_InventoryWidget::SORTORDER::BLUE);
+		}
 
 		Inventory->SelectedSkill = CurrentSkill;
-
-		Cast<UFP_MainUI>(PC->GetWidgetMap(AFP_PlayerController::MAINUI))->OpenInventoryFromSkill();
 	}
 		
 	SocketBox->SetVisibility(ESlateVisibility::Hidden);

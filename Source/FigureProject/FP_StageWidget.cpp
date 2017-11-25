@@ -9,6 +9,8 @@
 #include "Button.h"
 #include "FP_MainUI.h"
 #include "Runtime/UMG/Public/Components/TextBlock.h"
+#include "FP_FireMeteor.h"
+#include "FP_GlacialSpike.h"
 
 
 bool UFP_StageWidget::Initialize()
@@ -21,7 +23,11 @@ bool UFP_StageWidget::Initialize()
 	Button = (UButton*)GetWidgetFromName(TEXT("Exit"));
 	Button->OnClicked.AddDynamic(this, &UFP_StageWidget::Button_Exit);
 
+	Button = (UButton*)GetWidgetFromName(TEXT("Ultimate1"));
+	Button->OnClicked.AddDynamic(this, &UFP_StageWidget::Button_Ultimate1);
+
 	CountText = (UTextBlock*)GetWidgetFromName(TEXT("Count"));
+	UltText = (UTextBlock*)GetWidgetFromName(TEXT("Ult"));
 
 	return true;
 }
@@ -100,6 +106,46 @@ void UFP_StageWidget::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 			CountTime = 10.f;
 			Player->Particle->SetVisibility(true);
 		}
+
+		Ultimate1Gage = Player->KillCountForUltimate / 25.f;
+		
+
+
+		if(Player->KillCountForUltimate >= 25)
+			GetWidgetFromName(TEXT("Ultimate1"))->SetVisibility(ESlateVisibility::Visible);
+		else
+			GetWidgetFromName(TEXT("Ultimate1"))->SetVisibility(ESlateVisibility::Hidden);
+
+		if (Player->MyType == AFP_Player::FIRE)
+		{
+			FName Path = TEXT("Texture2D'/Game/Icon/MeteorIcon.MeteorIcon'");
+			UTexture2D* FireIcon = Cast<UTexture2D>(StaticLoadObject(UTexture2D::StaticClass(), NULL, *Path.ToString()));
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Normal.ImageSize = FVector2D(90.f, 80.f);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Normal.Margin = 0;
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Normal.SetResourceObject(FireIcon);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Hovered.ImageSize = FVector2D(90.f, 80.f);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Hovered.Margin = 0;
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Hovered.SetResourceObject(FireIcon);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Pressed.ImageSize = FVector2D(90.f, 80.f);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Pressed.Margin = 0;
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Pressed.SetResourceObject(FireIcon);
+			UltText->SetText(FText::FromString("Meteor"));
+		}
+		else
+		{
+			FName Path = TEXT("Texture2D'/Game/Icon/GlacialSpikeIcon.GlacialSpikeIcon'");
+			UTexture2D* IceIcon = Cast<UTexture2D>(StaticLoadObject(UTexture2D::StaticClass(), NULL, *Path.ToString()));
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Normal.ImageSize = FVector2D(90.f, 80.f);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Normal.Margin = 0;
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Normal.SetResourceObject(IceIcon);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Hovered.ImageSize = FVector2D(90.f, 80.f);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Hovered.Margin = 0;
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Hovered.SetResourceObject(IceIcon);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Pressed.ImageSize = FVector2D(90.f, 80.f);
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Pressed.Margin = 0;
+			Cast<UButton>(GetWidgetFromName(TEXT("Ultimate1")))->WidgetStyle.Pressed.SetResourceObject(IceIcon);
+			UltText->SetText(FText::FromString("GlacialSpike"));
+		}
 	}
 }
 
@@ -109,10 +155,10 @@ void UFP_StageWidget::Button_MainUI()
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
-	PC->ToggleMainUI();
+	if (CountTime >= 0.f && CountTime < 6.f)
+		return;
 
-	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-	//Player->TimeAcc = 0.f;
+	PC->ToggleMainUI();
 }
 
 void UFP_StageWidget::Button_Exit()
@@ -154,4 +200,17 @@ void UFP_StageWidget::Button_Exit()
 			PC->GetWidgetMap(AFP_PlayerController::RUNETOOLTIP)->RemoveFromViewport();
 		}
 	}
+}
+
+void UFP_StageWidget::Button_Ultimate1()
+{
+	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	AFP_Skill* skill;
+
+	if (Player->MyType == AFP_Player::FIRE)
+		skill = GetWorld()->SpawnActor<AFP_FireMeteor>(FVector::ZeroVector, FRotator(180.f, 0.f, 0.f));
+	else
+		skill = GetWorld()->SpawnActor<AFP_GlacialSpike>(FVector::ZeroVector, FRotator(180.f, 0.f, 0.f));
+
+	Player->KillCountForUltimate = 0;
 }

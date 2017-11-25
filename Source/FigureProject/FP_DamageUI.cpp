@@ -62,7 +62,7 @@ void UFP_DamageUI::NativeTick(const FGeometry& MyGeometry, float DeltaTime)
 }
 
 
-void UFP_DamageUI::ShowDamage(float _damage, FVector2D _uilocation,int fontsize,  FColor color)
+void UFP_DamageUI::ShowDamage(float _damage, FVector2D _uilocation,int fontsize,  FColor color, bool isminus)
 {
 	for (size_t i = 0; i < TextArray.Num(); ++i)
 	{
@@ -78,7 +78,12 @@ void UFP_DamageUI::ShowDamage(float _damage, FVector2D _uilocation,int fontsize,
 
 		//UE_LOG(LogClass, Log, TEXT("%d"), fontsize);
 		
-		FString Damage = "-" + FString::FromInt(FMath::RoundHalfToZero(_damage));
+		FString Damage;
+		if(isminus == true)
+			Damage = "-" + FString::FromInt(FMath::RoundHalfToZero(_damage));
+		else
+			Damage = "+" + FString::FromInt(FMath::RoundHalfToZero(_damage));
+
 		TextArray[i]->SetText(FText::FromString(Damage));
 
 		OriginLocation[i] = _uilocation;

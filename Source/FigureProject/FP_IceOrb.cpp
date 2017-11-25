@@ -18,12 +18,12 @@ AFP_IceOrb::AFP_IceOrb()
 	SkillInfo.Name = "IceOrb";
 
 	Stat.Speed = 0.2f;
-	Stat.CoolTimeRatio = 1.5f;
+	Stat.CoolTimeRatio = 1.f;
 	Stat.Damage = 1.f;
-	Stat.Range = 0.8f;
+	Stat.Range = 1.f;
 
 	SkillInfo.AtkSpdPerLv = 0.015f;
-	SkillInfo.DmgPerLv = 15.f;
+	SkillInfo.DmgPerLv = 25.f;
 
 	InitStat = Stat;
 }

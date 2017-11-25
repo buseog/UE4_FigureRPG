@@ -54,16 +54,18 @@ public:
 	DebuffStat Slow;
 	DebuffStat Frozen;
 	uint64 Property;
-	float Tier3DropRate = 60.f;
-	float Tier2DropRate = 60.f;
-	float Tier3MaxDropRate = 60.f;
-	float Tier2MaxDropRate = 60.f;
+	float Tier3DropRate = 0.1f;
+	float Tier2DropRate = 1.f;
+	float Tier1DropRate = 3.5f;
+	float Tier3MaxDropRate = 10.f;
+	float Tier2MaxDropRate = 30.f;
+	float Tier1MaxDropRate = 100.f;
 	FString Name = "";
 	TArray<FString> Option;
 	TArray<float> OptionVal;
 	bool bEquiped = false;
 	float ExpBonus = 1.f;
-	FString Discription[3];
+	TArray<FString> Discription;
 
 	//½Â·ÄÃß°¡
 	int iSkillIndex;

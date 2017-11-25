@@ -13,6 +13,9 @@
 #include "PaperSpriteComponent.h"
 #include "PaperSprite.h"
 #include "FP_FireWall.h"
+#include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
+#include "Runtime/Engine/Classes/Engine/RendererSettings.h"
+#include "FP_ComRuneGenerator.h"
 
 
 // Sets default values
@@ -120,6 +123,7 @@ void AFP_Player::BeginPlay()
 	Particle->EmitterInstances[4]->bEnabled = false;
 	Particle->EmitterInstances[5]->bEnabled = false;
 	Particle->EmitterInstances[6]->bEnabled = false;
+	HPUP_UI = nullptr;
 	
 }
 
@@ -130,6 +134,18 @@ void AFP_Player::Tick(float DeltaTime)
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	if (isOnceForRune == false && Inventory.Num() == 0)
+	{
+		isOnceForRune = true;
+
+		AFP_Rune* rune = GetWorld()->SpawnActor<AFP_Rune>(FVector::ZeroVector, FRotator::ZeroRotator);
+		AFP_ComRuneGenerator* runeGenerator = AFP_ComRuneGenerator::StaticClass()->GetDefaultObject<AFP_ComRuneGenerator>();
+		AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RedRuneOption, runeGenerator->GreenRuneOption, runeGenerator->BlueRuneOption, runeGenerator->RuneStat, rune, AFP_MonsterMgr::Stage, 1);
+		Inventory.Add(rune);
+	}
+
+	
 
 	//Regeneration(DeltaTime);
 
@@ -188,8 +204,8 @@ void AFP_Player::StatusLevelUp(int _Type)
 	switch (_Type)
 	{
 	case 0:
-		Status.MaxHp += 10.f;
-		Status.Hp += 10.f;
+		Status.MaxHp += 50.f;
+		Status.Hp += 50.f;
 		break;
 
 	case 1:
@@ -201,7 +217,7 @@ void AFP_Player::StatusLevelUp(int _Type)
 		break;
 
 	case 3:
-		Status.AttackRange += 1.f;
+		Status.AttackRange += 2.5f;
 		break;
 
 	case 4:
@@ -239,7 +255,7 @@ void AFP_Player::CheckLevelUp()
 		++Level.Level;
 		Level.Point += 1;
 		Level.Exp -= Level.FullExp;
-		Level.FullExp = FMath::Pow(2, Level.Level) * 50.f; // ½Â·Ä¼öÁ¤
+		Level.FullExp = FMath::Pow(1.2f, Level.Level) * 50.f; // ½Â·Ä¼öÁ¤
 		Status.Hp = Status.MaxHp;
 
 		if (Level.Level % 5 == 0)
@@ -409,6 +425,10 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	{
 		FInventoryLoad inventory;
 
+		inventory.Option1.Empty();
+		inventory.Option2.Empty();
+		inventory.Option3.Empty();
+
 		inventory.Color = Inventory[i]->Color;
 		inventory.Property = Inventory[i]->Property;
 		inventory.Damage = Inventory[i]->Stat.Damage;
@@ -429,11 +449,13 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 		inventory.Name = Inventory[i]->Name;
 
 		inventory.bEquiped = Inventory[i]->bEquiped;
+		inventory.Discription = Inventory[i]->Discription;
 		inventory.SkillIndex = Inventory[i]->iSkillIndex;
 		inventory.SocketIndex = Inventory[i]->iSocketIndex;
 		
 		for (const auto& Entry : Inventory[i]->Stat.Type)
 			inventory.Type.Add(Entry.Value);
+
 
 		/*for (int j = 0; j < Inventory[i]->Stat.Type.Num(); ++j)
 			inventory.Type.Add(Inventory[i]->Stat.Type[j]);*/
@@ -531,8 +553,47 @@ void AFP_Player::CheckBuff(float _deltaTime)
 		Particle->EmitterInstances[5]->bEnabled = false;
 		Particle->EmitterInstances[6]->bEnabled = false;
 		bIsBuffed = false;
-		break;
+		return;
 	}
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	TImeAccForHeal -= _deltaTime;
+	if (TImeAccForHeal > 0.f)
+		return;
+
+	TImeAccForHeal = 0.5f;
+
+	Status.Hp += Status.MaxHp * 0.05f;
+	if (Status.Hp >= Status.MaxHp)
+		Status.Hp = Status.MaxHp;
+
+
+	if (HPUP_UI == nullptr)
+	{
+		FName Path = TEXT("WidgetBlueprint'/Game/WidgetBP/FP_DamageNum.FP_DamageNum_C'");
+		TSubclassOf<UFP_DamageUI> DamageUIClass = Cast<UClass>(StaticLoadObject(UClass::StaticClass(), NULL, *Path.ToString()));
+		HPUP_UI = CreateWidget<UFP_DamageUI>(PC, DamageUIClass);
+		HPUP_UI->AddToViewport(-1);
+	}
+
+	const FVector2D viewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
+	const float viewportScale = GetDefault<UUserInterfaceSettings>(UUserInterfaceSettings::StaticClass())->GetDPIScaleBasedOnSize(FIntPoint(viewportSize.X, viewportSize.Y));
+
+	FVector2D location;
+	PC->ProjectWorldLocationToScreen(this->GetActorLocation(), location);
+	location.X /= viewportScale;
+	location.Y /= viewportScale;
+	location.Y -= 100.f;
+
+	HPUP_UI->ShowDamage(Status.MaxHp * 0.05f, location, 50, FColor::Green, false);
+
+	
+
+
+
+	
 }
 
 void AFP_Player::SetBuff(BUFFTYPE _buff, float _multiplier, float _duration)

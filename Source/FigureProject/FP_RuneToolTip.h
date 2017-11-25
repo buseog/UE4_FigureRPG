@@ -65,7 +65,10 @@ public:
 	UButton* DeleteButton;
 
 	AFP_Skill* SelectedSkill = nullptr;
-	AFP_Rune* SelectedRune = nullptr;
+	static AFP_Rune* SelectedRune;
+
+	UPROPERTY()
+	TArray<UButton*> PropButtonArray;
 	
 public:
 	void ToggleToolTip(AFP_Rune* _rune, bool _fromInventory = true, AFP_Skill* _skill = nullptr);
@@ -76,4 +79,10 @@ public:
 
 	UFUNCTION()
 	void DeleteRune();
+
+	UFUNCTION()
+	void Gamble();
+
+	UFUNCTION()
+	void ChangeOptionRune();
 };

@@ -23,7 +23,7 @@ AFP_FireWall::AFP_FireWall()
 	Stat.Range = 1.f;
 
 	SkillInfo.AtkSpdPerLv = 0.f;
-	SkillInfo.DmgPerLv = 30.f;
+	SkillInfo.DmgPerLv = 25.f;
 
 	InitStat = Stat;
 }
@@ -73,7 +73,7 @@ void AFP_FireWall::Tick(float DeltaTime)
 
 		Impact->SetImpact(AFP_Impact::FIREBALLIMPACT);*/
 
-		TimelimitForDot = 0.25f;
+		TimelimitForDot = 0.5f;
 	}
 
 

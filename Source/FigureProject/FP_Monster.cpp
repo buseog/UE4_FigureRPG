@@ -149,11 +149,11 @@ void AFP_Monster::Tick(float DeltaTime)
 
 
 	AFP_Player* player = AFP_ComCollision::Collision<USphereComponent, AFP_Player>(SphereComponent);
-	if (player != nullptr)
+	if (player != nullptr && MyBehaviour != DEAD)
 	{
 		player->MyState = AFP_Player::HIT;
 		MyBehaviour = DEAD;
-		player->Status.Hp -= HP;
+		player->Status.Hp -= HP * 0.5f;
 		if (player->Status.Hp < 1)
 			player->RestartStage();
 
@@ -187,7 +187,7 @@ void AFP_Monster::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	
 	Player->Level.Exp += Exp * 	ExpBonus;
 	AFP_MonsterMgr::MonsterKillCnt++;
-
+	++Player->KillCountForUltimate;
 }
 
 

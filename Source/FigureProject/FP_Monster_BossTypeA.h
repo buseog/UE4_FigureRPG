@@ -17,6 +17,7 @@ class FIGUREPROJECT_API AFP_Monster_BossTypeA : public AFP_Monster
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 	
 	float TimeAcc = 0.f;
 	float Distance = 0.f;

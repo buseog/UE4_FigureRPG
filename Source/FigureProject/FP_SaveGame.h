@@ -83,6 +83,9 @@ struct FInventoryLoad
 	bool bEquiped;
 
 	UPROPERTY(VisibleAnywhere, Category = Inventory)
+	TArray<FString> Discription;
+
+	UPROPERTY(VisibleAnywhere, Category = Inventory)
 	int SkillIndex;
 
 	UPROPERTY(VisibleAnywhere, Category = Inventory)

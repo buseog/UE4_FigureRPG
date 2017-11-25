@@ -32,6 +32,6 @@ public:
 	TMap<int, TMap<FString, TMap<FString, float>>> RuneStat;
 	
 public:
-	static AFP_Rune* GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage);
-
+	static bool GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage, int _tier = 0);
+	static void ChangeOption(/*AFP_Rune* _rune, */int _index, TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat);
 };

@@ -54,7 +54,15 @@ void AFP_Item::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	MoveToPlayer(DeltaTime);
+	TimeAccForDestroy += DeltaTime;
+	if (TimeAccForDestroy > 10.f)
+	{
+		Destroy();
+		return;
+	}
+		
+
+	MoveToPlayer(DeltaTime*2.f);
 }
 
 void AFP_Item::MoveToPlayer(float DeltaTime)

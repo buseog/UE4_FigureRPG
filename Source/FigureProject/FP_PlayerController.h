@@ -55,13 +55,14 @@ public:
 
 
 	template<typename T>
-	void SetSkillDetail(int iSkillLv)
+	void SetSkillDetail(int iSkillLv, FString SkillName)
 	{
 		UClass* Class = T::StaticClass();
 		T* SkillCDO = Class->GetDefaultObject<T>();
 
 		SkillCDO->Stat.Damage = SkillCDO->InitStat.Damage + SkillCDO->SkillInfo.DmgPerLv*0.01f * iSkillLv;
 		SkillCDO->Stat.CoolTimeRatio = SkillCDO->InitStat.CoolTimeRatio - SkillCDO->SkillInfo.AtkSpdPerLv * iSkillLv;
+		SkillCDO->SkillInfo.Name = SkillName;
 	}
 
 	template<typename T>

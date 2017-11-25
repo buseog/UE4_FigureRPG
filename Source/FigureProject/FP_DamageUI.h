@@ -25,6 +25,6 @@ public:
 	TArray<FVector2D> OriginLocation;
 	TArray<FColor> ColorArray;
 	TArray<float> FontArray;
-	void ShowDamage(float _damage, FVector2D _uilocation, int fontsize, FColor color);
+	void ShowDamage(float _damage, FVector2D _uilocation, int fontsize, FColor color, bool isminus = true);
 	bool bDestroy = false;
 };

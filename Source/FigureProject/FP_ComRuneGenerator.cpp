@@ -3,6 +3,7 @@
 #include "FP_ComRuneGenerator.h"
 #include "FP_RuneTable.h"
 #include "FP_Monster.h"
+#include "FP_RuneToolTip.h"
 
 
 // Sets default values
@@ -492,11 +493,12 @@ void AFP_ComRuneGenerator::Tick(float DeltaTime)
 
 }
 
-AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage)
+bool AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat, AFP_Rune* _rune, int _stage, int _tier)
 {
 	//Tier
 	_rune->Tier3DropRate = (float)_stage * _rune->Tier3DropRate;
 	_rune->Tier2DropRate = (float)_stage * _rune->Tier2DropRate;
+	_rune->Tier1DropRate = (float)_stage * _rune->Tier1DropRate;
 
 	if (_rune->Tier3DropRate >= _rune->Tier3MaxDropRate)
 		_rune->Tier3DropRate = _rune->Tier3MaxDropRate;
@@ -504,14 +506,29 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 	if (_rune->Tier2DropRate >= _rune->Tier2MaxDropRate)
 		_rune->Tier2DropRate = _rune->Tier2MaxDropRate;
 
-	float DropRate = FMath::FRandRange(0.f, 101.f);
+	if (_rune->Tier1DropRate >= _rune->Tier1MaxDropRate)
+		_rune->Tier1DropRate = _rune->Tier1MaxDropRate;
 
+	if (_tier == 3)
+		_rune->Tier3DropRate = 100.f;
+	else if (_tier == 2)
+		_rune->Tier2DropRate = 100.f;
+	else if (_tier == 1)
+		_rune->Tier1DropRate = 100.f;
+
+
+	float DropRate = FMath::FRandRange(0.f, 100.f);
 	if (DropRate <= _rune->Tier3DropRate)
 		_rune->Stat.Tier = 3;
 	else if (DropRate <= _rune->Tier2DropRate)
 		_rune->Stat.Tier = 2;
-	else
+	else if (DropRate <= _rune->Tier1DropRate)
 		_rune->Stat.Tier = 1;
+	else
+	{
+		_rune->Destroy();
+		return false;
+	}
 
 	//Color, Property, Name, Type
 	int random = FMath::RandRange(0, 2);
@@ -702,29 +719,32 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
+				if (_rune->Discription.Num() >= _rune->Option.Num())
+					break;
+
 				if (_rune->Option[j].Contains("DAMAGE") && !_rune->Option[j].Contains("TO"))
 				{
 					_rune->Stat.Damage = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DAMAGE UP"]["MIN"], _runeStat[_rune->Stat.Tier]["DAMAGE UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Damage;
-					_rune->Discription[j] = "Increase Damage By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
+					_rune->Discription.Add("Increase Damage By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
 				}
 				else if (_rune->Option[j].Contains("RANGE"))
 				{
 					_rune->Stat.Range = FMath::RandRange(_runeStat[_rune->Stat.Tier]["RANGE UP"]["MIN"], _runeStat[_rune->Stat.Tier]["RANGE UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Range;
-					_rune->Discription[j] = "Increase Range By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
+					_rune->Discription.Add("Increase Range By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
 				}
 				else if (_rune->Option[j].Contains("ATTACK SPEED"))
 				{
 					_rune->Stat.CoolTimeRatio = FMath::RandRange(_runeStat[_rune->Stat.Tier]["ATTACK SPEED UP"]["MIN"], _runeStat[_rune->Stat.Tier]["ATTACK SPEED UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.CoolTimeRatio;
-					_rune->Discription[j] = "Increase Attack Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
+					_rune->Discription.Add("Increase Attack Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
 				}
 				else if (_rune->Option[j].Contains("BULLET SPEED"))
 				{
 					_rune->Stat.Speed = FMath::RandRange(_runeStat[_rune->Stat.Tier]["BULLET SPEED UP"]["MIN"], _runeStat[_rune->Stat.Tier]["BULLET SPEED UP"]["MAX"]);
 					_rune->OptionVal[j] = _rune->Stat.Speed;
-					_rune->Discription[j] = "Increase Bullet Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%";
+					_rune->Discription.Add("Increase Bullet Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
 				}
 			}
 		}
@@ -733,12 +753,15 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
+				if (_rune->Discription.Num() >= _rune->Option.Num())
+					break;
+
 				if (_rune->Option[j].Contains("FREEZE"))
 				{
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["FREEZE"]["MIN"], _runeStat[_rune->Stat.Tier]["FREEZE"]["MAX"]);
 					_rune->Frozen.Probability = _rune->OptionVal[j];
 					_rune->Frozen.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
-					_rune->Discription[j] = "Freeze Enemy With " + FString::FromInt(_rune->Frozen.Probability) + "% Chance For " + FString::FromInt(_rune->Frozen.Duration) + "Sec";
+					_rune->Discription.Add("Freeze Enemy With " + FString::FromInt(_rune->Frozen.Probability) + "% Chance For " + FString::FromInt(_rune->Frozen.Duration) + "Sec");
 				}
 			}
 		}
@@ -747,23 +770,29 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
+				if (_rune->Discription.Num() >= _rune->Option.Num())
+					break;
+
 				if (_rune->Option[j].Contains("IGNITE"))
 				{
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["IGNITE"]["MIN"], _runeStat[_rune->Stat.Tier]["IGNITE"]["MAX"]);
 					_rune->Ignite.Damage = _rune->OptionVal[j];
 					_rune->Ignite.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
-					_rune->Discription[j] = "Deal " + FString::SanitizeFloat(_rune->Ignite.Damage * 5.f) + "%/sec of Enemy's Health For " + FString::FromInt(_rune->Ignite.Duration) + " Sec";
+					_rune->Discription.Add("Deal " + FString::SanitizeFloat(FMath::RoundHalfToEven(_rune->Ignite.Damage * 5.f * 10) / 10.f) + "%/sec of Enemy's Health For " + FString::FromInt(_rune->Ignite.Duration) + " Sec");
 				}
 			}
 
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
+				if (_rune->Discription.Num() >= _rune->Option.Num())
+					break;
+
 				if (_rune->Option[j].Contains("SLOW"))
 				{
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["SLOW"]["MIN"], _runeStat[_rune->Stat.Tier]["SLOW"]["MAX"]);
 					_rune->Slow.Damage = _rune->OptionVal[j];
 					_rune->Slow.Duration = FMath::RandRange(_runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[_rune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
-					_rune->Discription[j] = "Slow Enemy For " + FString::FromInt(_rune->Slow.Duration) + " Sec ";
+					_rune->Discription.Add("Slow Enemy For " + FString::FromInt(_rune->Slow.Duration) + " Sec ");
 				}
 			}
 		}
@@ -772,9 +801,12 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
+				if (_rune->Discription.Num() >= _rune->Option.Num())
+					break;
+
 				if (_rune->Option[j].Contains("PIERCE"))
 				{
-					_rune->Discription[j] = "Projectiles Pierce Enemies";
+					_rune->Discription.Add("Projectiles Pierce Enemies");
 				}
 			}
 		}
@@ -793,10 +825,14 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 		{
 			for (int j = 0; j < _rune->Option.Num(); ++j)
 			{
+				if (_rune->Discription.Num() >= _rune->Option.Num())
+					break;
+
 				if (_rune->Option[j].Contains("EXP"))
 				{
 					_rune->OptionVal[j] = FMath::RandRange(_runeStat[_rune->Stat.Tier]["EXP UP"]["MIN"], _runeStat[_rune->Stat.Tier]["EXP UP"]["MAX"]);
-					_rune->Discription[j] = "Gain " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "% Increased Exp";
+					_rune->Discription.Add("Gain " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((_rune->OptionVal[j] - 1) * 1000.f) / 10)) + "% Increased Exp");
+					_rune->ExpBonus = _rune->OptionVal[j];
 				}
 			}
 		}
@@ -912,5 +948,460 @@ AFP_Rune* AFP_ComRuneGenerator::GenerateRune(TMap<FColor, TMap<FString, TMap<uin
 	//UE_LOG(LogClass, Log, TEXT("Property : %x"), _rune->Property);
 	//UE_LOG(LogClass, Log, TEXT("Name : %s"), *_rune->Name);
 
-	return _rune;
+	return true;
+}
+
+void AFP_ComRuneGenerator::ChangeOption(/*AFP_Rune* _rune, */int _index, TMap<FColor, TMap<FString, TMap<uint64, FString>>> _runeProperty, TMap<uint64, FString> _redRuneOption, TMap<uint64, FString> _greenRuneOption, TMap<uint64, FString> _blueRuneOption, TMap<int, TMap<FString, TMap<FString, float>>> _runeStat)
+{
+	uint64 hex = 0;
+
+	uint64 property = 0;
+
+	if (UFP_RuneToolTip::SelectedRune->Color == FColor::Red)
+	{
+
+		for (const auto& Entry : _redRuneOption)
+		{
+			if (Entry.Value.Contains(UFP_RuneToolTip::SelectedRune->Option[_index]))
+				property = Entry.Key;
+		}
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Color == FColor::Green)
+	{
+		for (const auto& Entry : _greenRuneOption)
+		{
+			if (Entry.Value.Contains(UFP_RuneToolTip::SelectedRune->Option[_index]))
+				property = Entry.Key;
+		}
+	}
+	else
+	{
+		for (const auto& Entry : _blueRuneOption)
+		{
+			if (Entry.Value.Contains(UFP_RuneToolTip::SelectedRune->Option[_index]))
+				property = Entry.Key;
+		}
+	}
+
+	UE_LOG(LogClass, Log, TEXT("%s"), *UFP_RuneToolTip::SelectedRune->Name);
+	UE_LOG(LogClass, Log, TEXT("Origin Property : %d"), property);
+
+	UFP_RuneToolTip::SelectedRune->Property -= property;
+
+	UE_LOG(LogClass, Log, TEXT("Property after - : %d"), UFP_RuneToolTip::SelectedRune->Property);
+	UFP_RuneToolTip::SelectedRune->Name.Empty();
+	UFP_RuneToolTip::SelectedRune->Stat.Type.Empty();
+	//UFP_RuneToolTip::SelectedRune->Option.RemoveAt(_index);
+	//UFP_RuneToolTip::SelectedRune->OptionVal.RemoveAt(_index);
+	//UFP_RuneToolTip::SelectedRune->OptionVal.Add(0.f);
+	//UFP_RuneToolTip::SelectedRune->OptionVal.Init(0.f, 4);
+	//UFP_RuneToolTip::SelectedRune->Discription.Empty();
+
+	if (UFP_RuneToolTip::SelectedRune->Color == FColor::Red)
+	{
+		while (1)
+		{
+			int random = int(FMath::RandRange(0, _runeProperty[FColor::Red].Num() - 1));
+			hex = (uint64)FMath::Pow(16, random);
+
+			/*UE_LOG(LogClass, Log, TEXT("random : %d"), random);
+			UE_LOG(LogClass, Log, TEXT("hex : %d"), hex);
+			UE_LOG(LogClass, Log, TEXT("property : %d"), UFP_RuneToolTip::SelectedRune->Property);*/
+
+			if ((UFP_RuneToolTip::SelectedRune->Property & hex) == 0)
+				break;
+		}
+		UE_LOG(LogClass, Log, TEXT("hex : %d"), hex);
+		UFP_RuneToolTip::SelectedRune->Property = UFP_RuneToolTip::SelectedRune->Property | hex;
+		UE_LOG(LogClass, Log, TEXT("Property after | : %d"), UFP_RuneToolTip::SelectedRune->Property);
+
+		UFP_RuneToolTip::SelectedRune->Option[_index] = _redRuneOption[hex].Left(_redRuneOption[hex].Find(TEXT(":")));
+		
+		for (int i = 0; i < UFP_RuneToolTip::SelectedRune->Option.Num(); ++i)
+		{
+			UFP_RuneToolTip::SelectedRune->Name += UFP_RuneToolTip::SelectedRune->Option[i];
+			int key;
+
+			for (const auto& Entry : _redRuneOption)
+			{
+				if (Entry.Value.Contains(UFP_RuneToolTip::SelectedRune->Option[i]))
+					key = Entry.Key;
+			}
+
+			if (_redRuneOption[key].Contains("STAT"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::STAT);
+
+			if (_redRuneOption[key].Contains("DEBUFF"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::DEBUFF);
+
+			if (_redRuneOption[key].Contains("PROBABILITY"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::PROBABILITY);
+
+			if (_redRuneOption[key].Contains("FIXED"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::FIXED);
+
+			if (_redRuneOption[key].Contains("PROJECTILE"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::PROJECTILE);
+
+			if (_redRuneOption[key].Contains("AOE"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::AOE);
+
+			if (_redRuneOption[key].Contains("DOT"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::DOT);
+
+			if (_redRuneOption[key].Contains("EXP"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::EXP);
+
+			if (_redRuneOption[key].Contains("ETC"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::ETC);
+		}
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Color == FColor::Green)
+	{
+		while (1)
+		{
+			int random = int(FMath::RandRange(0, _runeProperty[FColor::Green].Num() - 1));
+			hex = (uint64)FMath::Pow(16, random);
+
+			if ((UFP_RuneToolTip::SelectedRune->Property & hex) == 0)
+				break;
+		}
+
+		TMap<uint64, FString>::TIterator iter = _greenRuneOption.CreateIterator();
+
+		UFP_RuneToolTip::SelectedRune->Property = UFP_RuneToolTip::SelectedRune->Property | hex;
+
+		UFP_RuneToolTip::SelectedRune->Option[_index] = _greenRuneOption[hex].Left(_greenRuneOption[hex].Find(TEXT(":")));
+
+		for (int i = 0; i < UFP_RuneToolTip::SelectedRune->Option.Num(); ++i)
+		{
+			UFP_RuneToolTip::SelectedRune->Name += UFP_RuneToolTip::SelectedRune->Option[i];
+			int key;
+
+			for (const auto& Entry : _greenRuneOption)
+			{
+				if (Entry.Value.Contains(UFP_RuneToolTip::SelectedRune->Option[i]))
+					key = Entry.Key;
+			}
+
+			if (_greenRuneOption[key].Contains("STAT"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::STAT);
+
+			if (_greenRuneOption[key].Contains("DEBUFF"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::DEBUFF);
+
+			if (_greenRuneOption[key].Contains("PROBABILITY"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::PROBABILITY);
+
+			if (_greenRuneOption[key].Contains("FIXED"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::FIXED);
+
+			if (_greenRuneOption[key].Contains("PROJECTILE"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::PROJECTILE);
+
+			if (_greenRuneOption[key].Contains("AOE"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::AOE);
+
+			if (_greenRuneOption[key].Contains("DOT"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::DOT);
+
+			if (_greenRuneOption[key].Contains("EXP"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::EXP);
+
+			if (_greenRuneOption[key].Contains("ETC"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::ETC);
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			int random = int(FMath::RandRange(0, _runeProperty[FColor::Blue].Num() - 1));
+			hex = (uint64)FMath::Pow(16, random);
+
+			if ((UFP_RuneToolTip::SelectedRune->Property & hex) == 0)
+				break;
+		}
+
+		TMap<uint64, FString>::TIterator iter = _blueRuneOption.CreateIterator();
+
+		UFP_RuneToolTip::SelectedRune->Property = UFP_RuneToolTip::SelectedRune->Property | hex;
+
+		UFP_RuneToolTip::SelectedRune->Option[_index] = _blueRuneOption[hex].Left(_blueRuneOption[hex].Find(TEXT(":")));
+
+		for (int i = 0; i < UFP_RuneToolTip::SelectedRune->Option.Num(); ++i)
+		{
+			UFP_RuneToolTip::SelectedRune->Name += UFP_RuneToolTip::SelectedRune->Option[i];
+			int key;
+
+			for (const auto& Entry : _blueRuneOption)
+			{
+				if (Entry.Value.Contains(UFP_RuneToolTip::SelectedRune->Option[i]))
+					key = Entry.Key;
+			}
+
+			if (_blueRuneOption[key].Contains("STAT"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::STAT);
+
+			if (_blueRuneOption[key].Contains("DEBUFF"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::DEBUFF);
+
+			if (_blueRuneOption[key].Contains("PROBABILITY"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::PROBABILITY);
+
+			if (_blueRuneOption[key].Contains("FIXED"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::FIXED);
+
+			if (_blueRuneOption[key].Contains("PROJECTILE"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::PROJECTILE);
+
+			if (_blueRuneOption[key].Contains("AOE"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::AOE);
+
+			if (_blueRuneOption[key].Contains("DOT"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::DOT);
+
+			if (_blueRuneOption[key].Contains("EXP"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::EXP);
+
+			if (_blueRuneOption[key].Contains("ETC"))
+				UFP_RuneToolTip::SelectedRune->Stat.Type.Add(UFP_RuneToolTip::SelectedRune->Option.Last(), AFP_Rune::TYPE::ETC);
+		}
+	}
+
+	if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("DAMAGE") && !UFP_RuneToolTip::SelectedRune->Option[_index].Contains("TO"))
+	{
+		UFP_RuneToolTip::SelectedRune->Stat.Damage = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DAMAGE UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DAMAGE UP"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = UFP_RuneToolTip::SelectedRune->Stat.Damage;
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Increase Damage By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[_index] - 1) * 1000.f) / 10)) + "%");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("RANGE"))
+	{
+		UFP_RuneToolTip::SelectedRune->Stat.Range = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["RANGE UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["RANGE UP"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = UFP_RuneToolTip::SelectedRune->Stat.Range;
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Increase Range By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[_index] - 1) * 1000.f) / 10)) + "%");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("ATTACK SPEED"))
+	{
+		UFP_RuneToolTip::SelectedRune->Stat.CoolTimeRatio = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["ATTACK SPEED UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["ATTACK SPEED UP"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = UFP_RuneToolTip::SelectedRune->Stat.CoolTimeRatio;
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Increase Attack Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[_index] - 1) * 1000.f) / 10)) + "%");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("BULLET SPEED"))
+	{
+		UFP_RuneToolTip::SelectedRune->Stat.Speed = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["BULLET SPEED UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["BULLET SPEED UP"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = UFP_RuneToolTip::SelectedRune->Stat.Speed;
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Increase Bullet Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[_index] - 1) * 1000.f) / 10)) + "%");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("FREEZE"))
+	{
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["FREEZE"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["FREEZE"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->Frozen.Probability = UFP_RuneToolTip::SelectedRune->OptionVal[_index];
+		UFP_RuneToolTip::SelectedRune->Frozen.Duration = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Freeze Enemy With " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Frozen.Probability) + "% Chance For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Frozen.Duration) + "Sec");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("IGNITE"))
+	{
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["IGNITE"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["IGNITE"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->Ignite.Damage = UFP_RuneToolTip::SelectedRune->OptionVal[_index];
+		UFP_RuneToolTip::SelectedRune->Ignite.Duration = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Deal " + FString::SanitizeFloat(FMath::RoundHalfToEven(UFP_RuneToolTip::SelectedRune->Ignite.Damage * 5.f * 10) / 10.f) + "%/sec of Enemy's Health For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Ignite.Duration) + " Sec");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("SLOW"))
+	{
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["SLOW"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["SLOW"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->Slow.Damage = UFP_RuneToolTip::SelectedRune->OptionVal[_index];
+		UFP_RuneToolTip::SelectedRune->Slow.Duration = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Slow Enemy For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Slow.Duration) + " Sec ");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("PIERCE"))
+	{
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Projectiles Pierce Enemies");
+	}
+	else if (UFP_RuneToolTip::SelectedRune->Option[_index].Contains("EXP"))
+	{
+		UFP_RuneToolTip::SelectedRune->OptionVal[_index] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["EXP UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["EXP UP"]["MAX"]);
+		UFP_RuneToolTip::SelectedRune->Discription[_index] = ("Gain " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[_index] - 1) * 1000.f) / 10)) + "% Increased Exp");
+		UFP_RuneToolTip::SelectedRune->ExpBonus = UFP_RuneToolTip::SelectedRune->OptionVal[_index];
+	}
+
+
+	//for (const auto& Entry : UFP_RuneToolTip::SelectedRune->Stat.Type)
+	//{
+	//	if (Entry.Value == AFP_Rune::TYPE::STAT)
+	//	{
+	//		for (int j = 0; j < UFP_RuneToolTip::SelectedRune->Option.Num(); ++j)
+	//		{
+	//			if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("DAMAGE") && !UFP_RuneToolTip::SelectedRune->Option[j].Contains("TO"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				
+	//			}
+	//			else if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("RANGE"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				if (UFP_RuneToolTip::SelectedRune->OptionVal[j] != 0.f)
+	//				{
+	//					UFP_RuneToolTip::SelectedRune->Discription.Add("Increase Range By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
+	//					continue;
+	//				}
+
+	//				UFP_RuneToolTip::SelectedRune->Stat.Range = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["RANGE UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["RANGE UP"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->OptionVal[j] = UFP_RuneToolTip::SelectedRune->Stat.Range;
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Increase Range By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
+	//			}
+	//			else if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("ATTACK SPEED"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				if (UFP_RuneToolTip::SelectedRune->OptionVal[j] != 0.f)
+	//				{
+	//					UFP_RuneToolTip::SelectedRune->Discription.Add("Increase Attack Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
+	//					continue;
+	//				}
+
+	//				UFP_RuneToolTip::SelectedRune->Stat.CoolTimeRatio = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["ATTACK SPEED UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["ATTACK SPEED UP"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->OptionVal[j] = UFP_RuneToolTip::SelectedRune->Stat.CoolTimeRatio;
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Increase Attack Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
+	//			}
+	//			else if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("BULLET SPEED"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				if (UFP_RuneToolTip::SelectedRune->OptionVal[j] != 0.f)
+	//				{
+	//					UFP_RuneToolTip::SelectedRune->Discription.Add("Increase Bullet Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
+	//					continue;
+	//				}
+
+	//				UFP_RuneToolTip::SelectedRune->Stat.Speed = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["BULLET SPEED UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["BULLET SPEED UP"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->OptionVal[j] = UFP_RuneToolTip::SelectedRune->Stat.Speed;
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Increase Bullet Speed By " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[j] - 1) * 1000.f) / 10)) + "%");
+	//			}
+	//		}
+	//	}
+
+	//	if (Entry.Value == AFP_Rune::TYPE::PROBABILITY)
+	//	{
+	//		for (int j = 0; j < UFP_RuneToolTip::SelectedRune->Option.Num(); ++j)
+	//		{
+	//			if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("FREEZE"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				if (UFP_RuneToolTip::SelectedRune->OptionVal[j] != 0.f)
+	//				{
+	//					UFP_RuneToolTip::SelectedRune->Discription.Add("Freeze Enemy With " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Frozen.Probability) + "% Chance For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Frozen.Duration) + "Sec");
+	//					continue;
+	//				}
+
+	//				UFP_RuneToolTip::SelectedRune->OptionVal[j] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["FREEZE"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["FREEZE"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->Frozen.Probability = UFP_RuneToolTip::SelectedRune->OptionVal[j];
+	//				UFP_RuneToolTip::SelectedRune->Frozen.Duration = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Freeze Enemy With " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Frozen.Probability) + "% Chance For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Frozen.Duration) + "Sec");
+	//			}
+	//		}
+	//	}
+
+	//	if (Entry.Value == AFP_Rune::TYPE::FIXED)
+	//	{
+	//		for (int j = 0; j < UFP_RuneToolTip::SelectedRune->Option.Num(); ++j)
+	//		{
+	//			if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("IGNITE"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				if (UFP_RuneToolTip::SelectedRune->OptionVal[j] != 0.f)
+	//				{
+	//					UFP_RuneToolTip::SelectedRune->Discription.Add("Deal " + FString::SanitizeFloat(FMath::RoundHalfToEven(UFP_RuneToolTip::SelectedRune->Ignite.Damage * 5.f * 10) / 10.f) + "%/sec of Enemy's Health For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Ignite.Duration) + " Sec");
+	//					continue;
+	//				}
+
+	//				UFP_RuneToolTip::SelectedRune->OptionVal[j] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["IGNITE"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["IGNITE"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->Ignite.Damage = UFP_RuneToolTip::SelectedRune->OptionVal[j];
+	//				UFP_RuneToolTip::SelectedRune->Ignite.Duration = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Deal " + FString::SanitizeFloat(FMath::RoundHalfToEven(UFP_RuneToolTip::SelectedRune->Ignite.Damage * 5.f * 10) / 10.f) + "%/sec of Enemy's Health For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Ignite.Duration) + " Sec");
+	//			}
+	//		}
+
+	//		for (int j = 0; j < UFP_RuneToolTip::SelectedRune->Option.Num(); ++j)
+	//		{
+	//			if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("SLOW"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				if (UFP_RuneToolTip::SelectedRune->OptionVal[j] != 0.f)
+	//				{
+	//					UFP_RuneToolTip::SelectedRune->Discription.Add("Slow Enemy For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Slow.Duration) + " Sec ");
+	//					continue;
+	//				}
+
+	//				UFP_RuneToolTip::SelectedRune->OptionVal[j] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["SLOW"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["SLOW"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->Slow.Damage = UFP_RuneToolTip::SelectedRune->OptionVal[j];
+	//				UFP_RuneToolTip::SelectedRune->Slow.Duration = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["DEBUFFDURATION"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Slow Enemy For " + FString::FromInt(UFP_RuneToolTip::SelectedRune->Slow.Duration) + " Sec ");
+	//			}
+	//		}
+	//	}
+
+	//	if (Entry.Value == AFP_Rune::TYPE::PROJECTILE)
+	//	{
+	//		for (int j = 0; j < UFP_RuneToolTip::SelectedRune->Option.Num(); ++j)
+	//		{
+	//			if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//				break;
+
+	//			if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("PIERCE"))
+	//			{
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Projectiles Pierce Enemies");
+	//			}
+	//		}
+	//	}
+
+	//	/*if (Entry.Value == AFP_Rune::TYPE::AOE)
+	//	{
+
+	//	}*/
+
+	//	/*if (Entry.Value == AFP_Rune::TYPE::DOT)
+	//	{
+
+	//	}*/
+
+	//	if (Entry.Value == AFP_Rune::TYPE::EXP)
+	//	{
+	//		for (int j = 0; j < UFP_RuneToolTip::SelectedRune->Option.Num(); ++j)
+	//		{
+	//			if (UFP_RuneToolTip::SelectedRune->Option[j].Contains("EXP"))
+	//			{
+	//				if (UFP_RuneToolTip::SelectedRune->Discription.Num() >= UFP_RuneToolTip::SelectedRune->Option.Num())
+	//					break;
+
+	//				if (UFP_RuneToolTip::SelectedRune->OptionVal[j] != 0.f)
+	//				{
+	//					UFP_RuneToolTip::SelectedRune->ExpBonus = UFP_RuneToolTip::SelectedRune->OptionVal[j];
+	//					continue;
+	//				}
+
+	//				UFP_RuneToolTip::SelectedRune->OptionVal[j] = FMath::RandRange(_runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["EXP UP"]["MIN"], _runeStat[UFP_RuneToolTip::SelectedRune->Stat.Tier]["EXP UP"]["MAX"]);
+	//				UFP_RuneToolTip::SelectedRune->Discription.Add("Gain " + FString::FromInt(FMath::RoundHalfToEven(FMath::RoundHalfToEven((UFP_RuneToolTip::SelectedRune->OptionVal[j] - 1) * 1000.f) / 10)) + "% Increased Exp");
+	//				UFP_RuneToolTip::SelectedRune->ExpBonus = UFP_RuneToolTip::SelectedRune->OptionVal[j];
+	//			}
+	//		}
+	//	}
+	//		
+	//	/*if (Entry.Value == AFP_Rune::TYPE::ETC)
+	//	{
+
+	//	}*/
+	//}
 }

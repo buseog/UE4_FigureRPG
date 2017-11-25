@@ -14,6 +14,8 @@
 #include "FP_IceBall.h"
 #include "FP_IceBlast.h"
 #include "FP_IceOrb.h"
+#include "Runtime/Core/Public/GenericPlatform/GenericPlatformMisc.h"
+#include "Runtime/Engine/Classes/Kismet/KismetSystemLibrary.h"
 
 
 void UFP_MainUI::NativeConstruct()
@@ -45,6 +47,11 @@ bool UFP_MainUI::Initialize()
 
 	Button = (UButton*)GetWidgetFromName(TEXT("Rev"));
 	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Rev);
+	ButtonArray.Add(Button);
+
+
+	Button = (UButton*)GetWidgetFromName(TEXT("Exit"));
+	Button->OnClicked.AddDynamic(this, &UFP_MainUI::Button_Exit);
 	ButtonArray.Add(Button);
 
 	return true;
@@ -133,6 +140,9 @@ void UFP_MainUI::Button_Skill()
 
 void UFP_MainUI::Button_Rev()
 {
+	if (AFP_MonsterMgr::Stage < 20)
+		return;
+
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)
 		return;
@@ -142,11 +152,8 @@ void UFP_MainUI::Button_Rev()
 	pPlayer->Level = pPlayer->InitLevel;
 	TSubclassOf<AFP_Player> PlayerClass = AFP_Player::StaticClass();
 	AFP_Player* Player_CDO = PlayerClass->GetDefaultObject<AFP_Player>();
-	pPlayer->Gem = Player_CDO->Gem;
+	//pPlayer->Gem = Player_CDO->Gem;
 	
-	AFP_MonsterMgr::Stage = 1;
-	AFP_MonsterMgr::MonsterKillCnt = 0;
-
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
@@ -159,7 +166,14 @@ void UFP_MainUI::Button_Rev()
 
 	UFP_InventoryWidget* Inventory = Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY));
 	Inventory->AddRune();
+	pPlayer->Gem += (int)FMath::FRandRange(AFP_MonsterMgr::Stage * 0.1f, AFP_MonsterMgr::Stage * 0.15f);
+	
 
+
+
+
+	AFP_MonsterMgr::Stage = 1;
+	AFP_MonsterMgr::MonsterKillCnt = 0;
 	PC->RestartLevel();
 	PC->isRev = true;
 }
@@ -178,7 +192,7 @@ void UFP_MainUI::Button_Rune()
 
 }
 
-void UFP_MainUI::OpenInventoryFromSkill()
+void UFP_MainUI::OpenInventoryFromSkill(UFP_InventoryWidget::SORTORDER _order)
 {
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
@@ -192,8 +206,17 @@ void UFP_MainUI::OpenInventoryFromSkill()
 		PC->WidgetArray[AFP_PlayerController::INVENTORY] = InventoryWidget;
 	}
 
-	Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
-	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
+	if (_order == Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->Order)
+	{
+		Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->CheckEquiped(_order);
+		PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
+	}
+	else
+	{
+		Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->Order = _order;
+		Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
+		PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
+	}
 }
 
 void UFP_MainUI::SetMyVisibility(ESlateVisibility _visibility)
@@ -202,4 +225,14 @@ void UFP_MainUI::SetMyVisibility(ESlateVisibility _visibility)
 	{
 		ButtonArray[i]->SetVisibility(_visibility);
 	}
+}
+
+void UFP_MainUI::Button_Exit()
+{
+	//FGenericPlatformMisc::RequestExit(true);
+
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+	
+	UKismetSystemLibrary::QuitGame(GetWorld(), PC, EQuitPreference::Quit);
 }

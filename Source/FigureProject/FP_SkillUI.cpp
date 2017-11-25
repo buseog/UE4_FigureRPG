@@ -197,6 +197,7 @@ void UFP_SkillUI::LvUpFireBall()
 
 	pPlayer->SkillLv.FireBall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+	pPlayer->Status.Attack += 0.5f;
 
 	UClass* Class = AFP_FireBall::StaticClass();
 	AFP_FireBall* Skill = Class->GetDefaultObject<AFP_FireBall>();
@@ -221,6 +222,7 @@ void UFP_SkillUI::LvUpFireBlast()
 
 	pPlayer->SkillLv.FireBlast += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+	pPlayer->Status.AttackSpeed -= 0.005;
 
 	UClass* Class = AFP_FireBlast::StaticClass();
 	AFP_FireBlast* Skill = Class->GetDefaultObject<AFP_FireBlast>();
@@ -245,6 +247,8 @@ void UFP_SkillUI::LvUpFireWall()
 
 	pPlayer->SkillLv.FireWall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+	pPlayer->Status.Hp += 20.f;
+	pPlayer->Status.MaxHp += 20.f;
 
 	UClass* Class = AFP_FireWall::StaticClass();
 	AFP_FireWall* Skill = Class->GetDefaultObject<AFP_FireWall>();
@@ -269,6 +273,7 @@ void UFP_SkillUI::LvUpIceBall()
 
 	pPlayer->SkillLv.IceBall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+	pPlayer->Status.Attack += 0.5f;
 
 	UClass* Class = AFP_IceBall::StaticClass();
 	AFP_IceBall* Skill = Class->GetDefaultObject<AFP_IceBall>();
@@ -292,6 +297,7 @@ void UFP_SkillUI::LvUpIceBlast()
 
 	pPlayer->SkillLv.IceBlast += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+	pPlayer->Status.AttackSpeed -= 0.005f;
 
 	UClass* Class = AFP_IceBlast::StaticClass();
 	AFP_IceBlast* Skill = Class->GetDefaultObject<AFP_IceBlast>();
@@ -315,6 +321,8 @@ void UFP_SkillUI::LvUpIceOrb()
 
 	pPlayer->SkillLv.IceOrb += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
+	pPlayer->Status.Hp += 20.f;
+	pPlayer->Status.MaxHp += 20.f;
 
 	UClass* Class = AFP_IceOrb::StaticClass();
 	AFP_IceOrb* Skill = Class->GetDefaultObject<AFP_IceOrb>();
