@@ -14,6 +14,7 @@
 #include "FP_IceBall.h"
 #include "FP_IceBlast.h"
 #include "FP_IceOrb.h"
+#include "FP_ComMessageUI.h"
 #include "Runtime/Core/Public/GenericPlatform/GenericPlatformMisc.h"
 #include "Runtime/Engine/Classes/Kismet/KismetSystemLibrary.h"
 
@@ -141,7 +142,13 @@ void UFP_MainUI::Button_Skill()
 void UFP_MainUI::Button_Rev()
 {
 	if (AFP_MonsterMgr::Stage < 20)
+	{
+		APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("available after 20 stages"), 2.f);
 		return;
+	}
+		
 
 	AFP_Player* pPlayer = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (nullptr == pPlayer)

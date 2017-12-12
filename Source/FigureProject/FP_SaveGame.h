@@ -126,6 +126,8 @@ public:
 		float Splash;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 		int PlayerType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
+		bool isPressedUI;
 
 	//Skill
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillLv)

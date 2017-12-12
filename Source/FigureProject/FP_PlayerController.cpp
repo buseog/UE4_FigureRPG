@@ -115,6 +115,7 @@ bool AFP_PlayerController::Load()
 	player->Status.AttackRange = LoadGameInstance->AttackRange;
 	player->Status.AttackSpeed = LoadGameInstance->AttackSpeed;
 	player->Status.BulletSpeed = LoadGameInstance->BulletSpeed;
+	player->isPressedUI = LoadGameInstance->isPressedUI;
 	
 	if(LoadGameInstance->PlayerType == 0)
 		player->MyType = AFP_Player::FIRE;

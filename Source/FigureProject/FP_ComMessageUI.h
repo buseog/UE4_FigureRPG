@@ -23,9 +23,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	static void ShowMessage(class AFP_PlayerController* pc, FText msg , float _time);
+	static void ShowMessage(class AFP_PlayerController* pc, FText msg , float _time , FColor color = FColor::Black);
+	static void ShowTouched(class AFP_PlayerController* pc);
 
-	static class UTextBlock* Text;
-	static bool bShowMessage;
-	static float Time;
+	static class UFP_Message* Message;
+	static class UFP_Alarm* Touch;
 };

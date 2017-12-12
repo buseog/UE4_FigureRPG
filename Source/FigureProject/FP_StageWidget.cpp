@@ -159,6 +159,12 @@ void UFP_StageWidget::Button_MainUI()
 		return;
 
 	PC->ToggleMainUI();
+
+	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (Player == nullptr)
+		return;
+
+	Player->isPressedUI = true;
 }
 
 void UFP_StageWidget::Button_Exit()

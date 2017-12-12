@@ -212,6 +212,7 @@ public:
 	float IconShowtime = 0.5f;
 	float StateTimeAcc = 0.f;
 	bool isOnceForRune = false;
+	bool isPressedUI = false;
 
 	//---------------------Gem-----------------------//
 	int Gem = 10;

@@ -15,6 +15,7 @@
 #include "FP_IceBall.h"
 #include "FP_IceBlast.h"
 #include "FP_IceOrb.h"
+#include "FP_ComMessageUI.h"
 
 bool UFP_SkillUI::Initialize()
 {
@@ -193,7 +194,11 @@ void UFP_SkillUI::LvUpFireBall()
 		return;
 
 	if (pPlayer->SkillLv.SkillPoint <= 0)
+	{
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("No SkillPoints"), 2.f, FColor::Red);
 		return;
+	}
+		
 
 	pPlayer->SkillLv.FireBall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
@@ -218,7 +223,11 @@ void UFP_SkillUI::LvUpFireBlast()
 		return;
 
 	if (pPlayer->SkillLv.SkillPoint <= 0)
+	{
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("No SkillPoints"), 2.f, FColor::Red);
 		return;
+	}
+		
 
 	pPlayer->SkillLv.FireBlast += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
@@ -243,7 +252,10 @@ void UFP_SkillUI::LvUpFireWall()
 		return;
 
 	if (pPlayer->SkillLv.SkillPoint <= 0)
+	{
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("No SkillPoints"), 2.f, FColor::Red);
 		return;
+	}
 
 	pPlayer->SkillLv.FireWall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
@@ -269,7 +281,10 @@ void UFP_SkillUI::LvUpIceBall()
 		return;
 
 	if (pPlayer->SkillLv.SkillPoint <= 0)
+	{
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("No SkillPoints"), 2.f, FColor::Red);
 		return;
+	}
 
 	pPlayer->SkillLv.IceBall += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
@@ -293,7 +308,10 @@ void UFP_SkillUI::LvUpIceBlast()
 		return;
 
 	if (pPlayer->SkillLv.SkillPoint <= 0)
+	{
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("No SkillPoints"), 2.f, FColor::Red);
 		return;
+	}
 
 	pPlayer->SkillLv.IceBlast += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;
@@ -317,7 +335,10 @@ void UFP_SkillUI::LvUpIceOrb()
 		return;
 
 	if (pPlayer->SkillLv.SkillPoint <= 0)
+	{
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("No SkillPoints"), 2.f, FColor::Red);
 		return;
+	}
 
 	pPlayer->SkillLv.IceOrb += 1;
 	pPlayer->SkillLv.SkillPoint -= 1;

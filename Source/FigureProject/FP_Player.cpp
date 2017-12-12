@@ -16,6 +16,7 @@
 #include "Runtime/Engine/Classes/Engine/UserInterfaceSettings.h"
 #include "Runtime/Engine/Classes/Engine/RendererSettings.h"
 #include "FP_ComRuneGenerator.h"
+#include "FP_ComMessageUI.h"
 
 
 // Sets default values
@@ -135,6 +136,13 @@ void AFP_Player::Tick(float DeltaTime)
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
 
+	//UE_LOG(LogClass, Log, TEXT("%f"), GetGameTimeSinceCreation());
+
+	if (GetGameTimeSinceCreation() > 5.f && isPressedUI == false)
+	{
+		AFP_ComMessageUI::ShowTouched(PC);
+	}
+
 	if (isOnceForRune == false && Inventory.Num() == 0)
 	{
 		isOnceForRune = true;
@@ -144,8 +152,6 @@ void AFP_Player::Tick(float DeltaTime)
 		AFP_ComRuneGenerator::GenerateRune(runeGenerator->RuneProperty, runeGenerator->RedRuneOption, runeGenerator->GreenRuneOption, runeGenerator->BlueRuneOption, runeGenerator->RuneStat, rune, AFP_MonsterMgr::Stage, 1);
 		Inventory.Add(rune);
 	}
-
-	
 
 	//Regeneration(DeltaTime);
 
@@ -199,7 +205,13 @@ void AFP_Player::Regeneration(float DeltaTime)
 void AFP_Player::StatusLevelUp(int _Type)
 {
 	if (Level.Point <= 0)
+	{
+		APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString("No Points"), 2.f);
 		return;
+	}
+		
 
 	switch (_Type)
 	{
@@ -414,6 +426,7 @@ void AFP_Player::EndPlay(EEndPlayReason::Type EndPlayReason)
 	SaveGameInstance->Point = Level.Point;
 	SaveGameInstance->ActiveSkill = int(AFP_Weapon::ActiveSkill);
 	SaveGameInstance->PlayerType = int(MyType);
+	SaveGameInstance->isPressedUI = isPressedUI;
 
 	SaveGameInstance->Stage = AFP_MonsterMgr::Stage;
 	SaveGameInstance->MonsterKillCnt = AFP_MonsterMgr::MonsterKillCnt;
