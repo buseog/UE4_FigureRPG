@@ -170,11 +170,28 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ComMonsterStateMgr.h">
       <Filter>Source\FigureProject\97. Component\04. ComMonsterStateMgr</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\..\Source\FigureProject\FP_ComMessageUI.h" />
     <ClInclude Include="..\..\Source\FigureProject\FP_FireMeteor.h" />
     <ClInclude Include="..\..\Source\FigureProject\FP_GlacialSpike.h" />
     <ClInclude Include="..\..\Source\FigureProject\FP_ComSound.h">
       <Filter>Source\FigureProject\99. Default</Filter>
+=======
+    <ClInclude Include="..\..\Source\FigureProject\FP_Message.h">
+      <Filter>Source\FigureProject\98. UI\09. MessageUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_Alarm.h">
+      <Filter>Source\FigureProject\98. UI\10. Alarm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComMessageUI.h">
+      <Filter>Source\FigureProject\97. Component\05. ComMessageUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_FireMeteor.h">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\03. Meteor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_GlacialSpike.h">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\03. GlacialSpike</Filter>
+>>>>>>> 4ee84a60c97fa2a8da18d99507cb41da48e09aa3
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -316,11 +333,28 @@
     <ClCompile Include="..\..\Source\FigureProject\FP_ComMonsterStateMgr.cpp">
       <Filter>Source\FigureProject\97. Component\04. ComMonsterStateMgr</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\..\Source\FigureProject\FP_ComMessageUI.cpp" />
     <ClCompile Include="..\..\Source\FigureProject\FP_FireMeteor.cpp" />
     <ClCompile Include="..\..\Source\FigureProject\FP_GlacialSpike.cpp" />
     <ClCompile Include="..\..\Source\FigureProject\FP_ComSound.cpp">
       <Filter>Source\FigureProject\99. Default</Filter>
+=======
+    <ClCompile Include="..\..\Source\FigureProject\FP_Message.cpp">
+      <Filter>Source\FigureProject\98. UI\09. MessageUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_Alarm.cpp">
+      <Filter>Source\FigureProject\98. UI\10. Alarm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComMessageUI.cpp">
+      <Filter>Source\FigureProject\97. Component\05. ComMessageUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_FireMeteor.cpp">
+      <Filter>Source\FigureProject\06. Skill\00. Fire\03. Meteor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_GlacialSpike.cpp">
+      <Filter>Source\FigureProject\06. Skill\01. Ice\03. GlacialSpike</Filter>
+>>>>>>> 4ee84a60c97fa2a8da18d99507cb41da48e09aa3
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -452,6 +486,21 @@
     </Filter>
     <Filter Include="Source\FigureProject\97. Component\04. ComMonsterStateMgr">
       <UniqueIdentifier>{74f733da-02bb-4c04-a892-33fffbf615ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\09. MessageUI">
+      <UniqueIdentifier>{e02aa17d-00e8-4104-8e39-1f9477063ba4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\98. UI\10. Alarm">
+      <UniqueIdentifier>{8daa588e-6e92-416a-8c7e-e6b25773519e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\97. Component\05. ComMessageUI">
+      <UniqueIdentifier>{d44e7123-bf21-4feb-a782-d2a166d9c6c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\00. Fire\03. Meteor">
+      <UniqueIdentifier>{a73fd0ed-0bb5-430c-b434-64d0aaa23ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FigureProject\06. Skill\01. Ice\03. GlacialSpike">
+      <UniqueIdentifier>{d07e6491-570f-4304-8c76-79d900b567e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

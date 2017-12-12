@@ -244,8 +244,8 @@ void UFP_Tooltip::CreateSocket()
 		pPlayer->Gem -= RequiredGem;
 		//SocketButton[iSocketIndex]->SetBackgroundColor(color);
 	}
-	/*else if (pPlayer->Gem < RequiredGem)
-		AFP_ComMessageUI::ShowMessage(PC, FText::FromString(TEXT("No Gem")), 2.f);*/
+	else if (pPlayer->Gem < RequiredGem)
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString(TEXT("No Gems")), 2.f, FColor::Red);
 
 
 	SocketBox->SetVisibility(ESlateVisibility::Hidden);
@@ -263,7 +263,10 @@ void UFP_Tooltip::ChangeColor()
 		return;
 
 	if (pPlayer->Gem == 0)
+	{
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString(TEXT("No Gems")), 2.f, FColor::Red);
 		return;
+	}
 	else
 		pPlayer->Gem--;
 

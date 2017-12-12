@@ -5,6 +5,7 @@
 #include "FP_InventoryWidget.h"
 #include "FP_Tooltip.h"
 #include "FP_ComRuneGenerator.h"
+#include "FP_ComMessageUI.h"
 
 
 AFP_Rune* UFP_RuneToolTip::SelectedRune = nullptr;
@@ -186,7 +187,13 @@ void UFP_RuneToolTip::ChangeOptionRune()
 {
 	AFP_Player* Player = Cast<AFP_Player>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
 	if (Player->Gem <= 0)
+	{
+		APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+		AFP_ComMessageUI::ShowMessage(PC, FText::FromString(TEXT("No Gems")), 2.f, FColor::Red);
 		return;
+	}
+		
 
 	Player->Gem--;
 	AFP_ComRuneGenerator* runeGenerator = AFP_ComRuneGenerator::StaticClass()->GetDefaultObject<AFP_ComRuneGenerator>();
