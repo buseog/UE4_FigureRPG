@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "FP_ComSound.h"
 #include "FP_PlayerController.generated.h"
 
 /**
@@ -45,6 +46,8 @@ public:
 	TArray<UUserWidget*> WidgetArray;
 
 	UUserWidget* GetWidgetMap(eWIDGET _key);
+
+	AFP_ComSound* Sound;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = UI)

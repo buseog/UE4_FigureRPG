@@ -95,7 +95,7 @@ void AFP_PlayerController::BeginPlay()
 
 	//Message Component
 	GetWorld()->SpawnActor<AFP_ComMessageUI>(FVector::ZeroVector, FRotator::ZeroRotator);
-	
+	Sound = GetWorld()->SpawnActor<AFP_ComSound>(FVector::ZeroVector, FRotator::ZeroRotator);
 }
 
 bool AFP_PlayerController::Load()

@@ -159,6 +159,8 @@ void UFP_StageWidget::Button_MainUI()
 		return;
 
 	PC->ToggleMainUI();
+
+	
 }
 
 void UFP_StageWidget::Button_Exit()

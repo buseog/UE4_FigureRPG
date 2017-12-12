@@ -125,6 +125,7 @@ void UFP_MainUI::Button_Stat()
 
 	SetMyVisibility(ESlateVisibility::Hidden);
 	
+	PC->Sound->PlaySound("Button", 0.f, 1.f, 1.f);
 }
 
 
@@ -136,6 +137,7 @@ void UFP_MainUI::Button_Skill()
 
 	SetMyVisibility(ESlateVisibility::Hidden);
 	
+	PC->Sound->PlaySound("Button", 0.f, 1.f, 1.f);
 }
 
 void UFP_MainUI::Button_Rev()
@@ -176,6 +178,8 @@ void UFP_MainUI::Button_Rev()
 	AFP_MonsterMgr::MonsterKillCnt = 0;
 	PC->RestartLevel();
 	PC->isRev = true;
+
+	PC->Sound->PlaySound("Button", 0.f, 1.f, 1.f);
 }
 
 void UFP_MainUI::Button_Rune()
@@ -190,6 +194,7 @@ void UFP_MainUI::Button_Rune()
 	PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
 	SetMyVisibility(ESlateVisibility::Hidden);
 
+	PC->Sound->PlaySound("Button", 0.f, 1.f, 1.f);
 }
 
 void UFP_MainUI::OpenInventoryFromSkill(UFP_InventoryWidget::SORTORDER _order)
@@ -217,6 +222,8 @@ void UFP_MainUI::OpenInventoryFromSkill(UFP_InventoryWidget::SORTORDER _order)
 		Cast<UFP_InventoryWidget>(PC->GetWidgetMap(AFP_PlayerController::INVENTORY))->SortInventory();
 		PC->GetWidgetMap(AFP_PlayerController::INVENTORY)->AddToViewport();
 	}
+
+	PC->Sound->PlaySound("Button", 0.f, 1.f, 1.f);
 }
 
 void UFP_MainUI::SetMyVisibility(ESlateVisibility _visibility)
@@ -233,6 +240,8 @@ void UFP_MainUI::Button_Exit()
 
 	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	AFP_PlayerController* PC = Cast<AFP_PlayerController>(Controller);
+
+	PC->Sound->PlaySound("Button", 0.f, 1.f, 1.f);
 	
 	UKismetSystemLibrary::QuitGame(GetWorld(), PC, EQuitPreference::Quit);
 }

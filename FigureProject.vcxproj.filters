@@ -170,6 +170,12 @@
     <ClInclude Include="..\..\Source\FigureProject\FP_ComMonsterStateMgr.h">
       <Filter>Source\FigureProject\97. Component\04. ComMonsterStateMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComMessageUI.h" />
+    <ClInclude Include="..\..\Source\FigureProject\FP_FireMeteor.h" />
+    <ClInclude Include="..\..\Source\FigureProject\FP_GlacialSpike.h" />
+    <ClInclude Include="..\..\Source\FigureProject\FP_ComSound.h">
+      <Filter>Source\FigureProject\99. Default</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\FigureProject\FigureProject.cpp">
@@ -309,6 +315,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\FigureProject\FP_ComMonsterStateMgr.cpp">
       <Filter>Source\FigureProject\97. Component\04. ComMonsterStateMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComMessageUI.cpp" />
+    <ClCompile Include="..\..\Source\FigureProject\FP_FireMeteor.cpp" />
+    <ClCompile Include="..\..\Source\FigureProject\FP_GlacialSpike.cpp" />
+    <ClCompile Include="..\..\Source\FigureProject\FP_ComSound.cpp">
+      <Filter>Source\FigureProject\99. Default</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
